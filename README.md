@@ -46,7 +46,9 @@ récupère les valeurs du projet.
 | `POSTGRES_PRISMA_URL` | injectée par Vercel ; le code ne la lit jamais |
 | `BLOB_READ_WRITE_TOKEN` | écriture Vercel Blob ; absent, repli sur `.media/` |
 | `NEXT_PUBLIC_BASE_URL` | base absolue des liens, balises Open Graph, `robots.txt` et sitemap |
-| `FREE_PAGE_TTL_DAYS` | durée de vie d'une page gratuite (défaut : 30) |
+| `FREE_PAGE_TTL_DAYS` | durée de vie d'une page gratuite (défaut : 365) |
+| `ADSENSE_PUBLISHER_ID` | identifiant d'éditeur AdSense (`pub-…` ou `ca-pub-…`), publié dans `/ads.txt` ; absent, `/ads.txt` répond 404 |
+| `PURGE_SECRET` | secret de `POST /api/purge`, 32 caractères au moins ; absent, la purge est désactivée — voir « La purge des cartes expirées » |
 | `RATE_LIMIT_DISABLED` | `1` coupe les quotas. Développement seulement — voir « Les routes anonymes » |
 
 ### 3. Créer le schéma
@@ -130,6 +132,8 @@ Les deux écrivent dans le même `.next` et le graphe de modules du serveur de d
 | `lib/mediaStore.ts` | où atterrissent les images : Vercel Blob, ou disque en développement |
 | `lib/extract.ts` | lecture des métadonnées OG, best-effort |
 | `lib/blob.ts` | recopie des images vers Vercel Blob |
+| `lib/purge.ts` | purge des cartes expirées sans choix, images comprises ; effacement des images d'une carte supprimée |
+| `app/api/purge/route.ts` | la route de la purge, protégée par `PURGE_SECRET`, qu'appelle une tâche planifiée |
 | `lib/validation.ts` | validation des entrées, avant toute écriture |
 | `lib/rateLimit.ts` | quotas des routes anonymes ; logique pure, horloge injectable |
 | `lib/site.ts` | **identité de l'éditeur** — le seul fichier à remplir pour les mentions légales |
@@ -153,15 +157,25 @@ Les deux écrivent dans le même `.next` et le graphe de modules du serveur de d
 | `/admin/[token]` | vue admin — `noindex` |
 
 Les slugs `admin`, `api`, `creer`, `_next`, `contact`, `conditions`, `confidentialite`,
-`mentions-legales`, `questions`, `exemple`, `favicon.ico`, `robots.txt`, `sitemap.xml`,
-`manifest.webmanifest`, `icon`, `icon.svg`, `apple-icon`, `apple-touch-icon.png`, `opengraph-image`
-et `twitter-image` sont réservés : `/[slug]` les traite en 404 sans requête en base. Les noms à
-points ne peuvent de toute façon pas former un slug ; ils restent listés pour que la liste dise ce
-qui est pris.
+`mentions-legales`, `questions`, `exemple`, `favicon.ico`, `robots.txt`, `llms.txt`, `ads.txt`,
+`sitemap.xml`, `manifest.webmanifest`, `icon`, `icon.svg`, `apple-icon`, `apple-touch-icon.png`,
+`opengraph-image` et `twitter-image` sont réservés : `/[slug]` les traite en 404 sans requête en
+base. Les noms à points ne peuvent de toute façon pas former un slug ; ils restent listés pour que
+la liste dise ce qui est pris.
 
 `/robots.txt` laisse explorer les pages-cadeau — c'est en les lisant qu'un robot voit leur
 `noindex` — mais interdit `/admin/` : un jeton d'administration n'a rien à faire dans un index.
 `/sitemap.xml` déclare les pages du site — l'accueil, `/creer`, `/questions`, `/exemple`… —, jamais les cartes.
+
+`/llms.txt` résume le site pour les assistants conversationnels, au format de llmstxt.org : ce que
+fait le service, et les pages qui comptent. Comme le sitemap, il ne cite jamais une carte, et il est
+figé au build — `NEXT_PUBLIC_BASE_URL` doit donc exister dès cette phase.
+
+`/ads.txt` déclare le compte AdSense autorisé à vendre de l'espace publicitaire sur le site. Il est
+lu dans `ADSENSE_PUBLISHER_ID` à chaque requête ; sans elle, il répond 404 plutôt qu'un fichier vide
+ou un compte fictif, qu'AdSense signalerait comme une erreur. **Aucune annonce n'est affichée
+aujourd'hui** : en afficher poserait des cookies, ce que la politique de confidentialité exclut
+(« aucun cookie, aucun traqueur »), et demanderait un bandeau de consentement.
 
 ### API
 
@@ -171,9 +185,10 @@ qui est pris.
 | `POST /api/upload` | image (repli manuel) → Vercel Blob → `{ url }` |
 | `POST /api/pages` | crée la page (aucun champ de texte obligatoire) → `{ slug, publicUrl, adminUrl, expiresAt, warnings }` |
 | `PATCH /api/admin/[token]` | édite la page ; 409 si verrouillée ou expirée |
-| `DELETE /api/admin/[token]` | supprime la page |
+| `DELETE /api/admin/[token]` | supprime la page et ses images |
 | `POST /api/pages/[slug]/choose` | `{ itemId }` → enregistre le choix et verrouille |
 | `POST /api/pages/[slug]/reply` | `{ reply }` → attache le mot du receveur, après le choix ; 409 hors fenêtre ou si un mot existe déjà |
+| `POST /api/purge` | purge les cartes expirées sans choix, images comprises. `Authorization: Bearer <PURGE_SECRET>` ; `?dry=1` à blanc ; 404 sans secret configuré |
 
 **Toutes ces routes peuvent répondre `429`** avec un en-tête `Retry-After` et un `{ error }` en
 français, avant toute validation — voir « Les routes anonymes et leurs quotas ».
@@ -191,7 +206,7 @@ reçoit — **Intro**, **Cadeaux**, **Choix** — suivis du thème et du lien.
 | **Mot d'ouverture** | Intro | La ligne au-dessus du titre. Vide = celle de l'occasion. |
 | **Message principal** | Intro | Le grand titre du voile, et le titre de l'aperçu de lien. |
 | **Texte du bouton** | Intro | Le bouton qui lève le voile. Vide = la suggestion de l'occasion (« Ouvrir », « Ouvrir mon cadeau »…). |
-| **Ouverture** | Intro | Le voile à lever, en six styles : voile, rideau, volets, enveloppe, couvercle, halo. Désactivable. |
+| **Ouverture** | Intro | Le voile à lever, en six styles : voile, rideau, volets, enveloppe, couvercle, halo. Toujours présent. |
 | **Date de révélation** | Intro | Avant elle, la carte reste scellée sur un compte à rebours. |
 | **Mot d'attente** | Intro | Sous le compte à rebours, tant que la carte est scellée. Vide = la suggestion de l'occasion. |
 | **Photo d'en-tête** | Intro | Une photo large en haut de la carte. |
@@ -211,12 +226,18 @@ reçoit — **Intro**, **Cadeaux**, **Choix** — suivis du thème et du lien.
 **Chaque écran a ses propres mots.** Le voile porte le prénom, le mot d'ouverture et le message
 principal ; l'écran des cadeaux porte son titre et son contenu ; l'écran de confirmation porte le
 message de fin. Le voile et l'écran des cadeaux répétaient auparavant les deux mêmes lignes, lues
-coup sur coup. Quand l'ouverture animée est désactivée, il n'y a plus de voile où loger l'intro :
-l'écran des cadeaux la reprend alors à son compte, en tête, et son propre titre passe en `h2`.
+coup sur coup. Une carte déjà choisie s'ouvre sans voile, puisqu'il n'y a plus rien à attendre :
+l'écran des cadeaux reprend alors l'intro à son compte, en tête, et son propre titre passe en `h2`.
 
 **Le facultatif se replie.** Un réglage optionnel est d'abord une case à cocher ; le champ
 n'apparaît qu'une fois cochée (composant `Optional`). Décocher **efface la valeur** : un réglage
 invisible mais toujours actif — une date de révélation oubliée, par exemple — serait un piège.
+
+**Le voile, lui, n'est plus facultatif.** Une case « Ouvrir la carte d'un geste » permettait de le
+couper : la carte s'ouvrait alors directement sur la liste, sans rien à lever, et perdait la mise en
+scène qui la distingue d'une liste de souhaits. Les cartes créées sans voile le retrouvent sans
+migration — `theme.cover` n'est plus relu en base (`normaliseTheme`) ni dans `GiftView`, et un
+garde-fou de `npm run check` l'interdit.
 Un repli s'ouvre d'emblée si le champ porte déjà une valeur, pour qu'en édition rien de rempli ne
 se cache.
 
@@ -343,6 +364,67 @@ là disparaîtrait au déploiement suivant. La route de service n'accepte qu'un 
 strictement conforme (`^[a-z0-9-]+\.(jpg|png|webp)$`), ce qui rend toute remontée de chemin
 impossible.
 
+## La purge des cartes expirées
+
+Les conditions, la politique de confidentialité et la FAQ promettent qu'une carte sur laquelle
+personne n'a choisi est **supprimée**, avec ses images, un an après sa création. Rien ne le faisait :
+`isExpired` bloquait le choix et l'édition, mais la ligne et ses images restaient indéfiniment.
+`POST /api/purge` le fait désormais (`lib/purge.ts`).
+
+**Une route, et non un script.** Un volume Railway n'appartient qu'à un service, et une tâche
+planifiée est un service à part : un script qu'elle lancerait verrait la base, pas le dossier
+d'images. Seul le serveur web voit les deux ; la route s'y déclenche donc de l'extérieur, chaque
+nuit.
+
+**Ce qui part.** Les cartes `chosen_at IS NULL AND expires_at < now()`, cinquante par appel, les
+plus anciennes d'abord — cinquante parce que les images s'effacent une à une, pour savoir laquelle
+résiste, et qu'un appel ne peut pas dépasser la minute. Avec elles, leurs images **chez nous** :
+Vercel Blob, et le dossier d'images, où un fichier se reconnaît à son nom quel que soit le domaine
+enregistré. L'image d'un marchand qu'on n'a pas pu recopier n'est pas à nous. La suppression en
+base répète la condition : une carte choisie ne part jamais, et un garde-fou l'exige de toute
+suppression de `lib/purge.ts`.
+
+**Une image partagée reste.** Une adresse déjà chez nous est reprise telle quelle : deux cartes
+peuvent pointer vers la même image. Avant d'effacer, la purge vérifie qu'aucune carte hors du lot
+ne la référence.
+
+**Les images d'abord, la ligne ensuite.** Une carte n'est effacée qu'une fois toutes ses images
+parties ; si l'une résiste, la carte reste et sera retentée à l'appel suivant. Dans l'ordre inverse,
+l'image deviendrait orpheline, sans plus rien pour la retrouver. Une image déjà absente compte
+comme effacée : la purge est rejouable. Sans `BLOB_READ_WRITE_TOKEN`, une image Blob ne peut pas
+être effacée — la carte reste, et le rapport le compte en échec.
+
+**La suppression manuelle** (`DELETE /api/admin/[token]`) emporte aussi les images, par la même
+fonction. Là, la carte part même si une image résiste — le donneur l'a demandé —, et l'adresse de
+l'image reste dans les journaux.
+
+| appel | réponse |
+|---|---|
+| `PURGE_SECRET` absent du serveur, ou plus court que 32 caractères | 404, comme une route qui n'existe pas |
+| secret faux, ou absent de la requête | 401 |
+| `?dry=1` | le rapport, rien d'effacé |
+| sinon | le rapport, et une ligne dans les journaux |
+
+```json
+{ "aBlanc": false, "cartes": 3, "images": { "blob": 4, "fichiers": 1, "partagees": 1, "echecs": 0 }, "reste": false }
+```
+
+### La brancher
+
+1. Générer un secret — `openssl rand -hex 32` — et le poser en `PURGE_SECRET` sur le service web.
+2. Essayer à blanc, et lire le rapport :
+
+   ```bash
+   curl -X POST -H "Authorization: Bearer <secret>" "https://<domaine>/api/purge?dry=1"
+   ```
+
+3. Planifier le même appel, sans `?dry=1`, une fois par nuit : un service planifié Railway (Cron
+   Schedule `0 3 * * *`) qui lance ce `curl`, ou n'importe quel planificateur capable d'un `POST`
+   avec en-tête. `reste: true` dans le rapport signale un lot plein : l'appel suivant continue, et
+   rien n'empêche d'appeler plusieurs fois de suite.
+
+Tant que ce branchement n'est pas fait, rien n'est purgé.
+
 ## Le cadeau unique
 
 Le minimum est de **un** cadeau, pas deux. Avec un seul, la carte cesse d'être un choix pour
@@ -466,7 +548,8 @@ colonnes, une migration et autant de règles de validation, pour un texte qu'on 
 avant d'imprimer. `localStorage` couvre le vrai risque — recharger la page, ou revenir imprimer un
 deuxième exemplaire — sans rien ajouter au schéma. C'est le même arbitrage que pour le modèle de
 carte, et le même mécanisme que le brouillon de composition : une clé par carte, une version qui
-invalide les formes anciennes, une péremption à 30 jours (la durée de vie d'une page gratuite), et
+invalide les formes anciennes, une péremption à un an (la durée de vie d'une page gratuite,
+`DUREE_VIE_PAGE_JOURS`, lue dans `lib/env.ts` et non recopiée), et
 tous les accès enveloppés dans des `try` — en navigation privée, lire `localStorage` lève.
 
 Le panneau est replié par défaut : neuf fois sur dix les mots de la page conviennent, et un
@@ -543,12 +626,16 @@ pastille de validation occupant le coin opposé.
 Une cérémonie, pas un écran utilitaire — **et un seul rythme du début à la fin**. Mesuré au
 chronomètre dans le navigateur :
 
-| l'écran d'accueil du receveur | à |
+| l'écran d'accueil du receveur, à mi-opacité | à |
 |---|---|
-| le prénom | 1,36 s |
-| le mot d'ouverture | 1,80 s |
-| le titre | 2,60 s |
-| le bouton d'ouverture | 2,88 s |
+| le prénom | 1,18 s |
+| le mot d'ouverture | 2,02 s |
+| le titre | 3,98 s |
+| le bouton d'ouverture | 5,85 s |
+
+Relevé animation par animation, par pas de 10 ms. Le bouton arrivait à 6,45 s ; sa pause après le
+titre est passée de 3,2 s à 2,6 s parce que l'attente paraissait longue. Le titre atteint 98 % de son
+opacité à 5,34 s : il reste une demi-seconde où l'on n'a que la phrase sous les yeux.
 
 | après le clic | à |
 |---|---|
@@ -614,8 +701,7 @@ seconde et demie après que tout ce qu'on voit se soit posé.
 ## Les effets
 
 **Séparés des ouvertures, à dessein.** L'ouverture dit comment le voile se lève ; l'effet, ce qui se
-passe derrière. Les deux se combinent librement — un halo peut lâcher des confettis — et un effet
-reste utile quand le donneur a coupé le voile.
+passe derrière. Les deux se combinent librement — un halo peut lâcher des confettis.
 
 | effet | rendu |
 |---|---|
@@ -627,7 +713,7 @@ reste utile quand le donneur a coupé le voile.
 | **Bulles** | Elles montent, grossissent, et éclatent en fin de course. |
 | **Feuilles** | Chute lente, avec un tournoiement sur deux axes. |
 | **Ballons** | Sept seulement, gros et lents, avec leur ficelle. |
-| **Poussière d'or** | Un scintillement sur place, sans chute. |
+| **Poussière d'or** | Des étoiles à quatre branches qui scintillent sur place, sans chute. |
 
 Comme la palette et le décor, **l'occasion en propose un** : neige pour Noël, confettis pour un
 anniversaire, pétales pour la Saint-Valentin, bulles pour une naissance, ballons pour une
@@ -649,8 +735,11 @@ plus de soin :
   effets et n'a pas à connaître les besoins de chacun.
 - **La poussière d'or ne traverse rien.** Tous les autres entrent par un bord et ressortent par
   l'autre ; celle-ci se pose où elle tombe et scintille sur place. D'où `--y`, la hauteur de départ
-  que le composant tire pour chaque grain, et trois grains par `<span>` posés en `box-shadow` :
-  vingt-six points sur un écran entier, c'est un désert.
+  que le composant tire pour chaque grain. Ces grains sont des **étoiles à quatre branches** — la
+  même que l'icône de l'effet dans l'éditeur — et non plus des points de deux à quatre pixels, qui se
+  lisaient comme de la poussière au sens propre. Découpées au masque dans les pseudo-éléments : deux
+  par `<span>`, parce que vingt-six sur un écran entier, c'est un désert, et qu'une `box-shadow`
+  copie la boîte, pas l'étoile. Le halo est un dégradé sur le `<span>` lui-même.
 
 Trois règles de fabrication :
 
@@ -795,7 +884,7 @@ Les pages-cadeau, elles, gardent leur propre aperçu, composé à partir de l'im
 ## Les routes anonymes et leurs quotas
 
 Aucun compte, aucun paiement, aucune adresse : rien n'identifie qui appelle l'API. Les routes
-ouvertes coûtent pourtant — une ligne en base, des images stockées trente jours, des requêtes
+ouvertes coûtent pourtant — une ligne en base, des images stockées un an, des requêtes
 sortantes. `lib/rateLimit.ts` leur pose un quota par adresse.
 
 | route | quota | pourquoi ce seuil |
@@ -902,7 +991,9 @@ L'application ne dépend d'aucun hébergeur en particulier.
 | `POSTGRES_URL_NON_POOLING` | connexion directe pour la migration ; souvent la même |
 | `NEXT_PUBLIC_BASE_URL` | base absolue des liens, QR codes et balises Open Graph |
 | `BLOB_READ_WRITE_TOKEN` | Vercel Blob ; absent, les images vont dans `.media/` |
-| `FREE_PAGE_TTL_DAYS` | durée de vie d'une page gratuite (défaut : 30) |
+| `FREE_PAGE_TTL_DAYS` | durée de vie d'une page gratuite (défaut : 365) |
+| `ADSENSE_PUBLISHER_ID` | identifiant AdSense publié dans `/ads.txt` ; facultatif |
+| `PURGE_SECRET` | secret de la purge des cartes expirées ; sans lui, rien n'est purgé |
 
 Deux pièges, tous deux silencieux :
 
@@ -1060,7 +1151,7 @@ les cadeaux (voir « Ce qui est personnalisable »). Il est bon en soi, et n'eng
 
 **Les images sont recopiées, jamais hotlinkées.** Qu'elle vienne de l'extraction OG, d'une URL
 collée ou d'un téléversement, chaque image est rapatriée dans Vercel Blob. Une page doit rester
-intacte 30 jours ; hotlinker l'image d'un marchand la casse dès qu'il touche à son site. Si la
+intacte un an ; hotlinker l'image d'un marchand la casse dès qu'il touche à son site. Si la
 copie échoue (403, lien mort, format refusé), l'URL d'origine est conservée en dernier recours et
 l'UI le signale — la création n'est jamais bloquée pour autant.
 
@@ -1138,12 +1229,16 @@ n'importe quelle édition.
 - **Aucun test ne touche une route, une base ou un navigateur.** `npm run check` ne vérifie que de
   la logique pure — validation, slugs, extraction, quotas, réduction d'images. Les handlers HTTP,
   les requêtes SQL et le rendu ne sont couverts par rien d'automatisé : ils se vérifient à la main.
-  C'est la lacune la plus large du projet.
+  C'est la lacune la plus large du projet. L'orchestration de la purge est testée sur une fausse
+  base, pas ses requêtes : la première passe en production doit être à blanc (`?dry=1`).
 - **Les fichiers de la marque sont du produit de build versionné.** `npm run brand` les régénère,
   mais rien n'oblige à le lancer : modifier la géométrie dans `scripts/brand.mjs` sans régénérer
   laisse le favicon et les icônes en désaccord avec leur source, et aucune vérification ne le
   signalera.
 - **Le slug public est devinable.** Ne rien mettre de sensible dans une page-cadeau.
+- **Des images restent orphelines.** Celles qu'on remplace en modifiant une carte, et celles
+  téléversées pour une carte jamais créée : plus aucune ligne ne les référence, et la purge part des
+  lignes.
 - **Le mot du receveur n'est plus lié à l'auteur du choix.** Il part dans une seconde requête ; qui
   détient le lien peut donc l'écrire à sa place, tant que la carte n'en porte pas déjà un et que
   l'heure qui suit le choix n'est pas écoulée. C'est le prix du bouton « Laisser un mot » posé après

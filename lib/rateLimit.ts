@@ -53,6 +53,8 @@ export const QUOTAS = {
   reponse: { limite: 30, fenetreMs: 10 * MINUTE },
   /** `PATCH` / `DELETE` admin : le jeton est déjà infalsifiable, ceci évite le martèlement. */
   admin: { limite: 60, fenetreMs: 10 * MINUTE },
+  /** `POST /api/purge` — protégée par secret ; le quota évite seulement le martèlement. */
+  purge: { limite: 10, fenetreMs: 10 * MINUTE },
 } as const;
 
 export type Verdict = { ok: true } | { ok: false; retryAfterS: number };

@@ -33,6 +33,15 @@ import { hexToHsl, hslToHex, styleDeTeinte, teinteDuTheme } from "../lib/carteCo
 import { RESERVED_SLUGS, slugError, slugify, suggestVariant } from "../lib/slug";
 import { REPLY_WINDOW_MS, isExpired, isLocked, isSealed, replyWindowOpen } from "../lib/types";
 import { LIMITS } from "../lib/limits";
+import { adsensePublisherId, freePageTtlDays, secretDePurge } from "../lib/env";
+import {
+  clesImages,
+  effacerImagesDeCarte,
+  purgerCartesExpirees,
+  secretValide,
+  type AccesPurge,
+  type PageImages,
+} from "../lib/purge";
 import { MEDIA_DIR } from "../lib/mediaStore";
 import {
   DEFAULT_PRINT_LAYOUT,
@@ -351,6 +360,44 @@ test("isExpired : null n'expire jamais, une date passée oui", () => {
   assert.equal(isExpired({ expires_at: new Date(Date.now() - 60_000).toISOString() }), true);
 });
 
+test("une page vit un an, et la carte a imprimer perime avec elle", () => {
+  const avant = process.env.FREE_PAGE_TTL_DAYS;
+  try {
+    delete process.env.FREE_PAGE_TTL_DAYS;
+    assert.equal(freePageTtlDays(), 365);
+  } finally {
+    if (avant !== undefined) process.env.FREE_PAGE_TTL_DAYS = avant;
+  }
+  // Une duree recopiee a la main finirait par diverger de celle de la page.
+  assert.match(lire("lib/printTexts.ts"), /const DUREE_MS = DUREE_VIE_PAGE_JOURS \*/);
+});
+
+/*
+ * Le code d'annonce AdSense montre `ca-pub-…` ; ads.txt veut `pub-…`. C'est la
+ * premiere forme qu'on copie : la refuser laisserait /ads.txt en 404 sans que
+ * rien ne dise pourquoi.
+ */
+test("ads.txt accepte l'identifiant AdSense sous ses deux formes, et rien d'autre", () => {
+  const avant = process.env.ADSENSE_PUBLISHER_ID;
+  const cas: [string | undefined, string | null][] = [
+    [undefined, null],
+    ["pub-1234567890123456", "pub-1234567890123456"],
+    [" ca-pub-1234567890123456 ", "pub-1234567890123456"],
+    ["pub-123", null],
+    ["google.com, pub-1234567890123456, DIRECT", null],
+  ];
+  try {
+    for (const [valeur, attendu] of cas) {
+      if (valeur === undefined) delete process.env.ADSENSE_PUBLISHER_ID;
+      else process.env.ADSENSE_PUBLISHER_ID = valeur;
+      assert.equal(adsensePublisherId(), attendu, `ADSENSE_PUBLISHER_ID=${valeur}`);
+    }
+  } finally {
+    if (avant === undefined) delete process.env.ADSENSE_PUBLISHER_ID;
+    else process.env.ADSENSE_PUBLISHER_ID = avant;
+  }
+});
+
 test("isLocked suit chosen_at", () => {
   assert.equal(isLocked({ chosen_at: null }), false);
   assert.equal(isLocked({ chosen_at: new Date().toISOString() }), true);
@@ -655,16 +702,21 @@ test("validatePatch accepte de vider la signature", () => {
 
 // --- Voile d'ouverture ------------------------------------------------------
 
-test("le voile d'ouverture est actif par defaut", () => {
-  assert.equal(validateCreate(validBody).theme.cover, true);
-  assert.equal(validateCreate({ ...validBody, theme: { occasion: "noel" } }).theme.cover, true);
-});
-
-test("le voile ne se coupe que sur un refus explicite", () => {
-  assert.equal(validateCreate({ ...validBody, theme: { cover: false } }).theme.cover, false);
-  // Une valeur bancale ne doit pas desactiver le voile par accident.
-  assert.equal(validateCreate({ ...validBody, theme: { cover: "non" } }).theme.cover, true);
-  assert.equal(validateCreate({ ...validBody, theme: { cover: 0 } }).theme.cover, true);
+/*
+ * Le voile ne se refuse plus. Les cartes creees avant portent encore
+ * `cover: false` en base : le relire — dans `normaliseTheme` ou dans GiftView —
+ * leur retirerait de nouveau le voile, en silence, sur des liens deja envoyes.
+ */
+test("le voile ne se refuse plus, meme sur une carte ancienne", () => {
+  const theme = validateCreate({ ...validBody, theme: { cover: false, effect: "neige" } }).theme;
+  assert.ok(!("cover" in theme), "validateTheme garde de nouveau cover");
+  assert.equal(theme.effect, "neige");
+  assert.doesNotMatch(lire("lib/db.ts"), /raw\.cover\b/, "normaliseTheme relit de nouveau cover");
+  assert.doesNotMatch(
+    lire("components/GiftView.tsx"),
+    /theme\.cover\b/,
+    "GiftView relit de nouveau theme.cover",
+  );
 });
 
 test("chaque occasion propose une suggestion de titre et de remerciement", () => {
@@ -1038,12 +1090,6 @@ test("validateTheme ne garde qu'une ouverture et un effet connus", () => {
   const ko = validateTheme({ opening: "<script>", effect: { toString: () => "neige" } });
   assert.equal(ko.opening, DEFAULT_OPENING_ID);
   assert.equal(ko.effect, DEFAULT_EFFECT_ID);
-});
-
-test("l'effet ne depend pas du voile : il survit a cover false", () => {
-  const t = validateTheme({ cover: false, effect: "neige" });
-  assert.equal(t.cover, false);
-  assert.equal(t.effect, "neige");
 });
 
 // --- Limitation de debit ---------------------------------------------------
@@ -1931,6 +1977,189 @@ async function checkImages() {
   });
 }
 
+// --- Purge des cartes expirees ---------------------------------------------
+
+const BLOB_TEST = "https://abc.public.blob.vercel-storage.com/gift/1-x.jpg";
+
+test("clesImages ne retient que nos images, une fois chacune", () => {
+  const cles = clesImages([
+    {
+      id: "a",
+      cover_image_url: BLOB_TEST,
+      header_image_url: "https://mypresentsforyou.be/api/media/gift-1-ab.jpg",
+      items: [
+        // La meme image sous un autre domaine : `baseUrl()` a pu changer.
+        { image_url: "http://localhost:3000/api/media/gift-1-ab.jpg" },
+        { image_url: "https://marchand.example/produit.jpg" },
+        { image_url: null },
+        // Un nom piege ne sort pas du dossier : l'URL le normalise, ou le motif le refuse.
+        { image_url: "https://x.example/api/media/../secret.jpg" },
+        { image_url: "https://x.example/api/media/..%2Fsecret.jpg" },
+        { image_url: "pas une adresse" },
+      ],
+    },
+    { id: "b", cover_image_url: BLOB_TEST, header_image_url: null, items: [] },
+  ]);
+  assert.deepEqual(cles, { blob: [BLOB_TEST], fichiers: ["gift-1-ab.jpg"] });
+});
+
+test("la purge ne supprime jamais une carte choisie ni une carte encore valide", () => {
+  /*
+   * Retirer une condition « redondante » avec la lecture effacerait sans bruit
+   * des cartes que les textes promettent de garder. Chaque suppression la porte
+   * donc elle-meme, et la casse ne permet pas d'y echapper.
+   */
+  const suppressions = lire("lib/purge.ts").match(/delete\s+from\s+gift_pages[^`]*/gi) ?? [];
+  assert.ok(suppressions.length > 0, "aucune suppression trouvee dans lib/purge.ts");
+  for (const s of suppressions) {
+    assert.match(s, /chosen_at IS NULL/, `suppression sans chosen_at IS NULL : ${s}`);
+    assert.match(s, /expires_at < now\(\)/, `suppression sans expires_at < now() : ${s}`);
+  }
+});
+
+test("la route de purge ne repond qu'a POST", () => {
+  // Un GET se declenche tout seul : un robot, un prechargement, un lien colle.
+  const route = lire("app/api/purge/route.ts");
+  assert.match(route, /export async function POST\b/);
+  assert.doesNotMatch(route, /export\s+(async\s+)?(function|const)\s+(GET|HEAD)\b/);
+});
+
+test("le secret de purge : absent ou court, la route se tait ; faux, refuse", () => {
+  const avant = process.env.PURGE_SECRET;
+  const secret = "s".repeat(32);
+  try {
+    delete process.env.PURGE_SECRET;
+    assert.equal(secretDePurge(), null);
+    process.env.PURGE_SECRET = "trop-court";
+    assert.equal(secretDePurge(), null);
+    process.env.PURGE_SECRET = ` ${secret} `;
+    assert.equal(secretDePurge(), secret);
+  } finally {
+    if (avant === undefined) delete process.env.PURGE_SECRET;
+    else process.env.PURGE_SECRET = avant;
+  }
+  assert.equal(secretValide(`Bearer ${secret}`, secret), true);
+  assert.equal(secretValide(`Bearer ${secret}x`, secret), false);
+  assert.equal(secretValide(secret, secret), false);
+  assert.equal(secretValide(null, secret), false);
+  assert.equal(secretValide("Bearer ", secret), false);
+});
+
+/*
+ * L'orchestration de la purge, sur une fausse base. Le journal note chaque
+ * effacement dans l'ordre ou il a lieu : c'est l'ordre qui est en jeu.
+ */
+function fausseBase(pages: PageImages[], options: { partagees?: string[]; resistent?: string[] } = {}) {
+  const journal: string[] = [];
+  const partagees = options.partagees ?? [];
+  const resistent = options.resistent ?? [];
+  const acces: AccesPurge = {
+    async lireExpirees(lot) {
+      journal.push(`lire:${lot}`);
+      return pages.slice(0, lot);
+    },
+    async encoreUtilisees(cles, exclure) {
+      journal.push(`partage:${exclure.join(",")}`);
+      return {
+        blob: cles.blob.filter((u) => partagees.includes(u)),
+        fichiers: cles.fichiers.filter((n) => partagees.includes(n)),
+      };
+    },
+    async effacerBlob(url) {
+      if (resistent.includes(url)) throw new Error("reseau");
+      journal.push(`blob:${url}`);
+    },
+    async effacerFichier(nom) {
+      if (resistent.includes(nom)) throw new Error("disque");
+      journal.push(`fichier:${nom}`);
+    },
+    async effacerCartes(ids) {
+      journal.push(`cartes:${ids.join(",")}`);
+      return ids.length;
+    },
+  };
+  return { acces, journal };
+}
+
+const blobDe = (n: string) => `https://abc.public.blob.vercel-storage.com/gift/${n}.jpg`;
+const carteA: PageImages = {
+  id: "A",
+  cover_image_url: blobDe("a"),
+  header_image_url: null,
+  items: [{ image_url: "https://mypresentsforyou.be/api/media/a.jpg" }],
+};
+const carteB: PageImages = {
+  id: "B",
+  cover_image_url: null,
+  header_image_url: null,
+  items: [{ image_url: blobDe("commune") }],
+};
+const carteC: PageImages = { id: "C", cover_image_url: null, header_image_url: null, items: [] };
+
+async function checkPurge() {
+  {
+    const { acces, journal } = fausseBase([carteA, carteB], { partagees: [blobDe("commune")] });
+    const r = await purgerCartesExpirees(acces);
+    test("la purge efface les images, garde celles qu'une autre carte utilise, puis les cartes", () => {
+      assert.deepEqual(r, {
+        aBlanc: false,
+        cartes: 2,
+        images: { blob: 1, fichiers: 1, partagees: 1, echecs: 0 },
+        reste: false,
+      });
+      assert.ok(!journal.includes(`blob:${blobDe("commune")}`), "image partagee effacee");
+      assert.ok(journal.includes("partage:A,B"), "le partage doit exclure le lot lui-meme");
+      // Une seule suppression de cartes, et apres la derniere image effacee.
+      const cartes = journal.flatMap((l, i) => (l.startsWith("cartes:") ? [i] : []));
+      const images = journal.flatMap((l, i) => (/^(blob|fichier):/.test(l) ? [i] : []));
+      assert.deepEqual(
+        cartes.map((i) => journal[i]),
+        ["cartes:A,B"],
+      );
+      assert.ok(cartes[0] > Math.max(...images), "les cartes doivent partir apres leurs images");
+    });
+  }
+  {
+    const { acces, journal } = fausseBase([carteA, carteC], { resistent: ["a.jpg"] });
+    const r = await purgerCartesExpirees(acces);
+    test("une carte dont une image resiste reste en base, pour la passe suivante", () => {
+      assert.equal(r.cartes, 1);
+      assert.equal(r.images.echecs, 1);
+      assert.equal(journal.at(-1), "cartes:C");
+    });
+  }
+  {
+    const { acces, journal } = fausseBase([carteA, carteB], { partagees: [blobDe("commune")] });
+    const r = await purgerCartesExpirees(acces, { aBlanc: true });
+    test("a blanc, la purge compte sans rien effacer", () => {
+      assert.deepEqual(r, {
+        aBlanc: true,
+        cartes: 2,
+        images: { blob: 1, fichiers: 1, partagees: 1, echecs: 0 },
+        reste: false,
+      });
+      assert.ok(!journal.some((l) => /^(blob|fichier|cartes):/.test(l)), journal.join(" "));
+    });
+  }
+  {
+    const { acces, journal } = fausseBase([carteA, carteB, carteC]);
+    const r = await purgerCartesExpirees(acces, { lot: 2 });
+    test("un lot plein annonce qu'il en reste", () => {
+      assert.equal(r.reste, true);
+      assert.ok(journal.includes("lire:2"));
+    });
+  }
+  {
+    const { acces, journal } = fausseBase([], { resistent: [blobDe("a")] });
+    const restees = await effacerImagesDeCarte(acces, carteA);
+    test("la suppression manuelle efface les images et rend celles qui resistent", () => {
+      assert.deepEqual(restees, [blobDe("a")]);
+      assert.ok(journal.includes("fichier:a.jpg"));
+      assert.ok(journal.includes("partage:A"));
+    });
+  }
+}
+
 // --- Rapport ---------------------------------------------------------------
 
 function report() {
@@ -1942,9 +2171,12 @@ function report() {
   console.log(`${passed} vérifications passées.`);
 }
 
-// `checkImages` est la seule partie asynchrone du harnais : on la chaine plutot
-// que d'attendre au niveau du module, ce qui rendrait tout le script asynchrone.
-checkImages().then(report, (err: unknown) => {
-  failures.push(`vérifications d'image\n    ${(err as Error).message}`);
-  report();
-});
+// Les parties asynchrones du harnais — les images, puis la purge — sont
+// chainees plutot qu'attendues au niveau du module, ce qui rendrait tout le
+// script asynchrone.
+checkImages()
+  .then(checkPurge)
+  .then(report, (err: unknown) => {
+    failures.push(`vérifications asynchrones\n    ${(err as Error).message}`);
+    report();
+  });
