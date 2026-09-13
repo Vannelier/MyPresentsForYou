@@ -34,7 +34,8 @@ import {
 } from "@/components/editor/draft";
 import { useDictionnaire } from "@/components/i18n/Dictionnaire";
 import type { Dictionnaire } from "@/lib/i18n";
-import { LOCALES } from "@/lib/i18n/langues";
+import { traduire } from "@/lib/i18n/erreurs";
+import { EN_TETE_LANGUE, LOCALES } from "@/lib/i18n/langues";
 import { remplir } from "@/lib/i18n/remplir";
 import { slugError, slugify } from "@/lib/slug";
 import type { Item, PublicPage, Theme } from "@/lib/types";
@@ -507,7 +508,7 @@ export default function PageEditor(props: Props) {
     try {
       const res = await fetch("/api/extract", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", [EN_TETE_LANGUE]: langue },
         body: JSON.stringify({ url }),
       });
       const data = (await res.json().catch(() => ({}))) as {
@@ -583,7 +584,7 @@ export default function PageEditor(props: Props) {
   async function upload(key: string, file: File | null) {
     if (!file) return;
     patchItem(key, { busy: "upload", imageHint: null });
-    const result = await uploadImage(file, ed.televersement);
+    const result = await uploadImage(file, ed.televersement, langue);
     if (result.ok) {
       patchItem(key, { busy: null, image_url: result.url, imageHint: null });
     } else {
@@ -678,7 +679,7 @@ export default function PageEditor(props: Props) {
     if (name.trim().length > LIMITS.name) return remplir(ed.nomTropLong, { max: LIMITS.name });
     if (mode === "create") {
       const err = slugError(effectiveSlug);
-      if (err) return err;
+      if (err) return traduire(d.erreurs, err);
     }
     if (welcome.trim().length > LIMITS.message) {
       return remplir(ed.messageTropLong, { max: LIMITS.message });
@@ -751,12 +752,12 @@ export default function PageEditor(props: Props) {
         props.mode === "create"
           ? await fetch("/api/pages", {
               method: "POST",
-              headers: { "Content-Type": "application/json" },
+              headers: { "Content-Type": "application/json", [EN_TETE_LANGUE]: langue },
               body: JSON.stringify({ slug: effectiveSlug, ...payload() }),
             })
           : await fetch(`/api/admin/${encodeURIComponent(props.adminToken)}`, {
               method: "PATCH",
-              headers: { "Content-Type": "application/json" },
+              headers: { "Content-Type": "application/json", [EN_TETE_LANGUE]: langue },
               body: JSON.stringify(payload()),
             });
 
@@ -1707,7 +1708,7 @@ function ImageField({
   onChange: (url: string) => void;
   ariaLabel: string;
 }) {
-  const { d } = useDictionnaire();
+  const { langue, d } = useDictionnaire();
   const ed = d.editeur;
   const [busy, setBusy] = useState(false);
   const [hint, setHint] = useState<string | null>(null);
@@ -1716,7 +1717,7 @@ function ImageField({
     if (!file) return;
     setBusy(true);
     setHint(null);
-    const result = await uploadImage(file, ed.televersement);
+    const result = await uploadImage(file, ed.televersement, langue);
     setBusy(false);
     if (result.ok) onChange(result.url);
     else setHint(result.error);

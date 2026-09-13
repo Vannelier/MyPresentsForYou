@@ -1,3 +1,5 @@
+import type { Erreurs } from "./i18n/erreurs";
+import { remplir } from "./i18n/remplir";
 import { ALLOWED_IMAGE_TYPES, LIMITS } from "./limits";
 import { storageAvailable, storeImage } from "./mediaStore";
 import type { Item } from "./types";
@@ -32,13 +34,11 @@ export function isOwnBlobUrl(url: string): boolean {
  */
 export async function mirrorImage(
   url: string,
+  e: Erreurs,
 ): Promise<{ url: string; warning?: string }> {
   if (isOwnBlobUrl(url)) return { url };
   if (!storageAvailable()) {
-    return {
-      url,
-      warning: "Stockage d'images indisponible : l'image reste hebergee par le site d'origine.",
-    };
+    return { url, warning: e.copieStockageIndisponible };
   }
 
   const controller = new AbortController();
@@ -54,23 +54,23 @@ export async function mirrorImage(
       },
     });
     if (!res.ok) {
-      return { url, warning: `Image non recuperable (${res.status}) : elle reste hebergee par le site d'origine.` };
+      return { url, warning: remplir(e.copieNonRecuperable, { statut: res.status }) };
     }
 
     const rawType = (res.headers.get("content-type") ?? "").split(";")[0].trim().toLowerCase();
     const contentType = rawType === "image/jpg" ? "image/jpeg" : rawType;
     if (!(ALLOWED_IMAGE_TYPES as readonly string[]).includes(contentType)) {
-      return { url, warning: "Format d'image non pris en charge : elle reste hebergee par le site d'origine." };
+      return { url, warning: e.copieFormat };
     }
 
     const buffer = await res.arrayBuffer();
     if (buffer.byteLength === 0 || buffer.byteLength > LIMITS.imageBytes) {
-      return { url, warning: "Image trop lourde : elle reste hebergee par le site d'origine." };
+      return { url, warning: e.copieTropLourde };
     }
 
     return { url: await storeImage(buffer, contentType) };
   } catch {
-    return { url, warning: "Copie de l'image impossible : elle reste hebergee par le site d'origine." };
+    return { url, warning: e.copieImpossible };
   } finally {
     clearTimeout(timer);
   }
@@ -78,12 +78,13 @@ export async function mirrorImage(
 
 export async function mirrorItemImages(
   items: Item[],
+  e: Erreurs,
 ): Promise<{ items: Item[]; warnings: ImageWarning[] }> {
   const warnings: ImageWarning[] = [];
   const mirrored = await Promise.all(
     items.map(async (item) => {
       if (!item.image_url) return item;
-      const { url, warning } = await mirrorImage(item.image_url);
+      const { url, warning } = await mirrorImage(item.image_url, e);
       if (warning) warnings.push({ scope: "item", itemId: item.id, message: `${item.label} — ${warning}` });
       return { ...item, image_url: url };
     }),
@@ -93,11 +94,12 @@ export async function mirrorItemImages(
 
 export async function mirrorCover(
   cover: string | null,
+  e: Erreurs,
 ): Promise<{ cover_image_url: string | null; warnings: ImageWarning[] }> {
   if (!cover) return { cover_image_url: null, warnings: [] };
-  const { url, warning } = await mirrorImage(cover);
+  const { url, warning } = await mirrorImage(cover, e);
   return {
     cover_image_url: url,
-    warnings: warning ? [{ scope: "cover", message: `Image d'apercu — ${warning}` }] : [],
+    warnings: warning ? [{ scope: "cover", message: `${e.imageApercu} — ${warning}` }] : [],
   };
 }

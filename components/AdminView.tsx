@@ -8,7 +8,7 @@ import { GiftCard } from "@/components/GiftView";
 import PageEditor, { type EditorInitial } from "@/components/editor/PageEditor";
 import { useDictionnaire } from "@/components/i18n/Dictionnaire";
 import { cheminVers } from "@/lib/i18n/chemins";
-import { LOCALES } from "@/lib/i18n/langues";
+import { EN_TETE_LANGUE, LOCALES } from "@/lib/i18n/langues";
 import { remplir } from "@/lib/i18n/remplir";
 import { occasionById } from "@/lib/occasions";
 import type { Item, Theme } from "@/lib/types";
@@ -79,7 +79,10 @@ export default function AdminView({ page, token }: { page: AdminSnapshot; token:
     setDeleting(true);
     setError(null);
     try {
-      const res = await fetch(`/api/admin/${encodeURIComponent(token)}`, { method: "DELETE" });
+      const res = await fetch(`/api/admin/${encodeURIComponent(token)}`, {
+        method: "DELETE",
+        headers: { [EN_TETE_LANGUE]: langue },
+      });
       if (!res.ok) {
         const data = (await res.json().catch(() => ({}))) as { error?: string };
         setError(data.error ?? t.suppressionEchouee);

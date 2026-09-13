@@ -1,6 +1,7 @@
 import { findBySlug, sql } from "@/lib/db";
-import { fail, handleError, json, readJson, tropDeRequetes } from "@/lib/http";
+import { erreursDe, fail, handleError, json, readJson, tropDeRequetes } from "@/lib/http";
 import { QUOTAS } from "@/lib/rateLimit";
+import { remplir } from "@/lib/i18n/remplir";
 import { LIMITS } from "@/lib/limits";
 import { REPLY_WINDOW_MS, isExpired, isLocked, replyWindowOpen } from "@/lib/types";
 
@@ -18,6 +19,7 @@ type Params = { params: Promise<{ slug: string }> };
  * suit le choix — le délai réel entre les deux se compte en secondes.
  */
 export async function POST(req: Request, { params }: Params) {
+  const e = erreursDe(req);
   try {
     const trop = tropDeRequetes(req, QUOTAS.reponse, "mot");
     if (trop) return trop;
@@ -25,23 +27,23 @@ export async function POST(req: Request, { params }: Params) {
     const { slug } = await params;
     const body = (await readJson(req)) as { reply?: unknown };
     const reply = typeof body?.reply === "string" ? body.reply.trim() : "";
-    if (!reply) return fail("Le mot est vide.", 400, "reply");
+    if (!reply) return fail(e.motVide, 400, "reply");
     if (reply.length > LIMITS.reply) {
-      return fail(`Le mot ne peut pas dépasser ${LIMITS.reply} caractères.`, 400, "reply");
+      return fail(remplir(e.motTropLong, { max: LIMITS.reply }), 400, "reply");
     }
 
     const page = await findBySlug(slug);
-    if (!page) return fail("Cette page n'existe pas.", 404);
-    if (isExpired(page)) return fail("Ce lien a expiré.", 409);
-    if (!isLocked(page)) return fail("Le choix n'a pas encore été confirmé.", 409);
+    if (!page) return fail(e.pageInexistante, 404);
+    if (isExpired(page)) return fail(e.lienExpire, 409);
+    if (!isLocked(page)) return fail(e.choixNonConfirme, 409);
     if (page.theme.reply !== true) {
-      return fail("Cette carte n'attend pas de mot.", 409);
+      return fail(e.carteSansMot, 409);
     }
     if (page.reply_message.trim()) {
-      return fail("Un mot a déjà été laissé sur cette carte.", 409);
+      return fail(e.motDejaLaisse, 409);
     }
     if (!replyWindowOpen(page)) {
-      return fail("Le délai pour laisser un mot est passé.", 409);
+      return fail(e.delaiMotPasse, 409);
     }
 
     // Les gardes sont répétés dans le WHERE : entre la lecture et l'écriture, un
@@ -55,11 +57,11 @@ export async function POST(req: Request, { params }: Params) {
          AND reply_message = ''
     `;
     if (rowCount === 0) {
-      return fail("Un mot a déjà été laissé sur cette carte.", 409);
+      return fail(e.motDejaLaisse, 409);
     }
 
     return json({ ok: true });
   } catch (err) {
-    return handleError(err);
+    return handleError(err, req);
   }
 }

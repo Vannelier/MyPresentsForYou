@@ -7,6 +7,7 @@ import GiftEffect from "@/components/GiftEffect";
 import GiftMotif from "@/components/GiftMotif";
 import GiftZoom from "@/components/GiftZoom";
 import { useDictionnaire } from "@/components/i18n/Dictionnaire";
+import { EN_TETE_LANGUE } from "@/lib/i18n/langues";
 import { remplir } from "@/lib/i18n/remplir";
 import {
   effectById,
@@ -111,7 +112,7 @@ export default function GiftView({
   lienSortie,
   pleineFenetre = false,
 }: Props) {
-  const { d } = useDictionnaire();
+  const { langue, d } = useDictionnaire();
   const mots = d.carte;
   const alreadyChosen = Boolean(page.chosen_at);
   const [phase, setPhase] = useState<Phase>(alreadyChosen ? "locked" : "choosing");
@@ -418,7 +419,7 @@ export default function GiftView({
     try {
       const res = await fetch(`/api/pages/${encodeURIComponent(page.slug)}/choose`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", [EN_TETE_LANGUE]: langue },
         body: JSON.stringify({ itemId: selectedId }),
       });
       const data = (await res.json().catch(() => ({}))) as { error?: string };
@@ -452,7 +453,7 @@ export default function GiftView({
     try {
       const res = await fetch(`/api/pages/${encodeURIComponent(page.slug)}/reply`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", [EN_TETE_LANGUE]: langue },
         body: JSON.stringify({ reply: mot }),
       });
       const data = (await res.json().catch(() => ({}))) as { error?: string };

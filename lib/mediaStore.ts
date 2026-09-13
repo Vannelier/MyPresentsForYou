@@ -54,10 +54,9 @@ export function storageAvailable(): boolean {
   return blobConfigured() || !runningOnVercel();
 }
 
-export function storageUnavailableMessage(): string {
-  return runningOnVercel()
-    ? "Le stockage d'images n'est pas configuré sur ce déploiement (BLOB_READ_WRITE_TOKEN). Colle plutôt une URL d'image."
-    : "Le stockage d'images n'est pas disponible. Colle plutôt une URL d'image.";
+/** La cle du message, que la route traduit dans la langue de la requete. */
+export function cleStockageIndisponible(): "stockageNonConfigure" | "stockageIndisponible" {
+  return runningOnVercel() ? "stockageNonConfigure" : "stockageIndisponible";
 }
 
 function extensionFor(contentType: string): string {

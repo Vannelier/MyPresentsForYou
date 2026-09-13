@@ -10,6 +10,7 @@ import { canonicaliseUrl, cleanTitle, parseHtml } from "../lib/extract";
 import { sslFor, toQuery } from "../lib/db";
 import { exemple } from "../lib/exemple";
 import { dictionnaire } from "../lib/i18n";
+import { traduire } from "../lib/i18n/erreurs";
 // @ts-expect-error — module JavaScript simple, volontairement hors du bundle Next.
 import { sslFor as bootSslFor, mediaDir as bootMediaDir } from "./boot.mjs";
 import {
@@ -247,6 +248,105 @@ const validBody = {
   theme: { layout: "list" },
   items: validItems,
 };
+
+test("chaque erreur levee se traduit sans marque restee, dans chaque langue", () => {
+  /*
+   * Une erreur voyage par sa cle et ses valeurs : une valeur renommee d'un cote
+   * et pas de l'autre laisserait « {max} » a l'ecran. Les erreurs sont levees
+   * par les vrais chemins plutot que listees a la main.
+   */
+  const erreurs = [slugError("ab"), slugError("Bonjour"), slugError("admin")];
+  for (const corps of [
+    { ...validBody, name: "x".repeat(LIMITS.name + 1) },
+    { ...validBody, items: Array.from({ length: LIMITS.itemsMax + 1 }, (_, i) => ({ label: `c${i}` })) },
+    { ...validBody, items: [] },
+    { ...validBody, slug: "ab" },
+    { ...validBody, reveal_at: "le 25 decembre" },
+  ]) {
+    try {
+      validateCreate(corps);
+      assert.fail(`aucune erreur pour ${JSON.stringify(corps).slice(0, 60)}`);
+    } catch (err) {
+      assert.ok(err instanceof ValidationError, String(err));
+      erreurs.push(err.erreur);
+    }
+  }
+  for (const langue of LANGUES) {
+    const e = dictionnaire(langue).erreurs;
+    for (const erreur of erreurs) {
+      assert.ok(erreur);
+      const texte = traduire(e, erreur);
+      assert.ok(texte.trim(), `${langue} : ${erreur.cle} vide`);
+      assert.doesNotMatch(texte, /\{\w+\}/, `${langue} : ${erreur.cle} garde une marque`);
+    }
+  }
+});
+
+test("les routes remplissent chaque marque de leurs messages", () => {
+  // Le pendant du test au-dessus pour les messages que les routes composent
+  // elles-memes : chaque marque du texte a sa valeur, et rien de plus.
+  const e: Record<string, string> = dictionnaire("fr").erreurs;
+  let vus = 0;
+  for (const f of ["app/api/pages/route.ts", "app/api/pages/[slug]/reply/route.ts", "app/api/upload/route.ts", "lib/blob.ts"]) {
+    for (const [, cle, objet] of lire(f).matchAll(/remplir\(e\.(\w+), \{([^}]*)\}\)/g)) {
+      assert.ok(e[cle], `${f} : cle inconnue ${cle}`);
+      const donnees = objet.split(",").map((p) => p.split(":")[0].trim()).filter(Boolean);
+      const marques = [...e[cle].matchAll(/\{(\w+)\}/g)].map((m) => m[1]);
+      assert.deepEqual(marques.sort(), donnees.sort(), `${f} : ${cle}`);
+      vus++;
+    }
+  }
+  assert.equal(vus, 4, "quatre messages a marques attendus");
+});
+
+test("les routes ne renvoient aucun message en dur", () => {
+  /*
+   * Tout message part du dictionnaire, dans la langue de la requete. Seule la
+   * purge garde le sien : elle ne repond qu'a la tache planifiee.
+   */
+  const routes: string[] = [];
+  const parcourir = (dossier: string) => {
+    for (const d of readdirSync(dossier, { withFileTypes: true })) {
+      const chemin = `${dossier}/${d.name}`;
+      if (d.isDirectory()) parcourir(chemin);
+      else if (d.name === "route.ts") routes.push(chemin);
+    }
+  };
+  parcourir("app/api");
+  assert.ok(routes.length >= 7, `routes trouvees : ${routes.length}`);
+  for (const f of [...routes, "lib/http.ts"]) {
+    if (f === "app/api/purge/route.ts") continue;
+    const source = lire(f);
+    assert.doesNotMatch(source, /fail\(\s*["'`]/, `${f} : message en dur`);
+    assert.doesNotMatch(source, /error:\s*["'`]/, `${f} : message en dur`);
+  }
+});
+
+test("chaque appel du navigateur aux routes annonce sa langue", () => {
+  /*
+   * Sans l'en-tete, la route repond en francais : sur une carte anglaise,
+   * l'erreur tomberait dans la mauvaise langue sans que rien ne casse. Tous
+   * les composants sont parcourus, pour qu'un nouvel appel n'y echappe pas.
+   */
+  let appels = 0;
+  const parcourir = (dossier: string) => {
+    for (const d of readdirSync(dossier, { withFileTypes: true })) {
+      const chemin = `${dossier}/${d.name}`;
+      if (d.isDirectory()) parcourir(chemin);
+      else if (/\.tsx?$/.test(d.name)) {
+        const source = lire(chemin);
+        for (const m of source.matchAll(/fetch\(\s*[`"]\/api\//g)) {
+          const suivant = source.indexOf("fetch(", m.index + 1);
+          const fin = Math.min(suivant === -1 ? source.length : suivant, m.index + 400);
+          assert.ok(source.slice(m.index, fin).includes("[EN_TETE_LANGUE]: langue"), `${chemin} : appel sans langue`);
+          appels++;
+        }
+      }
+    }
+  };
+  parcourir("components");
+  assert.ok(appels >= 7, `appels trouves : ${appels}`);
+});
 
 test("validateCreate accepte un corps correct et normalise", () => {
   const out = validateCreate(validBody);

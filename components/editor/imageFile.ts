@@ -1,5 +1,6 @@
 "use client";
 
+import { EN_TETE_LANGUE, type Langue } from "@/lib/i18n/langues";
 import { ALLOWED_IMAGE_TYPES, LIMITS } from "@/lib/limits";
 
 export const ACCEPTED_IMAGE_TYPES: readonly string[] = ALLOWED_IMAGE_TYPES;
@@ -83,8 +84,9 @@ export function imageUrlFromClipboard(data: DataTransfer | null): string | null 
 export type UploadResult = { ok: true; url: string } | { ok: false; error: string };
 
 /*
- * Les messages viennent du dictionnaire de l'appelant : ce module ne connait pas
- * la langue de la page, et n'a pas a la connaitre.
+ * Les messages et la langue viennent de l'appelant : ce module n'a pas acces au
+ * contexte React. La langue part dans l'en-tete, pour que la route reponde dans
+ * la meme.
  */
 export type MessagesTeleversement = {
   formats: string;
@@ -93,7 +95,11 @@ export type MessagesTeleversement = {
   echecConnexion: string;
 };
 
-export async function uploadImage(file: File, messages: MessagesTeleversement): Promise<UploadResult> {
+export async function uploadImage(
+  file: File,
+  messages: MessagesTeleversement,
+  langue: Langue,
+): Promise<UploadResult> {
   if (!ACCEPTED_IMAGE_TYPES.includes(file.type)) {
     return { ok: false, error: messages.formats };
   }
@@ -106,7 +112,11 @@ export async function uploadImage(file: File, messages: MessagesTeleversement): 
   body.append("file", prepared);
 
   try {
-    const res = await fetch("/api/upload", { method: "POST", body });
+    const res = await fetch("/api/upload", {
+      method: "POST",
+      body,
+      headers: { [EN_TETE_LANGUE]: langue },
+    });
     const data = (await res.json().catch(() => ({}))) as { url?: string; error?: string };
     if (!res.ok || !data.url) {
       return { ok: false, error: data.error ?? messages.echec };

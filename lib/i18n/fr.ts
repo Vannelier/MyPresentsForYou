@@ -414,6 +414,68 @@ export const fr = {
     noisette: "Noisette",
   },
 
+  // Les messages des routes : le serveur les rend dans la langue que le client
+  // annonce par l'en-tete `x-langue` (lib/http.ts).
+  erreurs: {
+    corpsInvalide: "Corps de requête invalide.",
+    corpsIllisible: "Corps de requête illisible : JSON attendu.",
+    champObligatoire: "Ce champ est obligatoire.",
+    champTexte: "Ce champ doit être du texte.",
+    champTropLong: "Ce champ ne peut pas dépasser {max} caractères.",
+    urlInvalide: "URL invalide.",
+    urlProtocole: "L'URL doit commencer par http:// ou https://.",
+    dateInvalide: "Date invalide.",
+    listeInvalide: "La liste de cadeaux est invalide.",
+    auMoinsUnCadeau: "Il faut au moins un cadeau.",
+    tropDeCadeaux: "Pas plus de {max} cadeaux.",
+    aucuneModification: "Aucune modification à enregistrer.",
+    slugLongueur: "L'adresse doit faire entre {min} et {max} caractères.",
+    slugFormat:
+      "L'adresse ne peut contenir que des lettres minuscules, des chiffres et des tirets, sans tiret au début ni à la fin.",
+    slugReservee: "Cette adresse est réservée, choisis-en une autre.",
+    introuvable: "Introuvable.",
+    baseNonConfiguree: "Base de données non configurée sur ce déploiement.",
+    inattendue: "Une erreur inattendue est survenue.",
+    tropDeRequetes:
+      "Trop de requêtes en peu de temps. Reprends dans quelques minutes — c'est une protection contre les abus, pas contre toi.",
+    revelationTardive:
+      "La date de révélation doit tomber avant l'expiration de la page, dans {jours} jours.",
+    nomTropPris: "Trop de cartes portent déjà ce nom. Change le nom de la carte.",
+    adresseVientDetrePrise: "Réessaie : une autre carte vient de prendre cette adresse.",
+    aucunCadeauChoisi: "Aucun cadeau sélectionné.",
+    pageInexistante: "Cette page n'existe pas.",
+    cadeauExpire: "Ce cadeau n'est plus disponible : le lien a expiré.",
+    choixDejaFait: "Un choix a déjà été enregistré pour cette page.",
+    carteScellee: "Cette carte n'est pas encore ouverte.",
+    cadeauHorsPage: "Ce cadeau ne fait pas partie de la page.",
+    motVide: "Le mot est vide.",
+    motTropLong: "Le mot ne peut pas dépasser {max} caractères.",
+    lienExpire: "Ce lien a expiré.",
+    choixNonConfirme: "Le choix n'a pas encore été confirmé.",
+    carteSansMot: "Cette carte n'attend pas de mot.",
+    motDejaLaisse: "Un mot a déjà été laissé sur cette carte.",
+    delaiMotPasse: "Le délai pour laisser un mot est passé.",
+    choixFaitVerrou: "Le choix a été fait : la page n'est plus modifiable.",
+    pageExpireeVerrou: "La page a expiré : elle n'est plus modifiable.",
+    choixVientDetreFait: "Le choix vient d'être fait : la page n'est plus modifiable.",
+    stockageNonConfigure:
+      "Le stockage d'images n'est pas configuré sur ce déploiement (BLOB_READ_WRITE_TOKEN). Colle plutôt une URL d'image.",
+    stockageIndisponible: "Le stockage d'images n'est pas disponible. Colle plutôt une URL d'image.",
+    aucunFichier: "Aucun fichier reçu.",
+    formatsAcceptes: "Formats acceptés : JPEG, PNG ou WebP.",
+    fichierVide: "Le fichier est vide.",
+    imageTropLourde: "L'image ne doit pas dépasser {mo} Mo.",
+    // Avertissements de recopie : l'image reste a son adresse d'origine, rien
+    // n'est refuse.
+    imageApercu: "Image d'aperçu",
+    copieStockageIndisponible:
+      "Stockage d'images indisponible : l'image reste hébergée par le site d'origine.",
+    copieNonRecuperable: "Image non récupérable ({statut}) : elle reste hébergée par le site d'origine.",
+    copieFormat: "Format d'image non pris en charge : elle reste hébergée par le site d'origine.",
+    copieTropLourde: "Image trop lourde : elle reste hébergée par le site d'origine.",
+    copieImpossible: "Copie de l'image impossible : elle reste hébergée par le site d'origine.",
+  },
+
   impression: {
     titreMeta: "Carte à imprimer — MyPresentsForYou",
     cta: "Scanne pour ouvrir ta carte",

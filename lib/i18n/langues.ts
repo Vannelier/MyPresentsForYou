@@ -13,6 +13,13 @@ export const LANGUES_ACTIVES: readonly Langue[] = ["fr"];
 /** La langue d'une carte creee avant le multilingue, ou dont l'identifiant est inconnu. */
 export const LANGUE_PAR_DEFAUT: Langue = "fr";
 
+/*
+ * L'en-tete par lequel le navigateur dit aux routes d'API la langue de la page
+ * ou il se trouve. Une route d'API n'a pas d'adresse traduite pour la porter, et
+ * un cookie ferait de la langue un etat garde, alors qu'elle suit l'adresse.
+ */
+export const EN_TETE_LANGUE = "x-langue";
+
 export const LOCALES: Record<Langue, { intl: string; og: string }> = {
   fr: { intl: "fr-BE", og: "fr_BE" },
   en: { intl: "en-GB", og: "en_GB" },

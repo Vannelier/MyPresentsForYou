@@ -1,6 +1,6 @@
 import { findByAdminToken, rowToPage, sql } from "@/lib/db";
 import { mirrorCover, mirrorItemImages, type ImageWarning } from "@/lib/blob";
-import { fail, handleError, json, notFoundJson, readJson, tropDeRequetes } from "@/lib/http";
+import { erreursDe, fail, handleError, json, notFoundJson, readJson, tropDeRequetes } from "@/lib/http";
 import { accesReel, effacerImagesDeCarte } from "@/lib/purge";
 import { QUOTAS } from "@/lib/rateLimit";
 import { isExpired, isLocked } from "@/lib/types";
@@ -12,6 +12,7 @@ export const maxDuration = 60;
 type Params = { params: Promise<{ token: string }> };
 
 export async function PATCH(req: Request, { params }: Params) {
+  const e = erreursDe(req);
   try {
     // Le jeton fait trente-deux octets aleatoires : il n'est pas devinable. Le
     // quota ne protege donc pas le secret, il empeche de marteler la base avec
@@ -21,13 +22,13 @@ export async function PATCH(req: Request, { params }: Params) {
 
     const { token } = await params;
     const page = await findByAdminToken(token);
-    if (!page) return notFoundJson();
+    if (!page) return notFoundJson(req);
 
     if (isLocked(page)) {
-      return fail("Le choix a été fait : la page n'est plus modifiable.", 409);
+      return fail(e.choixFaitVerrou, 409);
     }
     if (isExpired(page)) {
-      return fail("La page a expiré : elle n'est plus modifiable.", 409);
+      return fail(e.pageExpireeVerrou, 409);
     }
 
     const patch = validatePatch(await readJson(req));
@@ -35,21 +36,21 @@ export async function PATCH(req: Request, { params }: Params) {
 
     let items = page.items;
     if (patch.items) {
-      const mirrored = await mirrorItemImages(patch.items);
+      const mirrored = await mirrorItemImages(patch.items, e);
       items = mirrored.items;
       warnings.push(...mirrored.warnings);
     }
 
     let cover = page.cover_image_url;
     if ("cover_image_url" in patch) {
-      const mirrored = await mirrorCover(patch.cover_image_url ?? null);
+      const mirrored = await mirrorCover(patch.cover_image_url ?? null, e);
       cover = mirrored.cover_image_url;
       warnings.push(...mirrored.warnings);
     }
 
     let header = page.header_image_url;
     if ("header_image_url" in patch) {
-      const mirrored = await mirrorCover(patch.header_image_url ?? null);
+      const mirrored = await mirrorCover(patch.header_image_url ?? null, e);
       header = mirrored.cover_image_url;
       warnings.push(...mirrored.warnings);
     }
@@ -94,7 +95,7 @@ export async function PATCH(req: Request, { params }: Params) {
       RETURNING *
     `;
     if (rows.length === 0) {
-      return fail("Le choix vient d'être fait : la page n'est plus modifiable.", 409);
+      return fail(e.choixVientDetreFait, 409);
     }
 
     const updated = rowToPage(rows[0]);
@@ -122,7 +123,7 @@ export async function PATCH(req: Request, { params }: Params) {
       },
     });
   } catch (err) {
-    return handleError(err);
+    return handleError(err, req);
   }
 }
 
@@ -133,7 +134,7 @@ export async function DELETE(req: Request, { params }: Params) {
 
     const { token } = await params;
     const page = await findByAdminToken(token);
-    if (!page) return notFoundJson();
+    if (!page) return notFoundJson(req);
 
     /*
      * Les images partent avec la carte, sauf celles qu'une autre carte utilise.
@@ -147,9 +148,9 @@ export async function DELETE(req: Request, { params }: Params) {
     }
 
     const { rowCount } = await sql`DELETE FROM gift_pages WHERE admin_token = ${token}`;
-    if (rowCount === 0) return notFoundJson();
+    if (rowCount === 0) return notFoundJson(req);
     return json({ ok: true });
   } catch (err) {
-    return handleError(err);
+    return handleError(err, req);
   }
 }
