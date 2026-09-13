@@ -2117,6 +2117,15 @@ test("le routage : langues, anciennes adresses, cartes", () => {
   assert.deepEqual(r("/-mauvais-"), { type: "reecriture", vers: "/fr/introuvable" });
 });
 
+test("la langue de la carte : connue, elle est gardee ; inconnue ou absente, le francais", () => {
+  assert.equal(validateTheme({ langue: "de" }).langue, "de");
+  assert.equal(validateTheme({ langue: "xx" }).langue, "fr");
+  assert.equal(validateTheme({}).langue, "fr");
+  assert.equal(validateTheme({ langue: { toString: () => "de" } }).langue, "fr");
+  // Relue en base : sans cela, toute carte redeviendrait francaise a l'affichage.
+  assert.match(lire("lib/db.ts"), /\blangue: raw\.langue\b/);
+});
+
 // --- Purge des cartes expirees ---------------------------------------------
 
 const BLOB_TEST = "https://abc.public.blob.vercel-storage.com/gift/1-x.jpg";

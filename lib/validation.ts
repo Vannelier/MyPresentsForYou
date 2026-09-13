@@ -10,6 +10,7 @@ import {
   isOpeningId,
   occasionById,
 } from "./occasions";
+import { langueOuDefaut } from "./i18n/langues";
 import { PALETTES } from "./palettes";
 import { slugError } from "./slug";
 
@@ -116,6 +117,12 @@ export function validateTheme(value: unknown): Theme {
   // Laisser un mot n'a pas de sens quand on scanne le QR devant la personne :
   // c'est donc au donneur de l'activer, jamais actif par defaut.
   const reply = o.reply === true;
+  /*
+   * La langue de la carte, un identifiant comme l'occasion. Toute langue connue
+   * est acceptee, pas seulement les actives : une carte composee en allemand
+   * doit le rester, meme si l'allemand etait un jour desactive.
+   */
+  const langue = langueOuDefaut(o.langue);
 
   return {
     layout,
@@ -126,6 +133,7 @@ export function validateTheme(value: unknown): Theme {
     opening,
     effect,
     reply,
+    langue,
   };
 }
 
