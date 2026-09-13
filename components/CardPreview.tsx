@@ -8,7 +8,6 @@ import { useDictionnaire } from "@/components/i18n/Dictionnaire";
 import { remplir } from "@/lib/i18n/remplir";
 import { fontById, occasionById } from "@/lib/occasions";
 import { paletteStyle } from "@/lib/palettes";
-import { CTA_DEFAUT } from "@/lib/printTexts";
 import type { Theme } from "@/lib/types";
 
 /**
@@ -116,7 +115,7 @@ export default function CardPreview({
                 <div className="feuille__qr-vide" />
               )}
             </div>
-            <p className="feuille__cta">{CTA_DEFAUT}</p>
+            <p className="feuille__cta">{d.impression.cta}</p>
             {signature.trim() && <p className="feuille__signature">{signature}</p>}
           </div>
 

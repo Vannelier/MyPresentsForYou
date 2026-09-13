@@ -9,10 +9,14 @@ import { occasionById } from "@/lib/occasions";
 
 export const dynamic = "force-dynamic";
 
-export const metadata: Metadata = {
-  title: "Carte à imprimer — MyPresentsForYou",
-  robots: { index: false, follow: false, nocache: true },
-};
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { token } = await params;
+  const page = await lireCarteAdmin(token).catch(() => null);
+  return {
+    title: dictionnaire(langueOuDefaut(page?.theme.langue)).impression.titreMeta,
+    robots: { index: false, follow: false, nocache: true },
+  };
+}
 
 type Props = { params: Promise<{ token: string }> };
 

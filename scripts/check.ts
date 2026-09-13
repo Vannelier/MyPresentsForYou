@@ -1261,11 +1261,12 @@ test("les identifiants de disposition et de motif sont uniques", () => {
 });
 
 test("chaque entree porte un nom, et chaque motif un decor connu", () => {
-  for (const l of PRINT_LAYOUTS) assert.ok(l.nom.trim().length > 0, l.id);
-  for (const m of PRINT_MOTIFS) {
-    assert.ok(m.nom.trim().length > 0, m.id);
-    assert.ok(DECORS.includes(m.id), `motif inconnu : ${m.id}`);
+  for (const langue of LANGUES) {
+    const im = dictionnaire(langue).impression;
+    for (const l of PRINT_LAYOUTS) assert.ok(im.dispositions[l.id]?.trim(), `${langue} : ${l.id}`);
+    for (const m of PRINT_MOTIFS) assert.ok(im.pictogrammes[m.id]?.trim(), `${langue} : ${m.id}`);
   }
+  for (const m of PRINT_MOTIFS) assert.ok(DECORS.includes(m.id), `motif inconnu : ${m.id}`);
 });
 
 test("GiftMotif sait dessiner chaque decor du catalogue", () => {
@@ -1565,7 +1566,8 @@ async function checkImages() {
     }
     for (const m of PRINT_MOTIFS) {
       if (m.id === "none") continue;
-      assert.ok(readme.includes(m.nom.toLowerCase()), `decor absent du README : ${m.nom}`);
+      const nom = dictionnaire("fr").impression.pictogrammes[m.id];
+      assert.ok(readme.includes(nom.toLowerCase()), `decor absent du README : ${nom}`);
     }
   });
 

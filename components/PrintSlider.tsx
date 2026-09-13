@@ -1,5 +1,7 @@
 "use client";
 
+import { useDictionnaire } from "@/components/i18n/Dictionnaire";
+
 /**
  * Un curseur simple, avec son intitulé et sa valeur lisible.
  *
@@ -35,6 +37,7 @@ export default function PrintSlider({
   onChange: (v: number) => void;
 }) {
   const ecarte = Math.abs(valeur - defaut) > pas / 2;
+  const { d } = useDictionnaire();
 
   return (
     <div className="reglage">
@@ -49,7 +52,7 @@ export default function PrintSlider({
         <span className="reglage__droite">
           {ecarte && (
             <button type="button" className="reglage__retour" onClick={() => onChange(defaut)}>
-              Réinitialiser
+              {d.impression.reinitialiser}
             </button>
           )}
           <span className="reglage__valeur">{format(valeur)}</span>

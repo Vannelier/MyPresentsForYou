@@ -414,6 +414,58 @@ export const fr = {
     noisette: "Noisette",
   },
 
+  impression: {
+    titreMeta: "Carte à imprimer — MyPresentsForYou",
+    cta: "Scanne pour ouvrir ta carte",
+    retour: "← Retour",
+    imprimer: "Imprimer",
+    pour: "Pour {prenom}",
+    legende:
+      "Feuille A4, pliée en deux. Rabats la moitié gauche derrière la droite : la couverture se retrouve devant, le QR code au dos.",
+    dispositionAria: "Disposition de la carte",
+    dispositions: { centre: "Classique", affiche: "Affiche", sobre: "Sobre" },
+    pictogrammes: {
+      none: "Aucun",
+      coeurs: "Cœurs",
+      etoiles: "Étoiles",
+      flocons: "Flocons",
+      feuilles: "Feuilles",
+      confetti: "Confettis",
+      guirlande: "Guirlande",
+      pattes: "Pattes",
+      pieds: "Pas de bébé",
+      bougies: "Bougies",
+      cadeaux: "Cadeaux",
+      alliances: "Alliances",
+    },
+    pictogrammePrecedent: "Pictogramme précédent",
+    pictogrammeSuivant: "Pictogramme suivant",
+    couleur: "Couleur de la carte",
+    couleurTheme: "Couleur du thème",
+    teinteDegres: "Teinte {n} degrés",
+    couleurThemePage: "Couleur du thème de la page-cadeau",
+    tailleDecor: "Taille du décor",
+    contrasteDecor: "Contraste du décor",
+    // Le nombre est formate par Intl dans la locale de la langue ; seule
+    // l'unite, et sa place, vivent ici.
+    formatTaille: "×{v}",
+    formatContraste: "{v} %",
+    reinitialiser: "Réinitialiser",
+    masquerMots: "Masquer les mots",
+    modifierMots: "Modifier les mots de la carte",
+    motsAide:
+      "Ils reprennent ceux de la page-cadeau, et s'en détachent dès que tu y touches. La page, elle, ne bouge pas. Gardés sur cet appareil, jamais envoyés.",
+    destinataire: "Destinataire",
+    motOuverture: "Mot d'ouverture",
+    titre: "Titre",
+    signature: "Signature",
+    ligneQr: "Ligne sous le QR code",
+    exempleDestinataire: "Camille",
+    exempleIntro: "Joyeux anniversaire",
+    exempleSignature: "Avec toute mon affection, Sacha",
+    reprendre: "Reprendre les mots de la page",
+  },
+
   editeur: {
     // Par etape, sous la cle que porte STEPS dans l'editeur.
     etapes: {

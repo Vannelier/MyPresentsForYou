@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import GiftMotif from "@/components/GiftMotif";
+import { useDictionnaire } from "@/components/i18n/Dictionnaire";
 import type { MotifKind } from "@/lib/occasions";
 import { PRINT_MOTIFS, printMotifIndex } from "@/lib/printModels";
 
@@ -29,6 +30,7 @@ export default function PrintCarousel({
   onStep: (pas: number) => void;
 }) {
   const index = printMotifIndex(motif);
+  const { d } = useDictionnaire();
 
   /*
    * Les fleches du clavier font la meme chose que les boutons — sauf quand on
@@ -52,7 +54,7 @@ export default function PrintCarousel({
       <button
         type="button"
         className="carrousel__fleche"
-        aria-label="Pictogramme précédent"
+        aria-label={d.impression.pictogrammePrecedent}
         onClick={() => onStep(-1)}
       >
         ←
@@ -73,7 +75,7 @@ export default function PrintCarousel({
           <GiftMotif kind={PRINT_MOTIFS[index].id} echelle={0.3} />
         </span>
         <span className="carrousel__texte">
-          {PRINT_MOTIFS[index].nom}
+          {d.impression.pictogrammes[PRINT_MOTIFS[index].id]}
           <span className="carrousel__rang">
             {index + 1} / {PRINT_MOTIFS.length}
           </span>
@@ -83,7 +85,7 @@ export default function PrintCarousel({
       <button
         type="button"
         className="carrousel__fleche"
-        aria-label="Pictogramme suivant"
+        aria-label={d.impression.pictogrammeSuivant}
         onClick={() => onStep(1)}
       >
         →

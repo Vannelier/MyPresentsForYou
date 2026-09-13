@@ -18,9 +18,10 @@ import type { MotifKind } from "./occasions";
  * mieux, maintenant qu'on en règle la taille et le contraste.
  *
  * Comme les palettes et les occasions, seul l'identifiant compte : le rendu vit
- * dans `app/print.css`. Ajouter une disposition coûte une ligne ici et un bloc
- * de style ; ajouter un motif ne coûte qu'une ligne, `GiftMotif` sachant déjà
- * les dessiner tous.
+ * dans `app/print.css`, et les noms dans les dictionnaires (`lib/i18n`).
+ * Ajouter une disposition coûte une ligne ici, un nom par langue et un bloc de
+ * style ; ajouter un motif ne coûte qu'une ligne et ses noms, `GiftMotif`
+ * sachant déjà les dessiner tous.
  *
  * Aucun import Node : ce module part dans le bundle navigateur.
  */
@@ -28,9 +29,9 @@ import type { MotifKind } from "./occasions";
 /* --- La disposition : où tombent le titre, le mot et le QR ----------------- */
 
 export const PRINT_LAYOUTS = [
-  { id: "centre", nom: "Classique" },
-  { id: "affiche", nom: "Affiche" },
-  { id: "sobre", nom: "Sobre" },
+  { id: "centre" },
+  { id: "affiche" },
+  { id: "sobre" },
 ] as const;
 
 export type PrintLayout = (typeof PRINT_LAYOUTS)[number]["id"];
@@ -50,19 +51,19 @@ export function printLayoutById(id: string | undefined | null): (typeof PRINT_LA
  * « Aucun » ouvre la marche : c'est le défaut, et c'est ce qu'on veut voir en
  * premier — une carte nue avant d'y semer quoi que ce soit.
  */
-export const PRINT_MOTIFS: { id: MotifKind; nom: string }[] = [
-  { id: "none", nom: "Aucun" },
-  { id: "coeurs", nom: "Cœurs" },
-  { id: "etoiles", nom: "Étoiles" },
-  { id: "flocons", nom: "Flocons" },
-  { id: "feuilles", nom: "Feuilles" },
-  { id: "confetti", nom: "Confettis" },
-  { id: "guirlande", nom: "Guirlande" },
-  { id: "pattes", nom: "Pattes" },
-  { id: "pieds", nom: "Pas de bébé" },
-  { id: "bougies", nom: "Bougies" },
-  { id: "cadeaux", nom: "Cadeaux" },
-  { id: "alliances", nom: "Alliances" },
+export const PRINT_MOTIFS: { id: MotifKind }[] = [
+  { id: "none" },
+  { id: "coeurs" },
+  { id: "etoiles" },
+  { id: "flocons" },
+  { id: "feuilles" },
+  { id: "confetti" },
+  { id: "guirlande" },
+  { id: "pattes" },
+  { id: "pieds" },
+  { id: "bougies" },
+  { id: "cadeaux" },
+  { id: "alliances" },
 ];
 
 export const DEFAULT_PRINT_MOTIF: MotifKind = PRINT_MOTIFS[0].id;

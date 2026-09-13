@@ -58,8 +58,6 @@ export type PrintTexts = {
   cta: string;
 };
 
-export const CTA_DEFAUT = "Scanne pour ouvrir ta carte";
-
 /** Bornes de saisie. Au-delà, le texte déborde de la feuille au lieu de rétrécir. */
 export const PRINT_LIMITS = {
   to: 60,

@@ -7,6 +7,9 @@ import GiftMotif from "@/components/GiftMotif";
 import PrintCarousel from "@/components/PrintCarousel";
 import PrintColorSlider from "@/components/PrintColorSlider";
 import PrintSlider from "@/components/PrintSlider";
+import { useDictionnaire } from "@/components/i18n/Dictionnaire";
+import { LOCALES } from "@/lib/i18n/langues";
+import { remplir } from "@/lib/i18n/remplir";
 import { styleDeTeinte, teinteDuTheme } from "@/lib/carteCouleur";
 import { fontById, occasionById, type MotifKind } from "@/lib/occasions";
 import { paletteStyle } from "@/lib/palettes";
@@ -18,7 +21,6 @@ import {
   stepPrintMotif,
 } from "@/lib/printModels";
 import {
-  CTA_DEFAUT,
   PRINT_LIMITS,
   ecrirePrintTexts,
   lirePrintTexts,
@@ -63,6 +65,13 @@ export default function PrintableCard({
   /** Sert de cle au stockage des mots de la carte : un donneur en a plusieurs. */
   slug: string;
 }) {
+  const { langue, d } = useDictionnaire();
+  const im = d.impression;
+  const nombre = (v: number, decimales: number) =>
+    v.toLocaleString(LOCALES[langue].intl, {
+      minimumFractionDigits: decimales,
+      maximumFractionDigits: decimales,
+    });
   const [svg, setSvg] = useState<string | null>(null);
 
   /*
@@ -108,7 +117,7 @@ export default function PrintableCard({
    * ensuite. Une page qu'on ouvre au telephone et une carte qu'on tient dans la
    * main n'appellent pas la meme formule.
    */
-  const defauts: PrintTexts = { to, intro, title, signature, cta: CTA_DEFAUT };
+  const defauts: PrintTexts = { to, intro, title, signature, cta: im.cta };
   const [mots, setMots] = useState<PrintTexts>(defauts);
   const [ouvert, setOuvert] = useState(false);
 
@@ -190,7 +199,7 @@ export default function PrintableCard({
       <div className="print-bar">
         {backHref && (
           <Link className="btn btn--ghost btn--sm" href={backHref}>
-            ← Retour
+            {im.retour}
           </Link>
         )}
         {/*
@@ -199,7 +208,7 @@ export default function PrintableCard({
           lit une fois — et elle repoussait d'autant l'objet dont elle parle.
         */}
         <button type="button" className="btn btn--sm" onClick={() => window.print()}>
-          Imprimer
+          {im.imprimer}
         </button>
       </div>
 
@@ -247,17 +256,14 @@ export default function PrintableCard({
 
               {/* Panneau droit : la couverture, devant une fois pliee. */}
               <div className="feuille__panneau feuille__couv">
-                {mots.to.trim() && <p className="feuille__to">Pour {mots.to}</p>}
+                {mots.to.trim() && <p className="feuille__to">{remplir(im.pour, { prenom: mots.to })}</p>}
                 {mots.intro.trim() && <p className="feuille__intro">{mots.intro}</p>}
                 <h1 className="feuille__titre">{mots.title}</h1>
               </div>
             </div>
           </div>
 
-          <p className="print-legende">
-            Feuille A4, pliée en deux. Rabats la moitié gauche derrière la droite : la couverture se
-            retrouve devant, le QR code au dos.
-          </p>
+          <p className="print-legende">{im.legende}</p>
         </div>
 
         <div className="print-reglages">
@@ -267,7 +273,7 @@ export default function PrintableCard({
         Masques a l'impression avec le reste des commandes.
       */}
       <div className="habillage">
-        <div className="dispositions" role="group" aria-label="Disposition de la carte">
+        <div className="dispositions" role="group" aria-label={im.dispositionAria}>
           {PRINT_LAYOUTS.map((l) => (
             <button
               key={l.id}
@@ -276,7 +282,7 @@ export default function PrintableCard({
               aria-pressed={composition === l.id}
               onClick={() => setLayout(l.id)}
             >
-              {l.nom}
+              {im.dispositions[l.id]}
             </button>
           ))}
         </div>
@@ -295,25 +301,25 @@ export default function PrintableCard({
 
         <PrintSlider
           id="taille-motif"
-          label="Taille du décor"
+          label={im.tailleDecor}
           valeur={echelle}
           min={0.4}
           max={2.2}
           pas={0.05}
           defaut={MOTIF_ECHELLE_DEFAUT}
-          format={(v) => `×${v.toFixed(2).replace(".", ",")}`}
+          format={(v) => remplir(im.formatTaille, { v: nombre(v, 2) })}
           onChange={setEchelle}
         />
 
         <PrintSlider
           id="contraste-motif"
-          label="Contraste du décor"
+          label={im.contrasteDecor}
           valeur={opacite}
           min={0.02}
           max={0.4}
           pas={0.01}
           defaut={MOTIF_OPACITE_DEFAUT}
-          format={(v) => `${Math.round(v * 100)} %`}
+          format={(v) => remplir(im.formatContraste, { v: Math.round(v * 100) })}
           onChange={setOpacite}
         />
       </div>
@@ -333,40 +339,37 @@ export default function PrintableCard({
           aria-expanded={ouvert}
           onClick={() => setOuvert((v) => !v)}
         >
-          {ouvert ? "Masquer les mots" : "Modifier les mots de la carte"}
+          {ouvert ? im.masquerMots : im.modifierMots}
         </button>
 
         {ouvert && (
           <div className="mots-carte__corps">
-            <p className="mots-carte__aide">
-              Ils reprennent ceux de la page-cadeau, et s&apos;en détachent dès que tu y touches. La
-              page, elle, ne bouge pas. Gardés sur cet appareil, jamais envoyés.
-            </p>
+            <p className="mots-carte__aide">{im.motsAide}</p>
 
             <label className="mots-carte__champ">
-              <span>Destinataire</span>
+              <span>{im.destinataire}</span>
               <input
                 type="text"
                 value={mots.to}
                 maxLength={PRINT_LIMITS.to}
-                placeholder="Camille"
+                placeholder={im.exempleDestinataire}
                 onChange={(e) => changer("to", e.target.value)}
               />
             </label>
 
             <label className="mots-carte__champ">
-              <span>Mot d&apos;ouverture</span>
+              <span>{im.motOuverture}</span>
               <input
                 type="text"
                 value={mots.intro}
                 maxLength={PRINT_LIMITS.intro}
-                placeholder="Joyeux anniversaire"
+                placeholder={im.exempleIntro}
                 onChange={(e) => changer("intro", e.target.value)}
               />
             </label>
 
             <label className="mots-carte__champ">
-              <span>Titre</span>
+              <span>{im.titre}</span>
               <textarea
                 rows={2}
                 value={mots.title}
@@ -376,29 +379,29 @@ export default function PrintableCard({
             </label>
 
             <label className="mots-carte__champ">
-              <span>Signature</span>
+              <span>{im.signature}</span>
               <input
                 type="text"
                 value={mots.signature}
                 maxLength={PRINT_LIMITS.signature}
-                placeholder="Avec toute mon affection, Sacha"
+                placeholder={im.exempleSignature}
                 onChange={(e) => changer("signature", e.target.value)}
               />
             </label>
 
             <label className="mots-carte__champ">
-              <span>Ligne sous le QR code</span>
+              <span>{im.ligneQr}</span>
               <input
                 type="text"
                 value={mots.cta}
                 maxLength={PRINT_LIMITS.cta}
-                placeholder={CTA_DEFAUT}
+                placeholder={im.cta}
                 onChange={(e) => changer("cta", e.target.value)}
               />
             </label>
 
             <button type="button" className="btn btn--ghost btn--sm" onClick={reinitialiser}>
-              Reprendre les mots de la page
+              {im.reprendre}
             </button>
           </div>
         )}

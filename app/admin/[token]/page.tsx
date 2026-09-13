@@ -2,15 +2,21 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import AdminView, { type AdminSnapshot } from "@/components/AdminView";
 import { lireCarteAdmin } from "@/lib/carte";
+import { dictionnaire } from "@/lib/i18n";
+import { langueOuDefaut } from "@/lib/i18n/langues";
 import { publicUrlFor } from "@/lib/env";
 import { isExpired, isLocked, isSealed } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
 
-export const metadata: Metadata = {
-  title: "Administration — MyPresentsForYou",
-  robots: { index: false, follow: false, nocache: true },
-};
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { token } = await params;
+  const page = await lireCarteAdmin(token).catch(() => null);
+  return {
+    title: dictionnaire(langueOuDefaut(page?.theme.langue)).admin.titreMeta,
+    robots: { index: false, follow: false, nocache: true },
+  };
+}
 
 type Props = { params: Promise<{ token: string }> };
 
