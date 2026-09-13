@@ -92,10 +92,10 @@ export default function Confidentialite() {
 
       <h2>Combien de temps</h2>
       <p>
-        Une carte sur laquelle personne n&apos;a choisi est supprimée{" "}
+        Une carte sur laquelle personne n&apos;a choisi est supprimée, avec ses images,{" "}
         <strong>un an après sa création</strong>. Une carte dont le choix a été fait reste
         disponible pour que tu puisses le consulter, jusqu&apos;à ce que tu la supprimes toi-même
-        depuis ton lien d&apos;administration.
+        depuis ton lien d&apos;administration — ses images partent alors avec elle.
       </p>
 
       <h2>Effacer une carte</h2>

@@ -48,6 +48,7 @@ récupère les valeurs du projet.
 | `NEXT_PUBLIC_BASE_URL` | base absolue des liens, balises Open Graph, `robots.txt` et sitemap |
 | `FREE_PAGE_TTL_DAYS` | durée de vie d'une page gratuite (défaut : 365) |
 | `ADSENSE_PUBLISHER_ID` | identifiant d'éditeur AdSense (`pub-…` ou `ca-pub-…`), publié dans `/ads.txt` ; absent, `/ads.txt` répond 404 |
+| `PURGE_SECRET` | secret de `POST /api/purge`, 32 caractères au moins ; absent, la purge est désactivée — voir « La purge des cartes expirées » |
 | `RATE_LIMIT_DISABLED` | `1` coupe les quotas. Développement seulement — voir « Les routes anonymes » |
 
 ### 3. Créer le schéma
@@ -131,6 +132,8 @@ Les deux écrivent dans le même `.next` et le graphe de modules du serveur de d
 | `lib/mediaStore.ts` | où atterrissent les images : Vercel Blob, ou disque en développement |
 | `lib/extract.ts` | lecture des métadonnées OG, best-effort |
 | `lib/blob.ts` | recopie des images vers Vercel Blob |
+| `lib/purge.ts` | purge des cartes expirées sans choix, images comprises ; effacement des images d'une carte supprimée |
+| `app/api/purge/route.ts` | la route de la purge, protégée par `PURGE_SECRET`, qu'appelle une tâche planifiée |
 | `lib/validation.ts` | validation des entrées, avant toute écriture |
 | `lib/rateLimit.ts` | quotas des routes anonymes ; logique pure, horloge injectable |
 | `lib/site.ts` | **identité de l'éditeur** — le seul fichier à remplir pour les mentions légales |
@@ -182,9 +185,10 @@ aujourd'hui** : en afficher poserait des cookies, ce que la politique de confide
 | `POST /api/upload` | image (repli manuel) → Vercel Blob → `{ url }` |
 | `POST /api/pages` | crée la page (aucun champ de texte obligatoire) → `{ slug, publicUrl, adminUrl, expiresAt, warnings }` |
 | `PATCH /api/admin/[token]` | édite la page ; 409 si verrouillée ou expirée |
-| `DELETE /api/admin/[token]` | supprime la page |
+| `DELETE /api/admin/[token]` | supprime la page et ses images |
 | `POST /api/pages/[slug]/choose` | `{ itemId }` → enregistre le choix et verrouille |
 | `POST /api/pages/[slug]/reply` | `{ reply }` → attache le mot du receveur, après le choix ; 409 hors fenêtre ou si un mot existe déjà |
+| `POST /api/purge` | purge les cartes expirées sans choix, images comprises. `Authorization: Bearer <PURGE_SECRET>` ; `?dry=1` à blanc ; 404 sans secret configuré |
 
 **Toutes ces routes peuvent répondre `429`** avec un en-tête `Retry-After` et un `{ error }` en
 français, avant toute validation — voir « Les routes anonymes et leurs quotas ».
@@ -359,6 +363,67 @@ Le repli disque est refusé sur Vercel, dont le système de fichiers est éphém
 là disparaîtrait au déploiement suivant. La route de service n'accepte qu'un nom de fichier
 strictement conforme (`^[a-z0-9-]+\.(jpg|png|webp)$`), ce qui rend toute remontée de chemin
 impossible.
+
+## La purge des cartes expirées
+
+Les conditions, la politique de confidentialité et la FAQ promettent qu'une carte sur laquelle
+personne n'a choisi est **supprimée**, avec ses images, un an après sa création. Rien ne le faisait :
+`isExpired` bloquait le choix et l'édition, mais la ligne et ses images restaient indéfiniment.
+`POST /api/purge` le fait désormais (`lib/purge.ts`).
+
+**Une route, et non un script.** Un volume Railway n'appartient qu'à un service, et une tâche
+planifiée est un service à part : un script qu'elle lancerait verrait la base, pas le dossier
+d'images. Seul le serveur web voit les deux ; la route s'y déclenche donc de l'extérieur, chaque
+nuit.
+
+**Ce qui part.** Les cartes `chosen_at IS NULL AND expires_at < now()`, cinquante par appel, les
+plus anciennes d'abord — cinquante parce que les images s'effacent une à une, pour savoir laquelle
+résiste, et qu'un appel ne peut pas dépasser la minute. Avec elles, leurs images **chez nous** :
+Vercel Blob, et le dossier d'images, où un fichier se reconnaît à son nom quel que soit le domaine
+enregistré. L'image d'un marchand qu'on n'a pas pu recopier n'est pas à nous. La suppression en
+base répète la condition : une carte choisie ne part jamais, et un garde-fou l'exige de toute
+suppression de `lib/purge.ts`.
+
+**Une image partagée reste.** Une adresse déjà chez nous est reprise telle quelle : deux cartes
+peuvent pointer vers la même image. Avant d'effacer, la purge vérifie qu'aucune carte hors du lot
+ne la référence.
+
+**Les images d'abord, la ligne ensuite.** Une carte n'est effacée qu'une fois toutes ses images
+parties ; si l'une résiste, la carte reste et sera retentée à l'appel suivant. Dans l'ordre inverse,
+l'image deviendrait orpheline, sans plus rien pour la retrouver. Une image déjà absente compte
+comme effacée : la purge est rejouable. Sans `BLOB_READ_WRITE_TOKEN`, une image Blob ne peut pas
+être effacée — la carte reste, et le rapport le compte en échec.
+
+**La suppression manuelle** (`DELETE /api/admin/[token]`) emporte aussi les images, par la même
+fonction. Là, la carte part même si une image résiste — le donneur l'a demandé —, et l'adresse de
+l'image reste dans les journaux.
+
+| appel | réponse |
+|---|---|
+| `PURGE_SECRET` absent du serveur, ou plus court que 32 caractères | 404, comme une route qui n'existe pas |
+| secret faux, ou absent de la requête | 401 |
+| `?dry=1` | le rapport, rien d'effacé |
+| sinon | le rapport, et une ligne dans les journaux |
+
+```json
+{ "aBlanc": false, "cartes": 3, "images": { "blob": 4, "fichiers": 1, "partagees": 1, "echecs": 0 }, "reste": false }
+```
+
+### La brancher
+
+1. Générer un secret — `openssl rand -hex 32` — et le poser en `PURGE_SECRET` sur le service web.
+2. Essayer à blanc, et lire le rapport :
+
+   ```bash
+   curl -X POST -H "Authorization: Bearer <secret>" "https://<domaine>/api/purge?dry=1"
+   ```
+
+3. Planifier le même appel, sans `?dry=1`, une fois par nuit : un service planifié Railway (Cron
+   Schedule `0 3 * * *`) qui lance ce `curl`, ou n'importe quel planificateur capable d'un `POST`
+   avec en-tête. `reste: true` dans le rapport signale un lot plein : l'appel suivant continue, et
+   rien n'empêche d'appeler plusieurs fois de suite.
+
+Tant que ce branchement n'est pas fait, rien n'est purgé.
 
 ## Le cadeau unique
 
@@ -928,6 +993,7 @@ L'application ne dépend d'aucun hébergeur en particulier.
 | `BLOB_READ_WRITE_TOKEN` | Vercel Blob ; absent, les images vont dans `.media/` |
 | `FREE_PAGE_TTL_DAYS` | durée de vie d'une page gratuite (défaut : 365) |
 | `ADSENSE_PUBLISHER_ID` | identifiant AdSense publié dans `/ads.txt` ; facultatif |
+| `PURGE_SECRET` | secret de la purge des cartes expirées ; sans lui, rien n'est purgé |
 
 Deux pièges, tous deux silencieux :
 
@@ -1163,12 +1229,16 @@ n'importe quelle édition.
 - **Aucun test ne touche une route, une base ou un navigateur.** `npm run check` ne vérifie que de
   la logique pure — validation, slugs, extraction, quotas, réduction d'images. Les handlers HTTP,
   les requêtes SQL et le rendu ne sont couverts par rien d'automatisé : ils se vérifient à la main.
-  C'est la lacune la plus large du projet.
+  C'est la lacune la plus large du projet. L'orchestration de la purge est testée sur une fausse
+  base, pas ses requêtes : la première passe en production doit être à blanc (`?dry=1`).
 - **Les fichiers de la marque sont du produit de build versionné.** `npm run brand` les régénère,
   mais rien n'oblige à le lancer : modifier la géométrie dans `scripts/brand.mjs` sans régénérer
   laisse le favicon et les icônes en désaccord avec leur source, et aucune vérification ne le
   signalera.
 - **Le slug public est devinable.** Ne rien mettre de sensible dans une page-cadeau.
+- **Des images restent orphelines.** Celles qu'on remplace en modifiant une carte, et celles
+  téléversées pour une carte jamais créée : plus aucune ligne ne les référence, et la purge part des
+  lignes.
 - **Le mot du receveur n'est plus lié à l'auteur du choix.** Il part dans une seconde requête ; qui
   détient le lien peut donc l'écrire à sa place, tant que la carte n'en porte pas déjà un et que
   l'heure qui suit le choix n'est pas écoulée. C'est le prix du bouton « Laisser un mot » posé après
