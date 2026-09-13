@@ -1,13 +1,21 @@
 import type { Metadata } from "next";
 import CreateFlow from "@/components/CreateFlow";
 import { baseUrl } from "@/lib/env";
+import { dictionnaire } from "@/lib/i18n";
+import { cheminVers } from "@/lib/i18n/chemins";
+import { langueOuDefaut } from "@/lib/i18n/langues";
 
-export const metadata: Metadata = {
-  title: "Créer une page-cadeau gratuite — MyPresentsForYou",
-  description:
-    "Compose ta page en deux étapes : tes idées de cadeau, puis la présentation. Sans compte, sans paiement, en quelques minutes.",
-  alternates: { canonical: "/creer" },
-};
+type Params = { params: Promise<{ langue: string }> };
+
+export async function generateMetadata({ params }: Params): Promise<Metadata> {
+  const langue = langueOuDefaut((await params).langue);
+  const d = dictionnaire(langue).creation;
+  return {
+    title: d.titreMeta,
+    description: d.descriptionMeta,
+    alternates: { canonical: cheminVers(langue, "creer") },
+  };
+}
 
 export default function CreatePage() {
   const label = baseUrl().replace(/^https?:\/\//, "");

@@ -1,20 +1,24 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import TextPage from "@/components/TextPage";
+import { cheminVers } from "@/lib/i18n/chemins";
+import { langueOuDefaut } from "@/lib/i18n/langues";
 import { SITE, aRemplir } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Contact — MyPresentsForYou",
   description:
     "Une question, un bug, une carte à signaler ou un lien d'administration perdu : comment nous joindre.",
-  alternates: { canonical: "/contact" },
+  alternates: { canonical: cheminVers("fr", "contact") },
 };
 
-export default function Contact() {
+export default async function Contact({ params }: { params: Promise<{ langue: string }> }) {
+  const langue = langueOuDefaut((await params).langue);
   const sansAdresse = aRemplir(SITE.email);
 
   return (
     <TextPage
+      langue={langue}
       titre="Contact"
       chapo="MyPresentsForYou est un petit projet. Les réponses ne sont pas instantanées, mais elles arrivent."
     >
@@ -72,7 +76,7 @@ export default function Contact() {
       <h2>Avant d&apos;écrire</h2>
       <p>
         Beaucoup de questions ont déjà leur réponse sur la page{" "}
-        <Link href="/questions">Questions fréquentes</Link> — notamment sur la récupération
+        <Link href={cheminVers(langue, "questions")}>Questions fréquentes</Link> — notamment sur la récupération
         automatique des images, qui échoue chez certains marchands sans que ce soit une panne.
       </p>
     </TextPage>

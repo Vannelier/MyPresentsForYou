@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import TextPage from "@/components/TextPage";
+import { cheminVers } from "@/lib/i18n/chemins";
+import { langueOuDefaut } from "@/lib/i18n/langues";
 import { SITE, aRemplir } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Mentions légales — MyPresentsForYou",
   description: "Éditeur, hébergeur et contact du site MyPresentsForYou.",
-  alternates: { canonical: "/mentions-legales" },
+  alternates: { canonical: cheminVers("fr", "mentions-legales") },
   // Une page de mentions n'apporte rien dans un index de recherche, mais elle
   // doit rester atteignable : `follow` laisse passer le lien vers le reste.
   robots: { index: false, follow: true },
@@ -20,11 +22,13 @@ function Valeur({ children }: { children: string }) {
   return <>{children}</>;
 }
 
-export default function MentionsLegales() {
+export default async function MentionsLegales({ params }: { params: Promise<{ langue: string }> }) {
+  const langue = langueOuDefaut((await params).langue);
   const societe = SITE.editeur.statut === "societe";
 
   return (
     <TextPage
+      langue={langue}
       titre="Mentions légales"
       chapo="Qui édite ce site, qui l'héberge, et comment nous joindre."
     >
@@ -88,13 +92,13 @@ export default function MentionsLegales() {
       <h2>Signaler un contenu</h2>
       <p>
         Les cartes sont créées librement et sans compte. Si l&apos;une d&apos;elles présente un
-        contenu illicite, écris-nous depuis la page <Link href="/contact">Contact</Link> en
+        contenu illicite, écris-nous depuis la page <Link href={cheminVers(langue, "contact")}>Contact</Link> en
         indiquant son adresse — nous la supprimerons.
       </p>
 
       <p className="prose__date">
-        Voir aussi la <Link href="/confidentialite">politique de confidentialité</Link> et les{" "}
-        <Link href="/conditions">conditions d&apos;utilisation</Link>.
+        Voir aussi la <Link href={cheminVers(langue, "confidentialite")}>politique de confidentialité</Link> et les{" "}
+        <Link href={cheminVers(langue, "conditions")}>conditions d&apos;utilisation</Link>.
       </p>
     </TextPage>
   );

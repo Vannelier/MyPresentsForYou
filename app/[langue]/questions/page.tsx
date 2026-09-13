@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import TextPage from "@/components/TextPage";
+import { cheminVers } from "@/lib/i18n/chemins";
+import { langueOuDefaut } from "@/lib/i18n/langues";
 import { LIMITS } from "@/lib/limits";
 
 export const metadata: Metadata = {
   title: "Questions fréquentes — MyPresentsForYou",
   description:
     "Offrir en laissant choisir : comment ça marche, combien ça coûte, ce que voit la personne qui reçoit, et que faire si une image ne se récupère pas.",
-  alternates: { canonical: "/questions" },
+  alternates: { canonical: cheminVers("fr", "questions") },
 };
 
 /**
@@ -98,7 +100,8 @@ const QUESTIONS: { q: string; r: string[] }[] = [
   },
 ];
 
-export default function Questions() {
+export default async function Questions({ params }: { params: Promise<{ langue: string }> }) {
+  const langue = langueOuDefaut((await params).langue);
   /*
    * Balisage `FAQPage`. À dire franchement : depuis 2023, Google réserve les
    * résultats enrichis « questions » aux sites gouvernementaux et de santé — ce
@@ -118,6 +121,7 @@ export default function Questions() {
 
   return (
     <TextPage
+      langue={langue}
       titre="Questions fréquentes"
       chapo="Offrir en laissant choisir : comment ça marche, ce que ça coûte, et ce qui se passe quand la récupération automatique échoue."
     >
@@ -145,8 +149,8 @@ export default function Questions() {
 
       <h2>Une autre question ?</h2>
       <p>
-        Écris-nous depuis la page <Link href="/contact">Contact</Link>. Pour tout ce qui touche aux
-        données, la <Link href="/confidentialite">politique de confidentialité</Link> entre dans le
+        Écris-nous depuis la page <Link href={cheminVers(langue, "contact")}>Contact</Link>. Pour tout ce qui touche aux
+        données, la <Link href={cheminVers(langue, "confidentialite")}>politique de confidentialité</Link> entre dans le
         détail.
       </p>
     </TextPage>

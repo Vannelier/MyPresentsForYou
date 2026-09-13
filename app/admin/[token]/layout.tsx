@@ -1,7 +1,9 @@
 import type { Metadata, Viewport } from "next";
-import { CLASSES_POLICES, METADONNEES_COMMUNES, VIEWPORT } from "../../commun";
+import { DictionnaireProvider } from "@/components/i18n/Dictionnaire";
 import { lireCarteAdmin } from "@/lib/carte";
+import { dictionnaire } from "@/lib/i18n";
 import { langueOuDefaut } from "@/lib/i18n/langues";
+import { CLASSES_POLICES, METADONNEES_COMMUNES, VIEWPORT } from "../../commun";
 
 export const viewport: Viewport = VIEWPORT;
 export const metadata: Metadata = METADONNEES_COMMUNES;
@@ -19,9 +21,14 @@ export default async function LayoutAdmin({
 }) {
   const { token } = await params;
   const carte = await lireCarteAdmin(token).catch(() => null);
+  const langue = langueOuDefaut(carte?.theme.langue);
   return (
-    <html lang={langueOuDefaut(carte?.theme.langue)} className={CLASSES_POLICES}>
-      <body>{children}</body>
+    <html lang={langue} className={CLASSES_POLICES}>
+      <body>
+        <DictionnaireProvider langue={langue} d={dictionnaire(langue)}>
+          {children}
+        </DictionnaireProvider>
+      </body>
     </html>
   );
 }

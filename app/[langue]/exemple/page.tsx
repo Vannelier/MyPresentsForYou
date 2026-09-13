@@ -2,48 +2,55 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import GiftView from "@/components/GiftView";
 import { EXEMPLE } from "@/lib/exemple";
+import { dictionnaire } from "@/lib/i18n";
+import { cheminVers } from "@/lib/i18n/chemins";
+import { LOCALES, langueOuDefaut } from "@/lib/i18n/langues";
 import { alt as altBanniere, size as tailleBanniere } from "@/app/opengraph-image";
 
-const DESCRIPTION =
-  "Une vraie page-cadeau à essayer : lève le voile, choisis parmi quatre idées, confirme. Rien n'est envoyé.";
+type Params = { params: Promise<{ langue: string }> };
 
-export const metadata: Metadata = {
-  title: "Exemple de page-cadeau — MyPresentsForYou",
-  description: DESCRIPTION,
-  alternates: { canonical: "/exemple" },
-  /*
-   * Un `openGraph` de page remplace celui du layout en entier, sans fusion :
-   * type, nom du site et langue y sont repetes. L'exemple se partage — c'est
-   * ce qui justifiait une page plutot qu'un apercu — et son titre doit le dire.
-   *
-   * L'image, en revanche, est citee a la main : des que la page declare son
-   * propre openGraph, celle du fichier app/opengraph-image.tsx ne sort plus —
-   * mesure dans le HTML servi, aucune og:image. Ses dimensions et son texte
-   * alternatif viennent de ce fichier, pour suivre la banniere si elle change.
-   */
-  openGraph: {
-    type: "website",
-    siteName: "MyPresentsForYou",
-    locale: "fr_BE",
-    url: "/exemple",
-    title: "Exemple de page-cadeau — MyPresentsForYou",
-    description: DESCRIPTION,
-    images: [
-      {
-        url: "/opengraph-image",
-        width: tailleBanniere.width,
-        height: tailleBanniere.height,
-        alt: altBanniere,
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Exemple de page-cadeau — MyPresentsForYou",
-    description: DESCRIPTION,
-    images: ["/opengraph-image"],
-  },
-};
+export async function generateMetadata({ params }: Params): Promise<Metadata> {
+  const langue = langueOuDefaut((await params).langue);
+  const d = dictionnaire(langue).exemple;
+  const url = cheminVers(langue, "exemple");
+  return {
+    title: d.titreMeta,
+    description: d.descriptionMeta,
+    alternates: { canonical: url },
+    /*
+     * Un `openGraph` de page remplace celui du layout en entier, sans fusion :
+     * type, nom du site et langue y sont repetes. L'exemple se partage — c'est
+     * ce qui justifiait une page plutot qu'un apercu — et son titre doit le dire.
+     *
+     * L'image, en revanche, est citee a la main : des que la page declare son
+     * propre openGraph, celle du fichier app/opengraph-image.tsx ne sort plus —
+     * mesure dans le HTML servi, aucune og:image. Ses dimensions et son texte
+     * alternatif viennent de ce fichier, pour suivre la banniere si elle change.
+     */
+    openGraph: {
+      type: "website",
+      siteName: "MyPresentsForYou",
+      locale: LOCALES[langue].og,
+      url,
+      title: d.titreMeta,
+      description: d.descriptionMeta,
+      images: [
+        {
+          url: "/opengraph-image",
+          width: tailleBanniere.width,
+          height: tailleBanniere.height,
+          alt: altBanniere,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: d.titreMeta,
+      description: d.descriptionMeta,
+      images: ["/opengraph-image"],
+    },
+  };
+}
 
 /*
  * Une page-cadeau figee, jouee en mode apercu : on leve le voile, on choisit,
@@ -56,20 +63,23 @@ export const metadata: Metadata = {
  * `pleineFenetre` lui rend le verrou du defilement sous le voile et la
  * remontee a l'ouverture, que l'editeur tient lui-meme autour de son apercu.
  */
-export default function ExemplePage() {
+export default async function ExemplePage({ params }: Params) {
+  const langue = langueOuDefaut((await params).langue);
+  const d = dictionnaire(langue).exemple;
+  const creer = cheminVers(langue, "creer");
   return (
     <>
       <div className="preview-ribbon">
-        Exemple — rien n&apos;est envoyé
-        <Link className="preview-ribbon__exit" href="/creer">
-          Composer la mienne
+        {d.bandeau}
+        <Link className="preview-ribbon__exit" href={creer}>
+          {d.composerLaMienne}
         </Link>
       </div>
       <GiftView
         page={EXEMPLE}
         mode="preview"
         pleineFenetre
-        lienSortie={{ libelle: "Composer ma page-cadeau", href: "/creer" }}
+        lienSortie={{ libelle: d.composer, href: creer }}
       />
     </>
   );

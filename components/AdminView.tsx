@@ -1,12 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import CopyLine from "@/components/CopyLine";
 import CardPreview from "@/components/CardPreview";
 import { GiftCard } from "@/components/GiftView";
 import PageEditor, { type EditorInitial } from "@/components/editor/PageEditor";
+import { useDictionnaire } from "@/components/i18n/Dictionnaire";
+import { cheminVers } from "@/lib/i18n/chemins";
+import { LOCALES } from "@/lib/i18n/langues";
+import { remplir } from "@/lib/i18n/remplir";
 import { occasionById } from "@/lib/occasions";
 import type { Item, Theme } from "@/lib/types";
 
@@ -43,6 +46,8 @@ export type AdminSnapshot = {
 
 export default function AdminView({ page, token }: { page: AdminSnapshot; token: string }) {
   const router = useRouter();
+  const { langue, d } = useDictionnaire();
+  const t = d.admin;
   const [confirming, setConfirming] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -77,13 +82,13 @@ export default function AdminView({ page, token }: { page: AdminSnapshot; token:
       const res = await fetch(`/api/admin/${encodeURIComponent(token)}`, { method: "DELETE" });
       if (!res.ok) {
         const data = (await res.json().catch(() => ({}))) as { error?: string };
-        setError(data.error ?? "La suppression a échoué.");
+        setError(data.error ?? t.suppressionEchouee);
         setDeleting(false);
         return;
       }
-      router.replace("/");
+      router.replace(cheminVers(langue, "accueil"));
     } catch {
-      setError("Connexion perdue. Réessaie.");
+      setError(t.connexionPerdue);
       setDeleting(false);
     }
   }
@@ -91,31 +96,29 @@ export default function AdminView({ page, token }: { page: AdminSnapshot; token:
   return (
     <div className="shell shell--wide">
       <header className="hero">
-        <p className="eyebrow">{page.name || "Administration"}</p>
-        <h1>{page.locked ? "Le choix est fait" : "En attente d'un choix"}</h1>
+        <p className="eyebrow">{page.name || t.surtitre}</p>
+        <h1>{page.locked ? t.choixFait : t.enAttente}</h1>
       </header>
 
       {/* Le cadeau choisi passe avant les liens : c'est ce qu'on vient chercher
           ici une fois le choix fait, et les liens n'ont plus grand-chose à dire. */}
       {chosen && (
         <section className="panel">
-          <h2>Cadeau choisi</h2>
-          <p className="help">
-            À toi de jouer : commande-le et offre-le. Rien n&apos;a transité par la plateforme.
-          </p>
+          <h2>{t.cadeauChoisi}</h2>
+          <p className="help">{t.cadeauChoisiAide}</p>
           <div style={{ maxWidth: "20rem" }}>
             <GiftCard item={chosen} selected disabled />
           </div>
           {page.reply_message.trim() && (
             <blockquote className="reply-quote">
-              <p>« {page.reply_message} »</p>
+              <p>{remplir(t.motDuReceveur, { mot: page.reply_message })}</p>
             </blockquote>
           )}
 
           {chosen.source_url && (
             <p style={{ marginTop: "0.9rem", fontSize: "0.88rem" }}>
               <a href={chosen.source_url} target="_blank" rel="noreferrer">
-                Ouvrir la page d&apos;origine ↗
+                {t.pageOrigine}
               </a>
             </p>
           )}
@@ -123,19 +126,20 @@ export default function AdminView({ page, token }: { page: AdminSnapshot; token:
       )}
 
       <section className="panel">
-        <h2>Partager la carte</h2>
+        <h2>{t.partager}</h2>
 
         {/* Seule date conservée : une carte scellée ne s'ouvre pas encore, et rien
             d'autre sur cette page ne le dirait. */}
         {page.reveal_at && (
           <p className="help">
-            {page.sealed ? "S'ouvre le " : "Ouverte depuis le "}
-            {formatDateTime(page.reveal_at)}.
+            {remplir(page.sealed ? t.sOuvreLe : t.ouverteDepuis, {
+              date: formatDateTime(page.reveal_at, LOCALES[langue].intl),
+            })}
           </p>
         )}
 
         <div className="link-box">
-          <span className="link-box__label">Lien à envoyer</span>
+          <span className="link-box__label">{t.lienEnvoi}</span>
           <CopyLine value={page.publicUrl} />
         </div>
 
@@ -166,10 +170,8 @@ export default function AdminView({ page, token }: { page: AdminSnapshot; token:
             l'administration, plusieurs ecrans au-dessus de l'editeur.
           */}
           <section className="panel" id="modifier" style={{ paddingBottom: "0.6rem" }}>
-            <h2>Modifier la page</h2>
-            <p className="help">
-              Les liens ne changent pas : celui que tu as déjà envoyé continue de fonctionner.
-            </p>
+            <h2>{t.modifier}</h2>
+            <p className="help">{t.modifierAide}</p>
           </section>
           <PageEditor mode="edit" initial={initial} adminToken={token} slug={page.slug} />
         </>
@@ -178,12 +180,8 @@ export default function AdminView({ page, token }: { page: AdminSnapshot; token:
       {/* Une fois le choix fait, supprimer n'est plus une perte mais une fin de
           course : on range la carte plutôt qu'on ne l'efface. */}
       <section className="panel">
-        <h2>{page.locked ? "Bien reçu ?" : "Ranger la carte"}</h2>
-        <p className="help">
-          {page.locked
-            ? "Tu as noté le cadeau ? Tu peux clôturer : la page se referme pour de bon et les deux liens cessent de fonctionner."
-            : "Définitif. La page et son contenu disparaissent, les deux liens cessent de fonctionner."}
-        </p>
+        <h2>{page.locked ? t.bienRecu : t.ranger}</h2>
+        <p className="help">{page.locked ? t.clotureAide : t.suppressionAide}</p>
         {error && (
           <p className="notice notice--error" role="alert" style={{ marginBottom: "0.8rem" }}>
             {error}
@@ -194,11 +192,11 @@ export default function AdminView({ page, token }: { page: AdminSnapshot; token:
             <button type="button" className="btn btn--danger btn--sm" disabled={deleting} onClick={remove}>
               {deleting
                 ? page.locked
-                  ? "Clôture…"
-                  : "Suppression…"
+                  ? t.enCloture
+                  : t.enSuppression
                 : page.locked
-                  ? "Oui, clôturer pour de bon"
-                  : "Oui, supprimer définitivement"}
+                  ? t.confirmerCloture
+                  : t.confirmerSuppression}
             </button>
             <button
               type="button"
@@ -206,12 +204,12 @@ export default function AdminView({ page, token }: { page: AdminSnapshot; token:
               disabled={deleting}
               onClick={() => setConfirming(false)}
             >
-              Annuler
+              {t.annuler}
             </button>
           </div>
         ) : (
           <button type="button" className="btn btn--danger btn--sm" onClick={() => setConfirming(true)}>
-            {page.locked ? "C'est noté, clôturer la page" : "Supprimer cette page"}
+            {page.locked ? t.cloturer : t.supprimer}
           </button>
         )}
       </section>
@@ -219,9 +217,9 @@ export default function AdminView({ page, token }: { page: AdminSnapshot; token:
   );
 }
 
-function formatDateTime(value: string | null): string {
+function formatDateTime(value: string | null, locale: string): string {
   if (!value) return "—";
-  return new Date(value).toLocaleString("fr-BE", {
+  return new Date(value).toLocaleString(locale, {
     day: "numeric",
     month: "long",
     year: "numeric",

@@ -1,4 +1,7 @@
 import Link from "next/link";
+import { dictionnaire } from "@/lib/i18n";
+import { cheminVers } from "@/lib/i18n/chemins";
+import type { Langue } from "@/lib/i18n/langues";
 
 /**
  * Le pied de page du site public.
@@ -11,20 +14,21 @@ import Link from "next/link";
  * une carte n'a pas à voir les conditions d'utilisation d'un outil qu'elle
  * n'utilise pas, et la page doit rester celle du donneur, pas celle de MyPresentsForYou.
  */
-export default function SiteFooter({ note }: { note?: string }) {
+export default function SiteFooter({ langue, note }: { langue: Langue; note?: string }) {
+  const d = dictionnaire(langue);
   return (
     <footer className="lp-foot">
       {note && <p>{note}</p>}
 
-      <nav className="lp-foot__nav" aria-label="Liens de bas de page">
-        <Link href="/questions">Questions fréquentes</Link>
-        <Link href="/contact">Contact</Link>
-        <Link href="/confidentialite">Confidentialité</Link>
-        <Link href="/conditions">Conditions</Link>
-        <Link href="/mentions-legales">Mentions légales</Link>
+      <nav className="lp-foot__nav" aria-label={d.pied.navigation}>
+        <Link href={cheminVers(langue, "questions")}>{d.pied.questions}</Link>
+        <Link href={cheminVers(langue, "contact")}>{d.pied.contact}</Link>
+        <Link href={cheminVers(langue, "confidentialite")}>{d.pied.confidentialite}</Link>
+        <Link href={cheminVers(langue, "conditions")}>{d.pied.conditions}</Link>
+        <Link href={cheminVers(langue, "mentions-legales")}>{d.pied.mentionsLegales}</Link>
       </nav>
 
-      <p className="lp-foot__mark">MyPresentsForYou</p>
+      <p className="lp-foot__mark">{d.commun.marque}</p>
     </footer>
   );
 }

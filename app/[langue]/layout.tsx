@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
-import { CLASSES_POLICES, METADONNEES_COMMUNES, VIEWPORT } from "../commun";
+import { DictionnaireProvider } from "@/components/i18n/Dictionnaire";
+import { dictionnaire } from "@/lib/i18n";
 import { LANGUES_ACTIVES, LOCALES, langueOuDefaut } from "@/lib/i18n/langues";
+import { CLASSES_POLICES, METADONNEES_COMMUNES, VIEWPORT } from "../commun";
 
 export const viewport: Viewport = VIEWPORT;
 
@@ -15,28 +17,26 @@ export function generateStaticParams() {
   return LANGUES_ACTIVES.map((langue) => ({ langue }));
 }
 
-const DESCRIPTION =
-  "Compose une petite page-cadeau, envoie le lien, laisse la personne choisir.";
-
 type Params = { params: Promise<{ langue: string }> };
 
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const langue = langueOuDefaut((await params).langue);
+  const d = dictionnaire(langue).site;
   return {
     ...METADONNEES_COMMUNES,
-    title: "MyPresentsForYou — compose une page-cadeau",
-    description: DESCRIPTION,
+    title: d.titreMeta,
+    description: d.descriptionMeta,
     openGraph: {
       type: "website",
       siteName: "MyPresentsForYou",
       locale: LOCALES[langue].og,
-      title: "MyPresentsForYou — offre le choix",
-      description: DESCRIPTION,
+      title: d.titrePartage,
+      description: d.descriptionMeta,
     },
     twitter: {
       card: "summary_large_image",
-      title: "MyPresentsForYou — offre le choix",
-      description: DESCRIPTION,
+      title: d.titrePartage,
+      description: d.descriptionMeta,
     },
   };
 }
@@ -45,7 +45,11 @@ export default async function LayoutSite({ children, params }: Params & { childr
   const langue = langueOuDefaut((await params).langue);
   return (
     <html lang={langue} className={CLASSES_POLICES}>
-      <body>{children}</body>
+      <body>
+        <DictionnaireProvider langue={langue} d={dictionnaire(langue)}>
+          {children}
+        </DictionnaireProvider>
+      </body>
     </html>
   );
 }

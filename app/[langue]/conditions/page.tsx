@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import TextPage from "@/components/TextPage";
+import { cheminVers } from "@/lib/i18n/chemins";
+import { langueOuDefaut } from "@/lib/i18n/langues";
 
 const MISE_A_JOUR = "2026-09-13";
 
@@ -8,12 +10,14 @@ export const metadata: Metadata = {
   title: "Conditions d'utilisation — MyPresentsForYou",
   description:
     "Ce que MyPresentsForYou fait, ce qu'il ne fait pas, et ce qu'on attend de toi. Service gratuit, sans compte, sans paiement.",
-  alternates: { canonical: "/conditions" },
+  alternates: { canonical: cheminVers("fr", "conditions") },
 };
 
-export default function Conditions() {
+export default async function Conditions({ params }: { params: Promise<{ langue: string }> }) {
+  const langue = langueOuDefaut((await params).langue);
   return (
     <TextPage
+      langue={langue}
       titre="Conditions d'utilisation"
       chapo="Le service est gratuit et sans compte. Voici ce sur quoi nous nous engageons, et ce que nous te demandons en retour."
       miseAJour={MISE_A_JOUR}
@@ -67,7 +71,7 @@ export default function Conditions() {
       </ul>
       <p>
         Une carte qui enfreint ces règles peut être supprimée sans préavis. Pour en signaler une,
-        voir la page <Link href="/contact">Contact</Link>.
+        voir la page <Link href={cheminVers(langue, "contact")}>Contact</Link>.
       </p>
 
       <h2>Ce sur quoi nous ne nous engageons pas</h2>
@@ -90,7 +94,7 @@ export default function Conditions() {
       </p>
 
       <p className="prose__date">
-        Voir aussi la <Link href="/confidentialite">politique de confidentialité</Link>.
+        Voir aussi la <Link href={cheminVers(langue, "confidentialite")}>politique de confidentialité</Link>.
       </p>
     </TextPage>
   );
