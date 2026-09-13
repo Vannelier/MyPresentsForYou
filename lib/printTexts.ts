@@ -4,9 +4,9 @@
  * Ils reprennent d'abord ceux de la page-cadeau — c'est presque toujours ce
  * qu'on veut — mais ce sont deux objets différents. Une page qu'on ouvre au
  * téléphone et une carte qu'on tient dans la main n'appellent pas la même
- * formule : « Je n'ai pas su choisir » se lit bien à l'écran, moins bien gravé
- * sur du papier qu'on offrira. Ils se modifient donc séparément, sans toucher à
- * la page.
+ * formule : « J'ai hésité entre plusieurs idées » se lit bien à l'écran,
+ * moins bien imprimé sur du papier qu'on offrira. Ils se modifient donc
+ * séparément, sans toucher à la page.
  *
  * **Sur l'appareil, pas en base.** Les persister demanderait cinq colonnes, une
  * migration et autant de règles de validation, pour un texte qu'on écrit une
@@ -57,8 +57,6 @@ export type PrintTexts = {
   /** La ligne sous le QR code, au dos. */
   cta: string;
 };
-
-export const CTA_DEFAUT = "Scanne pour ouvrir ta carte";
 
 /** Bornes de saisie. Au-delà, le texte déborde de la feuille au lieu de rétrécir. */
 export const PRINT_LIMITS = {

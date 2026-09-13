@@ -4,9 +4,10 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import QRCode from "qrcode";
 import GiftMotif from "@/components/GiftMotif";
+import { useDictionnaire } from "@/components/i18n/Dictionnaire";
+import { remplir } from "@/lib/i18n/remplir";
 import { fontById, occasionById } from "@/lib/occasions";
 import { paletteStyle } from "@/lib/palettes";
-import { CTA_DEFAUT } from "@/lib/printTexts";
 import type { Theme } from "@/lib/types";
 
 /**
@@ -41,6 +42,8 @@ export default function CardPreview({
   /** Vers l'atelier d'impression. Chemin interne ou adresse absolue. */
   printHref: string;
 }) {
+  const { d } = useDictionnaire();
+  const t = d.apercuCarte;
   const [svg, setSvg] = useState<string | null>(null);
   const [rate, setRate] = useState(false);
   const motif = occasionById(theme.occasion).motif;
@@ -112,12 +115,12 @@ export default function CardPreview({
                 <div className="feuille__qr-vide" />
               )}
             </div>
-            <p className="feuille__cta">{CTA_DEFAUT}</p>
+            <p className="feuille__cta">{d.impression.cta}</p>
             {signature.trim() && <p className="feuille__signature">{signature}</p>}
           </div>
 
           <div className="feuille__panneau feuille__couv">
-            {to.trim() && <p className="feuille__to">Pour {to}</p>}
+            {to.trim() && <p className="feuille__to">{remplir(t.pour, { prenom: to })}</p>}
             {intro.trim() && <p className="feuille__intro">{intro}</p>}
             <h2 className="feuille__titre">{title}</h2>
           </div>
@@ -130,13 +133,11 @@ export default function CardPreview({
           celui de la page, et le relire deux fois n'apprend rien. Une legende la
           decrit a la place.
         */}
-        <p className="carte-apercu__legende">
-          Une feuille A4 pliée en deux : la couverture devant, le QR code au dos.
-        </p>
+        <p className="carte-apercu__legende">{t.legende}</p>
 
         <div className="carte-apercu__actions">
           <Link className="btn btn--sm" href={printHref}>
-            Carte à imprimer
+            {t.imprimer}
           </Link>
           <button
             type="button"
@@ -144,22 +145,18 @@ export default function CardPreview({
             disabled={!svg}
             onClick={() => svg && telecharger(svg)}
           >
-            Télécharger le QR code
+            {t.telechargerQr}
           </button>
         </div>
       </div>
 
-      {rate && (
-        <p className="notice notice--warn carte-apercu__alerte">
-          Le QR code n&apos;a pas pu être généré. Le lien reste utilisable tel quel.
-        </p>
-      )}
+      {rate && <p className="notice notice--warn carte-apercu__alerte">{t.qrRate}</p>}
 
       {!isOpenableUrl(url) && (
         <p className="notice notice--warn carte-apercu__alerte">
-          Ce lien pointe vers une adresse locale : les téléphones l&apos;affichent sans pouvoir
-          l&apos;ouvrir. Renseigne <code>NEXT_PUBLIC_BASE_URL</code> avec l&apos;adresse publique du
-          site.
+          {t.adresseLocaleDebut}
+          <code>NEXT_PUBLIC_BASE_URL</code>
+          {t.adresseLocaleFin}
         </p>
       )}
     </div>

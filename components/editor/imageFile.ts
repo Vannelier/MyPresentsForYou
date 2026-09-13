@@ -1,5 +1,6 @@
 "use client";
 
+import { EN_TETE_LANGUE, type Langue } from "@/lib/i18n/langues";
 import { ALLOWED_IMAGE_TYPES, LIMITS } from "@/lib/limits";
 
 export const ACCEPTED_IMAGE_TYPES: readonly string[] = ALLOWED_IMAGE_TYPES;
@@ -82,12 +83,28 @@ export function imageUrlFromClipboard(data: DataTransfer | null): string | null 
 
 export type UploadResult = { ok: true; url: string } | { ok: false; error: string };
 
-export async function uploadImage(file: File): Promise<UploadResult> {
+/*
+ * Les messages et la langue viennent de l'appelant : ce module n'a pas acces au
+ * contexte React. La langue part dans l'en-tete, pour que la route reponde dans
+ * la meme.
+ */
+export type MessagesTeleversement = {
+  formats: string;
+  taille: string;
+  echec: string;
+  echecConnexion: string;
+};
+
+export async function uploadImage(
+  file: File,
+  messages: MessagesTeleversement,
+  langue: Langue,
+): Promise<UploadResult> {
   if (!ACCEPTED_IMAGE_TYPES.includes(file.type)) {
-    return { ok: false, error: "Formats acceptés : JPEG, PNG ou WebP." };
+    return { ok: false, error: messages.formats };
   }
   if (file.size > MAX_IMAGE_BYTES) {
-    return { ok: false, error: "L'image ne doit pas dépasser 5 Mo." };
+    return { ok: false, error: messages.taille };
   }
 
   const prepared = await prepareImageForUpload(file);
@@ -95,13 +112,17 @@ export async function uploadImage(file: File): Promise<UploadResult> {
   body.append("file", prepared);
 
   try {
-    const res = await fetch("/api/upload", { method: "POST", body });
+    const res = await fetch("/api/upload", {
+      method: "POST",
+      body,
+      headers: { [EN_TETE_LANGUE]: langue },
+    });
     const data = (await res.json().catch(() => ({}))) as { url?: string; error?: string };
     if (!res.ok || !data.url) {
-      return { ok: false, error: data.error ?? "Le téléversement a échoué." };
+      return { ok: false, error: data.error ?? messages.echec };
     }
     return { ok: true, url: data.url };
   } catch {
-    return { ok: false, error: "Le téléversement a échoué. Vérifie ta connexion." };
+    return { ok: false, error: messages.echecConnexion };
   }
 }

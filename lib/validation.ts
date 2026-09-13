@@ -10,6 +10,9 @@ import {
   isOpeningId,
   occasionById,
 } from "./occasions";
+import { dictionnaire } from "./i18n";
+import type { CleErreur, Erreur } from "./i18n/erreurs";
+import { langueOuDefaut, type Langue } from "./i18n/langues";
 import { PALETTES } from "./palettes";
 import { slugError } from "./slug";
 
@@ -17,34 +20,41 @@ import { ALLOWED_IMAGE_TYPES, LIMITS } from "./limits";
 
 export { ALLOWED_IMAGE_TYPES, LIMITS };
 
+/*
+ * L'erreur porte sa cle, pas son texte : la validation ne sait pas dans quelle
+ * langue repondre. `handleError` la traduit avec les messages de la requete.
+ */
 export class ValidationError extends Error {
   readonly field: string | undefined;
-  constructor(message: string, field?: string) {
-    super(message);
+  readonly erreur: Erreur;
+  constructor(erreur: Erreur | CleErreur, field?: string) {
+    const e = typeof erreur === "string" ? { cle: erreur } : erreur;
+    super(e.cle);
     this.name = "ValidationError";
+    this.erreur = e;
     this.field = field;
   }
 }
 
 function asObject(value: unknown): Record<string, unknown> {
   if (!value || typeof value !== "object" || Array.isArray(value)) {
-    throw new ValidationError("Corps de requete invalide.");
+    throw new ValidationError("corpsInvalide");
   }
   return value as Record<string, unknown>;
 }
 
 function text(value: unknown, field: string, max: number, { required = false } = {}): string {
   if (value === undefined || value === null) {
-    if (required) throw new ValidationError("Ce champ est obligatoire.", field);
+    if (required) throw new ValidationError("champObligatoire", field);
     return "";
   }
-  if (typeof value !== "string") throw new ValidationError("Ce champ doit etre du texte.", field);
+  if (typeof value !== "string") throw new ValidationError("champTexte", field);
   const trimmed = value.trim();
   if (required && trimmed.length === 0) {
-    throw new ValidationError("Ce champ est obligatoire.", field);
+    throw new ValidationError("champObligatoire", field);
   }
   if (trimmed.length > max) {
-    throw new ValidationError(`Ce champ ne peut pas depasser ${max} caracteres.`, field);
+    throw new ValidationError({ cle: "champTropLong", valeurs: { max } }, field);
   }
   return trimmed;
 }
@@ -60,11 +70,11 @@ export function isHttpUrl(value: string): boolean {
 
 function optionalUrl(value: unknown, field: string): string | null {
   if (value === undefined || value === null || value === "") return null;
-  if (typeof value !== "string") throw new ValidationError("URL invalide.", field);
+  if (typeof value !== "string") throw new ValidationError("urlInvalide", field);
   const trimmed = value.trim();
   if (trimmed === "") return null;
   if (!isHttpUrl(trimmed)) {
-    throw new ValidationError("L'URL doit commencer par http:// ou https://.", field);
+    throw new ValidationError("urlProtocole", field);
   }
   return trimmed;
 }
@@ -82,10 +92,10 @@ const ISO_DATE =
 function optionalDate(value: unknown, field: string): string | null {
   if (value === undefined || value === null || value === "") return null;
   if (typeof value !== "string" || !ISO_DATE.test(value.trim())) {
-    throw new ValidationError("Date invalide.", field);
+    throw new ValidationError("dateInvalide", field);
   }
   const date = new Date(value.trim());
-  if (Number.isNaN(date.getTime())) throw new ValidationError("Date invalide.", field);
+  if (Number.isNaN(date.getTime())) throw new ValidationError("dateInvalide", field);
   return date.toISOString();
 }
 
@@ -116,6 +126,12 @@ export function validateTheme(value: unknown): Theme {
   // Laisser un mot n'a pas de sens quand on scanne le QR devant la personne :
   // c'est donc au donneur de l'activer, jamais actif par defaut.
   const reply = o.reply === true;
+  /*
+   * La langue de la carte, un identifiant comme l'occasion. Toute langue connue
+   * est acceptee, pas seulement les actives : une carte composee en allemand
+   * doit le rester, meme si l'allemand etait un jour desactive.
+   */
+  const langue = langueOuDefaut(o.langue);
 
   return {
     layout,
@@ -126,24 +142,26 @@ export function validateTheme(value: unknown): Theme {
     opening,
     effect,
     reply,
+    langue,
   };
 }
 
-export function validateItems(value: unknown): Item[] {
-  if (!Array.isArray(value)) throw new ValidationError("La liste de cadeaux est invalide.", "items");
+export function validateItems(value: unknown, langue: Langue): Item[] {
+  if (!Array.isArray(value)) throw new ValidationError("listeInvalide", "items");
   if (value.length < LIMITS.itemsMin) {
-    throw new ValidationError("Il faut au moins un cadeau.", "items");
+    throw new ValidationError("auMoinsUnCadeau", "items");
   }
   if (value.length > LIMITS.itemsMax) {
-    throw new ValidationError(`Pas plus de ${LIMITS.itemsMax} cadeaux.`, "items");
+    throw new ValidationError({ cle: "tropDeCadeaux", valeurs: { max: LIMITS.itemsMax } }, "items");
   }
 
+  const sansTitre = dictionnaire(langue).editeur.sansTitre;
   const seen = new Set<string>();
   return value.map((raw, i) => {
     const o = asObject(raw);
     // Un titre vide ne bloque plus la creation : la carte affiche un libelle de
-    // repli plutot que de refuser l'enregistrement.
-    const label = text(o.label, `items.${i}.label`, LIMITS.itemLabel) || "Sans titre";
+    // repli, dans sa langue, plutot que de refuser l'enregistrement.
+    const label = text(o.label, `items.${i}.label`, LIMITS.itemLabel) || sansTitre;
     const note = text(o.note, `items.${i}.note`, LIMITS.itemNote) || null;
     const image_url = optionalUrl(o.image_url, `items.${i}.image_url`);
     const source_url = optionalUrl(o.source_url, `items.${i}.source_url`);
@@ -189,6 +207,7 @@ export function validateCreate(body: unknown): PageInput & { slug: string } {
  * ne fait donc que borner les longueurs.
  */
 export function validatePageFields(o: Record<string, unknown>): PageInput {
+  const theme = validateTheme(o.theme);
   return {
     name: text(o.name, "name", LIMITS.name),
     intro_message: text(o.intro_message, "intro_message", LIMITS.intro),
@@ -204,8 +223,8 @@ export function validatePageFields(o: Record<string, unknown>): PageInput {
     items_message: text(o.items_message, "items_message", LIMITS.itemsMessage),
     thank_you_message: text(o.thank_you_message, "thank_you_message", LIMITS.message),
     cover_image_url: optionalUrl(o.cover_image_url, "cover_image_url"),
-    theme: validateTheme(o.theme),
-    items: validateItems(o.items),
+    theme,
+    items: validateItems(o.items, langueOuDefaut(theme.langue)),
   };
 }
 
@@ -240,9 +259,11 @@ export function validatePatch(body: unknown): Partial<PageInput> {
   }
   if ("cover_image_url" in o) out.cover_image_url = optionalUrl(o.cover_image_url, "cover_image_url");
   if ("theme" in o) out.theme = validateTheme(o.theme);
-  if ("items" in o) out.items = validateItems(o.items);
+  // L'editeur envoie toujours le theme avec les cadeaux ; un correctif qui n'en
+  // porte pas retombe sur le libelle francais.
+  if ("items" in o) out.items = validateItems(o.items, langueOuDefaut(out.theme?.langue));
   if (Object.keys(out).length === 0) {
-    throw new ValidationError("Aucune modification a enregistrer.");
+    throw new ValidationError("aucuneModification");
   }
   return out;
 }

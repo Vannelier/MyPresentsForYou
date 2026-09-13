@@ -1,7 +1,8 @@
 import { rowToPage, slugExists, sql } from "@/lib/db";
 import { mirrorCover, mirrorItemImages, type ImageWarning } from "@/lib/blob";
 import { adminUrlFor, freePageTtlDays, publicUrlFor } from "@/lib/env";
-import { fail, handleError, json, readJson, tropDeRequetes } from "@/lib/http";
+import { erreursDe, fail, handleError, json, readJson, tropDeRequetes } from "@/lib/http";
+import { remplir } from "@/lib/i18n/remplir";
 import { QUOTAS } from "@/lib/rateLimit";
 import { newAdminToken } from "@/lib/ids";
 import { suggestVariant } from "@/lib/slug";
@@ -11,6 +12,7 @@ export const dynamic = "force-dynamic";
 export const maxDuration = 60;
 
 export async function POST(req: Request) {
+  const e = erreursDe(req);
   try {
     // La route la plus couteuse du site : une insertion, la recopie des images
     // vers le stockage, et une page qui vivra un an. Deux garde-fous —
@@ -25,22 +27,14 @@ export async function POST(req: Request) {
 
     // Une carte qui se revele apres son expiration ne s'ouvrirait jamais.
     if (input.reveal_at && new Date(input.reveal_at).getTime() >= Date.now() + freePageTtlDays() * 86_400_000) {
-      return fail(
-        `La date de révélation doit tomber avant l'expiration de la page, dans ${freePageTtlDays()} jours.`,
-        400,
-        "reveal_at",
-      );
+      return fail(remplir(e.revelationTardive, { jours: freePageTtlDays() }), 400, "reveal_at");
     }
 
     // L'adresse n'est plus modifiable depuis le formulaire : une collision doit
     // donc se resoudre toute seule, sinon plus personne ne peut la corriger.
     const slug = await freeSlug(input.slug);
     if (!slug) {
-      return fail(
-        "Trop de cartes portent déjà ce nom. Change le nom de la carte.",
-        409,
-        "name",
-      );
+      return fail(e.nomTropPris, 409, "name");
     }
 
     const [
@@ -48,9 +42,9 @@ export async function POST(req: Request) {
       { cover_image_url, warnings: coverWarnings },
       header,
     ] = await Promise.all([
-      mirrorItemImages(input.items),
-      mirrorCover(input.cover_image_url),
-      mirrorCover(input.header_image_url),
+      mirrorItemImages(input.items, e),
+      mirrorCover(input.cover_image_url, e),
+      mirrorCover(input.header_image_url, e),
     ]);
     const header_image_url = header.cover_image_url;
     const warnings: ImageWarning[] = [...coverWarnings, ...header.warnings, ...itemWarnings];
@@ -80,7 +74,7 @@ export async function POST(req: Request) {
     } catch (err) {
       // Collision gagnee par une creation concurrente entre le test et l'INSERT.
       if (isUniqueViolation(err)) {
-        return fail("Réessaie : une autre carte vient de prendre cette adresse.", 409, "name");
+        return fail(e.adresseVientDetrePrise, 409, "name");
       }
       throw err;
     }
@@ -97,7 +91,7 @@ export async function POST(req: Request) {
       201,
     );
   } catch (err) {
-    return handleError(err);
+    return handleError(err, req);
   }
 }
 

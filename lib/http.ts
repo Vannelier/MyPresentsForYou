@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
 import { DbNotConfiguredError } from "./db";
+import { dictionnaire } from "./i18n";
+import { traduire, type Erreurs } from "./i18n/erreurs";
+import { EN_TETE_LANGUE, langueOuDefaut } from "./i18n/langues";
 import {
   adresseClient,
   consomme,
@@ -16,9 +19,20 @@ export function fail(message: string, status: number, field?: string) {
   return NextResponse.json({ error: message, field }, { status });
 }
 
+/**
+ * Les messages d'une requête, dans la langue que le client annonce par
+ * `x-langue` : celle de la page où il se trouve, donc celle de la carte. Sans
+ * en-tête, le français. Pas l'Accept-Language : un donneur peut régler son
+ * navigateur en anglais et composer une carte en français, qui lui répond en
+ * français.
+ */
+export function erreursDe(req: Request): Erreurs {
+  return dictionnaire(langueOuDefaut(req.headers.get(EN_TETE_LANGUE))).erreurs;
+}
+
 /** 404 muet : ne jamais révéler l'existence d'une page derrière un token admin. */
-export function notFoundJson() {
-  return fail("Introuvable.", 404);
+export function notFoundJson(req: Request) {
+  return fail(erreursDe(req).introuvable, 404);
 }
 
 /**
@@ -47,10 +61,7 @@ export function tropDeRequetes(
   if (verdict.ok) return null;
 
   return NextResponse.json(
-    {
-      error:
-        "Trop de requêtes en peu de temps. Reprends dans quelques minutes — c'est une protection contre les abus, pas contre toi.",
-    },
+    { error: erreursDe(req).tropDeRequetes },
     { status: 429, headers: { "Retry-After": String(verdict.retryAfterS) } },
   );
 }
@@ -59,19 +70,20 @@ export async function readJson(req: Request): Promise<unknown> {
   try {
     return await req.json();
   } catch {
-    throw new ValidationError("Corps de requête illisible : JSON attendu.");
+    throw new ValidationError("corpsIllisible");
   }
 }
 
 /** Convertit une ValidationError en 400 exploitable côté UI ; le reste en 500 muet. */
-export function handleError(err: unknown) {
+export function handleError(err: unknown, req: Request) {
+  const e = erreursDe(req);
   if (err instanceof ValidationError) {
-    return fail(err.message, 400, err.field);
+    return fail(traduire(e, err.erreur), 400, err.field);
   }
   if (err instanceof DbNotConfiguredError) {
     console.error("[mypresentsforyou]", err.message);
-    return fail("Base de données non configurée sur ce déploiement.", 503);
+    return fail(e.baseNonConfiguree, 503);
   }
   console.error("[mypresentsforyou]", err);
-  return fail("Une erreur inattendue est survenue.", 500);
+  return fail(e.inattendue, 500);
 }

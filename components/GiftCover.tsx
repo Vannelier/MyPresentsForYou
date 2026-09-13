@@ -2,6 +2,9 @@
 
 import { useEffect, useState } from "react";
 import GiftMotif from "@/components/GiftMotif";
+import { useDictionnaire } from "@/components/i18n/Dictionnaire";
+import { LOCALES } from "@/lib/i18n/langues";
+import { remplir } from "@/lib/i18n/remplir";
 import type { MotifKind, OpeningId } from "@/lib/occasions";
 
 /**
@@ -39,7 +42,8 @@ export default function GiftCover({
   closing: boolean;
   onOpen: () => void;
 }) {
-  const remaining = useCountdown(sealedUntil);
+  const { langue, d } = useDictionnaire();
+  const remaining = useCountdown(sealedUntil, d.carte.rebours);
   const sealed = remaining !== null;
 
   return (
@@ -59,7 +63,7 @@ export default function GiftCover({
       <GiftMotif kind={motif} />
 
       <div className="cover__inner">
-        {to && <p className="cover__to">Pour {to}</p>}
+        {to && <p className="cover__to">{remplir(d.carte.pour, { prenom: to })}</p>}
         <p className="cover__intro">{intro}</p>
         <h1 className="cover__title">{title}</h1>
 
@@ -69,12 +73,14 @@ export default function GiftCover({
               {remaining}
             </p>
             <p className="cover__when">
-              À ouvrir le{" "}
-              {sealedUntil?.toLocaleDateString("fr-BE", {
-                day: "numeric",
-                month: "long",
-                hour: "2-digit",
-                minute: "2-digit",
+              {remplir(d.carte.aOuvrirLe, {
+                date:
+                  sealedUntil?.toLocaleDateString(LOCALES[langue].intl, {
+                    day: "numeric",
+                    month: "long",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  }) ?? "",
               })}
             </p>
             {waitMessage.trim() && <p className="cover__patience">{waitMessage}</p>}
@@ -94,7 +100,10 @@ export default function GiftCover({
  * Le compte à rebours n'est qu'un confort : le serveur refuse de toute façon un
  * choix envoyé avant la date.
  */
-function useCountdown(until: Date | null): string | null {
+function useCountdown(
+  until: Date | null,
+  formats: { jours: string; heures: string; minutes: string },
+): string | null {
   const [now, setNow] = useState<number | null>(null);
 
   useEffect(() => {
@@ -116,9 +125,9 @@ function useCountdown(until: Date | null): string | null {
   const minutes = Math.floor((s % 3600) / 60);
   const secondes = s % 60;
 
-  if (jours > 0) return `${jours} j ${heures} h`;
-  if (heures > 0) return `${heures} h ${pad(minutes)} min`;
-  return `${minutes}:${pad(secondes)}`;
+  if (jours > 0) return remplir(formats.jours, { j: jours, h: heures });
+  if (heures > 0) return remplir(formats.heures, { h: heures, m: pad(minutes) });
+  return remplir(formats.minutes, { m: minutes, s: pad(secondes) });
 }
 
 function pad(n: number): string {

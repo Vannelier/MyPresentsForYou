@@ -1,16 +1,22 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import AdminView, { type AdminSnapshot } from "@/components/AdminView";
-import { findByAdminToken } from "@/lib/db";
+import { lireCarteAdmin } from "@/lib/carte";
+import { dictionnaire } from "@/lib/i18n";
+import { langueOuDefaut } from "@/lib/i18n/langues";
 import { publicUrlFor } from "@/lib/env";
 import { isExpired, isLocked, isSealed } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
 
-export const metadata: Metadata = {
-  title: "Administration — MyPresentsForYou",
-  robots: { index: false, follow: false, nocache: true },
-};
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { token } = await params;
+  const page = await lireCarteAdmin(token).catch(() => null);
+  return {
+    title: dictionnaire(langueOuDefaut(page?.theme.langue)).admin.titreMeta,
+    robots: { index: false, follow: false, nocache: true },
+  };
+}
 
 type Props = { params: Promise<{ token: string }> };
 
@@ -19,7 +25,7 @@ export default async function AdminRoute({ params }: Props) {
 
   // Un token invalide donne un 404 identique à celui d'une page inexistante :
   // rien ne doit laisser deviner qu'une page existe derrière cette adresse.
-  const page = await findByAdminToken(token);
+  const page = await lireCarteAdmin(token);
   if (!page) notFound();
 
   const snapshot: AdminSnapshot = {

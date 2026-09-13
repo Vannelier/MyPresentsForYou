@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import TextPage from "@/components/TextPage";
+import { alternatesDe } from "@/lib/i18n/alternates";
+import { cheminVers } from "@/lib/i18n/chemins";
+import { langueOuDefaut } from "@/lib/i18n/langues";
 import { SITE, aRemplir } from "@/lib/site";
 
 const MISE_A_JOUR = "2026-09-13";
@@ -9,12 +12,15 @@ export const metadata: Metadata = {
   title: "Politique de confidentialité — MyPresentsForYou",
   description:
     "MyPresentsForYou ne pose aucun cookie, n'utilise aucun traqueur et ne demande aucun compte. Ce qui est stocké, pour combien de temps, et comment tout effacer.",
-  alternates: { canonical: "/confidentialite" },
+  alternates: alternatesDe("fr", "confidentialite"),
 };
 
-export default function Confidentialite() {
+export default async function Confidentialite({ params }: { params: Promise<{ langue: string }> }) {
+  const langue = langueOuDefaut((await params).langue);
   return (
     <TextPage
+      langue={langue}
+      page="confidentialite"
       titre="Politique de confidentialité"
       chapo="MyPresentsForYou est construit pour avoir le moins de données possible à protéger. Cette page dit exactement lesquelles, et pourquoi elles existent."
       miseAJour={MISE_A_JOUR}
@@ -106,7 +112,7 @@ export default function Confidentialite() {
       </p>
       <p>
         Si tu as perdu ce lien, écris-nous depuis la page{" "}
-        <Link href="/contact">Contact</Link> en indiquant l&apos;adresse publique de la carte.
+        <Link href={cheminVers(langue, "contact")}>Contact</Link> en indiquant l&apos;adresse publique de la carte.
       </p>
 
       <h2>À qui les données sont transmises</h2>
@@ -115,7 +121,7 @@ export default function Confidentialite() {
         Deux prestataires techniques interviennent : l&apos;hébergeur du site et de la base de
         données, et le service de stockage des images. Ils agissent uniquement sur nos instructions,
         pour faire fonctionner le service. Leur identité figure dans les{" "}
-        <Link href="/mentions-legales">mentions légales</Link>.
+        <Link href={cheminVers(langue, "mentions-legales")}>mentions légales</Link>.
       </p>
       <p>
         Une précision technique : quand tu colles l&apos;adresse d&apos;une page produit pour en
@@ -135,7 +141,7 @@ export default function Confidentialite() {
         {aRemplir(SITE.email) ? (
           <>
             {" "}
-            à l&apos;adresse indiquée sur la page <Link href="/contact">Contact</Link>
+            à l&apos;adresse indiquée sur la page <Link href={cheminVers(langue, "contact")}>Contact</Link>
           </>
         ) : (
           <>

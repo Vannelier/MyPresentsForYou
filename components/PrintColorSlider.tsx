@@ -1,6 +1,8 @@
 "use client";
 
+import { useDictionnaire } from "@/components/i18n/Dictionnaire";
 import { hslToHex, hexToHsl } from "@/lib/carteCouleur";
+import { remplir } from "@/lib/i18n/remplir";
 import { paletteById, paletteIdOf } from "@/lib/palettes";
 
 /**
@@ -33,6 +35,8 @@ export default function PrintColorSlider({
    * et clarte de la palette comprises — et non un `hsl(H 100% 50%)` fluo qui
    * promettrait une couleur que la carte n'a jamais.
    */
+  const { d } = useDictionnaire();
+  const im = d.impression;
   const accent = paletteById(paletteIdOf(palette)).vars["--accent"];
   const base = hexToHsl(accent) ?? { h: 0, s: 0.4, l: 0.45 };
   const apercu = hslToHex({ ...base, h: teinte });
@@ -66,7 +70,7 @@ export default function PrintColorSlider({
     <div className="teinte">
       <div className="teinte__tete">
         <label className="teinte__label" htmlFor="teinte-carte">
-          Couleur de la carte
+          {im.couleur}
         </label>
         {ecarte && (
           <button
@@ -74,7 +78,7 @@ export default function PrintColorSlider({
             className="teinte__retour"
             onClick={() => onChange(defaut)}
           >
-            Couleur du thème
+            {im.couleurTheme}
           </button>
         )}
       </div>
@@ -95,7 +99,7 @@ export default function PrintColorSlider({
            * a cote porte l'information pour ceux qui la voient.
            */
           aria-valuetext={
-            ecarte ? `Teinte ${auTour(teinte)} degrés` : "Couleur du thème de la page-cadeau"
+            ecarte ? remplir(im.teinteDegres, { n: auTour(teinte) }) : im.couleurThemePage
           }
           style={{ "--apercu": apercu, "--piste": piste } as React.CSSProperties}
         />

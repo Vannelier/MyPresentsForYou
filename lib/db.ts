@@ -160,6 +160,7 @@ function normaliseTheme(value: unknown): Theme {
     opening: raw.opening,
     effect: raw.effect,
     reply: raw.reply,
+    langue: raw.langue,
   };
 }
 

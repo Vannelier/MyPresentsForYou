@@ -6,9 +6,10 @@ import GiftCover from "@/components/GiftCover";
 import GiftEffect from "@/components/GiftEffect";
 import GiftMotif from "@/components/GiftMotif";
 import GiftZoom from "@/components/GiftZoom";
+import { useDictionnaire } from "@/components/i18n/Dictionnaire";
+import { EN_TETE_LANGUE } from "@/lib/i18n/langues";
+import { remplir } from "@/lib/i18n/remplir";
 import {
-  ITEMS_MESSAGE_HINT,
-  ITEMS_TITLE_HINT,
   effectById,
   fontById,
   occasionById,
@@ -111,6 +112,8 @@ export default function GiftView({
   lienSortie,
   pleineFenetre = false,
 }: Props) {
+  const { langue, d } = useDictionnaire();
+  const mots = d.carte;
   const alreadyChosen = Boolean(page.chosen_at);
   const [phase, setPhase] = useState<Phase>(alreadyChosen ? "locked" : "choosing");
   const [selectedId, setSelectedId] = useState<string | null>(page.chosen_item_id);
@@ -416,18 +419,18 @@ export default function GiftView({
     try {
       const res = await fetch(`/api/pages/${encodeURIComponent(page.slug)}/choose`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", [EN_TETE_LANGUE]: langue },
         body: JSON.stringify({ itemId: selectedId }),
       });
       const data = (await res.json().catch(() => ({}))) as { error?: string };
       if (!res.ok) {
-        setError(data.error ?? "Le choix n'a pas pu être enregistré.");
+        setError(data.error ?? mots.choixRate);
         setPhase("choosing");
         return;
       }
       setPhase("done");
     } catch {
-      setError("Connexion perdue. Vérifie ta connexion et réessaie.");
+      setError(mots.connexionPerdue);
       setPhase("choosing");
     }
   }
@@ -450,23 +453,24 @@ export default function GiftView({
     try {
       const res = await fetch(`/api/pages/${encodeURIComponent(page.slug)}/reply`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", [EN_TETE_LANGUE]: langue },
         body: JSON.stringify({ reply: mot }),
       });
       const data = (await res.json().catch(() => ({}))) as { error?: string };
       if (!res.ok) {
-        setReplyError(data.error ?? "Le mot n'a pas pu être envoyé.");
+        setReplyError(data.error ?? mots.motRate);
         setReplyPhase("writing");
         return;
       }
       setReplyPhase("sent");
     } catch {
-      setReplyError("Connexion perdue. Vérifie ta connexion et réessaie.");
+      setReplyError(mots.connexionPerdue);
       setReplyPhase("writing");
     }
   }
 
   const occasion = occasionById(page.theme.occasion);
+  const formules = d.occasions[occasion.id];
   const skin = {
     ...paletteStyle(page.theme.palette),
     "--font-title": fontById(page.theme.font).cssVar,
@@ -486,13 +490,13 @@ export default function GiftView({
   const rootClass = `gift-root${variant === "embedded" ? " gift-root--embedded" : ""}`;
   const motif = page.theme.motif === false ? "none" : occasion.motif;
   const effect = effectById(page.theme.effect).id;
-  const intro = page.intro_message.trim() || occasion.intro;
-  const openLabel = page.open_label.trim() || occasion.openHint;
-  const waitMessage = page.wait_message.trim() || occasion.waitHint;
-  const itemsTitle = page.items_title.trim() || ITEMS_TITLE_HINT;
+  const intro = page.intro_message.trim() || formules.intro;
+  const openLabel = page.open_label.trim() || formules.ouvrir;
+  const waitMessage = page.wait_message.trim() || formules.attente;
+  const itemsTitle = page.items_title.trim() || mots.titreCadeaux;
   // Un cadeau unique n'est pas un choix : la page devient une annonce.
   const itemsMessage =
-    page.items_message.trim() || (solo ? "C'est pour toi." : ITEMS_MESSAGE_HINT);
+    page.items_message.trim() || (solo ? mots.messageSolo : mots.messageCadeaux);
 
   /*
    * Quand le voile est actif, c'est lui qui porte le prenom, le mot d'ouverture
@@ -521,7 +525,7 @@ export default function GiftView({
           {chosen && (
             <>
               <p>
-                {solo ? "Ton cadeau : " : "Ton choix : "}
+                {solo ? mots.tonCadeau : mots.tonChoix}
                 <strong>{chosen.label}</strong>
               </p>
               <div className="chosen-recap">
@@ -531,7 +535,7 @@ export default function GiftView({
           )}
           {/* Le mot deja enregistre, ou celui qui vient d'etre envoye. */}
           {(sentReply || replyPhase === "sent") && (
-            <p className="state__reply">« {sentReply || reply.trim()} »</p>
+            <p className="state__reply">{remplir(mots.motCite, { mot: sentReply || reply.trim() })}</p>
           )}
 
           {/*
@@ -546,12 +550,12 @@ export default function GiftView({
                   className="btn btn--ghost btn--sm"
                   onClick={() => setReplyPhase("writing")}
                 >
-                  Laisser un mot
+                  {mots.laisserMot}
                 </button>
               ) : (
                 <>
                   <label className="reply__label" htmlFor="reply">
-                    Ton mot <span>Facultatif</span>
+                    {mots.tonMot} <span>{mots.facultatif}</span>
                   </label>
                   <textarea
                     id="reply"
@@ -559,7 +563,7 @@ export default function GiftView({
                     maxLength={LIMITS.reply}
                     rows={3}
                     autoFocus
-                    placeholder="Merci, ça me fait très plaisir…"
+                    placeholder={mots.exempleMot}
                     onChange={(e) => setReply(e.target.value)}
                   />
                   {replyError && (
@@ -574,7 +578,7 @@ export default function GiftView({
                       disabled={!reply.trim() || replyPhase === "sending"}
                       onClick={sendReply}
                     >
-                      {replyPhase === "sending" ? "Envoi…" : "Envoyer"}
+                      {replyPhase === "sending" ? mots.envoi : mots.envoyer}
                     </button>
                   </div>
                 </>
@@ -586,11 +590,11 @@ export default function GiftView({
           {mode === "preview" && (
             <div className="btn-row" style={{ justifyContent: "center", marginTop: "2rem" }}>
               <button type="button" className="btn btn--ghost btn--sm" onClick={() => setPhase("choosing")}>
-                Rejouer l&apos;aperçu
+                {mots.rejouer}
               </button>
               {onExitPreview && (
                 <button type="button" className="btn btn--sm" onClick={onExitPreview}>
-                  Revenir au formulaire
+                  {mots.revenirFormulaire}
                 </button>
               )}
               {lienSortie && (
@@ -621,7 +625,7 @@ export default function GiftView({
 
         {showIntroBlock && (
           <header className="gift-head">
-            {page.recipient_name && <p className="gift-to">Pour {page.recipient_name}</p>}
+            {page.recipient_name && <p className="gift-to">{remplir(mots.pour, { prenom: page.recipient_name })}</p>}
             <p className="eyebrow">{intro}</p>
             <h1>{page.welcome_message}</h1>
           </header>
@@ -658,7 +662,7 @@ export default function GiftView({
                 <button
                   type="button"
                   className="zoom-btn"
-                  aria-label={`Voir la photo de ${item.label} en grand`}
+                  aria-label={remplir(mots.voirPhoto, { cadeau: item.label })}
                   onClick={() => setZoom(item)}
                 >
                   <span aria-hidden="true">⤢</span>
@@ -677,7 +681,7 @@ export default function GiftView({
         {page.signature.trim() && <p className="signature">{page.signature}</p>}
 
         <p className="made-with">
-          Page-cadeau générée avec <strong>MyPresentsForYou</strong>
+          {mots.faitAvec}<strong>{d.commun.marque}</strong>
         </p>
       </div>
 
@@ -690,12 +694,12 @@ export default function GiftView({
             onClick={confirm}
           >
             {phase === "submitting"
-              ? "Enregistrement…"
+              ? mots.enregistrement
               : solo
-                ? "Merci !"
+                ? mots.merci
                 : selectedId
-                  ? "Confirmer mon choix"
-                  : "Sélectionne un cadeau"}
+                  ? mots.confirmer
+                  : mots.selectionne}
           </button>
         </div>
       </div>

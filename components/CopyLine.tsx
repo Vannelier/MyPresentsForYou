@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useDictionnaire } from "@/components/i18n/Dictionnaire";
 
 /**
  * Une URL affichée avec son bouton « Copier ». Vit dans son propre fichier :
@@ -9,6 +10,7 @@ import { useState } from "react";
  */
 export default function CopyLine({ value }: { value: string }) {
   const [copied, setCopied] = useState(false);
+  const { d } = useDictionnaire();
 
   async function copy() {
     try {
@@ -24,7 +26,7 @@ export default function CopyLine({ value }: { value: string }) {
     <div className="link-box__value">
       <code>{value}</code>
       <button type="button" className="btn btn--ghost btn--sm" onClick={copy}>
-        {copied ? "Copié" : "Copier"}
+        {copied ? d.copier.copie : d.copier.copier}
       </button>
     </div>
   );

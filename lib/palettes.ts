@@ -19,7 +19,6 @@ export type PaletteId =
 
 export type Palette = {
   id: PaletteId;
-  name: string;
   /** Aperçu dans le sélecteur : accent, fond, encre. */
   swatch: [string, string, string];
   vars: Record<string, string>;
@@ -28,7 +27,6 @@ export type Palette = {
 export const PALETTES: Palette[] = [
   {
     id: "terracotta",
-    name: "Terracotta",
     swatch: ["#b0533c", "#f4ece1", "#231f1c"],
     vars: {
       "--paper": "#faf6f0",
@@ -49,7 +47,6 @@ export const PALETTES: Palette[] = [
   },
   {
     id: "olive",
-    name: "Olive",
     swatch: ["#5f7746", "#eceedf", "#1f2419"],
     vars: {
       "--paper": "#f7f8f0",
@@ -70,7 +67,6 @@ export const PALETTES: Palette[] = [
   },
   {
     id: "encre",
-    name: "Encre",
     swatch: ["#3a5a8c", "#e6ecf3", "#1a2230"],
     vars: {
       "--paper": "#f5f7fa",
@@ -91,7 +87,6 @@ export const PALETTES: Palette[] = [
   },
   {
     id: "prune",
-    name: "Prune",
     swatch: ["#8c3d63", "#f1e6ec", "#261c22"],
     vars: {
       "--paper": "#faf5f7",
@@ -112,7 +107,6 @@ export const PALETTES: Palette[] = [
   },
   {
     id: "sapin",
-    name: "Sapin",
     swatch: ["#1f6b4a", "#e6ede7", "#16241d"],
     vars: {
       "--paper": "#f4f8f5",
@@ -133,7 +127,6 @@ export const PALETTES: Palette[] = [
   },
   {
     id: "rose",
-    name: "Rose",
     swatch: ["#c2415c", "#f7e4e8", "#2b1a1e"],
     vars: {
       "--paper": "#fdf5f6",
@@ -154,7 +147,6 @@ export const PALETTES: Palette[] = [
   },
   {
     id: "brume",
-    name: "Brume",
     swatch: ["#6f8ba3", "#e8eef2", "#232b31"],
     vars: {
       "--paper": "#f7fafb",
@@ -175,7 +167,6 @@ export const PALETTES: Palette[] = [
   },
   {
     id: "ivoire",
-    name: "Ivoire",
     swatch: ["#a58a4e", "#f2ece0", "#262218"],
     vars: {
       "--paper": "#fbf9f4",
@@ -203,7 +194,6 @@ export const PALETTES: Palette[] = [
      * abandonne le rouge, tout en gardant le papier chaud du reste du site.
      */
     id: "noisette",
-    name: "Noisette",
     swatch: ["#79512f", "#f1e7db", "#2a2119"],
     vars: {
       "--paper": "#faf6f1",

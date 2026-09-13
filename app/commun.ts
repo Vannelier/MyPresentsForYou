@@ -15,6 +15,14 @@ import "./landing.css";
 import "./legal.css";
 import "./print.css";
 
+/*
+ * Ce que partagent les trois layouts racines — le site sous `[langue]`, les
+ * cartes, l'administration. Il n'y a plus de layout racine unique : `<html
+ * lang>` doit porter la langue de la page, qu'un layout place au-dessus de
+ * `[langue]` ne connaitrait pas, et qu'une carte ne revele qu'une fois lue en
+ * base.
+ */
+
 const display = Fraunces({
   subsets: ["latin"],
   display: "swap",
@@ -70,57 +78,35 @@ const calligraphy = Dancing_Script({
   variable: "--font-calligraphy",
 });
 
-const DESCRIPTION =
-  "Compose une petite page-cadeau, envoie le lien, laisse la personne choisir.";
+/** Les variables CSS des sept polices, a poser sur `<html>`. */
+export const CLASSES_POLICES = [
+  display.variable,
+  sans.variable,
+  script.variable,
+  classic.variable,
+  delicate.variable,
+  round.variable,
+  calligraphy.variable,
+].join(" ");
 
-/*
- * Les icônes ne sont pas déclarées ici : `app/favicon.ico`, `app/icon.svg` et
- * `app/apple-icon.png` sont détectés par Next, qui pose les balises lui-même.
- * Les redéclarer dans `metadata.icons` remplacerait cette détection au lieu de
- * la compléter. Même chose pour la bannière, prise dans `app/opengraph-image.tsx`.
- *
- * `metadataBase` sert à tout le site : sans elle, l'adresse de la bannière
- * partirait en relatif, et aucune messagerie ne sait quoi en faire.
- *
- * Pas de gabarit de titre (`template`) : le titre d'une page-cadeau est celui
- * que le donneur a écrit, et lui accoler « — MyPresentsForYou » signerait sa carte à sa
- * place dans l'aperçu WhatsApp.
- */
-export const metadata: Metadata = {
-  metadataBase: new URL(baseUrl()),
-  title: "MyPresentsForYou — compose une page-cadeau",
-  description: DESCRIPTION,
-  applicationName: "MyPresentsForYou",
-  openGraph: {
-    type: "website",
-    siteName: "MyPresentsForYou",
-    locale: "fr_BE",
-    title: "MyPresentsForYou — offre le choix",
-    description: DESCRIPTION,
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "MyPresentsForYou — offre le choix",
-    description: DESCRIPTION,
-  },
-};
-
-export const viewport: Viewport = {
+export const VIEWPORT: Viewport = {
   themeColor: "#b0533c",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <html lang="fr" className={[
-        display.variable,
-        sans.variable,
-        script.variable,
-        classic.variable,
-        delicate.variable,
-        round.variable,
-        calligraphy.variable,
-      ].join(" ")}>
-      <body>{children}</body>
-    </html>
-  );
-}
+/*
+ * Les icones ne sont pas declarees ici : `app/favicon.ico`, `app/icon.svg` et
+ * `app/apple-icon.png` sont detectes par Next, qui pose les balises lui-meme.
+ * Les redeclarer dans `metadata.icons` remplacerait cette detection au lieu de
+ * la completer. Meme chose pour la banniere, prise dans `app/opengraph-image.tsx`.
+ *
+ * `metadataBase` sert a tout le site : sans elle, l'adresse de la banniere
+ * partirait en relatif, et aucune messagerie ne sait quoi en faire.
+ *
+ * Pas de gabarit de titre (`template`) : le titre d'une page-cadeau est celui
+ * que le donneur a ecrit, et lui accoler « — MyPresentsForYou » signerait sa
+ * carte a sa place dans l'apercu WhatsApp.
+ */
+export const METADONNEES_COMMUNES: Metadata = {
+  metadataBase: new URL(baseUrl()),
+  applicationName: "MyPresentsForYou",
+};

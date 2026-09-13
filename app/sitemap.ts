@@ -1,5 +1,8 @@
 import type { MetadataRoute } from "next";
 import { baseUrl } from "@/lib/env";
+import { variantes } from "@/lib/i18n/alternates";
+import { cheminVers, type Page } from "@/lib/i18n/chemins";
+import { LANGUES_ACTIVES } from "@/lib/i18n/langues";
 
 /**
  * Les pages publiques, et elles seules : les pages-cadeau sont privées et
@@ -9,22 +12,29 @@ import { baseUrl } from "@/lib/env";
  * Les mentions légales n'y figurent pas non plus — elles portent `noindex` : une
  * page d'identité de l'éditeur n'a rien à faire dans un index de recherche, mais
  * elle reste atteignable par le pied de page.
+ *
+ * Chaque page y figure une fois par langue active, avec ses versions dans les
+ * autres. L'accueil y est sous `/fr`, et non `/` : la racine redirige selon le
+ * navigateur, et une adresse qui redirige n'a rien a faire dans un sitemap.
  */
+const PAGES_PUBLIQUES: [page: Page, priorite: number][] = [
+  ["accueil", 1],
+  ["creer", 0.9],
+  ["questions", 0.8],
+  ["exemple", 0.7],
+  ["contact", 0.4],
+  ["confidentialite", 0.3],
+  ["conditions", 0.3],
+];
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = baseUrl();
-  const pages: [chemin: string, priorite: number][] = [
-    ["/", 1],
-    ["/creer", 0.9],
-    ["/questions", 0.8],
-    ["/exemple", 0.7],
-    ["/contact", 0.4],
-    ["/confidentialite", 0.3],
-    ["/conditions", 0.3],
-  ];
-
-  return pages.map(([chemin, priority]) => ({
-    url: `${base}${chemin}`,
-    changeFrequency: "monthly",
-    priority,
-  }));
+  return LANGUES_ACTIVES.flatMap((langue) =>
+    PAGES_PUBLIQUES.map(([page, priority]) => ({
+      url: `${base}${cheminVers(langue, page)}`,
+      changeFrequency: "monthly" as const,
+      priority,
+      alternates: { languages: variantes(page, base) },
+    })),
+  );
 }

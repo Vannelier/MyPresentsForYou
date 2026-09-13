@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect } from "react";
+import { useDictionnaire } from "@/components/i18n/Dictionnaire";
+import { remplir } from "@/lib/i18n/remplir";
 
 /**
  * L'image d'un cadeau, en grand.
@@ -20,6 +22,7 @@ export default function GiftZoom({
   label: string;
   onClose: () => void;
 }) {
+  const { d } = useDictionnaire();
   useEffect(() => {
     const surTouche = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -39,10 +42,10 @@ export default function GiftZoom({
       className="zoom"
       role="dialog"
       aria-modal="true"
-      aria-label={`Photo : ${label}`}
+      aria-label={remplir(d.carte.photo, { cadeau: label })}
       onClick={onClose}
     >
-      <button type="button" className="zoom__fermer" aria-label="Fermer la photo" onClick={onClose}>
+      <button type="button" className="zoom__fermer" aria-label={d.carte.fermerPhoto} onClick={onClose}>
         ×
       </button>
 

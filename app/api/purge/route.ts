@@ -17,7 +17,7 @@ export const maxDuration = 60;
 export async function POST(req: Request) {
   try {
     const secret = secretDePurge();
-    if (!secret) return notFoundJson();
+    if (!secret) return notFoundJson(req);
 
     const trop = tropDeRequetes(req, QUOTAS.purge, "purge");
     if (trop) return trop;
@@ -31,6 +31,6 @@ export async function POST(req: Request) {
     console.log(`[mypresentsforyou] ${resumeRapport(rapport)}`);
     return json(rapport);
   } catch (err) {
-    return handleError(err);
+    return handleError(err, req);
   }
 }

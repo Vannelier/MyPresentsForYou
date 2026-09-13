@@ -5,6 +5,8 @@ import Link from "next/link";
 import CopyLine from "@/components/CopyLine";
 import CardPreview from "@/components/CardPreview";
 import PageEditor, { type CreateResult, type EditorInitial } from "@/components/editor/PageEditor";
+import { useDictionnaire } from "@/components/i18n/Dictionnaire";
+import { cheminVers } from "@/lib/i18n/chemins";
 import { DEFAULT_THEME } from "@/lib/types";
 
 const EMPTY: EditorInitial = {
@@ -28,20 +30,18 @@ const EMPTY: EditorInitial = {
 
 export default function CreateFlow({ baseUrlLabel }: { baseUrlLabel: string }) {
   const [created, setCreated] = useState<CreateResult | null>(null);
+  const { langue, d } = useDictionnaire();
 
   if (created) return <Created result={created} />;
 
   return (
     <div className="shell shell--wide">
       <header className="hero">
-        <Link className="back-link" href="/">
-          ← MyPresentsForYou
+        <Link className="back-link" href={cheminVers(langue, "accueil")}>
+          {d.commun.retourAccueil}
         </Link>
-        <h1>Compose ta page-cadeau</h1>
-        <p>
-          Deux à dix idées, un message, et c&apos;est prêt. Le bouton « Aperçu » te montre à tout
-          moment ce que verra la personne.
-        </p>
+        <h1>{d.creation.titre}</h1>
+        <p>{d.creation.chapo}</p>
       </header>
 
       <PageEditor mode="create" initial={EMPTY} baseUrlLabel={baseUrlLabel} onCreated={setCreated} />
@@ -50,13 +50,15 @@ export default function CreateFlow({ baseUrlLabel }: { baseUrlLabel: string }) {
 }
 
 function Created({ result }: { result: CreateResult }) {
+  const { d } = useDictionnaire();
+  const t = d.creation;
   return (
     <div className="shell shell--flush">
       <div className="state fade-in" style={{ textAlign: "left" }}>
         <div className="state__seal" aria-hidden="true">
           ✓
         </div>
-        <h1 style={{ textAlign: "center" }}>Ta page est prête</h1>
+        <h1 style={{ textAlign: "center" }}>{t.pret}</h1>
 
         {/*
           Creer n'est pas valider.
@@ -66,10 +68,7 @@ function Created({ result }: { result: CreateResult }) {
           disait que tout restait modifiable. Il le dit maintenant, et le bouton
           du bas ramene directement a l'editeur.
         */}
-        <p className="state__note">
-          Rien n&apos;est figé : tant que personne n&apos;a choisi, tu peux tout modifier — les
-          textes, les cadeaux, le thème. Les deux liens ci-dessous ne changeront pas.
-        </p>
+        <p className="state__note">{t.rienNestFige}</p>
 
         {/*
           Le lien de recuperation passe devant, et pulse.
@@ -81,17 +80,17 @@ function Created({ result }: { result: CreateResult }) {
           ferme l'onglet en croyant avoir fini.
         */}
         <div className="link-box link-box--admin link-box--pulse">
-          <span className="link-box__label">Ton lien de récupération</span>
+          <span className="link-box__label">{t.lienRecuperation}</span>
           <span className="link-box__help">
-            <strong>Garde-le maintenant</strong> : il n&apos;est affiché qu&apos;ici, et c&apos;est
-            le seul moyen de revenir voir le cadeau choisi.
+            <strong>{t.lienRecuperationFort}</strong>
+            {t.lienRecuperationSuite}
           </span>
           <CopyLine value={result.adminUrl} />
         </div>
 
         <div className="link-box">
-          <span className="link-box__label">Lien à envoyer</span>
-          <span className="link-box__help">C&apos;est ce que reçoit la personne.</span>
+          <span className="link-box__label">{t.lienEnvoi}</span>
+          <span className="link-box__help">{t.lienEnvoiAide}</span>
           <CopyLine value={result.publicUrl} />
         </div>
 
@@ -133,10 +132,10 @@ function Created({ result }: { result: CreateResult }) {
         */}
         <div className="btn-row" style={{ marginTop: "1.75rem" }}>
           <a className="btn btn--sm" href={`${result.adminUrl}#modifier`}>
-            Reprendre la modification
+            {t.reprendre}
           </a>
           <a className="btn btn--ghost btn--sm" href={result.publicUrl} target="_blank" rel="noreferrer">
-            Voir la page publique
+            {t.voirPublique}
           </a>
         </div>
       </div>

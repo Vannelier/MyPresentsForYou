@@ -13,8 +13,6 @@ import { LIMITS } from "@/lib/limits";
 import {
   EFFECTS,
   FONTS,
-  ITEMS_MESSAGE_HINT,
-  ITEMS_TITLE_HINT,
   OCCASION_GROUPS,
   OPENINGS,
   effectById,
@@ -34,6 +32,11 @@ import {
   lireBrouillon,
   type Brouillon,
 } from "@/components/editor/draft";
+import { useDictionnaire } from "@/components/i18n/Dictionnaire";
+import type { Dictionnaire } from "@/lib/i18n";
+import { traduire } from "@/lib/i18n/erreurs";
+import { EN_TETE_LANGUE, LOCALES } from "@/lib/i18n/langues";
+import { remplir } from "@/lib/i18n/remplir";
 import { slugError, slugify } from "@/lib/slug";
 import type { Item, PublicPage, Theme } from "@/lib/types";
 
@@ -115,10 +118,11 @@ const EFFECT_GLYPHS: Record<EffectId, string> = {
   poussiere: "✧",
 };
 
+// Les titres des etapes vivent dans le dictionnaire (`editeur.etapes`), sous leur cle.
 const STEPS = [
-  { n: 1, title: "L'occasion", short: "Occasion" },
-  { n: 2, title: "Les cadeaux", short: "Cadeaux" },
-  { n: 3, title: "La présentation", short: "Présentation" },
+  { n: 1, cle: "occasion" },
+  { n: 2, cle: "cadeaux" },
+  { n: 3, cle: "presentation" },
 ] as const;
 
 type StepNumber = 1 | 2 | 3;
@@ -163,6 +167,8 @@ function emptyRow(): DraftItem {
 
 export default function PageEditor(props: Props) {
   const { mode, initial } = props;
+  const { langue, d } = useDictionnaire();
+  const ed = d.editeur;
   const router = useRouter();
 
   const [step, setStep] = useState<StepNumber>(1);
@@ -421,18 +427,19 @@ export default function PageEditor(props: Props) {
   }, [preview]);
 
   const current = occasionById(occasion);
+  const formules = d.occasions[current.id];
 
   /**
    * Plus rien n'est obligatoire : un champ laissé vide retombe sur la suggestion
    * que le donneur avait sous les yeux en placeholder. Le nom, lui, n'a pas de
-   * placeholder utilisable tel quel — « Anniversaire de Sophie » deviendrait
+   * placeholder utilisable tel quel — « Anniversaire de Camille » deviendrait
    * l'adresse de toutes les cartes anonymes — alors on le compose à partir de
    * l'occasion et du prénom déjà saisis.
    */
   const effectiveName =
     name.trim() ||
     (() => {
-      const base = current.id === "aucune" ? "Carte cadeau" : current.name;
+      const base = current.id === "aucune" ? ed.nomParDefaut : d.occasions[current.id].nom;
       const who = recipient.trim();
       return who ? `${base} — ${who}` : base;
     })();
@@ -493,7 +500,7 @@ export default function PageEditor(props: Props) {
     if (!row) return;
     const url = row.source_url.trim();
     if (!url) {
-      patchItem(key, { hint: "Colle d'abord l'adresse de la page du produit." });
+      patchItem(key, { hint: ed.collerAdresseDabord });
       return;
     }
 
@@ -501,7 +508,7 @@ export default function PageEditor(props: Props) {
     try {
       const res = await fetch("/api/extract", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", [EN_TETE_LANGUE]: langue },
         body: JSON.stringify({ url }),
       });
       const data = (await res.json().catch(() => ({}))) as {
@@ -518,17 +525,17 @@ export default function PageEditor(props: Props) {
       if (data.ok && data.image) {
         patch.image_url = data.image;
         patch.hint = gotTitle
-          ? "Titre et image récupérés. Tu peux les remplacer."
-          : "Image récupérée. Tu peux la remplacer si elle ne te plaît pas.";
+          ? ed.titreEtImageRecuperes
+          : ed.imageRecuperee;
       } else {
         // Repli manuel : chemin nominal, pas une erreur.
-        patch.hint = `${failureHint(data.reason)}${gotTitle ? " Le titre, lui, a été récupéré." : ""}`;
+        patch.hint = `${failureHint(ed.echecs, data.reason)}${gotTitle ? ed.titreRecupere : ""}`;
       }
       patchItem(key, patch);
     } catch {
       patchItem(key, {
         busy: null,
-        hint: "Récupération impossible. Colle une adresse d'image ou téléverse une photo.",
+        hint: ed.recuperationImpossible,
       });
     }
   }
@@ -570,14 +577,14 @@ export default function PageEditor(props: Props) {
     const url = imageUrlFromClipboard(event.clipboardData);
     if (url) {
       event.preventDefault();
-      patchItem(key, { image_url: url, imageHint: "Adresse d'image collée." });
+      patchItem(key, { image_url: url, imageHint: ed.adresseImageCollee });
     }
   }
 
   async function upload(key: string, file: File | null) {
     if (!file) return;
     patchItem(key, { busy: "upload", imageHint: null });
-    const result = await uploadImage(file);
+    const result = await uploadImage(file, ed.televersement, langue);
     if (result.ok) {
       patchItem(key, { busy: null, image_url: result.url, imageHint: null });
     } else {
@@ -591,7 +598,7 @@ export default function PageEditor(props: Props) {
     )
     .map((it, index) => ({
       id: it.id ?? `draft_${index}`,
-      label: it.label.trim() || "Sans titre",
+      label: it.label.trim() || ed.sansTitre,
       image_url: it.image_url.trim() || null,
       source_url: it.source_url.trim() || null,
       note: it.note.trim() || null,
@@ -606,6 +613,7 @@ export default function PageEditor(props: Props) {
     opening,
     effect,
     reply: replyOn,
+    langue,
   };
 
   /**
@@ -621,7 +629,7 @@ export default function PageEditor(props: Props) {
     setMotif(next.motif !== "none");
     // L'effet suit l'occasion tant que le donneur n'en a pas choisi un autre.
     setEffect((cur) => (cur === previous.effect ? next.effect : cur));
-    setIntro((cur) => (cur.trim() === previous.intro ? "" : cur));
+    setIntro((cur) => (cur.trim() === d.occasions[previous.id].intro ? "" : cur));
   }
 
   const previewPage: PublicPage = {
@@ -634,12 +642,12 @@ export default function PageEditor(props: Props) {
     reveal_at: revealAt ? new Date(revealAt).toISOString() : null,
     // Champ vide : on montre la suggestion de l'occasion, pas un texte fige.
     // L'apercu doit refleter le theme choisi, comme les placeholders du formulaire.
-    welcome_message: welcome.trim() || current.welcomeHint,
+    welcome_message: welcome.trim() || formules.bienvenue,
     open_label: openLabel,
     wait_message: waitMessage,
     items_title: itemsTitle,
     items_message: itemsMessage,
-    thank_you_message: thanks.trim() || current.thanksHint,
+    thank_you_message: thanks.trim() || formules.remerciement,
     theme,
     items: draftItems,
     chosen_item_id: null,
@@ -663,21 +671,21 @@ export default function PageEditor(props: Props) {
 
     if (which === 2) {
       const filled = filledItems();
-      if (filled.length < LIMITS.itemsMin) return "Il faut au moins un cadeau.";
-      if (filled.length > LIMITS.itemsMax) return `Pas plus de ${LIMITS.itemsMax} cadeaux.`;
+      if (filled.length < LIMITS.itemsMin) return ed.auMoinsUnCadeau;
+      if (filled.length > LIMITS.itemsMax) return remplir(ed.pasPlusDe, { max: LIMITS.itemsMax });
       return null;
     }
 
-    if (name.trim().length > LIMITS.name) return `Le nom dépasse ${LIMITS.name} caractères.`;
+    if (name.trim().length > LIMITS.name) return remplir(ed.nomTropLong, { max: LIMITS.name });
     if (mode === "create") {
       const err = slugError(effectiveSlug);
-      if (err) return err;
+      if (err) return traduire(d.erreurs, err);
     }
     if (welcome.trim().length > LIMITS.message) {
-      return `Le message principal dépasse ${LIMITS.message} caractères.`;
+      return remplir(ed.messageTropLong, { max: LIMITS.message });
     }
     if (thanks.trim().length > LIMITS.message) {
-      return `Le message de fin dépasse ${LIMITS.message} caractères.`;
+      return remplir(ed.finTropLongue, { max: LIMITS.message });
     }
     return null;
   }
@@ -704,17 +712,17 @@ export default function PageEditor(props: Props) {
       reveal_at: revealAt ? new Date(revealAt).toISOString() : null,
       // Champ vide : on enregistre la suggestion affichée en placeholder, celle
       // que le donneur avait sous les yeux et a implicitement acceptée.
-      welcome_message: welcome.trim() || current.welcomeHint,
-      open_label: openLabel.trim() || current.openHint,
-      wait_message: waitMessage.trim() || current.waitHint,
-      items_title: itemsTitle.trim() || ITEMS_TITLE_HINT,
-      items_message: itemsMessage.trim() || ITEMS_MESSAGE_HINT,
-      thank_you_message: thanks.trim() || current.thanksHint,
+      welcome_message: welcome.trim() || formules.bienvenue,
+      open_label: openLabel.trim() || formules.ouvrir,
+      wait_message: waitMessage.trim() || formules.attente,
+      items_title: itemsTitle.trim() || d.carte.titreCadeaux,
+      items_message: itemsMessage.trim() || d.carte.messageCadeaux,
+      thank_you_message: thanks.trim() || formules.remerciement,
       cover_image_url: cover.trim() || null,
       theme,
       items: filledItems().map((it) => ({
         ...(it.id ? { id: it.id } : {}),
-        label: it.label.trim() || "Sans titre",
+        label: it.label.trim() || ed.sansTitre,
         image_url: it.image_url.trim() || null,
         source_url: it.source_url.trim() || null,
         note: it.note.trim() || null,
@@ -744,19 +752,19 @@ export default function PageEditor(props: Props) {
         props.mode === "create"
           ? await fetch("/api/pages", {
               method: "POST",
-              headers: { "Content-Type": "application/json" },
+              headers: { "Content-Type": "application/json", [EN_TETE_LANGUE]: langue },
               body: JSON.stringify({ slug: effectiveSlug, ...payload() }),
             })
           : await fetch(`/api/admin/${encodeURIComponent(props.adminToken)}`, {
               method: "PATCH",
-              headers: { "Content-Type": "application/json" },
+              headers: { "Content-Type": "application/json", [EN_TETE_LANGUE]: langue },
               body: JSON.stringify(payload()),
             });
 
       const data = (await res.json().catch(() => ({}))) as Record<string, unknown>;
       if (!res.ok) {
         if ((data.field as string) === "slug") goTo(3);
-        showError((data.error as string) ?? "L'enregistrement a échoué.");
+        showError((data.error as string) ?? ed.enregistrementEchoue);
         return;
       }
 
@@ -774,7 +782,7 @@ export default function PageEditor(props: Props) {
           ...(data as unknown as Omit<CreateResult, "carte">),
           carte: {
             to: envoye.recipient_name,
-            intro: envoye.intro_message || current.intro,
+            intro: envoye.intro_message || formules.intro,
             title: envoye.welcome_message,
             signature: envoye.signature,
             theme: envoye.theme,
@@ -792,11 +800,11 @@ export default function PageEditor(props: Props) {
         if (saved.items) setItems(toDraftItems(saved.items));
         if ("cover_image_url" in saved) setCover(saved.cover_image_url ?? "");
         if ("header_image_url" in saved) setHeader(saved.header_image_url ?? "");
-        setSavedAt(new Date().toLocaleTimeString("fr-BE", { hour: "2-digit", minute: "2-digit" }));
+        setSavedAt(new Date().toLocaleTimeString(LOCALES[langue].intl, { hour: "2-digit", minute: "2-digit" }));
         router.refresh();
       }
     } catch {
-      showError("Connexion perdue. Vérifie ta connexion et réessaie.");
+      showError(ed.connexionPerdue);
     } finally {
       setSaving(false);
     }
@@ -807,11 +815,11 @@ export default function PageEditor(props: Props) {
     // la page de création (hero compris) et ne montrerait pas ce que le receveur
     // voit réellement.
     return (
-      <div className="preview-overlay" role="dialog" aria-modal="true" aria-label="Aperçu de la page-cadeau">
+      <div className="preview-overlay" role="dialog" aria-modal="true" aria-label={ed.apercuTitre}>
         <div className="preview-ribbon">
-          Aperçu — rien n&apos;est enregistré
+          {ed.apercuBandeau}
           <button type="button" className="preview-ribbon__exit" onClick={() => setPreview(false)}>
-            Fermer
+            {ed.fermer}
           </button>
         </div>
         {/*
@@ -852,7 +860,7 @@ export default function PageEditor(props: Props) {
                 onClick={() => reachable && goTo(s.n as StepNumber)}
               >
                 <span className="stepper__num">{s.n < step ? "✓" : s.n}</span>
-                <span className="stepper__label">{s.short}</span>
+                <span className="stepper__label">{ed.etapes[s.cle].court}</span>
               </button>
             </li>
           );
@@ -872,13 +880,13 @@ export default function PageEditor(props: Props) {
         </p>
       ))}
       {savedAt && (
-        <p className="notice notice--info editor__notice">Modifications enregistrées à {savedAt}.</p>
+        <p className="notice notice--info editor__notice">{remplir(ed.enregistreA, { heure: savedAt })}</p>
       )}
       {brouillonRetrouve && (
         <p className="notice notice--info editor__notice">
-          Ta carte en cours a été retrouvée telle que tu l&apos;avais laissée.{" "}
+          {ed.brouillonRetrouve}{" "}
           <button type="button" className="notice__action" onClick={repartirDeZero}>
-            Repartir de zéro
+            {ed.repartirDeZero}
           </button>
         </p>
       )}
@@ -899,15 +907,12 @@ export default function PageEditor(props: Props) {
             et le poser au-dessus de la liste repoussait celle-ci a plus de
             1 200 px du haut. Isolee, elle tient dans un ecran et ne gene rien.
           */}
-          <h2>L&apos;occasion</h2>
-          <p className="help">
-            Elle pose d&apos;un coup une palette, un décor et des formulations de départ. Tout reste
-            modifiable à la dernière étape.
-          </p>
-          <div className="occasion-groups" role="radiogroup" aria-label="Occasion">
+          <h2>{ed.occasionTitre}</h2>
+          <p className="help">{ed.occasionAide}</p>
+          <div className="occasion-groups" role="radiogroup" aria-label={ed.occasionAria}>
             {OCCASION_GROUPS.map((groupe) => (
               <div key={groupe.label ?? "base"}>
-                {groupe.label && <p className="occasion-group__title">{groupe.label}</p>}
+                {groupe.label && <p className="occasion-group__title">{d.rubriques[groupe.label]}</p>}
                 <div className="occasions">
                   {groupe.items.map((o) => (
                     <button
@@ -921,7 +926,7 @@ export default function PageEditor(props: Props) {
                       <span className="occasion__icon" aria-hidden="true">
                         {o.icon}
                       </span>
-                      <span className="occasion__name">{o.name}</span>
+                      <span className="occasion__name">{d.occasions[o.id].nom}</span>
                     </button>
                   ))}
                 </div>
@@ -934,7 +939,7 @@ export default function PageEditor(props: Props) {
       {step === 2 && (
         <section className="panel">
           <div className="panel__head">
-            <h2>Les cadeaux</h2>
+            <h2>{ed.cadeauxTitre}</h2>
             <span className="panel__count">
               {filledCount} / {LIMITS.itemsMax}
             </span>
@@ -946,15 +951,12 @@ export default function PageEditor(props: Props) {
             fois l'intitule ramene a sa plus simple expression.
           */}
           <p className="help">
-            Jusqu&apos;à {LIMITS.itemsMax} propositions, dans l&apos;ordre que tu veux. Colle
-            l&apos;adresse d&apos;un produit pour en récupérer le titre et l&apos;image — c&apos;est
-            aussi le lien qui te reviendra, après le choix, pour acheter. Un cadeau qui ne
-            s&apos;achète pas en ligne se décrit très bien à la main.
+            {remplir(ed.cadeauxAide, { max: LIMITS.itemsMax })}
             {filledCount === 1 && (
               <>
                 {" "}
-                <strong>Avec un seul cadeau</strong>, la carte devient une annonce : rien à choisir,
-                juste un accusé de réception.
+                <strong>{ed.unSeulFort}</strong>
+                {ed.unSeulSuite}
               </>
             )}
           </p>
@@ -968,7 +970,7 @@ export default function PageEditor(props: Props) {
                     <button
                       type="button"
                       className="icon-btn"
-                      aria-label={`Monter le cadeau ${index + 1}`}
+                      aria-label={remplir(ed.monter, { n: index + 1 })}
                       disabled={index === 0}
                       onClick={() => move(row.key, -1)}
                     >
@@ -977,7 +979,7 @@ export default function PageEditor(props: Props) {
                     <button
                       type="button"
                       className="icon-btn"
-                      aria-label={`Descendre le cadeau ${index + 1}`}
+                      aria-label={remplir(ed.descendre, { n: index + 1 })}
                       disabled={index === items.length - 1}
                       onClick={() => move(row.key, 1)}
                     >
@@ -986,7 +988,7 @@ export default function PageEditor(props: Props) {
                     <button
                       type="button"
                       className="icon-btn icon-btn--danger"
-                      aria-label={`Retirer le cadeau ${index + 1}`}
+                      aria-label={remplir(ed.retirer, { n: index + 1 })}
                       disabled={items.length <= 1}
                       onClick={() => setItems((prev) => prev.filter((it) => it.key !== row.key))}
                     >
@@ -1011,13 +1013,13 @@ export default function PageEditor(props: Props) {
                     par ligne, et c'etait le point aveugle de l'ancienne version,
                     ou le champ ressemblait a un champ obligatoire de plus.
                   */}
-                  <span className="row__zone-label">Lien du produit — facultatif</span>
+                  <span className="row__zone-label">{ed.lienProduit}</span>
                   <div className="inline">
                     <input
                       type="url"
                       inputMode="url"
                       value={row.source_url}
-                      aria-label={`Adresse de la page produit du cadeau ${index + 1}`}
+                      aria-label={remplir(ed.adresseProduit, { n: index + 1 })}
                       placeholder="https://…"
                       onChange={(e) => patchItem(row.key, { source_url: e.target.value })}
                     />
@@ -1027,7 +1029,7 @@ export default function PageEditor(props: Props) {
                       disabled={row.busy !== null}
                       onClick={() => extract(row.key)}
                     >
-                      {row.busy === "extract" ? "…" : "Récupérer"}
+                      {row.busy === "extract" ? "…" : ed.recuperer}
                     </button>
                   </div>
                   {row.hint && <p className="notice notice--info">{row.hint}</p>}
@@ -1035,7 +1037,7 @@ export default function PageEditor(props: Props) {
 
                 <div className="row__gift">
                   <span className="row__zone-label row__zone-label--gift">
-                    Ce que verra la personne
+                    {ed.ceQueVerra}
                   </span>
                   <div className="row__gift-grid">
                     <div className="row__thumb-wrap">
@@ -1061,7 +1063,7 @@ export default function PageEditor(props: Props) {
                           type="file"
                           accept={ACCEPTED_IMAGE_TYPES.join(",")}
                           disabled={row.busy !== null}
-                          aria-label={`Image du cadeau ${index + 1}`}
+                          aria-label={remplir(ed.imageCadeau, { n: index + 1 })}
                           onChange={(e) => {
                             void upload(row.key, e.target.files?.[0] ?? null);
                             e.target.value = "";
@@ -1072,7 +1074,7 @@ export default function PageEditor(props: Props) {
                           <img src={row.image_url} alt="" />
                         ) : (
                           <span>
-                            {row.busy === "upload" ? "envoi…" : "choisis ou colle une image"}
+                            {row.busy === "upload" ? ed.envoiImage : ed.choisisImage}
                           </span>
                         )}
                       </label>
@@ -1080,7 +1082,7 @@ export default function PageEditor(props: Props) {
                         <button
                           type="button"
                           className="row__thumb-clear"
-                          aria-label={`Retirer l'image du cadeau ${index + 1}`}
+                          aria-label={remplir(ed.retirerImage, { n: index + 1 })}
                           onClick={() => patchItem(row.key, { image_url: "" })}
                         >
                           ×
@@ -1089,26 +1091,26 @@ export default function PageEditor(props: Props) {
                     </div>
 
                     <div className="row__title">
-                      <Field label="Titre">
+                      <Field label={ed.titre}>
                         <input
                           type="text"
                           value={row.label}
-                          aria-label={`Titre du cadeau ${index + 1}`}
+                          aria-label={remplir(ed.titreCadeau, { n: index + 1 })}
                           maxLength={LIMITS.itemLabel}
-                          placeholder="Collier Fluorite"
+                          placeholder={ed.exempleTitre}
                           onChange={(e) => patchItem(row.key, { label: e.target.value })}
                         />
                       </Field>
                     </div>
 
                     <div className="row__note">
-                      <Field label="Note" help="Facultatif. Un mot pour situer le cadeau.">
+                      <Field label={ed.note} help={ed.noteAide}>
                         <input
                           type="text"
                           value={row.note}
-                          aria-label={`Note du cadeau ${index + 1}`}
+                          aria-label={remplir(ed.noteCadeau, { n: index + 1 })}
                           maxLength={LIMITS.itemNote}
-                          placeholder="Un soir de semaine, sans se presser"
+                          placeholder={ed.exempleNote}
                           onChange={(e) => patchItem(row.key, { note: e.target.value })}
                         />
                       </Field>
@@ -1126,7 +1128,7 @@ export default function PageEditor(props: Props) {
             disabled={items.length >= LIMITS.itemsMax}
             onClick={() => setItems((prev) => [...prev, emptyRow()])}
           >
-            + Ajouter un cadeau
+            {ed.ajouter}
           </button>
         </section>
       )}
@@ -1138,17 +1140,17 @@ export default function PageEditor(props: Props) {
           <aside className="compose__side">
             <div className="mini">
               <div className="mini__head">
-                <span>Aperçu en direct</span>
+                <span>{ed.apercuDirect}</span>
                 <div className="mini__actions">
                   <button
                     type="button"
                     className="btn btn--ghost btn--sm"
                     onClick={() => setReplay((n) => n + 1)}
                   >
-                    Rejouer
+                    {ed.rejouer}
                   </button>
                   <button type="button" className="btn btn--ghost btn--sm" onClick={() => setPreview(true)}>
-                    Plein écran
+                    {ed.pleinEcran}
                   </button>
                 </div>
               </div>
@@ -1181,70 +1183,59 @@ export default function PageEditor(props: Props) {
               onFocusCapture={() => setEcranApercu("intro")}
               onClickCapture={() => setEcranApercu("intro")}
             >
-              <h2>Intro</h2>
-              <p className="help">
-                Le premier écran : ce qui s&apos;affiche avant les cadeaux.
-              </p>
+              <h2>{ed.intro}</h2>
+              <p className="help">{ed.introAide}</p>
 
-              <Field
-                label="Prénom de la personne"
-                help="Affiché tout en haut."
-              >
+              <Field label={ed.prenom} help={ed.prenomAide}>
                 <input
                   type="text"
                   value={recipient}
-                  aria-label="Prénom de la personne"
+                  aria-label={ed.prenom}
                   maxLength={LIMITS.recipient}
-                  placeholder="Sophie"
+                  placeholder={ed.exemplePrenom}
                   onChange={(e) => setRecipient(e.target.value)}
                 />
                 <Counter value={recipient} max={LIMITS.recipient} />
               </Field>
 
-              <Field label="Mot d&apos;ouverture" help="La petite ligne au-dessus du titre.">
+              <Field label={ed.motOuverture} help={ed.motOuvertureAide}>
                 <input
                   type="text"
                   value={intro}
-                  aria-label="Mot d'ouverture"
+                  aria-label={ed.motOuverture}
                   maxLength={LIMITS.intro}
-                  placeholder={current.intro}
+                  placeholder={formules.intro}
                   onChange={(e) => setIntro(e.target.value)}
                 />
                 <Counter value={intro} max={LIMITS.intro} />
               </Field>
 
-              <Field
-                label="Message principal"
-                help="Le grand titre. Sert aussi à l&apos;aperçu du lien."
-              >
+              <Field label={ed.messagePrincipal} help={ed.messagePrincipalAide}>
                 <textarea
                   value={welcome}
-                  aria-label="Message principal"
+                  aria-label={ed.messagePrincipal}
                   maxLength={LIMITS.message}
                   rows={2}
                   onChange={(e) => setWelcome(e.target.value)}
-                  placeholder={current.welcomeHint}
+                  placeholder={formules.bienvenue}
                 />
                 <Counter value={welcome} max={LIMITS.message} />
               </Field>
 
-              <Field
-                label="Texte du bouton"
-                help="Le bouton qui lève le voile."
-              >
+              <Field label={ed.texteBouton} help={ed.texteBoutonAide}>
                 <input
                   type="text"
                   value={openLabel}
-                  aria-label="Texte du bouton d'ouverture"
+                  aria-label={ed.texteBoutonAria}
                   maxLength={LIMITS.openLabel}
-                  placeholder={current.openHint}
+                  placeholder={formules.ouvrir}
                   onChange={(e) => setOpenLabel(e.target.value)}
                 />
                 <Counter value={openLabel} max={LIMITS.openLabel} />
               </Field>
 
-              <Field label="Manière de l&apos;ouvrir">
-                <div className="openings" role="radiogroup" aria-label="Manière de l'ouvrir">
+              <Field label={ed.maniereOuvrir}>
+                <div className="openings" role="radiogroup" aria-label={ed.maniereOuvrir}>
                   {OPENINGS.map((o) => (
                     <button
                       key={o.id}
@@ -1258,8 +1249,8 @@ export default function PageEditor(props: Props) {
                         <i />
                         <i />
                       </span>
-                      <span className="opening__name">{o.name}</span>
-                      <span className="opening__hint">{o.hint}</span>
+                      <span className="opening__name">{d.ouvertures[o.id].nom}</span>
+                      <span className="opening__hint">{d.ouvertures[o.id].aide}</span>
                     </button>
                   ))}
                 </div>
@@ -1267,33 +1258,33 @@ export default function PageEditor(props: Props) {
 
               <div className="options">
                 <Optional
-                  label="Ouvrir à une date précise"
-                  help="Avant elle, la carte reste scellée sur un compte à rebours — tu peux donc envoyer le lien à l'avance."
+                  label={ed.dateOption}
+                  help={ed.dateOptionAide}
                   checked={revealOn}
                   onChange={(on) => {
                     setRevealOn(on);
                     if (!on) setRevealAt("");
                   }}
                 >
-                  <Field label="Date de révélation">
+                  <Field label={ed.dateRevelation}>
                     <input
                       type="datetime-local"
                       value={revealAt}
-                      aria-label="Date de révélation"
+                      aria-label={ed.dateRevelation}
                       onChange={(e) => setRevealAt(e.target.value)}
                     />
                   </Field>
 
                   <Field
-                    label="Mot d&apos;attente"
-                    help="Sous le compte à rebours, pendant que la carte est encore scellée."
+                    label={ed.motAttente}
+                    help={ed.motAttenteAide}
                   >
                     <input
                       type="text"
                       value={waitMessage}
-                      aria-label="Mot d'attente"
+                      aria-label={ed.motAttente}
                       maxLength={LIMITS.waitMessage}
-                      placeholder={current.waitHint}
+                      placeholder={formules.attente}
                       onChange={(e) => setWaitMessage(e.target.value)}
                     />
                     <Counter value={waitMessage} max={LIMITS.waitMessage} />
@@ -1308,43 +1299,40 @@ export default function PageEditor(props: Props) {
               onFocusCapture={() => setEcranApercu("cadeaux")}
               onClickCapture={() => setEcranApercu("cadeaux")}
             >
-              <h2>Cadeaux</h2>
-              <p className="help">
-                L&apos;écran qui suit l&apos;ouverture. Ses mots lui appartiennent : répéter ceux du
-                voile ferait lire deux fois la même chose.
-              </p>
+              <h2>{ed.cadeaux}</h2>
+              <p className="help">{ed.cadeauxEcranAide}</p>
 
-              <Field label="Titre" help="Au-dessus des cadeaux.">
+              <Field label={ed.titre} help={ed.titreEcranAide}>
                 <input
                   type="text"
                   value={itemsTitle}
-                  aria-label="Titre de l'écran des cadeaux"
+                  aria-label={ed.titreEcranAria}
                   maxLength={LIMITS.itemsTitle}
-                  placeholder={ITEMS_TITLE_HINT}
+                  placeholder={d.carte.titreCadeaux}
                   onChange={(e) => setItemsTitle(e.target.value)}
                 />
                 <Counter value={itemsTitle} max={LIMITS.itemsTitle} />
               </Field>
 
-              <Field label="Contenu" help="La ligne sous ce titre.">
+              <Field label={ed.contenu} help={ed.contenuAide}>
                 <textarea
                   value={itemsMessage}
-                  aria-label="Contenu de l'écran des cadeaux"
+                  aria-label={ed.contenuAria}
                   maxLength={LIMITS.itemsMessage}
                   rows={2}
-                  placeholder={ITEMS_MESSAGE_HINT}
+                  placeholder={d.carte.messageCadeaux}
                   onChange={(e) => setItemsMessage(e.target.value)}
                 />
                 <Counter value={itemsMessage} max={LIMITS.itemsMessage} />
               </Field>
 
-              <Field label="Signature" help="En bas de page, pour dire de qui ça vient.">
+              <Field label={ed.signature} help={ed.signatureAide}>
                 <input
                   type="text"
                   value={signature}
-                  aria-label="Signature"
+                  aria-label={ed.signature}
                   maxLength={LIMITS.signature}
-                  placeholder="Avec toute mon affection, Nathan"
+                  placeholder={ed.exempleSignature}
                   onChange={(e) => setSignature(e.target.value)}
                 />
                 <Counter value={signature} max={LIMITS.signature} />
@@ -1352,8 +1340,8 @@ export default function PageEditor(props: Props) {
 
               <div className="options">
                 <Optional
-                  label="Ajouter une photo d&apos;en-tête"
-                  help="Une photo large en haut de cet écran, au-dessus du titre."
+                  label={ed.photoEnTeteOption}
+                  help={ed.photoEnTeteOptionAide}
                   checked={headerOn}
                   onChange={(on) => {
                     setHeaderOn(on);
@@ -1361,8 +1349,8 @@ export default function PageEditor(props: Props) {
                   }}
                 >
                   <ImageField
-                    label="Photo d'en-tête"
-                    ariaLabel="Photo d'en-tête"
+                    label={ed.photoEnTete}
+                    ariaLabel={ed.photoEnTete}
                     value={header}
                     onChange={setHeader}
                   />
@@ -1375,40 +1363,40 @@ export default function PageEditor(props: Props) {
               onFocusCapture={() => setEcranApercu("choix")}
               onClickCapture={() => setEcranApercu("choix")}
             >
-              <h2>Choix</h2>
-              <p className="help">Le dernier écran, une fois le cadeau confirmé.</p>
+              <h2>{ed.choix}</h2>
+              <p className="help">{ed.choixAide}</p>
 
-              <Field label="Message de fin" help="Ce qui s&apos;affiche à la place des cadeaux.">
+              <Field label={ed.messageFin} help={ed.messageFinAide}>
                 <textarea
                   value={thanks}
-                  aria-label="Message de fin"
+                  aria-label={ed.messageFin}
                   maxLength={LIMITS.message}
                   rows={2}
                   onChange={(e) => setThanks(e.target.value)}
-                  placeholder={current.thanksHint}
+                  placeholder={formules.remerciement}
                 />
                 <Counter value={thanks} max={LIMITS.message} />
               </Field>
 
               <div className="options">
                 <Optional
-                  label="Proposer de laisser un mot"
-                  help="Laisse l&apos;opportunité à la personne de te répondre directement après avoir fait son choix."
+                  label={ed.motOption}
+                  help={ed.motOptionAide}
                   checked={replyOn}
                   onChange={setReplyOn}
                 >
                   <p className="help" style={{ marginBottom: 0 }}>
-                    Le mot apparaîtra dans ta vue d&apos;administration.
+                    {ed.motOptionNote}
                   </p>
                 </Optional>
               </div>
             </section>
 
             <section className="panel">
-              <h2>Le thème</h2>
+              <h2>{ed.theme}</h2>
 
-              <Field label="Palette">
-                <div className="palettes" role="radiogroup" aria-label="Palette">
+              <Field label={ed.palette}>
+                <div className="palettes" role="radiogroup" aria-label={ed.palette}>
                   {PALETTES.map((p) => (
                     <button
                       key={p.id}
@@ -1423,14 +1411,14 @@ export default function PageEditor(props: Props) {
                           <span key={c} style={{ background: c }} />
                         ))}
                       </span>
-                      <span className="palette__name">{p.name}</span>
+                      <span className="palette__name">{d.palettes[p.id]}</span>
                     </button>
                   ))}
                 </div>
               </Field>
 
-              <Field label="Police du titre">
-                <div className="fonts" role="radiogroup" aria-label="Police du titre">
+              <Field label={ed.police}>
+                <div className="fonts" role="radiogroup" aria-label={ed.police}>
                   {FONTS.map((f) => (
                     <button
                       key={f.id}
@@ -1443,14 +1431,14 @@ export default function PageEditor(props: Props) {
                       <span className="font-choice__sample" style={{ fontFamily: f.cssVar }}>
                         {f.sample}
                       </span>
-                      <span className="font-choice__name">{f.name}</span>
+                      <span className="font-choice__name">{d.polices[f.id]}</span>
                     </button>
                   ))}
                 </div>
               </Field>
 
-              <Field label="Disposition">
-                <div className="segmented" role="radiogroup" aria-label="Disposition">
+              <Field label={ed.disposition}>
+                <div className="segmented" role="radiogroup" aria-label={ed.disposition}>
                   <button
                     type="button"
                     role="radio"
@@ -1458,7 +1446,7 @@ export default function PageEditor(props: Props) {
                     className={layout === "grid" ? "is-on" : ""}
                     onClick={() => setLayout("grid")}
                   >
-                    Grille
+                    {ed.grille}
                   </button>
                   <button
                     type="button"
@@ -1467,16 +1455,13 @@ export default function PageEditor(props: Props) {
                     className={layout === "list" ? "is-on" : ""}
                     onClick={() => setLayout("list")}
                   >
-                    Liste
+                    {ed.liste}
                   </button>
                 </div>
               </Field>
 
-              <Field
-                label="Effet"
-                help="Joué une fois, pas en boucle."
-              >
-                <div className="effects" role="radiogroup" aria-label="Effet">
+              <Field label={ed.effet} help={ed.effetAide}>
+                <div className="effects" role="radiogroup" aria-label={ed.effet}>
                   {EFFECTS.map((e) => (
                     <button
                       key={e.id}
@@ -1489,8 +1474,8 @@ export default function PageEditor(props: Props) {
                       <span className="effect__glyph" aria-hidden="true">
                         {EFFECT_GLYPHS[e.id]}
                       </span>
-                      <span className="effect__name">{e.name}</span>
-                      <span className="effect__hint">{e.hint}</span>
+                      <span className="effect__name">{d.effets[e.id].nom}</span>
+                      <span className="effect__hint">{d.effets[e.id].aide}</span>
                     </button>
                   ))}
                 </div>
@@ -1504,35 +1489,32 @@ export default function PageEditor(props: Props) {
                       checked={motif}
                       onChange={(e) => setMotif(e.target.checked)}
                     />
-                    <span>Afficher le décor de l&apos;occasion</span>
+                    <span>{ed.decor}</span>
                   </label>
                 </div>
               )}
             </section>
 
             <section className="panel">
-              <h2>Le lien</h2>
+              <h2>{ed.lien}</h2>
 
               {props.mode === "create" ? (
                 <p className="options__hint">
-                  Adresse du lien : <code>{props.baseUrlLabel}/{effectiveSlug}</code>
+                  {ed.adresseLien}<code>{props.baseUrlLabel}/{effectiveSlug}</code>
                 </p>
               ) : (
-                <Field
-                  label="Adresse du lien"
-                  help="Fixe : le lien que tu as déjà envoyé continue de fonctionner."
-                >
+                <Field label={ed.adresseLienTitre} help={ed.adresseLienAide}>
                   <p className="readonly-value">{props.slug}</p>
                 </Field>
               )}
 
-              <Field label="Nom de la carte">
+              <Field label={ed.nomCarte}>
                 <input
                   type="text"
                   value={name}
-                  aria-label="Nom de la carte"
+                  aria-label={ed.nomCarte}
                   maxLength={LIMITS.name}
-                  placeholder="Anniversaire de Sophie"
+                  placeholder={ed.exempleNomCarte}
                   onChange={(e) => setName(e.target.value)}
                 />
                 <Counter value={name} max={LIMITS.name} />
@@ -1540,8 +1522,8 @@ export default function PageEditor(props: Props) {
 
               <div className="options">
                 <Optional
-                  label="Personnaliser le lien"
-                  help="Ce que montrent WhatsApp, Signal et les SMS quand tu colles le lien."
+                  label={ed.lienOption}
+                  help={ed.lienOptionAide}
                   checked={linkOn}
                   onChange={(on) => {
                     setLinkOn(on);
@@ -1551,24 +1533,21 @@ export default function PageEditor(props: Props) {
                     }
                   }}
                 >
-                  <Field
-                    label="Texte affiché"
-                    help="Le titre cliquable de l&apos;aperçu. À défaut, le message principal."
-                  >
+                  <Field label={ed.texteAffiche} help={ed.texteAfficheAide}>
                     <input
                       type="text"
                       value={linkTitle}
-                      aria-label="Texte affiché dans l'aperçu du lien"
+                      aria-label={ed.texteAfficheAria}
                       maxLength={LIMITS.linkTitle}
-                      placeholder={welcome.trim() || current.welcomeHint}
+                      placeholder={welcome.trim() || formules.bienvenue}
                       onChange={(e) => setLinkTitle(e.target.value)}
                     />
                     <Counter value={linkTitle} max={LIMITS.linkTitle} />
                   </Field>
 
                   <ImageField
-                    label="Image affichée"
-                    ariaLabel="Image d'aperçu du lien"
+                    label={ed.imageAffichee}
+                    ariaLabel={ed.imageApercuAria}
                     value={cover}
                     onChange={setCover}
                   />
@@ -1587,17 +1566,17 @@ export default function PageEditor(props: Props) {
               className="btn btn--ghost btn--sm"
               onClick={() => goTo((step - 1) as StepNumber)}
             >
-              ← Précédent
+              {ed.precedent}
             </button>
           )}
           <button type="button" className="btn btn--ghost btn--sm" onClick={() => setPreview(true)}>
-            Aperçu
+            {ed.apercu}
           </button>
           {/* En édition on enregistre depuis n'importe quelle étape : la navigation
               passe donc par ces boutons secondaires et par les puces du haut. */}
           {mode === "edit" && !isLast && (
             <button type="button" className="btn btn--ghost btn--sm" onClick={next}>
-              Suivant →
+              {ed.suivant}
             </button>
           )}
         </div>
@@ -1605,14 +1584,14 @@ export default function PageEditor(props: Props) {
         {mode === "edit" || isLast ? (
           <button type="button" className="btn" disabled={saving} onClick={submit}>
             {saving
-              ? "Enregistrement…"
+              ? ed.enregistrement
               : mode === "create"
-                ? "Créer la page"
-                : "Enregistrer les modifications"}
+                ? ed.creer
+                : ed.enregistrer}
           </button>
         ) : (
           <button type="button" className="btn" onClick={next}>
-            Suivant : {STEPS[step].title.toLowerCase()}
+            {remplir(ed.suivantVers, { etape: ed.etapes[STEPS[step].cle].titre.toLowerCase() })}
           </button>
         )}
       </div>
@@ -1634,18 +1613,18 @@ function toLocalInput(iso: string | null): string {
 }
 
 /** Une cause d'échec précise vaut mieux qu'un « ça n'a pas marché » générique. */
-function failureHint(reason?: string): string {
+function failureHint(echecs: Dictionnaire["editeur"]["echecs"], reason?: string): string {
   switch (reason) {
     case "login_required":
-      return "Ce site n'ouvre pas ses pages aux robots. Colle une adresse d'image ou téléverse une photo.";
+      return echecs.connexionRequise;
     case "blocked":
-      return "Le site a refusé la requête. Colle une adresse d'image ou téléverse une photo.";
+      return echecs.bloque;
     case "unreachable":
-      return "Page injoignable. Vérifie l'adresse, ou remplis le titre et l'image à la main.";
+      return echecs.injoignable;
     case "not_html":
-      return "Cette adresse ne pointe pas vers une page web. Si c'est déjà une image, colle-la dans le champ Image.";
+      return echecs.pasUnePage;
     default:
-      return "Pas d'image trouvée sur cette page. Colle une adresse d'image ou téléverse une photo.";
+      return echecs.pasDImage;
   }
 }
 
@@ -1729,6 +1708,8 @@ function ImageField({
   onChange: (url: string) => void;
   ariaLabel: string;
 }) {
+  const { langue, d } = useDictionnaire();
+  const ed = d.editeur;
   const [busy, setBusy] = useState(false);
   const [hint, setHint] = useState<string | null>(null);
 
@@ -1736,7 +1717,7 @@ function ImageField({
     if (!file) return;
     setBusy(true);
     setHint(null);
-    const result = await uploadImage(file);
+    const result = await uploadImage(file, ed.televersement, langue);
     setBusy(false);
     if (result.ok) onChange(result.url);
     else setHint(result.error);
@@ -1760,7 +1741,7 @@ function ImageField({
     if (url) {
       event.preventDefault();
       onChange(url);
-      setHint("Adresse d'image collée.");
+      setHint(ed.adresseImageCollee);
     }
   }
 
@@ -1773,14 +1754,14 @@ function ImageField({
             className={`image-field__cible${busy ? " is-busy" : ""}`}
             tabIndex={0}
             role="button"
-            aria-label={`Coller une image pour : ${label}`}
+            aria-label={remplir(ed.collerImagePour, { champ: label })}
             onPaste={coller}
           >
             {value ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img src={value} alt="" />
             ) : (
-              <span>{busy ? "envoi…" : "colle une image ici"}</span>
+              <span>{busy ? ed.envoiImage : ed.colleImageIci}</span>
             )}
           </div>
 
@@ -1795,7 +1776,7 @@ function ImageField({
                 onChange={(e) => onChange(e.target.value)}
               />
               <label className={`btn btn--ghost btn--sm${busy ? " is-disabled" : ""}`}>
-                {busy ? "…" : "Téléverser"}
+                {busy ? "…" : ed.televerser}
                 <input
                   type="file"
                   accept={ACCEPTED_IMAGE_TYPES.join(",")}

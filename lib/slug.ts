@@ -1,3 +1,5 @@
+import type { Erreur } from "./i18n/erreurs";
+
 /**
  * Adresses que le site occupe déjà : une carte qui en prendrait une resterait
  * inaccessible, masquée par la route ou le fichier de même nom.
@@ -17,6 +19,7 @@ export const RESERVED_SLUGS = new Set([
   "mentions-legales",
   "questions",
   "exemple",
+  "carte",
   "favicon.ico",
   "robots.txt",
   "llms.txt",
@@ -48,16 +51,13 @@ export function slugify(input: string): string {
     .replace(/-+$/g, "");
 }
 
-export function slugError(slug: string): string | null {
+/** Une cle, pas un texte : l'editeur la traduit, et la route la renvoie traduite. */
+export function slugError(slug: string): Erreur | null {
   if (slug.length < SLUG_MIN || slug.length > SLUG_MAX) {
-    return `L'adresse doit faire entre ${SLUG_MIN} et ${SLUG_MAX} caracteres.`;
+    return { cle: "slugLongueur", valeurs: { min: SLUG_MIN, max: SLUG_MAX } };
   }
-  if (!SLUG_RE.test(slug)) {
-    return "L'adresse ne peut contenir que des lettres minuscules, des chiffres et des tirets, sans tiret au debut ni a la fin.";
-  }
-  if (RESERVED_SLUGS.has(slug)) {
-    return "Cette adresse est reservee, choisis-en une autre.";
-  }
+  if (!SLUG_RE.test(slug)) return { cle: "slugFormat" };
+  if (RESERVED_SLUGS.has(slug)) return { cle: "slugReservee" };
   return null;
 }
 

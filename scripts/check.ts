@@ -8,7 +8,9 @@ import assert from "node:assert/strict";
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { canonicaliseUrl, cleanTitle, parseHtml } from "../lib/extract";
 import { sslFor, toQuery } from "../lib/db";
-import { EXEMPLE } from "../lib/exemple";
+import { exemple } from "../lib/exemple";
+import { dictionnaire } from "../lib/i18n";
+import { traduire } from "../lib/i18n/erreurs";
 // @ts-expect-error — module JavaScript simple, volontairement hors du bundle Next.
 import { sslFor as bootSslFor, mediaDir as bootMediaDir } from "./boot.mjs";
 import {
@@ -18,8 +20,6 @@ import {
   DEFAULT_OPENING_ID,
   EFFECTS,
   FONTS,
-  ITEMS_MESSAGE_HINT,
-  ITEMS_TITLE_HINT,
   OCCASIONS,
   OCCASION_GROUPS,
   OPENINGS,
@@ -33,7 +33,19 @@ import { hexToHsl, hslToHex, styleDeTeinte, teinteDuTheme } from "../lib/carteCo
 import { RESERVED_SLUGS, slugError, slugify, suggestVariant } from "../lib/slug";
 import { REPLY_WINDOW_MS, isExpired, isLocked, isSealed, replyWindowOpen } from "../lib/types";
 import { LIMITS } from "../lib/limits";
-import { adsensePublisherId, freePageTtlDays, secretDePurge } from "../lib/env";
+import { adsensePublisherId, baseUrl, freePageTtlDays, secretDePurge } from "../lib/env";
+import sitemap from "../app/sitemap";
+import { GET as llmsTxt } from "../app/llms.txt/route";
+import { alternatesDe } from "../lib/i18n/alternates";
+import { CHEMINS, PAGES, cheminVers } from "../lib/i18n/chemins";
+import {
+  LANGUES,
+  LANGUES_ACTIVES,
+  langueDuNavigateur,
+  langueOuDefaut,
+  type Langue,
+} from "../lib/i18n/langues";
+import { router } from "../lib/i18n/routage";
 import {
   clesImages,
   effacerImagesDeCarte,
@@ -179,7 +191,7 @@ test("toute page du site occupe un slug reserve", () => {
  * reserve, aucune carte nouvelle ne peut le prendre.
  */
 test("la page d'exemple reste en mode apercu", () => {
-  const chemin = new URL("../app/exemple/page.tsx", import.meta.url);
+  const chemin = new URL("../app/[langue]/exemple/page.tsx", import.meta.url);
   assert.ok(existsSync(chemin), "app/exemple/page.tsx introuvable");
   const rendus = lire(chemin).match(/<GiftView\b[^>]*>/g) ?? [];
   assert.equal(rendus.length, 1, "la page d'exemple doit rendre GiftView une fois, et une seule");
@@ -204,8 +216,8 @@ test("la page d'exemple reste en mode apercu", () => {
  * qui ne trouverait plus rien passerait en silence.
  */
 test("chaque photo de la page d'exemple existe", () => {
-  assert.equal(EXEMPLE.items.length, 4, "l'exemple montre quatre cadeaux");
-  for (const item of EXEMPLE.items) {
+  assert.equal(exemple("fr").items.length, 4, "l'exemple montre quatre cadeaux");
+  for (const item of exemple("fr").items) {
     assert.ok(item.image_url, `${item.label} : pas de photo`);
     assert.ok(item.image_url.startsWith("/"), `${item.label} : photo hors du site (${item.image_url})`);
     /*
@@ -245,6 +257,105 @@ const validBody = {
   theme: { layout: "list" },
   items: validItems,
 };
+
+test("chaque erreur levee se traduit sans marque restee, dans chaque langue", () => {
+  /*
+   * Une erreur voyage par sa cle et ses valeurs : une valeur renommee d'un cote
+   * et pas de l'autre laisserait « {max} » a l'ecran. Les erreurs sont levees
+   * par les vrais chemins plutot que listees a la main.
+   */
+  const erreurs = [slugError("ab"), slugError("Bonjour"), slugError("admin")];
+  for (const corps of [
+    { ...validBody, name: "x".repeat(LIMITS.name + 1) },
+    { ...validBody, items: Array.from({ length: LIMITS.itemsMax + 1 }, (_, i) => ({ label: `c${i}` })) },
+    { ...validBody, items: [] },
+    { ...validBody, slug: "ab" },
+    { ...validBody, reveal_at: "le 25 decembre" },
+  ]) {
+    try {
+      validateCreate(corps);
+      assert.fail(`aucune erreur pour ${JSON.stringify(corps).slice(0, 60)}`);
+    } catch (err) {
+      assert.ok(err instanceof ValidationError, String(err));
+      erreurs.push(err.erreur);
+    }
+  }
+  for (const langue of LANGUES) {
+    const e = dictionnaire(langue).erreurs;
+    for (const erreur of erreurs) {
+      assert.ok(erreur);
+      const texte = traduire(e, erreur);
+      assert.ok(texte.trim(), `${langue} : ${erreur.cle} vide`);
+      assert.doesNotMatch(texte, /\{\w+\}/, `${langue} : ${erreur.cle} garde une marque`);
+    }
+  }
+});
+
+test("les routes remplissent chaque marque de leurs messages", () => {
+  // Le pendant du test au-dessus pour les messages que les routes composent
+  // elles-memes : chaque marque du texte a sa valeur, et rien de plus.
+  const e: Record<string, string> = dictionnaire("fr").erreurs;
+  let vus = 0;
+  for (const f of ["app/api/pages/route.ts", "app/api/pages/[slug]/reply/route.ts", "app/api/upload/route.ts", "lib/blob.ts"]) {
+    for (const [, cle, objet] of lire(f).matchAll(/remplir\(e\.(\w+), \{([^}]*)\}\)/g)) {
+      assert.ok(e[cle], `${f} : cle inconnue ${cle}`);
+      const donnees = objet.split(",").map((p) => p.split(":")[0].trim()).filter(Boolean);
+      const marques = [...e[cle].matchAll(/\{(\w+)\}/g)].map((m) => m[1]);
+      assert.deepEqual(marques.sort(), donnees.sort(), `${f} : ${cle}`);
+      vus++;
+    }
+  }
+  assert.equal(vus, 4, "quatre messages a marques attendus");
+});
+
+test("les routes ne renvoient aucun message en dur", () => {
+  /*
+   * Tout message part du dictionnaire, dans la langue de la requete. Seule la
+   * purge garde le sien : elle ne repond qu'a la tache planifiee.
+   */
+  const routes: string[] = [];
+  const parcourir = (dossier: string) => {
+    for (const d of readdirSync(dossier, { withFileTypes: true })) {
+      const chemin = `${dossier}/${d.name}`;
+      if (d.isDirectory()) parcourir(chemin);
+      else if (d.name === "route.ts") routes.push(chemin);
+    }
+  };
+  parcourir("app/api");
+  assert.ok(routes.length >= 7, `routes trouvees : ${routes.length}`);
+  for (const f of [...routes, "lib/http.ts"]) {
+    if (f === "app/api/purge/route.ts") continue;
+    const source = lire(f);
+    assert.doesNotMatch(source, /fail\(\s*["'`]/, `${f} : message en dur`);
+    assert.doesNotMatch(source, /error:\s*["'`]/, `${f} : message en dur`);
+  }
+});
+
+test("chaque appel du navigateur aux routes annonce sa langue", () => {
+  /*
+   * Sans l'en-tete, la route repond en francais : sur une carte anglaise,
+   * l'erreur tomberait dans la mauvaise langue sans que rien ne casse. Tous
+   * les composants sont parcourus, pour qu'un nouvel appel n'y echappe pas.
+   */
+  let appels = 0;
+  const parcourir = (dossier: string) => {
+    for (const d of readdirSync(dossier, { withFileTypes: true })) {
+      const chemin = `${dossier}/${d.name}`;
+      if (d.isDirectory()) parcourir(chemin);
+      else if (/\.tsx?$/.test(d.name)) {
+        const source = lire(chemin);
+        for (const m of source.matchAll(/fetch\(\s*[`"]\/api\//g)) {
+          const suivant = source.indexOf("fetch(", m.index + 1);
+          const fin = Math.min(suivant === -1 ? source.length : suivant, m.index + 400);
+          assert.ok(source.slice(m.index, fin).includes("[EN_TETE_LANGUE]: langue"), `${chemin} : appel sans langue`);
+          appels++;
+        }
+      }
+    }
+  };
+  parcourir("components");
+  assert.ok(appels >= 7, `appels trouves : ${appels}`);
+});
 
 test("validateCreate accepte un corps correct et normalise", () => {
   const out = validateCreate(validBody);
@@ -671,10 +782,14 @@ test("chaque occasion pointe vers une palette qui existe", () => {
   }
 });
 
-test("chaque occasion propose un message d'ouverture non vide", () => {
-  for (const o of OCCASIONS) {
-    assert.ok(o.intro.trim().length > 0, o.id);
-    assert.ok(o.intro.length <= LIMITS.intro, `${o.id} depasse ${LIMITS.intro}`);
+test("chaque occasion propose un message d'ouverture non vide, dans chaque langue", () => {
+  for (const langue of LANGUES) {
+    const d = dictionnaire(langue);
+    for (const o of OCCASIONS) {
+      const intro = d.occasions[o.id].intro;
+      assert.ok(intro.trim().length > 0, `${langue}/${o.id}`);
+      assert.ok(intro.length <= LIMITS.intro, `${langue}/${o.id} depasse ${LIMITS.intro}`);
+    }
   }
 });
 
@@ -719,18 +834,25 @@ test("le voile ne se refuse plus, meme sur une carte ancienne", () => {
   );
 });
 
-test("chaque occasion propose une suggestion de titre et de remerciement", () => {
-  for (const o of OCCASIONS) {
-    assert.ok(o.welcomeHint.trim().length > 0, o.id);
-    assert.ok(o.thanksHint.trim().length > 0, o.id);
-    assert.ok(o.welcomeHint.length <= LIMITS.message, o.id);
-    assert.ok(o.thanksHint.length <= LIMITS.message, o.id);
+test("chaque occasion propose une suggestion de titre et de remerciement, dans chaque langue", () => {
+  for (const langue of LANGUES) {
+    const d = dictionnaire(langue);
+    for (const o of OCCASIONS) {
+      const f = d.occasions[o.id];
+      assert.ok(f.bienvenue.trim().length > 0, `${langue}/${o.id}`);
+      assert.ok(f.remerciement.trim().length > 0, `${langue}/${o.id}`);
+      assert.ok(f.bienvenue.length <= LIMITS.message, `${langue}/${o.id}`);
+      assert.ok(f.remerciement.length <= LIMITS.message, `${langue}/${o.id}`);
+    }
   }
 });
 
-test("les suggestions de titre sont distinctes d'une occasion a l'autre", () => {
-  const hints = OCCASIONS.map((o) => o.welcomeHint);
-  assert.equal(new Set(hints).size, hints.length);
+test("les suggestions de titre sont distinctes d'une occasion a l'autre, dans chaque langue", () => {
+  for (const langue of LANGUES) {
+    const d = dictionnaire(langue);
+    const titres = OCCASIONS.map((o) => d.occasions[o.id].bienvenue);
+    assert.equal(new Set(titres).size, titres.length, langue);
+  }
 });
 
 
@@ -784,10 +906,13 @@ test("le style d'ouverture retombe sur le voile si inconnu", () => {
   );
 });
 
-test("chaque style d'ouverture a un nom et une explication", () => {
-  for (const o of OPENINGS) {
-    assert.ok(o.name.trim().length > 0, o.id);
-    assert.ok(o.hint.trim().length > 0, o.id);
+test("chaque style d'ouverture a un nom et une explication, dans chaque langue", () => {
+  for (const langue of LANGUES) {
+    const d = dictionnaire(langue);
+    for (const o of OPENINGS) {
+      assert.ok(d.ouvertures[o.id].nom.trim().length > 0, `${langue}/${o.id}`);
+      assert.ok(d.ouvertures[o.id].aide.trim().length > 0, `${langue}/${o.id}`);
+    }
   }
   assert.equal(new Set(OPENINGS.map((o) => o.id)).size, OPENINGS.length);
 });
@@ -823,15 +948,21 @@ test("le socle d'occasions est present", () => {
 });
 
 test("chaque occasion a un nom et un pictogramme uniques", () => {
-  const noms = OCCASIONS.map((o) => o.name);
+  for (const langue of LANGUES) {
+    const d = dictionnaire(langue);
+    const noms = OCCASIONS.map((o) => d.occasions[o.id].nom);
+    assert.equal(new Set(noms).size, noms.length, `${langue} : noms en double`);
+  }
   const icones = OCCASIONS.map((o) => o.icon);
-  assert.equal(new Set(noms).size, noms.length, "noms en double");
   assert.equal(new Set(icones).size, icones.length, "pictogrammes en double");
 });
 
-test("les mots d'ouverture sont distincts d'une occasion a l'autre", () => {
-  const intros = OCCASIONS.map((o) => o.intro);
-  assert.equal(new Set(intros).size, intros.length);
+test("les mots d'ouverture sont distincts d'une occasion a l'autre, dans chaque langue", () => {
+  for (const langue of LANGUES) {
+    const d = dictionnaire(langue);
+    const intros = OCCASIONS.map((o) => d.occasions[o.id].intro);
+    assert.equal(new Set(intros).size, intros.length, langue);
+  }
 });
 
 test("les rubriques couvrent toutes les occasions, sans doublon", () => {
@@ -1001,24 +1132,25 @@ test("validatePatch ne renvoie que les textes d'ecran fournis", () => {
   assert.equal(out.items_title, "Choisis");
 });
 
-test("chaque occasion propose un texte de bouton et un mot d'attente", () => {
-  for (const o of OCCASIONS) {
-    assert.ok(o.openHint.trim().length > 0, `openHint vide : ${o.id}`);
-    assert.ok(o.waitHint.trim().length > 0, `waitHint vide : ${o.id}`);
-    assert.ok(
-      o.openHint.length <= LIMITS.openLabel,
-      `openHint dépasse la limite du champ : ${o.id}`,
-    );
-    assert.ok(
-      o.waitHint.length <= LIMITS.waitMessage,
-      `waitHint dépasse la limite du champ : ${o.id}`,
-    );
+test("chaque occasion propose un texte de bouton et un mot d'attente, dans chaque langue", () => {
+  for (const langue of LANGUES) {
+    const d = dictionnaire(langue);
+    for (const o of OCCASIONS) {
+      const f = d.occasions[o.id];
+      assert.ok(f.ouvrir.trim().length > 0, `bouton vide : ${langue}/${o.id}`);
+      assert.ok(f.attente.trim().length > 0, `attente vide : ${langue}/${o.id}`);
+      assert.ok(f.ouvrir.length <= LIMITS.openLabel, `bouton trop long : ${langue}/${o.id}`);
+      assert.ok(f.attente.length <= LIMITS.waitMessage, `attente trop longue : ${langue}/${o.id}`);
+    }
   }
 });
 
-test("les suggestions communes tiennent dans leurs champs", () => {
-  assert.ok(ITEMS_TITLE_HINT.length <= LIMITS.itemsTitle);
-  assert.ok(ITEMS_MESSAGE_HINT.length <= LIMITS.itemsMessage);
+test("les suggestions communes tiennent dans leurs champs, dans chaque langue", () => {
+  for (const langue of LANGUES) {
+    const d = dictionnaire(langue);
+    assert.ok(d.carte.titreCadeaux.length <= LIMITS.itemsTitle, langue);
+    assert.ok(d.carte.messageCadeaux.length <= LIMITS.itemsMessage, langue);
+  }
 });
 
 // --- Fenetre du mot du receveur --------------------------------------------
@@ -1049,18 +1181,24 @@ test("la borne exacte de la fenetre reste recevable", () => {
 test("chaque ouverture a un identifiant unique, un nom et une description", () => {
   const ids = OPENINGS.map((o) => o.id);
   assert.equal(new Set(ids).size, ids.length, "identifiants dupliques");
-  for (const o of OPENINGS) {
-    assert.ok(o.name.trim().length > 0, `nom vide : ${o.id}`);
-    assert.ok(o.hint.trim().length > 0, `description vide : ${o.id}`);
+  for (const langue of LANGUES) {
+    const d = dictionnaire(langue);
+    for (const o of OPENINGS) {
+      assert.ok(d.ouvertures[o.id].nom.trim().length > 0, `nom vide : ${langue}/${o.id}`);
+      assert.ok(d.ouvertures[o.id].aide.trim().length > 0, `description vide : ${langue}/${o.id}`);
+    }
   }
 });
 
 test("chaque effet a un identifiant unique, un nom et une description", () => {
   const ids = EFFECTS.map((e) => e.id);
   assert.equal(new Set(ids).size, ids.length, "identifiants dupliques");
-  for (const e of EFFECTS) {
-    assert.ok(e.name.trim().length > 0, `nom vide : ${e.id}`);
-    assert.ok(e.hint.trim().length > 0, `description vide : ${e.id}`);
+  for (const langue of LANGUES) {
+    const d = dictionnaire(langue);
+    for (const e of EFFECTS) {
+      assert.ok(d.effets[e.id].nom.trim().length > 0, `nom vide : ${langue}/${e.id}`);
+      assert.ok(d.effets[e.id].aide.trim().length > 0, `description vide : ${langue}/${e.id}`);
+    }
   }
 });
 
@@ -1232,11 +1370,12 @@ test("les identifiants de disposition et de motif sont uniques", () => {
 });
 
 test("chaque entree porte un nom, et chaque motif un decor connu", () => {
-  for (const l of PRINT_LAYOUTS) assert.ok(l.nom.trim().length > 0, l.id);
-  for (const m of PRINT_MOTIFS) {
-    assert.ok(m.nom.trim().length > 0, m.id);
-    assert.ok(DECORS.includes(m.id), `motif inconnu : ${m.id}`);
+  for (const langue of LANGUES) {
+    const im = dictionnaire(langue).impression;
+    for (const l of PRINT_LAYOUTS) assert.ok(im.dispositions[l.id]?.trim(), `${langue} : ${l.id}`);
+    for (const m of PRINT_MOTIFS) assert.ok(im.pictogrammes[m.id]?.trim(), `${langue} : ${m.id}`);
   }
+  for (const m of PRINT_MOTIFS) assert.ok(DECORS.includes(m.id), `motif inconnu : ${m.id}`);
 });
 
 test("GiftMotif sait dessiner chaque decor du catalogue", () => {
@@ -1531,11 +1670,13 @@ async function checkImages() {
     const readme = lire(new URL("../README.md", import.meta.url)).toLowerCase();
     for (const e of EFFECTS) {
       if (e.id === "aucun") continue;
-      assert.ok(readme.includes(e.name.toLowerCase()), `effet absent du README : ${e.name}`);
+      const nom = dictionnaire("fr").effets[e.id].nom;
+      assert.ok(readme.includes(nom.toLowerCase()), `effet absent du README : ${nom}`);
     }
     for (const m of PRINT_MOTIFS) {
       if (m.id === "none") continue;
-      assert.ok(readme.includes(m.nom.toLowerCase()), `decor absent du README : ${m.nom}`);
+      const nom = dictionnaire("fr").impression.pictogrammes[m.id];
+      assert.ok(readme.includes(nom.toLowerCase()), `decor absent du README : ${nom}`);
     }
   });
 
@@ -2048,6 +2189,183 @@ async function checkImages() {
   });
 }
 
+// --- Multilingue : langues, chemins, routage -------------------------------
+
+test("la langue du navigateur se choisit parmi les langues actives", () => {
+  const actives: readonly Langue[] = ["fr", "en", "de"];
+  assert.equal(langueDuNavigateur("de-DE,de;q=0.9,en;q=0.8", actives), "de");
+  assert.equal(langueDuNavigateur("en;q=0.3,de;q=0.9", actives), "de");
+  assert.equal(langueDuNavigateur("pt-BR,pt;q=0.9", actives), "en");
+  assert.equal(langueDuNavigateur(null, actives), "en");
+  assert.equal(langueDuNavigateur("de;q=0", actives), "en");
+  // Sans l'anglais, le repli est la premiere langue active.
+  assert.equal(langueDuNavigateur("pt-BR", ["fr"]), "fr");
+});
+
+test("une langue inconnue retombe sur le francais", () => {
+  assert.equal(langueOuDefaut("de"), "de");
+  assert.equal(langueOuDefaut("xx"), "fr");
+  assert.equal(langueOuDefaut(undefined), "fr");
+});
+
+test("chaque page a un chemin dans chaque langue, unique dans sa langue", () => {
+  for (const langue of LANGUES) {
+    const vus = new Set<string>();
+    for (const page of PAGES) {
+      const chemin = CHEMINS[page][langue];
+      assert.equal(typeof chemin, "string", `${page}/${langue}`);
+      assert.match(chemin, /^[a-z0-9-]*$/, `${page}/${langue} : ${chemin}`);
+      assert.ok(!vus.has(chemin), `${langue} : « ${chemin} » designe deux pages`);
+      vus.add(chemin);
+    }
+  }
+  assert.equal(cheminVers("fr", "creer"), "/fr/creer");
+  assert.equal(cheminVers("de", "creer"), "/de/erstellen");
+  assert.equal(cheminVers("en", "accueil"), "/en");
+});
+
+test("aucun cookie : ni le middleware ni lib/i18n n'en posent", () => {
+  /*
+   * La langue vit dans l'adresse, et la politique de confidentialite promet
+   * « aucun cookie » : un cookie de langue, si commode soit-il, la dementirait
+   * sans que rien d'autre ne casse.
+   */
+  const fichiers = ["middleware.ts", ...readdirSync("lib/i18n").map((f) => `lib/i18n/${f}`)];
+  for (const f of fichiers) {
+    assert.doesNotMatch(lire(f), /set-cookie|cookies\s*\(|\.cookies\b/i, `${f} pose un cookie`);
+  }
+});
+
+test("la redirection de / varie selon Accept-Language", () => {
+  /*
+   * Elle depend de la langue du navigateur : sans `Vary`, un cache partage
+   * servirait a tout le monde la langue du premier visiteur. Le middleware
+   * importe next/server et ne se charge pas ici ; il est lu comme du texte.
+   */
+  const middleware = lire("middleware.ts");
+  assert.match(
+    middleware,
+    /if \(!decision\.permanente\) reponse\.headers\.set\("Vary", "Accept-Language"\);/,
+    "la redirection temporaire ne pose plus Vary",
+  );
+});
+
+test("le navigateur ne recoit jamais les dictionnaires par import", () => {
+  /*
+   * Un composant cote navigateur recoit le sien par le contexte. Un import de
+   * valeur de `@/lib/i18n` ou de `fr.ts` embarquerait tous les dictionnaires
+   * dans le bundle ; `import type` s'efface a la compilation. Les modules de
+   * lib/i18n que le navigateur importe ne doivent pas non plus les tirer.
+   */
+  const IMPORT_DE_VALEUR = /^import\s+(?!type\b)[^;]*from\s+"(?:@\/lib\/i18n(?:\/fr)?|\.\/(?:index|fr)|\.)";/m;
+  let clients = 0;
+  const parcourir = (dossier: string) => {
+    for (const d of readdirSync(dossier, { withFileTypes: true })) {
+      const chemin = `${dossier}/${d.name}`;
+      if (d.isDirectory()) parcourir(chemin);
+      else if (/\.tsx?$/.test(d.name)) {
+        const source = lire(chemin);
+        if (!/^["']use client["'];/m.test(source)) continue;
+        clients++;
+        assert.doesNotMatch(source, IMPORT_DE_VALEUR, `${chemin} importe les dictionnaires`);
+      }
+    }
+  };
+  parcourir("components");
+  parcourir("app");
+  assert.ok(clients >= 10, `composants navigateur trouves : ${clients}`);
+  for (const f of ["remplir", "langues", "chemins", "erreurs", "alternates"]) {
+    assert.doesNotMatch(lire(`lib/i18n/${f}.ts`), IMPORT_DE_VALEUR, `lib/i18n/${f}.ts tire les dictionnaires`);
+  }
+});
+
+/** Une adresse que le routeur sert telle quelle : ni redirigee, ni introuvable. */
+function servie(url: string): boolean {
+  const d = router(new URL(url, "http://x").pathname, null, LANGUES_ACTIVES);
+  return d.type === "suite" || (d.type === "reecriture" && !d.vers.endsWith("/introuvable"));
+}
+
+test("le sitemap et les hreflang ne citent que des adresses servies", () => {
+  /*
+   * Une adresse qui redirige, ou qui tombe sur la page introuvable, n'a rien a
+   * faire dans un sitemap ni dans un hreflang : le robot la suit, et la version
+   * annoncee n'existe pas. Chaque adresse passe donc par le vrai routeur.
+   */
+  const base = baseUrl();
+  const plan = sitemap();
+  assert.equal(plan.length, LANGUES_ACTIVES.length * 7);
+  for (const entree of plan) {
+    assert.ok(entree.url.startsWith(`${base}/`), entree.url);
+    assert.ok(servie(entree.url), `sitemap : ${entree.url} n'est pas servie`);
+    assert.ok(!entree.url.endsWith(CHEMINS["mentions-legales"].fr), "les mentions portent noindex");
+    const versions = Object.entries(entree.alternates?.languages ?? {});
+    for (const [hreflang, url] of versions) {
+      if (hreflang === "x-default") {
+        assert.equal(url, `${base}/`);
+        continue;
+      }
+      assert.ok(LANGUES_ACTIVES.includes(hreflang as Langue), `version dans une langue inactive : ${hreflang}`);
+      assert.ok(servie(String(url)), `hreflang : ${url} n'est pas servie`);
+    }
+    assert.equal(versions.filter(([h]) => h !== "x-default").length, LANGUES_ACTIVES.length, entree.url);
+  }
+  for (const langue of LANGUES_ACTIVES) {
+    for (const page of PAGES) {
+      const a = alternatesDe(langue, page);
+      assert.equal(a?.canonical, cheminVers(langue, page));
+      for (const [hreflang, url] of Object.entries(a?.languages ?? {})) {
+        if (hreflang !== "x-default") assert.ok(servie(String(url)), `${page} : ${url}`);
+      }
+    }
+  }
+});
+
+test("le selecteur de langue n'apparait qu'avec plusieurs langues, et mene a la meme page", () => {
+  const pied = lire("components/SiteFooter.tsx");
+  assert.match(pied, /\{LANGUES_ACTIVES\.length > 1 && \(/, "selecteur rendu sans condition");
+  assert.match(pied, /href=\{cheminVers\(l, page\)\}/, "le selecteur ne mene plus a la meme page");
+});
+
+test("le routage : langues, anciennes adresses, cartes", () => {
+  const toutes: readonly Langue[] = LANGUES;
+  const r = (chemin: string, accept: string | null = null, actives: readonly Langue[] = ["fr"]) =>
+    router(chemin, accept, actives);
+
+  assert.deepEqual(r("/"), { type: "redirection", vers: "/fr", permanente: false });
+  assert.deepEqual(r("/", "de-DE", toutes), { type: "redirection", vers: "/de", permanente: false });
+  assert.deepEqual(r("/fr"), { type: "suite" });
+  assert.deepEqual(r("/fr/creer"), { type: "suite" });
+  assert.deepEqual(r("/creer"), { type: "redirection", vers: "/fr/creer", permanente: true });
+  assert.deepEqual(r("/mentions-legales"), { type: "redirection", vers: "/fr/mentions-legales", permanente: true });
+  assert.deepEqual(r("/camille-anniversaire"), { type: "reecriture", vers: "/carte/camille-anniversaire" });
+
+  // Une langue n'est jamais prise pour une carte, meme inactive.
+  assert.deepEqual(r("/en"), { type: "reecriture", vers: "/fr/introuvable" });
+  assert.deepEqual(r("/en/create"), { type: "reecriture", vers: "/fr/introuvable" });
+
+  // Langue active : le chemin traduit vise le dossier francais, et le chemin
+  // d'une autre langue est redirige vers le bon.
+  assert.deepEqual(r("/en/create", null, toutes), { type: "reecriture", vers: "/en/creer" });
+  assert.deepEqual(r("/en/contact", null, toutes), { type: "suite" });
+  assert.deepEqual(r("/en/creer", null, toutes), { type: "redirection", vers: "/en/create", permanente: true });
+  assert.deepEqual(r("/de/privacy", null, toutes), { type: "redirection", vers: "/de/datenschutz", permanente: true });
+
+  for (const passant of ["/api/pages", "/admin/abc", "/carte/x", "/opengraph-image", "/robots.txt", "/icon.svg"]) {
+    assert.deepEqual(r(passant), { type: "suite" }, passant);
+  }
+  assert.deepEqual(r("/a/b/c", "de-DE", toutes), { type: "reecriture", vers: "/de/introuvable" });
+  assert.deepEqual(r("/-mauvais-"), { type: "reecriture", vers: "/fr/introuvable" });
+});
+
+test("la langue de la carte : connue, elle est gardee ; inconnue ou absente, le francais", () => {
+  assert.equal(validateTheme({ langue: "de" }).langue, "de");
+  assert.equal(validateTheme({ langue: "xx" }).langue, "fr");
+  assert.equal(validateTheme({}).langue, "fr");
+  assert.equal(validateTheme({ langue: { toString: () => "de" } }).langue, "fr");
+  // Relue en base : sans cela, toute carte redeviendrait francaise a l'affichage.
+  assert.match(lire("lib/db.ts"), /\blangue: raw\.langue\b/);
+});
+
 // --- Purge des cartes expirees ---------------------------------------------
 
 const BLOB_TEST = "https://abc.public.blob.vercel-storage.com/gift/1-x.jpg";
@@ -2231,6 +2549,22 @@ async function checkPurge() {
   }
 }
 
+// --- llms.txt ----------------------------------------------------------------
+
+async function checkLlms() {
+  const texte = await llmsTxt().text();
+  test("llms.txt ne cite que des adresses servies, en francais", () => {
+    // Ecrits a la main, ses liens pointaient vers d'anciennes adresses : une
+    // redirection pour chaque assistant qui les suivait.
+    const liens = [...texte.matchAll(/\]\((http[^)]+)\)/g)].map((m) => m[1]);
+    assert.equal(liens.length, 7, `liens trouves : ${liens.length}`);
+    for (const lien of liens) {
+      assert.ok(lien.startsWith(`${baseUrl()}/fr`), lien);
+      assert.ok(servie(lien), `${lien} n'est pas servie`);
+    }
+  });
+}
+
 // --- Rapport ---------------------------------------------------------------
 
 function report() {
@@ -2242,11 +2576,12 @@ function report() {
   console.log(`${passed} vérifications passées.`);
 }
 
-// Les parties asynchrones du harnais — les images, puis la purge — sont
+// Les parties asynchrones du harnais — les images, la purge, llms.txt — sont
 // chainees plutot qu'attendues au niveau du module, ce qui rendrait tout le
 // script asynchrone.
 checkImages()
   .then(checkPurge)
+  .then(checkLlms)
   .then(report, (err: unknown) => {
     failures.push(`vérifications asynchrones\n    ${(err as Error).message}`);
     report();
