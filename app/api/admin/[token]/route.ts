@@ -1,6 +1,7 @@
 import { findByAdminToken, rowToPage, sql } from "@/lib/db";
 import { mirrorCover, mirrorItemImages, type ImageWarning } from "@/lib/blob";
 import { fail, handleError, json, notFoundJson, readJson, tropDeRequetes } from "@/lib/http";
+import { accesReel, effacerImagesDeCarte } from "@/lib/purge";
 import { QUOTAS } from "@/lib/rateLimit";
 import { isExpired, isLocked } from "@/lib/types";
 import { validatePatch } from "@/lib/validation";
@@ -131,6 +132,20 @@ export async function DELETE(req: Request, { params }: Params) {
     if (trop) return trop;
 
     const { token } = await params;
+    const page = await findByAdminToken(token);
+    if (!page) return notFoundJson();
+
+    /*
+     * Les images partent avec la carte, sauf celles qu'une autre carte utilise.
+     * Une image qui resiste n'empeche pas la suppression — c'est le donneur qui
+     * l'a demandee —, mais son adresse reste dans les journaux : une fois la
+     * ligne effacee, plus rien ne permettrait de la retrouver.
+     */
+    const restees = await effacerImagesDeCarte(accesReel(), page);
+    if (restees.length > 0) {
+      console.error("[mypresentsforyou] suppression : images restees", restees.join(" "));
+    }
+
     const { rowCount } = await sql`DELETE FROM gift_pages WHERE admin_token = ${token}`;
     if (rowCount === 0) return notFoundJson();
     return json({ ok: true });

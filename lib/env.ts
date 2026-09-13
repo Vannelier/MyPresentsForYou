@@ -35,6 +35,19 @@ export function adsensePublisherId(): string | null {
   return /^pub-\d{16}$/.test(id) ? id : null;
 }
 
+/**
+ * Le secret de la purge, s'il est pose et assez long ; `null` sinon, et la
+ * route se tait alors en 404. Trente-deux caracteres au moins : c'est tout ce
+ * qui la protege, et `openssl rand -hex 32` en donne soixante-quatre.
+ *
+ * La comparaison, elle, vit dans `lib/purge.ts` : elle a besoin de
+ * `node:crypto`, et ce module-ci part aussi dans le bundle navigateur.
+ */
+export function secretDePurge(): string | null {
+  const secret = process.env.PURGE_SECRET?.trim() ?? "";
+  return secret.length >= 32 ? secret : null;
+}
+
 export function publicUrlFor(slug: string): string {
   return `${baseUrl()}/${slug}`;
 }

@@ -4,7 +4,7 @@ import type { Item } from "./types";
 
 export { storageAvailable, storeImage };
 
-const BLOB_HOST_SUFFIX = ".public.blob.vercel-storage.com";
+export const BLOB_HOST_SUFFIX = ".public.blob.vercel-storage.com";
 const FETCH_TIMEOUT_MS = 8000;
 
 export type ImageWarning = { scope: "cover" | "item"; itemId?: string; message: string };
