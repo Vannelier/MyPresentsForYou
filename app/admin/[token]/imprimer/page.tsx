@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import PrintableCard from "@/components/PrintableCard";
-import { findByAdminToken } from "@/lib/db";
+import { lireCarteAdmin } from "@/lib/carte";
 import { publicUrlFor } from "@/lib/env";
 import { occasionById } from "@/lib/occasions";
 
@@ -20,7 +20,7 @@ type Props = { params: Promise<{ token: string }> };
  */
 export default async function PrintRoute({ params }: Props) {
   const { token } = await params;
-  const page = await findByAdminToken(token);
+  const page = await lireCarteAdmin(token);
   if (!page) notFound();
 
   return (

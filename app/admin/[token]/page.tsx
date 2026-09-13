@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import AdminView, { type AdminSnapshot } from "@/components/AdminView";
-import { findByAdminToken } from "@/lib/db";
+import { lireCarteAdmin } from "@/lib/carte";
 import { publicUrlFor } from "@/lib/env";
 import { isExpired, isLocked, isSealed } from "@/lib/types";
 
@@ -19,7 +19,7 @@ export default async function AdminRoute({ params }: Props) {
 
   // Un token invalide donne un 404 identique à celui d'une page inexistante :
   // rien ne doit laisser deviner qu'une page existe derrière cette adresse.
-  const page = await findByAdminToken(token);
+  const page = await lireCarteAdmin(token);
   if (!page) notFound();
 
   const snapshot: AdminSnapshot = {

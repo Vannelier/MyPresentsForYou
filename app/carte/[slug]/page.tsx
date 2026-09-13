@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import GiftView from "@/components/GiftView";
-import { findBySlug, incrementViewCount } from "@/lib/db";
+import { lireCarte } from "@/lib/carte";
+import { incrementViewCount } from "@/lib/db";
 import { baseUrl, publicUrlFor } from "@/lib/env";
 import { RESERVED_SLUGS } from "@/lib/slug";
 import { isExpired, isLocked, toPublicPage } from "@/lib/types";
@@ -15,7 +16,7 @@ const OG_DESCRIPTION = "Choisis ton cadeau.";
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   if (RESERVED_SLUGS.has(slug)) return { title: "Page introuvable" };
-  const page = await findBySlug(slug).catch(() => null);
+  const page = await lireCarte(slug).catch(() => null);
   if (!page) return { title: "Page introuvable" };
 
   // Le donneur peut choisir ce que WhatsApp affiche, sans toucher au titre de la page.
@@ -58,7 +59,7 @@ export default async function GiftPageRoute({ params }: Props) {
   // /favicon.ico, /robots.txt et compagnie retombent ici : 404 sans toucher la base.
   if (RESERVED_SLUGS.has(slug)) notFound();
 
-  const page = await findBySlug(slug);
+  const page = await lireCarte(slug);
   if (!page) notFound();
 
   if (isExpired(page)) {

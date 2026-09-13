@@ -1,6 +1,10 @@
 import Link from "next/link";
 
-export default function NotFound() {
+/*
+ * La page introuvable, commune aux trois layouts racines. Sans layout unique,
+ * chacun a son `not-found` ; ils doivent dire la meme chose.
+ */
+export default function Introuvable() {
   return (
     <div className="shell shell--flush">
       <div className="state">

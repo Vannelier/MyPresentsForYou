@@ -182,7 +182,7 @@ test("toute page du site occupe un slug reserve", () => {
  * reserve, aucune carte nouvelle ne peut le prendre.
  */
 test("la page d'exemple reste en mode apercu", () => {
-  const chemin = new URL("../app/exemple/page.tsx", import.meta.url);
+  const chemin = new URL("../app/[langue]/exemple/page.tsx", import.meta.url);
   assert.ok(existsSync(chemin), "app/exemple/page.tsx introuvable");
   const rendus = lire(chemin).match(/<GiftView\b[^>]*>/g) ?? [];
   assert.equal(rendus.length, 1, "la page d'exemple doit rendre GiftView une fois, et une seule");

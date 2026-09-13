@@ -15,6 +15,8 @@ export type Theme = {
   opening?: string;
   /** Effet joue sur la page decouverte, independant de l'ouverture. */
   effect?: string;
+  /** Langue de la carte, choisie a la creation. Absente = francais. */
+  langue?: string;
 };
 
 export type Item = {
