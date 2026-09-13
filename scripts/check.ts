@@ -1842,6 +1842,27 @@ async function checkImages() {
   });
 }
 
+test("la mention n'est un lien qu'une fois le choix passe", () => {
+  /*
+   * Sur l'ecran des cadeaux, un toucher egare au bas de la liste ferait quitter
+   * la page avant d'avoir choisi. Un remaniement qui reposerait le lien a cet
+   * endroit n'echouerait nulle part ailleurs : on lit donc les deux ecrans de
+   * GiftView comme du texte, separes par le `return` de l'ecran des cadeaux.
+   */
+  const vue = lire(new URL("../components/GiftView.tsx", import.meta.url));
+  const debut = vue.indexOf("if (settled) {");
+  const milieu = vue.indexOf("\n  return (", debut);
+  const fin = vue.indexOf("\nexport function GiftCard", milieu);
+  assert.ok(debut !== -1 && milieu !== -1 && fin !== -1, "reperes de GiftView introuvables");
+  const confirmation = vue.slice(debut, milieu);
+  const cadeaux = vue.slice(milieu, fin);
+
+  assert.match(cadeaux, /<MadeWith cliquable=\{false\} \/>/);
+  assert.doesNotMatch(cadeaux, /<a\b|<Link\b|href=/, "un lien sur l'ecran des cadeaux");
+  assert.match(confirmation, /<MadeWith cliquable=\{mode === "live"\} \/>/);
+  assert.match(vue, /function MadeWith[\s\S]*?<Link href="\/"/);
+});
+
 // --- Rapport ---------------------------------------------------------------
 
 function report() {

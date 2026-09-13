@@ -374,6 +374,16 @@ l'hydratation sur une carte choisie il y a presque une heure.
 Le serveur n'enregistre le mot que si l'option est active sur la page — une requête directe ne peut
 pas glisser un texte dans une carte qui ne l'a pas demandé.
 
+## La mention en pied de page
+
+« Page-cadeau générée avec MyPresentsForYou » est le seul canal de découverte du produit. Elle
+figure sur l'écran des cadeaux et sur l'écran de confirmation, mais **n'est un lien que sur le
+second** : tant que le choix n'est pas fait, un toucher égaré en bas de la liste ferait quitter la
+page au receveur avant qu'il ait choisi. Une fois le choix confirmé, il n'y a plus rien à perdre, et
+la mention ramène à l'accueil.
+
+Dans l'aperçu du formulaire, elle reste du texte : le lien ferait quitter l'édition en cours.
+
 ## La carte à imprimer
 
 `/admin/[token]/imprimer` : une feuille A4 paysage pliée en deux, avec le QR code au dos et la

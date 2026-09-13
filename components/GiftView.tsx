@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import Link from "next/link";
 import GiftCover from "@/components/GiftCover";
 import GiftEffect from "@/components/GiftEffect";
 import GiftMotif from "@/components/GiftMotif";
@@ -565,6 +566,8 @@ export default function GiftView({
           )}
 
           {page.signature.trim() && <p className="signature">{page.signature}</p>}
+          {/* Dans l'apercu, le lien ferait quitter le formulaire en cours d'edition. */}
+          <MadeWith cliquable={mode === "live"} />
           {mode === "preview" && (
             <div className="btn-row" style={{ justifyContent: "center", marginTop: "2rem" }}>
               <button type="button" className="btn btn--ghost btn--sm" onClick={() => setPhase("choosing")}>
@@ -653,9 +656,12 @@ export default function GiftView({
 
         {page.signature.trim() && <p className="signature">{page.signature}</p>}
 
-        <p className="made-with">
-          Page-cadeau générée avec <strong>MyPresentsForYou</strong>
-        </p>
+        {/*
+          Jamais un lien ici : le choix n'est pas fait, et un toucher egare au
+          bas de la liste ferait quitter la page avant d'avoir choisi. La mention
+          ne devient cliquable que sur l'ecran de confirmation.
+        */}
+        <MadeWith cliquable={false} />
       </div>
 
       <div className={`confirm-bar${barIn ? "" : " confirm-bar--waiting"}`}>
@@ -753,6 +759,32 @@ export function GiftCard({
         ✓
       </span>
     </button>
+  );
+}
+
+/**
+ * Le lien vise l'accueil par un chemin relatif : la page-cadeau est servie par
+ * le site lui-meme, et le chemin suit donc le domaine, quel qu'il soit.
+ *
+ * Sans prechargement : la plupart des receveurs ne cliqueront pas, et chaque
+ * ecran de confirmation irait sinon chercher l'accueil pour rien.
+ */
+function MadeWith({ cliquable }: { cliquable: boolean }) {
+  const texte = (
+    <>
+      Page-cadeau générée avec <strong>MyPresentsForYou</strong>
+    </>
+  );
+  return (
+    <p className="made-with">
+      {cliquable ? (
+        <Link href="/" prefetch={false}>
+          {texte}
+        </Link>
+      ) : (
+        texte
+      )}
+    </p>
   );
 }
 
