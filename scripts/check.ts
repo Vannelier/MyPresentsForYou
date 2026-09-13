@@ -34,6 +34,9 @@ import { RESERVED_SLUGS, slugError, slugify, suggestVariant } from "../lib/slug"
 import { REPLY_WINDOW_MS, isExpired, isLocked, isSealed, replyWindowOpen } from "../lib/types";
 import { LIMITS } from "../lib/limits";
 import { adsensePublisherId, freePageTtlDays, secretDePurge } from "../lib/env";
+import { CHEMINS, PAGES, cheminVers } from "../lib/i18n/chemins";
+import { LANGUES, langueDuNavigateur, langueOuDefaut, type Langue } from "../lib/i18n/langues";
+import { router } from "../lib/i18n/routage";
 import {
   clesImages,
   effacerImagesDeCarte,
@@ -2047,6 +2050,72 @@ async function checkImages() {
     assert.match(bloc('.card[aria-pressed="true"] .card__check'), /will-change: transform, opacity;/);
   });
 }
+
+// --- Multilingue : langues, chemins, routage -------------------------------
+
+test("la langue du navigateur se choisit parmi les langues actives", () => {
+  const actives: readonly Langue[] = ["fr", "en", "de"];
+  assert.equal(langueDuNavigateur("de-DE,de;q=0.9,en;q=0.8", actives), "de");
+  assert.equal(langueDuNavigateur("en;q=0.3,de;q=0.9", actives), "de");
+  assert.equal(langueDuNavigateur("pt-BR,pt;q=0.9", actives), "en");
+  assert.equal(langueDuNavigateur(null, actives), "en");
+  assert.equal(langueDuNavigateur("de;q=0", actives), "en");
+  // Sans l'anglais, le repli est la premiere langue active.
+  assert.equal(langueDuNavigateur("pt-BR", ["fr"]), "fr");
+});
+
+test("une langue inconnue retombe sur le francais", () => {
+  assert.equal(langueOuDefaut("de"), "de");
+  assert.equal(langueOuDefaut("xx"), "fr");
+  assert.equal(langueOuDefaut(undefined), "fr");
+});
+
+test("chaque page a un chemin dans chaque langue, unique dans sa langue", () => {
+  for (const langue of LANGUES) {
+    const vus = new Set<string>();
+    for (const page of PAGES) {
+      const chemin = CHEMINS[page][langue];
+      assert.equal(typeof chemin, "string", `${page}/${langue}`);
+      assert.match(chemin, /^[a-z0-9-]*$/, `${page}/${langue} : ${chemin}`);
+      assert.ok(!vus.has(chemin), `${langue} : « ${chemin} » designe deux pages`);
+      vus.add(chemin);
+    }
+  }
+  assert.equal(cheminVers("fr", "creer"), "/fr/creer");
+  assert.equal(cheminVers("de", "creer"), "/de/erstellen");
+  assert.equal(cheminVers("en", "accueil"), "/en");
+});
+
+test("le routage : langues, anciennes adresses, cartes", () => {
+  const toutes: readonly Langue[] = LANGUES;
+  const r = (chemin: string, accept: string | null = null, actives: readonly Langue[] = ["fr"]) =>
+    router(chemin, accept, actives);
+
+  assert.deepEqual(r("/"), { type: "redirection", vers: "/fr", permanente: false });
+  assert.deepEqual(r("/", "de-DE", toutes), { type: "redirection", vers: "/de", permanente: false });
+  assert.deepEqual(r("/fr"), { type: "suite" });
+  assert.deepEqual(r("/fr/creer"), { type: "suite" });
+  assert.deepEqual(r("/creer"), { type: "redirection", vers: "/fr/creer", permanente: true });
+  assert.deepEqual(r("/mentions-legales"), { type: "redirection", vers: "/fr/mentions-legales", permanente: true });
+  assert.deepEqual(r("/camille-anniversaire"), { type: "reecriture", vers: "/carte/camille-anniversaire" });
+
+  // Une langue n'est jamais prise pour une carte, meme inactive.
+  assert.deepEqual(r("/en"), { type: "reecriture", vers: "/fr/introuvable" });
+  assert.deepEqual(r("/en/create"), { type: "reecriture", vers: "/fr/introuvable" });
+
+  // Langue active : le chemin traduit vise le dossier francais, et le chemin
+  // d'une autre langue est redirige vers le bon.
+  assert.deepEqual(r("/en/create", null, toutes), { type: "reecriture", vers: "/en/creer" });
+  assert.deepEqual(r("/en/contact", null, toutes), { type: "suite" });
+  assert.deepEqual(r("/en/creer", null, toutes), { type: "redirection", vers: "/en/create", permanente: true });
+  assert.deepEqual(r("/de/privacy", null, toutes), { type: "redirection", vers: "/de/datenschutz", permanente: true });
+
+  for (const passant of ["/api/pages", "/admin/abc", "/carte/x", "/opengraph-image", "/robots.txt", "/icon.svg"]) {
+    assert.deepEqual(r(passant), { type: "suite" }, passant);
+  }
+  assert.deepEqual(r("/a/b/c", "de-DE", toutes), { type: "reecriture", vers: "/de/introuvable" });
+  assert.deepEqual(r("/-mauvais-"), { type: "reecriture", vers: "/fr/introuvable" });
+});
 
 // --- Purge des cartes expirees ---------------------------------------------
 
