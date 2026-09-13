@@ -209,6 +209,35 @@ test("la page d'exemple reste en mode apercu", () => {
   );
 });
 
+test("la mention n'est un lien qu'une fois le choix passe", () => {
+  /*
+   * Sur l'ecran des cadeaux, un toucher egare au bas de la liste ferait quitter
+   * la page avant d'avoir choisi. Sur l'ecran de confirmation, le lien doit
+   * exister dans tous les modes : une premiere version le reservait a la page
+   * reelle, et c'est dans l'apercu qu'on l'a cherche — sans le trouver.
+   *
+   * On lit les deux ecrans de GiftView comme du texte, separes par le `return`
+   * de l'ecran des cadeaux : un remaniement qui deplacerait le lien n'echouerait
+   * nulle part ailleurs.
+   */
+  const vue = lire("components/GiftView.tsx");
+  const debut = vue.indexOf("if (settled) {");
+  const milieu = vue.indexOf("\n  return (", debut);
+  const fin = vue.indexOf("\nexport function GiftCard", milieu);
+  assert.ok(debut !== -1 && milieu !== -1 && fin !== -1, "reperes de GiftView introuvables");
+  const confirmation = vue.slice(debut, milieu);
+  const cadeaux = vue.slice(milieu, fin);
+
+  assert.match(cadeaux, /<MadeWith \/>/);
+  assert.doesNotMatch(cadeaux, /<a\b|<Link\b|href=|<MadeWith lien/, "un lien sur l'ecran des cadeaux");
+  assert.match(
+    confirmation,
+    /<MadeWith lien=\{commeUneVraiePage \? "meme-onglet" : "nouvel-onglet"\} \/>/,
+    "la confirmation n'offre plus le lien dans tous les modes",
+  );
+  assert.match(vue, /function MadeWith[\s\S]*?href=\{cheminVers\(langue, "accueil"\)\}/);
+});
+
 /*
  * Chaque photo de l'exemple doit exister sous public/ : une photo renommee ou
  * oubliee afficherait une image cassee, precisement la ou le produit doit

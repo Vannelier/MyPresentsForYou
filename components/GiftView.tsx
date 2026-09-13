@@ -7,6 +7,7 @@ import GiftEffect from "@/components/GiftEffect";
 import GiftMotif from "@/components/GiftMotif";
 import GiftZoom from "@/components/GiftZoom";
 import { useDictionnaire } from "@/components/i18n/Dictionnaire";
+import { cheminVers } from "@/lib/i18n/chemins";
 import { EN_TETE_LANGUE } from "@/lib/i18n/langues";
 import { remplir } from "@/lib/i18n/remplir";
 import {
@@ -587,6 +588,12 @@ export default function GiftView({
           )}
 
           {page.signature.trim() && <p className="signature">{page.signature}</p>}
+          {/*
+            Le choix est fait : la mention peut mener au site sans rien faire
+            perdre. Dans l'apercu de l'editeur, elle ouvre un nouvel onglet — le
+            meme onglet ferait quitter le formulaire en cours d'edition.
+          */}
+          <MadeWith lien={commeUneVraiePage ? "meme-onglet" : "nouvel-onglet"} />
           {mode === "preview" && (
             <div className="btn-row" style={{ justifyContent: "center", marginTop: "2rem" }}>
               <button type="button" className="btn btn--ghost btn--sm" onClick={() => setPhase("choosing")}>
@@ -680,9 +687,11 @@ export default function GiftView({
 
         {page.signature.trim() && <p className="signature">{page.signature}</p>}
 
-        <p className="made-with">
-          {mots.faitAvec}<strong>{d.commun.marque}</strong>
-        </p>
+        {/*
+          Jamais un lien ici : le choix n'est pas fait, et un toucher egare au
+          bas de la liste ferait quitter la page avant d'avoir choisi.
+        */}
+        <MadeWith />
       </div>
 
       <div className={`confirm-bar${barIn ? "" : " confirm-bar--waiting"}`}>
@@ -780,6 +789,38 @@ export function GiftCard({
         ✓
       </span>
     </button>
+  );
+}
+
+/**
+ * Sans `lien`, la mention reste du texte. Le lien vise l'accueil dans la langue
+ * de la carte : le receveur decouvre le site dans la langue de son cadeau.
+ *
+ * Sans prechargement : la plupart des receveurs ne cliqueront pas, et chaque
+ * ecran de confirmation irait sinon chercher l'accueil pour rien.
+ */
+function MadeWith({ lien }: { lien?: "meme-onglet" | "nouvel-onglet" }) {
+  const { langue, d } = useDictionnaire();
+  const texte = (
+    <>
+      {d.carte.faitAvec}
+      <strong>{d.commun.marque}</strong>
+    </>
+  );
+  return (
+    <p className="made-with">
+      {lien ? (
+        <Link
+          href={cheminVers(langue, "accueil")}
+          prefetch={false}
+          {...(lien === "nouvel-onglet" ? { target: "_blank", rel: "noopener" } : {})}
+        >
+          {texte}
+        </Link>
+      ) : (
+        texte
+      )}
+    </p>
   );
 }
 
