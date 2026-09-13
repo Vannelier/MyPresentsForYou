@@ -82,12 +82,23 @@ export function imageUrlFromClipboard(data: DataTransfer | null): string | null 
 
 export type UploadResult = { ok: true; url: string } | { ok: false; error: string };
 
-export async function uploadImage(file: File): Promise<UploadResult> {
+/*
+ * Les messages viennent du dictionnaire de l'appelant : ce module ne connait pas
+ * la langue de la page, et n'a pas a la connaitre.
+ */
+export type MessagesTeleversement = {
+  formats: string;
+  taille: string;
+  echec: string;
+  echecConnexion: string;
+};
+
+export async function uploadImage(file: File, messages: MessagesTeleversement): Promise<UploadResult> {
   if (!ACCEPTED_IMAGE_TYPES.includes(file.type)) {
-    return { ok: false, error: "Formats acceptés : JPEG, PNG ou WebP." };
+    return { ok: false, error: messages.formats };
   }
   if (file.size > MAX_IMAGE_BYTES) {
-    return { ok: false, error: "L'image ne doit pas dépasser 5 Mo." };
+    return { ok: false, error: messages.taille };
   }
 
   const prepared = await prepareImageForUpload(file);
@@ -98,10 +109,10 @@ export async function uploadImage(file: File): Promise<UploadResult> {
     const res = await fetch("/api/upload", { method: "POST", body });
     const data = (await res.json().catch(() => ({}))) as { url?: string; error?: string };
     if (!res.ok || !data.url) {
-      return { ok: false, error: data.error ?? "Le téléversement a échoué." };
+      return { ok: false, error: data.error ?? messages.echec };
     }
     return { ok: true, url: data.url };
   } catch {
-    return { ok: false, error: "Le téléversement a échoué. Vérifie ta connexion." };
+    return { ok: false, error: messages.echecConnexion };
   }
 }
