@@ -1,7 +1,7 @@
 import Link from "next/link";
 import SiteFooter from "@/components/SiteFooter";
 import { dictionnaire } from "@/lib/i18n";
-import { cheminVers } from "@/lib/i18n/chemins";
+import { cheminVers, type Page } from "@/lib/i18n/chemins";
 import { LOCALES, type Langue } from "@/lib/i18n/langues";
 
 /**
@@ -15,12 +15,14 @@ import { LOCALES, type Langue } from "@/lib/i18n/langues";
  */
 export default function TextPage({
   langue,
+  page,
   titre,
   chapo,
   miseAJour,
   children,
 }: {
   langue: Langue;
+  page: Page;
   titre: string;
   chapo?: string;
   miseAJour?: string;
@@ -46,7 +48,7 @@ export default function TextPage({
         {children}
       </article>
 
-      <SiteFooter langue={langue} />
+      <SiteFooter langue={langue} page={page} />
     </main>
   );
 }

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import SiteFooter from "@/components/SiteFooter";
 import { dictionnaire } from "@/lib/i18n";
+import { alternatesDe } from "@/lib/i18n/alternates";
 import { cheminVers } from "@/lib/i18n/chemins";
 import { langueOuDefaut, type Langue } from "@/lib/i18n/langues";
 
@@ -21,7 +22,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   return {
     title: d.titreMeta,
     description: d.descriptionMeta,
-    alternates: { canonical: cheminVers(langue, "accueil") },
+    alternates: alternatesDe(langue, "accueil"),
     keywords: d.motsCles,
   };
 }
@@ -151,7 +152,7 @@ export default async function LandingPage({ params }: Params) {
         </Link>
       </section>
 
-      <SiteFooter langue={langue} note={d.piedNote} />
+      <SiteFooter langue={langue} page="accueil" note={d.piedNote} />
     </main>
   );
 }

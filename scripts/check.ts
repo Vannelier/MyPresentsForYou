@@ -33,9 +33,18 @@ import { hexToHsl, hslToHex, styleDeTeinte, teinteDuTheme } from "../lib/carteCo
 import { RESERVED_SLUGS, slugError, slugify, suggestVariant } from "../lib/slug";
 import { REPLY_WINDOW_MS, isExpired, isLocked, isSealed, replyWindowOpen } from "../lib/types";
 import { LIMITS } from "../lib/limits";
-import { adsensePublisherId, freePageTtlDays, secretDePurge } from "../lib/env";
+import { adsensePublisherId, baseUrl, freePageTtlDays, secretDePurge } from "../lib/env";
+import sitemap from "../app/sitemap";
+import { GET as llmsTxt } from "../app/llms.txt/route";
+import { alternatesDe } from "../lib/i18n/alternates";
 import { CHEMINS, PAGES, cheminVers } from "../lib/i18n/chemins";
-import { LANGUES, langueDuNavigateur, langueOuDefaut, type Langue } from "../lib/i18n/langues";
+import {
+  LANGUES,
+  LANGUES_ACTIVES,
+  langueDuNavigateur,
+  langueOuDefaut,
+  type Langue,
+} from "../lib/i18n/langues";
 import { router } from "../lib/i18n/routage";
 import {
   clesImages,
@@ -2215,6 +2224,108 @@ test("chaque page a un chemin dans chaque langue, unique dans sa langue", () => 
   assert.equal(cheminVers("en", "accueil"), "/en");
 });
 
+test("aucun cookie : ni le middleware ni lib/i18n n'en posent", () => {
+  /*
+   * La langue vit dans l'adresse, et la politique de confidentialite promet
+   * « aucun cookie » : un cookie de langue, si commode soit-il, la dementirait
+   * sans que rien d'autre ne casse.
+   */
+  const fichiers = ["middleware.ts", ...readdirSync("lib/i18n").map((f) => `lib/i18n/${f}`)];
+  for (const f of fichiers) {
+    assert.doesNotMatch(lire(f), /set-cookie|cookies\s*\(|\.cookies\b/i, `${f} pose un cookie`);
+  }
+});
+
+test("la redirection de / varie selon Accept-Language", () => {
+  /*
+   * Elle depend de la langue du navigateur : sans `Vary`, un cache partage
+   * servirait a tout le monde la langue du premier visiteur. Le middleware
+   * importe next/server et ne se charge pas ici ; il est lu comme du texte.
+   */
+  const middleware = lire("middleware.ts");
+  assert.match(
+    middleware,
+    /if \(!decision\.permanente\) reponse\.headers\.set\("Vary", "Accept-Language"\);/,
+    "la redirection temporaire ne pose plus Vary",
+  );
+});
+
+test("le navigateur ne recoit jamais les dictionnaires par import", () => {
+  /*
+   * Un composant cote navigateur recoit le sien par le contexte. Un import de
+   * valeur de `@/lib/i18n` ou de `fr.ts` embarquerait tous les dictionnaires
+   * dans le bundle ; `import type` s'efface a la compilation. Les modules de
+   * lib/i18n que le navigateur importe ne doivent pas non plus les tirer.
+   */
+  const IMPORT_DE_VALEUR = /^import\s+(?!type\b)[^;]*from\s+"(?:@\/lib\/i18n(?:\/fr)?|\.\/(?:index|fr)|\.)";/m;
+  let clients = 0;
+  const parcourir = (dossier: string) => {
+    for (const d of readdirSync(dossier, { withFileTypes: true })) {
+      const chemin = `${dossier}/${d.name}`;
+      if (d.isDirectory()) parcourir(chemin);
+      else if (/\.tsx?$/.test(d.name)) {
+        const source = lire(chemin);
+        if (!/^["']use client["'];/m.test(source)) continue;
+        clients++;
+        assert.doesNotMatch(source, IMPORT_DE_VALEUR, `${chemin} importe les dictionnaires`);
+      }
+    }
+  };
+  parcourir("components");
+  parcourir("app");
+  assert.ok(clients >= 10, `composants navigateur trouves : ${clients}`);
+  for (const f of ["remplir", "langues", "chemins", "erreurs", "alternates"]) {
+    assert.doesNotMatch(lire(`lib/i18n/${f}.ts`), IMPORT_DE_VALEUR, `lib/i18n/${f}.ts tire les dictionnaires`);
+  }
+});
+
+/** Une adresse que le routeur sert telle quelle : ni redirigee, ni introuvable. */
+function servie(url: string): boolean {
+  const d = router(new URL(url, "http://x").pathname, null, LANGUES_ACTIVES);
+  return d.type === "suite" || (d.type === "reecriture" && !d.vers.endsWith("/introuvable"));
+}
+
+test("le sitemap et les hreflang ne citent que des adresses servies", () => {
+  /*
+   * Une adresse qui redirige, ou qui tombe sur la page introuvable, n'a rien a
+   * faire dans un sitemap ni dans un hreflang : le robot la suit, et la version
+   * annoncee n'existe pas. Chaque adresse passe donc par le vrai routeur.
+   */
+  const base = baseUrl();
+  const plan = sitemap();
+  assert.equal(plan.length, LANGUES_ACTIVES.length * 7);
+  for (const entree of plan) {
+    assert.ok(entree.url.startsWith(`${base}/`), entree.url);
+    assert.ok(servie(entree.url), `sitemap : ${entree.url} n'est pas servie`);
+    assert.ok(!entree.url.endsWith(CHEMINS["mentions-legales"].fr), "les mentions portent noindex");
+    const versions = Object.entries(entree.alternates?.languages ?? {});
+    for (const [hreflang, url] of versions) {
+      if (hreflang === "x-default") {
+        assert.equal(url, `${base}/`);
+        continue;
+      }
+      assert.ok(LANGUES_ACTIVES.includes(hreflang as Langue), `version dans une langue inactive : ${hreflang}`);
+      assert.ok(servie(String(url)), `hreflang : ${url} n'est pas servie`);
+    }
+    assert.equal(versions.filter(([h]) => h !== "x-default").length, LANGUES_ACTIVES.length, entree.url);
+  }
+  for (const langue of LANGUES_ACTIVES) {
+    for (const page of PAGES) {
+      const a = alternatesDe(langue, page);
+      assert.equal(a?.canonical, cheminVers(langue, page));
+      for (const [hreflang, url] of Object.entries(a?.languages ?? {})) {
+        if (hreflang !== "x-default") assert.ok(servie(String(url)), `${page} : ${url}`);
+      }
+    }
+  }
+});
+
+test("le selecteur de langue n'apparait qu'avec plusieurs langues, et mene a la meme page", () => {
+  const pied = lire("components/SiteFooter.tsx");
+  assert.match(pied, /\{LANGUES_ACTIVES\.length > 1 && \(/, "selecteur rendu sans condition");
+  assert.match(pied, /href=\{cheminVers\(l, page\)\}/, "le selecteur ne mene plus a la meme page");
+});
+
 test("le routage : langues, anciennes adresses, cartes", () => {
   const toutes: readonly Langue[] = LANGUES;
   const r = (chemin: string, accept: string | null = null, actives: readonly Langue[] = ["fr"]) =>
@@ -2438,6 +2549,22 @@ async function checkPurge() {
   }
 }
 
+// --- llms.txt ----------------------------------------------------------------
+
+async function checkLlms() {
+  const texte = await llmsTxt().text();
+  test("llms.txt ne cite que des adresses servies, en francais", () => {
+    // Ecrits a la main, ses liens pointaient vers d'anciennes adresses : une
+    // redirection pour chaque assistant qui les suivait.
+    const liens = [...texte.matchAll(/\]\((http[^)]+)\)/g)].map((m) => m[1]);
+    assert.equal(liens.length, 7, `liens trouves : ${liens.length}`);
+    for (const lien of liens) {
+      assert.ok(lien.startsWith(`${baseUrl()}/fr`), lien);
+      assert.ok(servie(lien), `${lien} n'est pas servie`);
+    }
+  });
+}
+
 // --- Rapport ---------------------------------------------------------------
 
 function report() {
@@ -2449,11 +2576,12 @@ function report() {
   console.log(`${passed} vérifications passées.`);
 }
 
-// Les parties asynchrones du harnais — les images, puis la purge — sont
+// Les parties asynchrones du harnais — les images, la purge, llms.txt — sont
 // chainees plutot qu'attendues au niveau du module, ce qui rendrait tout le
 // script asynchrone.
 checkImages()
   .then(checkPurge)
+  .then(checkLlms)
   .then(report, (err: unknown) => {
     failures.push(`vérifications asynchrones\n    ${(err as Error).message}`);
     report();

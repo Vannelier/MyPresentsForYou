@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import TextPage from "@/components/TextPage";
+import { alternatesDe } from "@/lib/i18n/alternates";
 import { cheminVers } from "@/lib/i18n/chemins";
 import { langueOuDefaut } from "@/lib/i18n/langues";
 import { SITE, aRemplir } from "@/lib/site";
@@ -9,7 +10,7 @@ export const metadata: Metadata = {
   title: "Contact — MyPresentsForYou",
   description:
     "Une question, un bug, une carte à signaler ou un lien d'administration perdu : comment nous joindre.",
-  alternates: { canonical: cheminVers("fr", "contact") },
+  alternates: alternatesDe("fr", "contact"),
 };
 
 export default async function Contact({ params }: { params: Promise<{ langue: string }> }) {
@@ -19,6 +20,7 @@ export default async function Contact({ params }: { params: Promise<{ langue: st
   return (
     <TextPage
       langue={langue}
+      page="contact"
       titre="Contact"
       chapo="MyPresentsForYou est un petit projet. Les réponses ne sont pas instantanées, mais elles arrivent."
     >

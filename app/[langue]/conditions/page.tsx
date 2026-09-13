@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import TextPage from "@/components/TextPage";
+import { alternatesDe } from "@/lib/i18n/alternates";
 import { cheminVers } from "@/lib/i18n/chemins";
 import { langueOuDefaut } from "@/lib/i18n/langues";
 
@@ -10,7 +11,7 @@ export const metadata: Metadata = {
   title: "Conditions d'utilisation — MyPresentsForYou",
   description:
     "Ce que MyPresentsForYou fait, ce qu'il ne fait pas, et ce qu'on attend de toi. Service gratuit, sans compte, sans paiement.",
-  alternates: { canonical: cheminVers("fr", "conditions") },
+  alternates: alternatesDe("fr", "conditions"),
 };
 
 export default async function Conditions({ params }: { params: Promise<{ langue: string }> }) {
@@ -18,6 +19,7 @@ export default async function Conditions({ params }: { params: Promise<{ langue:
   return (
     <TextPage
       langue={langue}
+      page="conditions"
       titre="Conditions d'utilisation"
       chapo="Le service est gratuit et sans compte. Voici ce sur quoi nous nous engageons, et ce que nous te demandons en retour."
       miseAJour={MISE_A_JOUR}

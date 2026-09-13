@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import TextPage from "@/components/TextPage";
+import { alternatesDe } from "@/lib/i18n/alternates";
 import { cheminVers } from "@/lib/i18n/chemins";
 import { langueOuDefaut } from "@/lib/i18n/langues";
 import { LIMITS } from "@/lib/limits";
@@ -9,7 +10,7 @@ export const metadata: Metadata = {
   title: "Questions fréquentes — MyPresentsForYou",
   description:
     "Offrir en laissant choisir : comment ça marche, combien ça coûte, ce que voit la personne qui reçoit, et que faire si une image ne se récupère pas.",
-  alternates: { canonical: cheminVers("fr", "questions") },
+  alternates: alternatesDe("fr", "questions"),
 };
 
 /**
@@ -122,6 +123,7 @@ export default async function Questions({ params }: { params: Promise<{ langue: 
   return (
     <TextPage
       langue={langue}
+      page="questions"
       titre="Questions fréquentes"
       chapo="Offrir en laissant choisir : comment ça marche, ce que ça coûte, et ce qui se passe quand la récupération automatique échoue."
     >

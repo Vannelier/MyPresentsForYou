@@ -108,10 +108,10 @@ Les deux écrivent dans le même `.next` et le graphe de modules du serveur de d
 
 | chemin | rôle |
 |---|---|
-| `app/page.tsx` | page d'accueil : présente l'outil et renvoie vers `/creer` et `/exemple` |
-| `app/creer/page.tsx` | assistant de création, en trois étapes |
-| `app/[slug]/page.tsx` | page-cadeau publique (SSR + `generateMetadata` pour l'aperçu de lien) |
-| `app/exemple/page.tsx` | la page d'exemple : une page-cadeau figée, jouée en mode aperçu |
+| `app/[langue]/page.tsx` | page d'accueil : présente l'outil et renvoie vers la création et l'exemple |
+| `app/[langue]/creer/page.tsx` | assistant de création, en trois étapes |
+| `app/carte/[slug]/page.tsx` | page-cadeau publique (SSR + `generateMetadata` pour l'aperçu de lien), servie à `/<slug>` par réécriture |
+| `app/[langue]/exemple/page.tsx` | la page d'exemple : une page-cadeau figée, jouée en mode aperçu |
 | `lib/exemple.ts` | les données de l'exemple : l'occasion, les prénoms, les quatre cadeaux |
 | `app/admin/[token]/page.tsx` | vue admin : cadeau choisi, liens, édition, clôture |
 | `components/GiftView.tsx` | le rendu que voit le receveur — **le même** composant sert à l'aperçu |
@@ -138,25 +138,37 @@ Les deux écrivent dans le même `.next` et le graphe de modules du serveur de d
 | `lib/rateLimit.ts` | quotas des routes anonymes ; logique pure, horloge injectable |
 | `lib/site.ts` | **identité de l'éditeur** — le seul fichier à remplir pour les mentions légales |
 | `components/TextPage.tsx` | coquille commune aux pages de texte |
-| `components/SiteFooter.tsx` | pied de page et liens légaux |
+| `components/SiteFooter.tsx` | pied de page, liens légaux et sélecteur de langue |
 | `lib/db.ts` | **seul** point de contact avec Postgres (pilote `pg`, gabarit paramétré) |
+| `middleware.ts` | applique les règles d'adresse : langue, anciennes adresses, cartes |
+| `lib/i18n/routage.ts` | ces règles, en fonction pure, testées sans serveur |
+| `lib/i18n/langues.ts`, `lib/i18n/chemins.ts` | les six langues, les actives, et l'adresse de chaque page dans chacune |
+| `lib/i18n/fr.ts` | le dictionnaire français, qui fait foi : les autres langues en dérivent leur type |
+| `lib/i18n/erreurs.ts` | une erreur voyage par sa clé ; seul le bout qui répond la traduit |
+| `lib/i18n/alternates.ts` | les `hreflang` d'une page, pour ses métadonnées et le sitemap |
+| `components/i18n/Dictionnaire.tsx` | le contexte qui donne aux composants navigateur le dictionnaire de leur langue |
 
 ### Pages
 
 | route | rôle |
 |---|---|
-| `/` | accueil — invite à composer |
-| `/creer` | formulaire de création, puis l'écran « Ta page est prête » |
-| `/exemple` | une page-cadeau d'exemple, jouable de bout en bout ; rien n'est envoyé |
-| `/questions` | questions fréquentes — la page faite pour être trouvée |
-| `/contact` | comment nous joindre |
-| `/confidentialite` | politique de confidentialité |
-| `/conditions` | conditions d'utilisation |
-| `/mentions-legales` | éditeur et hébergeur — `noindex` |
-| `/[slug]` | page-cadeau publique — `noindex` |
+| `/` | redirige (307) vers la langue du navigateur, parmi les langues actives |
+| `/fr` | accueil — invite à composer |
+| `/fr/creer` | formulaire de création, puis l'écran « Ta page est prête » |
+| `/fr/exemple` | une page-cadeau d'exemple, jouable de bout en bout ; rien n'est envoyé |
+| `/fr/questions` | questions fréquentes — la page faite pour être trouvée |
+| `/fr/contact` | comment nous joindre |
+| `/fr/confidentialite` | politique de confidentialité |
+| `/fr/conditions` | conditions d'utilisation |
+| `/fr/mentions-legales` | éditeur et hébergeur — `noindex` |
+| `/[slug]` | page-cadeau publique — `noindex` ; servie par `app/carte/[slug]` |
 | `/admin/[token]` | vue admin — `noindex` |
 
-Les slugs `admin`, `api`, `creer`, `_next`, `contact`, `conditions`, `confidentialite`,
+Chaque page du site existe dans chaque langue active, sous une adresse traduite — `/en/create`,
+`/de/erstellen` : voir « Le multilingue ». Les adresses d'avant, sans langue (`/creer`,
+`/questions`…), redirigent en 308 vers `/fr/…`.
+
+Les slugs `admin`, `api`, `carte`, `creer`, `_next`, `contact`, `conditions`, `confidentialite`,
 `mentions-legales`, `questions`, `exemple`, `favicon.ico`, `robots.txt`, `llms.txt`, `ads.txt`,
 `sitemap.xml`, `manifest.webmanifest`, `icon`, `icon.svg`, `apple-icon`, `apple-touch-icon.png`,
 `opengraph-image` et `twitter-image` sont réservés : `/[slug]` les traite en 404 sans requête en
@@ -165,10 +177,11 @@ la liste dise ce qui est pris.
 
 `/robots.txt` laisse explorer les pages-cadeau — c'est en les lisant qu'un robot voit leur
 `noindex` — mais interdit `/admin/` : un jeton d'administration n'a rien à faire dans un index.
-`/sitemap.xml` déclare les pages du site — l'accueil, `/creer`, `/questions`, `/exemple`… —, jamais les cartes.
+`/sitemap.xml` déclare les pages du site dans chaque langue active, avec leurs `hreflang` — l'accueil
+sous `/fr`, et non `/`, qui redirige —, jamais les cartes.
 
 `/llms.txt` résume le site pour les assistants conversationnels, au format de llmstxt.org : ce que
-fait le service, et les pages qui comptent. Comme le sitemap, il ne cite jamais une carte, et il est
+fait le service, et les pages qui comptent, en français et vers les pages `/fr/…`. Comme le sitemap, il ne cite jamais une carte, et il est
 figé au build — `NEXT_PUBLIC_BASE_URL` doit donc exister dès cette phase.
 
 `/ads.txt` déclare le compte AdSense autorisé à vendre de l'espace publicitaire sur le site. Il est
@@ -190,8 +203,12 @@ aujourd'hui** : en afficher poserait des cookies, ce que la politique de confide
 | `POST /api/pages/[slug]/reply` | `{ reply }` → attache le mot du receveur, après le choix ; 409 hors fenêtre ou si un mot existe déjà |
 | `POST /api/purge` | purge les cartes expirées sans choix, images comprises. `Authorization: Bearer <PURGE_SECRET>` ; `?dry=1` à blanc ; 404 sans secret configuré |
 
-**Toutes ces routes peuvent répondre `429`** avec un en-tête `Retry-After` et un `{ error }` en
-français, avant toute validation — voir « Les routes anonymes et leurs quotas ».
+**Toutes ces routes peuvent répondre `429`** avec un en-tête `Retry-After` et un `{ error }`, avant
+toute validation — voir « Les routes anonymes et leurs quotas ».
+
+Chaque `{ error }` sort dans la langue que le navigateur annonce par l'en-tête `x-langue` — celle
+de la page où il se trouve, donc celle de la carte ; sans en-tête, en français. Seule la purge répond
+en français quoi qu'il arrive : la tâche planifiée est sa seule lectrice.
 
 ## Ce qui est personnalisable
 
@@ -930,6 +947,60 @@ créations toutes personnes confondues, et le site refuse tout le monde. C'est u
 et total, bien plus visible qu'un abus passé au travers. **À vérifier une fois déployé** — créer
 deux cartes de suite depuis deux réseaux différents suffit à savoir.
 
+## Le multilingue
+
+Six langues sont prévues — français, anglais, italien, espagnol, allemand, néerlandais —, sans
+bibliothèque et sans cookie. **Seul le français est actif aujourd'hui** : les autres arrivent avec
+leurs dictionnaires, et une langue sans dictionnaire servirait du français sous une adresse
+étrangère.
+
+**Les adresses.** Chaque page du site vit sous sa langue, avec des mots de cette langue :
+`/fr/creer`, `/en/create`, `/de/erstellen`. Le code ne garde qu'un dossier par page, qui porte son
+nom français (`app/[langue]/creer`) ; le middleware réécrit l'adresse traduite vers lui. La table
+des adresses est dans `lib/i18n/chemins.ts`, les règles dans `lib/i18n/routage.ts`, en fonction
+pure :
+
+- `/` redirige (307, `Vary: Accept-Language`) vers la langue du navigateur parmi les actives,
+  l'anglais à défaut s'il est actif ;
+- une adresse d'avant, sans langue (`/creer`), part en 308 vers `/fr/creer` ;
+- le mot d'une autre langue (`/en/creer`) part en 308 vers le bon (`/en/create`) ;
+- une langue inactive mène à la page introuvable, plutôt que de servir du français sous son
+  adresse ;
+- un segment au format d'un slug est une carte : `/camille` est servie par `app/carte/[slug]`. Une
+  langue n'est jamais prise pour une carte — un slug fait trois caractères au moins.
+
+Il y a trois layouts racines — le site (`app/[langue]`), la carte (`app/carte/[slug]`),
+l'administration (`app/admin/[token]`) —, chacun posant `<html lang>` et le dictionnaire de sa
+langue.
+
+**Aucun cookie.** La langue vit dans l'adresse ; un cookie de langue démentirait la politique de
+confidentialité. Un garde-fou le vérifie.
+
+**La langue de la carte** est un identifiant du thème, `theme.langue`, comme l'occasion : pas de
+migration, et une valeur absente ou inconnue retombe sur le français, celle de toutes les cartes
+d'avant. Elle vaut la langue de la page où l'on compose : une carte composée depuis `/en/create`
+est en anglais. La page-cadeau, l'administration et la carte à imprimer s'affichent dans cette
+langue, quelle que soit celle du navigateur qui les ouvre. Le texte écrit par le donneur reste tel
+quel.
+
+**Les dictionnaires.** `lib/i18n/fr.ts` fait foi ; le type `Dictionnaire` en est dérivé, et une
+autre langue déclare `satisfies Dictionnaire` — une clé manquante ou en trop ne compile pas. Les
+noms et les formules des occasions, palettes, polices, effets, ouvertures et pictogrammes y sont
+indexés par identifiant ; `lib/occasions.ts` et consorts ne gardent que les identifiants, les
+couleurs et les décors. Côté serveur, `dictionnaire(langue)` ; côté navigateur, `useDictionnaire()`,
+qui reçoit du layout le seul dictionnaire de la langue affichée. Un garde-fou interdit à un
+composant navigateur d'importer les dictionnaires : il les embarquerait tous. Les textes à variable
+s'écrivent `Pour {prenom}` et se remplissent par `remplir()`.
+
+**Les erreurs de l'API** voyagent par leur clé (`lib/i18n/erreurs.ts`) : la validation ne sait pas
+dans quelle langue répondre, et seul le bout qui répond traduit. Le navigateur annonce la langue de
+sa page par l'en-tête `x-langue` ; sans lui, le français.
+
+**Ajouter une langue** : son dictionnaire (`lib/i18n/<code>.ts`, `satisfies Dictionnaire`), son
+entrée dans `DICTIONNAIRES` (`lib/i18n/index.ts`), puis son code dans `LANGUES_ACTIVES`. Le sitemap,
+les `hreflang` et le sélecteur de langue du pied de page — absent tant qu'une seule langue est
+active — la prennent en compte d'eux-mêmes.
+
 ## Être trouvé sur Google
 
 Une page-cadeau ne doit jamais être indexée — c'est du courrier privé. Ce qui doit l'être, c'est
@@ -938,9 +1009,13 @@ l'outil : l'accueil, le formulaire, et surtout `/questions`.
 **Ce qui est en place**
 
 - `robots.txt` et `sitemap.xml` générés depuis `NEXT_PUBLIC_BASE_URL`. Le sitemap ne liste que les
-  six pages publiques ; y inscrire les cartes reviendrait à publier la liste des liens envoyés.
+  pages publiques, une fois par langue active ; y inscrire les cartes reviendrait à publier la liste des liens envoyés.
 - **Une adresse canonique par page** (`alternates.canonical`), pour qu'une même page atteinte par
   deux chemins ne se fasse pas concurrence à elle-même.
+- **Des `hreflang`** (`alternates.languages`), sur chaque page et dans le sitemap : la même page
+  dans chaque langue active, et `x-default` vers `/` sur l'accueil — l'adresse qui choisit la
+  langue. Seules les langues actives y figurent : annoncer une version que le middleware refuse
+  enverrait les robots sur une page introuvable.
 - **Des titres qui portent ce qu'on cherche, pas ce qu'on est.** « MyPresentsForYou — offre le choix » ne se
   trouve qu'en tapant « MyPresentsForYou », c'est-à-dire en connaissant déjà le site. L'accueil annonce donc
   « Offrir en laissant choisir le cadeau ». Tous les titres tiennent sous 60 signes, toutes les
@@ -1225,7 +1300,9 @@ n'importe quelle édition.
 - **Navigateur headless.** L'extraction se limite à `fetch` + parsing HTML.
 - **Notification du choix.** Le donneur découvre le choix en rouvrant son lien admin.
 - **Collecte d'adresse ou d'infos du receveur.** Il ne saisit que son choix.
-- **Multi-devise et i18n.**
+- **Multi-devise.** Sans paiement, sans objet.
+- **La traduction du texte écrit par le donneur.** Le multilingue traduit le produit, pas les mots
+  de la carte : ils restent tels qu'ils ont été écrits.
 - **Paywall.** L'ordre choisi est : étoffer d'abord les options de personnalisation, puis décider
   lesquelles passent derrière le paiement. Aucune option n'est aujourd'hui marquée payante, et
   l'assistant n'affiche rien à ce sujet — mieux vaut ne rien annoncer que d'annoncer des cases
@@ -1245,6 +1322,8 @@ n'importe quelle édition.
   mais rien n'oblige à le lancer : modifier la géométrie dans `scripts/brand.mjs` sans régénérer
   laisse le favicon et les icônes en désaccord avec leur source, et aucune vérification ne le
   signalera.
+- **Seul le français est actif.** Les cinq autres langues ont leurs adresses, pas encore leurs
+  dictionnaires — voir « Le multilingue ». Leurs pages répondent « introuvable » d'ici là.
 - **Le slug public est devinable.** Ne rien mettre de sensible dans une page-cadeau.
 - **Des images restent orphelines.** Celles qu'on remplace en modifiant une carte, et celles
   téléversées pour une carte jamais créée : plus aucune ligne ne les référence, et la purge part des

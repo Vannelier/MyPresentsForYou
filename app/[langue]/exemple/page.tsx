@@ -3,6 +3,7 @@ import Link from "next/link";
 import GiftView from "@/components/GiftView";
 import { exemple } from "@/lib/exemple";
 import { dictionnaire } from "@/lib/i18n";
+import { alternatesDe } from "@/lib/i18n/alternates";
 import { cheminVers } from "@/lib/i18n/chemins";
 import { LOCALES, langueOuDefaut } from "@/lib/i18n/langues";
 import { alt as altBanniere, size as tailleBanniere } from "@/app/opengraph-image";
@@ -16,7 +17,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   return {
     title: d.titreMeta,
     description: d.descriptionMeta,
-    alternates: { canonical: url },
+    alternates: alternatesDe(langue, "exemple"),
     /*
      * Un `openGraph` de page remplace celui du layout en entier, sans fusion :
      * type, nom du site et langue y sont repetes. L'exemple se partage — c'est

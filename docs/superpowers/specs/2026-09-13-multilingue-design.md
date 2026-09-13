@@ -174,3 +174,31 @@ Dans `scripts/check.ts`, chacun testé par mutation :
   ne porte `Set-Cookie`.
 - La page d'exemple et une carte en français s'affichent **à l'identique** d'avant le socle.
 - `npm run check`, `npx tsc --noEmit`, `npm run build`.
+
+## Écarts
+
+Ce que l'implémentation du socle a changé à cette spécification, et pourquoi.
+
+- **La langue de la carte n'a pas de sélecteur dans l'éditeur.** Elle vaut la langue de la page où
+  l'on compose, sans choix à part. Un sélecteur à côté de l'occasion aurait permis une carte
+  anglaise composée sous une interface française : l'aperçu, les formules proposées et les messages
+  d'erreur n'auraient pas été dans la langue de la carte. Changer de langue, c'est changer de page.
+- **`remplir()` a son propre module** (`lib/i18n/remplir.ts`), et non `lib/i18n/index.ts` : celui-ci
+  importe les dictionnaires, et un composant navigateur qui l'importerait les embarquerait tous.
+- **Les erreurs voyagent par leur clé** (`lib/i18n/erreurs.ts`). `ValidationError` et `slugError`
+  portaient un texte français, que ni les routes ni l'éditeur n'auraient pu traduire après coup ;
+  elles portent désormais une clé et ses valeurs. Seule la purge garde un message en dur : la tâche
+  planifiée est sa seule lectrice.
+- **Le libellé d'un cadeau sans titre**, stocké en base, suit la langue de la carte.
+- **Le sitemap déclare l'accueil sous `/fr`**, et non `/` : la racine redirige, et une adresse qui
+  redirige n'a rien à faire dans un sitemap. `x-default` pointe vers `/`, sur l'accueil seulement :
+  c'est la seule page dont une adresse choisit la langue.
+- **Le sélecteur de langue n'est pas rendu** tant qu'une seule langue est active.
+- **`Intl.PluralRules` n'est pas employé.** Les nombres affichés sont des limites fixes, toutes
+  supérieures à un, ou des abréviations (`j`, `h`, `min`). Seul le texte d'accessibilité du curseur
+  de teinte, « Teinte {n} degrés », peut tomber sur 0 ou 1 — comme avant le socle.
+- **`llms.txt` reste unique et en français**, ses liens menant à `/fr/…` ; sa version par langue
+  vient avec les cinq langues.
+- **Des garde-fous au-delà de la liste** : aucun message en dur dans les routes, chaque appel du
+  navigateur à l'API annonce sa langue, chaque marque d'un message est remplie, et le sitemap comme
+  les `hreflang` ne citent que des adresses que le routeur sert telles quelles.

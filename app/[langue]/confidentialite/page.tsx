@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import TextPage from "@/components/TextPage";
+import { alternatesDe } from "@/lib/i18n/alternates";
 import { cheminVers } from "@/lib/i18n/chemins";
 import { langueOuDefaut } from "@/lib/i18n/langues";
 import { SITE, aRemplir } from "@/lib/site";
@@ -11,7 +12,7 @@ export const metadata: Metadata = {
   title: "Politique de confidentialité — MyPresentsForYou",
   description:
     "MyPresentsForYou ne pose aucun cookie, n'utilise aucun traqueur et ne demande aucun compte. Ce qui est stocké, pour combien de temps, et comment tout effacer.",
-  alternates: { canonical: cheminVers("fr", "confidentialite") },
+  alternates: alternatesDe("fr", "confidentialite"),
 };
 
 export default async function Confidentialite({ params }: { params: Promise<{ langue: string }> }) {
@@ -19,6 +20,7 @@ export default async function Confidentialite({ params }: { params: Promise<{ la
   return (
     <TextPage
       langue={langue}
+      page="confidentialite"
       titre="Politique de confidentialité"
       chapo="MyPresentsForYou est construit pour avoir le moins de données possible à protéger. Cette page dit exactement lesquelles, et pourquoi elles existent."
       miseAJour={MISE_A_JOUR}

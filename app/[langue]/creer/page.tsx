@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import CreateFlow from "@/components/CreateFlow";
 import { baseUrl } from "@/lib/env";
 import { dictionnaire } from "@/lib/i18n";
-import { cheminVers } from "@/lib/i18n/chemins";
+import { alternatesDe } from "@/lib/i18n/alternates";
 import { langueOuDefaut } from "@/lib/i18n/langues";
 
 type Params = { params: Promise<{ langue: string }> };
@@ -13,7 +13,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   return {
     title: d.titreMeta,
     description: d.descriptionMeta,
-    alternates: { canonical: cheminVers(langue, "creer") },
+    alternates: alternatesDe(langue, "creer"),
   };
 }
 

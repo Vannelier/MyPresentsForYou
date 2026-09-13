@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import TextPage from "@/components/TextPage";
+import { alternatesDe } from "@/lib/i18n/alternates";
 import { cheminVers } from "@/lib/i18n/chemins";
 import { langueOuDefaut } from "@/lib/i18n/langues";
 import { SITE, aRemplir } from "@/lib/site";
@@ -8,7 +9,7 @@ import { SITE, aRemplir } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Mentions légales — MyPresentsForYou",
   description: "Éditeur, hébergeur et contact du site MyPresentsForYou.",
-  alternates: { canonical: cheminVers("fr", "mentions-legales") },
+  alternates: alternatesDe("fr", "mentions-legales"),
   // Une page de mentions n'apporte rien dans un index de recherche, mais elle
   // doit rester atteignable : `follow` laisse passer le lien vers le reste.
   robots: { index: false, follow: true },
@@ -29,6 +30,7 @@ export default async function MentionsLegales({ params }: { params: Promise<{ la
   return (
     <TextPage
       langue={langue}
+      page="mentions-legales"
       titre="Mentions légales"
       chapo="Qui édite ce site, qui l'héberge, et comment nous joindre."
     >

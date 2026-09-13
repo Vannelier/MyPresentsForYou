@@ -29,6 +29,19 @@ export const LOCALES: Record<Langue, { intl: string; og: string }> = {
   nl: { intl: "nl-BE", og: "nl_BE" },
 };
 
+/*
+ * Chaque langue dans la sienne : c'est sous ce nom qu'un visiteur la cherche
+ * dans un selecteur, quelle que soit la langue de la page ou il se trouve.
+ */
+export const NOMS_DES_LANGUES: Record<Langue, string> = {
+  fr: "Français",
+  en: "English",
+  it: "Italiano",
+  es: "Español",
+  de: "Deutsch",
+  nl: "Nederlands",
+};
+
 export function estLangue(x: unknown): x is Langue {
   return typeof x === "string" && (LANGUES as readonly string[]).includes(x);
 }

@@ -29,6 +29,7 @@ export const fr = {
     confidentialite: "Confidentialité",
     conditions: "Conditions",
     mentionsLegales: "Mentions légales",
+    langues: "Langue du site",
   },
 
   pageTexte: {

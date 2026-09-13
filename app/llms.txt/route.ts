@@ -1,4 +1,5 @@
 import { baseUrl } from "@/lib/env";
+import { cheminVers, type Page } from "@/lib/i18n/chemins";
 import { LIMITS } from "@/lib/limits";
 
 /*
@@ -15,11 +16,16 @@ import { LIMITS } from "@/lib/limits";
  *
  * `## Optional` reste en anglais : c'est un mot de la norme, qui signale aux
  * assistants ce qu'ils peuvent laisser de cote quand la place manque.
+ *
+ * Les liens menent aux pages francaises, par `cheminVers` : le texte est en
+ * francais, et un assistant qui cite une page doit citer celle qu'il a lue.
+ * Ecrits a la main, ils pointaient vers d'anciennes adresses qui redirigent.
  */
 export const dynamic = "force-static";
 
 export function GET() {
   const base = baseUrl();
+  const lien = (page: Page) => `${base}${cheminVers("fr", page)}`;
   const texte = `# MyPresentsForYou
 
 > Offrir un cadeau en laissant la personne choisir. Le donneur compose une petite page avec jusqu'à ${LIMITS.itemsMax} idées de cadeau, envoie le lien, et la personne qui reçoit choisit celle qui lui fait le plus envie. Gratuit, sans compte, en français.
@@ -37,16 +43,16 @@ Les pages-cadeau elles-mêmes sont privées et marquées noindex : elles ne sont
 
 ## Pages
 
-- [Accueil](${base}/): ce que fait le service, et en quoi il diffère d'une liste de souhaits
-- [Voir un exemple](${base}/exemple): une page-cadeau jouable de bout en bout, sur des données d'exemple ; rien n'est envoyé
-- [Composer une page-cadeau](${base}/creer): l'assistant de création, en trois étapes — l'occasion, les cadeaux, la présentation
-- [Questions fréquentes](${base}/questions): gratuité, compte, durée de vie, envoi, différence avec une liste de souhaits ou une cagnotte
+- [Accueil](${lien("accueil")}): ce que fait le service, et en quoi il diffère d'une liste de souhaits
+- [Voir un exemple](${lien("exemple")}): une page-cadeau jouable de bout en bout, sur des données d'exemple ; rien n'est envoyé
+- [Composer une page-cadeau](${lien("creer")}): l'assistant de création, en trois étapes — l'occasion, les cadeaux, la présentation
+- [Questions fréquentes](${lien("questions")}): gratuité, compte, durée de vie, envoi, différence avec une liste de souhaits ou une cagnotte
 
 ## Optional
 
-- [Contact](${base}/contact)
-- [Politique de confidentialité](${base}/confidentialite): ce qui est stocké, et pour combien de temps
-- [Conditions d'utilisation](${base}/conditions)
+- [Contact](${lien("contact")})
+- [Politique de confidentialité](${lien("confidentialite")}): ce qui est stocké, et pour combien de temps
+- [Conditions d'utilisation](${lien("conditions")})
 `;
   return new Response(texte, { headers: { "content-type": "text/plain; charset=utf-8" } });
 }
