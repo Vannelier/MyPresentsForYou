@@ -68,6 +68,9 @@ export default function LandingPage() {
             <Link className="btn btn--auto" href="/creer">
               Composer ma page-cadeau
             </Link>
+            <Link className="btn btn--ghost btn--auto" href="/exemple">
+              Voir un exemple
+            </Link>
             <span className="lp-cta__note">Gratuit · sans compte · trois étapes</span>
           </div>
         </div>
@@ -206,7 +209,7 @@ export default function LandingPage() {
         </Link>
       </section>
 
-      <SiteFooter note="Une page reste en ligne 30 jours. Garde bien ton lien d'administration pour voir le cadeau désiré par la personne qui reçoit ta page-cadeau." />
+      <SiteFooter note="Une page reste en ligne un an. Garde bien ton lien d'administration pour voir le cadeau désiré par la personne qui reçoit ta page-cadeau." />
     </main>
   );
 }

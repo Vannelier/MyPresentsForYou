@@ -4,7 +4,7 @@ import type { Item } from "./types";
 
 export { storageAvailable, storeImage };
 
-const BLOB_HOST_SUFFIX = ".public.blob.vercel-storage.com";
+export const BLOB_HOST_SUFFIX = ".public.blob.vercel-storage.com";
 const FETCH_TIMEOUT_MS = 8000;
 
 export type ImageWarning = { scope: "cover" | "item"; itemId?: string; message: string };
@@ -25,7 +25,7 @@ export function isOwnBlobUrl(url: string): boolean {
 /**
  * Rapatrie une image externe dans Vercel Blob.
  *
- * Une page doit rester visuellement intacte pendant 30 jours : hotlinker l'image
+ * Une page doit rester visuellement intacte pendant un an : hotlinker l'image
  * d'un marchand la casse des qu'il touche a son site. En cas d'echec (403, lien
  * mort, type refuse) on rend l'URL d'origine en dernier recours, avec un message
  * a afficher dans l'UI de creation — jamais une erreur bloquante.

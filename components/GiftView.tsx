@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import Link from "next/link";
 import GiftCover from "@/components/GiftCover";
 import GiftEffect from "@/components/GiftEffect";
 import GiftMotif from "@/components/GiftMotif";
@@ -35,6 +36,21 @@ type Props = {
   variant?: "full" | "embedded";
   /** Aperçu : quitter et revenir au formulaire. */
   onExitPreview?: () => void;
+  /**
+   * Apercu public : un lien de sortie plutot qu'une fonction. Une page serveur,
+   * comme /exemple, ne peut pas passer de fonction a un composant client ; un
+   * libelle et une adresse, si.
+   */
+  lienSortie?: { libelle: string; href: string };
+  /**
+   * Apercu qui occupe la fenetre, comme une vraie page-cadeau : /exemple. Rend
+   * au mode apercu les trois comportements de la vraie page que l'editeur tient
+   * lui-meme autour de son apercu — le verrou du defilement sous le voile, la
+   * remontee a l'ouverture, la restauration du defilement coupee. Sans eux,
+   * glisser sur le voile faisait defiler la page cachee, et l'ouverture pouvait
+   * se jouer hors du champ.
+   */
+  pleineFenetre?: boolean;
 };
 
 type Phase = "choosing" | "submitting" | "done" | "locked";
@@ -92,6 +108,8 @@ export default function GiftView({
   previewScreen,
   variant = "full",
   onExitPreview,
+  lienSortie,
+  pleineFenetre = false,
 }: Props) {
   const alreadyChosen = Boolean(page.chosen_at);
   const [phase, setPhase] = useState<Phase>(alreadyChosen ? "locked" : "choosing");
@@ -140,9 +158,13 @@ export default function GiftView({
   // choisie ou expiree doit montrer son etat tout de suite.
   const revealAt = page.reveal_at ? new Date(page.reveal_at) : null;
   const sealed = isSealed(page);
-  // Une carte scellee garde son voile meme si le donneur l'avait desactive :
-  // c'est lui qui porte le compte a rebours.
-  const coverEnabled = (page.theme.cover !== false || sealed) && !alreadyChosen;
+  /*
+   * Toujours un voile tant qu'un choix est attendu, y compris sur une carte
+   * ancienne qui porte encore `cover: false` en base. Le donneur pouvait le
+   * couper ; la page s'ouvrait alors directement sur la liste, sans rien a
+   * lever — et c'est la mise en scene qui fait la page.
+   */
+  const coverEnabled = !alreadyChosen;
   const [opened, setOpened] = useState(!coverEnabled);
   const [closing, setClosing] = useState(false);
 
@@ -271,13 +293,6 @@ export default function GiftView({
     // son identite relancait toute la mise en scene entre deux lettres.
   }, [revealing, coverEnabled, page.items.length]);
 
-  // `useState` ne lit sa valeur initiale qu'au montage. Sans cette synchro, couper
-  // le voile depuis le formulaire ne changeait rien a l'apercu deja affiche.
-  useEffect(() => {
-    setClosing(false);
-    setOpened(!coverEnabled);
-  }, [coverEnabled]);
-
   /*
    * L'apercu suit le cadre qu'on modifie.
    *
@@ -316,19 +331,22 @@ export default function GiftView({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [previewScreen, mode, coverEnabled, page.items]);
 
+  const commeUneVraiePage = mode === "live" || pleineFenetre;
+
   // Tant que le voile est la, la page derriere ne doit pas defiler.
   //
-  // Uniquement sur la vraie page : dans l'apercu plein ecran, c'est le formulaire
-  // qui tient deja ce verrou. Deux composants pilotant le meme style global, le
-  // premier a relacher effaçait le verrou de l'autre.
+  // Uniquement sur une page qui occupe la fenetre — la vraie, ou /exemple. Dans
+  // l'apercu plein ecran, c'est le formulaire qui tient deja ce verrou. Deux
+  // composants pilotant le meme style global, le premier a relacher effaçait
+  // le verrou de l'autre.
   useEffect(() => {
-    if (opened || variant !== "full" || mode !== "live") return;
+    if (opened || variant !== "full" || !commeUneVraiePage) return;
     const previous = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     return () => {
       document.body.style.overflow = previous;
     };
-  }, [opened, variant, mode]);
+  }, [opened, variant, commeUneVraiePage]);
 
   /**
    * Remet la page en haut, sans animation.
@@ -347,7 +365,7 @@ export default function GiftView({
    * Jamais depuis l'apercu de l'editeur — il ferait sauter le formulaire.
    */
   function remonter() {
-    if (mode !== "live" || variant !== "full") return;
+    if (!commeUneVraiePage || variant !== "full") return;
     if (typeof window === "undefined") return;
     window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
   }
@@ -357,7 +375,7 @@ export default function GiftView({
    * restauration automatique est coupee, et la position remise a zero.
    */
   useEffect(() => {
-    if (mode !== "live" || variant !== "full") return;
+    if (!commeUneVraiePage || variant !== "full") return;
     const precedent = history.scrollRestoration;
     try {
       history.scrollRestoration = "manual";
@@ -373,7 +391,7 @@ export default function GiftView({
       }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mode, variant]);
+  }, [commeUneVraiePage, variant]);
 
   function openCover() {
     remonter();
@@ -574,6 +592,11 @@ export default function GiftView({
                 <button type="button" className="btn btn--sm" onClick={onExitPreview}>
                   Revenir au formulaire
                 </button>
+              )}
+              {lienSortie && (
+                <Link className="btn btn--sm" href={lienSortie.href}>
+                  {lienSortie.libelle}
+                </Link>
               )}
             </div>
           )}
