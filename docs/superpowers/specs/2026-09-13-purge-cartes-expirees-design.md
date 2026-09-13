@@ -42,8 +42,10 @@ déclenchement à la main, ni essai à blanc, et un passage à chaque déploieme
 ### Ce qui est effacé
 
 **Les candidates** : `chosen_at IS NULL AND expires_at IS NOT NULL AND expires_at < now()`, les plus
-anciennes d'abord, **par lots de 200**. Un lot borne la durée d'un appel ; le rapport dit s'il en
-reste, et l'appel du lendemain continue. La suppression en base **répète la condition** : une carte
+anciennes d'abord, **par lots de 50**. Les images s'effacent une à une, pour savoir laquelle
+résiste : à deux cents cartes d'environ cinq images et une centaine de millisecondes par
+effacement, un appel dépasserait la minute qu'une route peut durer. Le rapport dit s'il en reste,
+et l'appel suivant continue. La suppression en base **répète la condition** : une carte
 choisie entre la lecture et l'effacement ne part jamais.
 
 **Leurs images** : l'image d'aperçu du lien (`cover_image_url`), la photo d'en-tête
