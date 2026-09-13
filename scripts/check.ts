@@ -5,9 +5,10 @@
  *   npm run check
  */
 import assert from "node:assert/strict";
-import { readFileSync, readdirSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { canonicaliseUrl, cleanTitle, parseHtml } from "../lib/extract";
 import { sslFor, toQuery } from "../lib/db";
+import { EXEMPLE } from "../lib/exemple";
 // @ts-expect-error — module JavaScript simple, volontairement hors du bundle Next.
 import { sslFor as bootSslFor, mediaDir as bootMediaDir } from "./boot.mjs";
 import {
@@ -151,6 +152,65 @@ test("toute page du site occupe un slug reserve", () => {
   assert.ok(pages.length > 0, "aucun dossier de page trouve");
   for (const nom of pages) {
     assert.ok(RESERVED_SLUGS.has(nom), `/${nom} manque dans RESERVED_SLUGS`);
+  }
+});
+
+/*
+ * La page d'exemple se joue en mode apercu : on leve le voile, on choisit, on
+ * confirme, on ecrit un mot — et rien ne part, parce que ce mode rend la main
+ * avant toute requete. En mode direct, le premier visiteur qui choisirait
+ * enverrait une requete a /api/pages/exemple/choose : au mieux une erreur sur
+ * la page censee convaincre, au pire une ecriture sur une carte reelle qui
+ * porterait ce slug.
+ *
+ * Il lit le texte de la page : un composant qui envelopperait GiftView pour lui
+ * imposer un autre mode lui echapperait. Il faudrait l'ecrire expres ; un
+ * remaniement ordinaire, qui deplacerait GiftView dans un sous-composant, le
+ * fait au contraire echouer. Et le pire reste ferme ailleurs : le slug est
+ * reserve, aucune carte nouvelle ne peut le prendre.
+ */
+test("la page d'exemple reste en mode apercu", () => {
+  const chemin = new URL("../app/exemple/page.tsx", import.meta.url);
+  assert.ok(existsSync(chemin), "app/exemple/page.tsx introuvable");
+  const rendus = lire(chemin).match(/<GiftView\b[^>]*>/g) ?? [];
+  assert.equal(rendus.length, 1, "la page d'exemple doit rendre GiftView une fois, et une seule");
+  assert.match(rendus[0], /\bmode="preview"/, "GiftView n'y est plus en mode apercu");
+
+  /*
+   * Et elle occupe la fenetre : sans `pleineFenetre`, le mode apercu laisse la
+   * page defiler sous le voile et peut jouer l'ouverture hors du champ — il
+   * compte sur l'editeur pour tenir ces roles, et l'exemple n'a pas d'editeur.
+   */
+  assert.match(
+    rendus[0],
+    /\bpleineFenetre\b(?!=\{false\})/,
+    "GiftView n'y occupe plus la fenetre : le voile ne retient plus le defilement",
+  );
+});
+
+/*
+ * Chaque photo de l'exemple doit exister sous public/ : une photo renommee ou
+ * oubliee afficherait une image cassee, precisement la ou le produit doit
+ * seduire. Les donnees sont importees et non relues comme du texte : une regex
+ * qui ne trouverait plus rien passerait en silence.
+ */
+test("chaque photo de la page d'exemple existe", () => {
+  assert.equal(EXEMPLE.items.length, 4, "l'exemple montre quatre cadeaux");
+  for (const item of EXEMPLE.items) {
+    assert.ok(item.image_url, `${item.label} : pas de photo`);
+    assert.ok(item.image_url.startsWith("/"), `${item.label} : photo hors du site (${item.image_url})`);
+    /*
+     * La casse compte : `existsSync` l'ignore sous Windows, ou `Casque.jpg`
+     * passerait pour `casque.jpg` — et renverrait un 404 sur un serveur Linux.
+     * On compare donc au nom exact tel qu'il figure dans son dossier.
+     */
+    const coupe = item.image_url.lastIndexOf("/");
+    const dossier = new URL(`../public${item.image_url.slice(0, coupe + 1)}`, import.meta.url);
+    const nom = item.image_url.slice(coupe + 1);
+    assert.ok(
+      existsSync(dossier) && readdirSync(dossier).includes(nom),
+      `${item.label} : ${item.image_url} manque sous public/ (casse comprise)`,
+    );
   }
 });
 
@@ -1661,6 +1721,35 @@ async function checkImages() {
         `${axe} de ${Number(m[1]) * 16} px entre les commandes, minimum 16`,
       );
     }
+  });
+
+  test("le bouton secondaire de l'accroche a un bord visible", () => {
+    /*
+     * « Voir un exemple » portait le bord `--line` de `.btn--ghost` : environ
+     * 1,2:1 avec le papier, mesure au navigateur. A cote du bouton plein, il se
+     * lisait comme du texte. `--line` est le jeton exact de ce defaut, comme
+     * pour la barre d'action de l'editeur.
+     */
+    const css = lire(new URL("../app/landing.css", import.meta.url));
+    const bloc = /\.lp-cta \.btn--ghost \{([^}]*)\}/.exec(css);
+    assert.ok(bloc, "regle .lp-cta .btn--ghost introuvable");
+    const bord = /border-color:\s*var\((--[a-z-]+)\)/.exec(bloc[1]);
+    assert.ok(bord, "le bouton secondaire de l'accroche n'impose plus de couleur de bord");
+    assert.notEqual(bord[1], "--line", "bord revenu a --line, invisible sur le papier");
+
+    /*
+     * Au survol aussi : `.btn--ghost:hover:not(:disabled)`, plus specifique que
+     * la regle ci-dessus, repassait le bord a `--ink-faint` (environ 2,7:1). Une
+     * premiere version de ce garde-fou ne lisait que la regle au repos.
+     */
+    const survol = /\.lp-cta \.btn--ghost:hover:not\(:disabled\) \{([^}]*)\}/.exec(css);
+    assert.ok(survol, "regle de survol .lp-cta .btn--ghost introuvable : le survol repasse le bord a --ink-faint");
+    const bordSurvol = /border-color:\s*var\((--[a-z-]+)\)/.exec(survol[1]);
+    assert.ok(bordSurvol, "le survol du bouton secondaire n'impose plus de couleur de bord");
+    assert.ok(
+      !["--line", "--ink-faint"].includes(bordSurvol[1]),
+      `bord de survol a ${bordSurvol[1]}, sous 3:1 sur le papier`,
+    );
   });
 
   test("l'ecran de creation ramene a l'editeur", () => {

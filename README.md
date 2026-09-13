@@ -106,9 +106,11 @@ Les deux écrivent dans le même `.next` et le graphe de modules du serveur de d
 
 | chemin | rôle |
 |---|---|
-| `app/page.tsx` | page d'accueil : présente l'outil et renvoie vers `/creer` |
+| `app/page.tsx` | page d'accueil : présente l'outil et renvoie vers `/creer` et `/exemple` |
 | `app/creer/page.tsx` | assistant de création, en trois étapes |
 | `app/[slug]/page.tsx` | page-cadeau publique (SSR + `generateMetadata` pour l'aperçu de lien) |
+| `app/exemple/page.tsx` | la page d'exemple : une page-cadeau figée, jouée en mode aperçu |
+| `lib/exemple.ts` | les données de l'exemple : l'occasion, les prénoms, les quatre cadeaux |
 | `app/admin/[token]/page.tsx` | vue admin : cadeau choisi, liens, édition, clôture |
 | `components/GiftView.tsx` | le rendu que voit le receveur — **le même** composant sert à l'aperçu |
 | `components/editor/PageEditor.tsx` | assistant partagé création / édition |
@@ -141,6 +143,7 @@ Les deux écrivent dans le même `.next` et le graphe de modules du serveur de d
 |---|---|
 | `/` | accueil — invite à composer |
 | `/creer` | formulaire de création, puis l'écran « Ta page est prête » |
+| `/exemple` | une page-cadeau d'exemple, jouable de bout en bout ; rien n'est envoyé |
 | `/questions` | questions fréquentes — la page faite pour être trouvée |
 | `/contact` | comment nous joindre |
 | `/confidentialite` | politique de confidentialité |
@@ -149,14 +152,16 @@ Les deux écrivent dans le même `.next` et le graphe de modules du serveur de d
 | `/[slug]` | page-cadeau publique — `noindex` |
 | `/admin/[token]` | vue admin — `noindex` |
 
-Les slugs `admin`, `api`, `creer`, `_next`, `icon`, `apple-icon`, `opengraph-image`,
-`twitter-image`, `favicon.ico`, `robots.txt`, `sitemap.xml` et `manifest.webmanifest` sont
-réservés : `/[slug]` les traite en 404 sans requête en base. Les noms à points ne peuvent de toute
-façon pas former un slug ; ils restent listés pour que la liste dise ce qui est pris.
+Les slugs `admin`, `api`, `creer`, `_next`, `contact`, `conditions`, `confidentialite`,
+`mentions-legales`, `questions`, `exemple`, `favicon.ico`, `robots.txt`, `sitemap.xml`,
+`manifest.webmanifest`, `icon`, `icon.svg`, `apple-icon`, `apple-touch-icon.png`, `opengraph-image`
+et `twitter-image` sont réservés : `/[slug]` les traite en 404 sans requête en base. Les noms à
+points ne peuvent de toute façon pas former un slug ; ils restent listés pour que la liste dise ce
+qui est pris.
 
 `/robots.txt` laisse explorer les pages-cadeau — c'est en les lisant qu'un robot voit leur
 `noindex` — mais interdit `/admin/` : un jeton d'administration n'a rien à faire dans un index.
-`/sitemap.xml` ne déclare que l'accueil et `/creer`, jamais les cartes.
+`/sitemap.xml` déclare les pages du site — l'accueil, `/creer`, `/questions`, `/exemple`… —, jamais les cartes.
 
 ### API
 
@@ -723,6 +728,37 @@ donc aucun ne peut mentir.
   sur le cadre. Les tailles en `clamp(… vw …)` y devenaient énormes ; `.gift-root--embedded` fige
   donc les valeurs que ces clamps prendraient à 390 px.
 - **L'aperçu plein écran**, accessible depuis n'importe quelle étape.
+
+## La page d'exemple
+
+L'accueil expliquait le produit sans le montrer : le téléphone dessiné à côté de l'accroche est une
+maquette figée. **« Voir un exemple »** mène à `/exemple`, une vraie page-cadeau qu'on peut jouer de
+bout en bout — lever le voile, choisir, confirmer, laisser un mot.
+
+**Elle ne vit pas en base.** La démonstration de `db/seed.sql` est une vraie carte : le premier
+visiteur qui y choisirait un cadeau la verrouillerait pour tous les suivants. `/exemple` rend
+`GiftView` en **mode aperçu** sur des données figées (`lib/exemple.ts`) ; dans ce mode, le choix et le
+mot du receveur rendent la main avant toute requête. Un garde-fou refuse qu'elle quitte ce mode.
+
+**Ses textes sont ceux de l'occasion anniversaire**, lus et non recopiés : l'exemple montre ce qu'on
+obtient sans rien écrire. Les prénoms sont épicènes — Camille, Sacha — et les quatre cadeaux mêlent
+expériences et objets.
+
+**Ses photos** sont libres de droits, sous licence Unsplash, réduites à 1 200 px et servies depuis
+`public/exemple/`. Elles ont été choisies sans visage au premier plan, et sans marque qui se lise à
+l'œil nu — la page offre un zoom : un casque dont le logo se lisait sur les charnières a été écarté
+pour cette raison, et seul l'appareil photo garde « instax SQ1 » en relief, blanc sur blanc,
+discernable au zoom. Un garde-fou vérifie que chacune existe.
+
+| photo | auteur | source | licence |
+|---|---|---|---|
+| `parachute.jpg` | Kamil Pietrzak | [unsplash.com/photos/Hwp_4FYAdEM](https://unsplash.com/photos/Hwp_4FYAdEM) | Unsplash |
+| `appareil-photo.jpg` | Liam Charmer | [unsplash.com/photos/lSsO9GQXIc8](https://unsplash.com/photos/lSsO9GQXIc8) | Unsplash |
+| `restaurant.jpg` | Ronan | [unsplash.com/photos/PCE0T5i4pDI](https://unsplash.com/photos/PCE0T5i4pDI) | Unsplash |
+| `casque.jpg` | C D-X | [unsplash.com/photos/PDX_a_82obo](https://unsplash.com/photos/PDX_a_82obo) | Unsplash |
+
+**Avant de déployer**, il faut vérifier en base qu'aucune carte n'existait déjà à l'adresse `/exemple` :
+une route fixe l'emporte sur `[slug]`, et une telle carte deviendrait inaccessible.
 
 ## La marque, le favicon et la bannière
 
