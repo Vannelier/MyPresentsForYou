@@ -1111,51 +1111,82 @@ En création, l'assistant avance pas à pas. En édition tout est déverrouillé
 
 ## Modèle économique
 
-**Rien n'est décidé, et rien n'est implémenté.** Cette section existe pour que l'analyse ne se
-reperde pas, pas pour acter un choix.
+**Décidé le 13 septembre 2026 : le site est gratuit, sans publicité et sans option payante. Il se
+finance par l'affiliation, au moment où l'offreur achète.** Rien n'est encore implémenté ; cette
+section dit ce qui est décidé, pourquoi, et dans quel ordre le construire.
 
-La piste étudiée est l'**affiliation** : le donneur colle des liens produit, un achat s'ensuit,
-une commission tombe. Trois réserves, par ordre de gravité.
+### Pourquoi l'affiliation, et pourquoi dans la page d'administration
 
-**Le volume est structurellement minuscule.** Une page-cadeau, c'est **un** acheteur. Pas mille
-visiteurs dont 2 % convertissent : une personne, dont la conversion est presque certaine mais dont
-la base est 1. *Estimation, hypothèses explicites* — panier de 45 €, commission moyenne 4,5 %
-(Amazon FR : 3-4 % high-tech, 6-7 % maison/beauté), 70 % des pages aboutissant à un achat traçable
-— soit **≈ 1,40 € par page créée**, et **~7 000 pages/an** pour 10 000 € de revenu. La question
-n'est donc pas « quel taux ? » mais « peut-on faire 7 000 pages ? ».
+**Celui qui choisit n'est pas celui qui paie.** Un lien affilié sur la page-cadeau poserait le
+cookie chez le receveur, qui n'achète rien. Le seul clic qui rapporte est celui de l'offreur, dans
+sa page d'administration, quand il va acheter le cadeau choisi : l'intention y est presque
+certaine, et le cookie se pose sur le navigateur qui paiera.
 
-**Récrire les liens collés par le donneur est une zone grise.** L'injection d'un tag dans une URL
-que l'utilisateur a fournie n'est pas explicitement traitée par l'*Associates Operating Agreement*
-d'Amazon ; ce qui l'est : l'injection de tags sans intention de clic authentique, le cookie
-stuffing, les redirections forcées, avec fermeture de compte annoncée pour toute violation
-« however minor ». **À vérifier auprès d'Amazon avant de construire dessus** — le coût d'une erreur
-est la perte du canal entier.
+**C'est aussi ce qu'impose le cookie de 24 h.** Le cookie Amazon dure 24 h (90 jours si le produit
+part au panier), or le parcours est asynchrone par construction : création, envoi, choix des jours
+plus tard, achat après. Un lien affilié posé à la création aurait expiré depuis longtemps ; celui
+qu'on sert au moment de l'achat, non.
 
-**Le cookie de 24 h contre un parcours asynchrone.** Le cookie Amazon dure 24 h (90 jours si le
-produit part au panier), or MyPresentsForYou est asynchrone par construction : création, envoi, choix du
-receveur des jours plus tard, achat après. Contrainte de conception qui en découle : **le lien
-d'achat final doit être servi par MyPresentsForYou** depuis l'écran d'administration, pas copié-collé.
+**Pas de publicité.** Une carte est vue quelques fois, par une seule personne : même à quelques
+euros pour mille affichages, elle rapporterait moins d'un centime. La publicité abîmerait la mise
+en scène, qui est tout le produit, et poserait des cookies — un bandeau de consentement par-dessus
+le voile, et la fin de « aucun cookie, aucun traqueur ». `/ads.txt` existe mais reste inerte : sans
+`ADSENSE_PUBLISHER_ID`, il répond 404.
 
-**Ce que l'affiliation impliquerait sur le produit.** MyPresentsForYou repose sur un renversement : *c'est le
-donneur qui propose, pas le receveur qui demande*. Si MyPresentsForYou propose les cadeaux, la prémisse devient
-« MyPresentsForYou me dit quoi offrir », et l'on entre frontalement sur le marché des sites d'idées cadeaux.
-Les listes multi-enseignes gratuites existent déjà en France — The Good List, Listy, MyLittleWishList,
-Milirose — et ce qui distingue MyPresentsForYou n'est pas la liste, c'est le renversement et la mise en scène.
+**Pas d'option payante.** Envisagée — une carte imprimée et postée, des thèmes premium — et
+écartée : le produit reste gratuit sans réserve, et l'accueil peut le dire sans astérisque.
 
-**L'ordre à suivre, si la question revient :**
+### Comment
 
-1. **Instrumenter avant de construire.** Trois chiffres manquent : pages créées, choix confirmés,
-   clics vers la boutique depuis l'admin. Sans eux, tout calcul de revenu est de la fiction — y
-   compris celui ci-dessus.
-2. **Des suggestions complémentaires, jamais substitutives.** Le donneur a mis deux cadeaux →
-   « trois idées de plus pour un anniversaire », qu'il *ajoute* s'il veut. L'affiliation devient
-   propre — notre lien, notre produit, pas de récriture — et la prémisse du produit reste intacte.
-3. **Regarder un modèle qui ne dépend pas d'un tiers qui peut bannir.** La carte à imprimer est déjà
-   une valeur réelle. *Spéculation, à valider* : une carte imprimée et postée se vend au moment où
-   le donneur est le plus engagé, sans cookie et sans compte à faire fermer.
+1. **Un bouton « Acheter »** sur le cadeau choisi, dans la page d'administration, qui passe par une
+   redirection à nous. Elle compte les clics — le troisième chiffre de l'instrumentation, avec les
+   cartes créées et les choix confirmés — et ajoute l'affiliation. La redirection se fait côté
+   serveur : aucun cookie sur notre domaine, seul le marchand pose le sien après le clic. Aucun
+   script de réseau d'affiliation dans nos pages : il en poserait.
+2. **Un réseau multi-marchands et multi-pays**, plutôt que des accords marchand par marchand. Le
+   site vise six langues — français, anglais, italien, espagnol, allemand, néerlandais —, et les
+   programmes d'affiliation sont souvent propres à chaque pays : Amazon en a un par boutique
+   nationale. Un lien que le réseau ne sait pas affilier part tel quel.
+3. **Jamais de tag glissé dans un lien collé par le donneur hors d'un réseau qui l'autorise.**
+   L'*Associates Operating Agreement* d'Amazon ne traite pas explicitement ce cas, mais annonce la
+   fermeture du compte pour toute violation « however minor » : le coût d'une erreur serait la
+   perte du canal entier.
+4. **Un e-mail facultatif, « préviens-moi quand elle a choisi »**, proposé à la création, jamais
+   obligatoire, sans compte. Aujourd'hui l'offreur découvre le choix en rouvrant son lien — s'il y
+   pense. L'e-mail porte le bouton « Acheter » au moment où l'achat se décide, et rend possible la
+   relance à un an pour une occasion qui revient. Il met fin à la promesse « ni compte, ni
+   e-mail » : la politique de confidentialité, les conditions et la FAQ devront le dire.
+5. **Une mention « lien affilié »** visible à côté du bouton : c'est une obligation, et une question
+   de franchise.
+6. **Plus tard, des suggestions de cadeaux**, complémentaires et jamais substitutives : le donneur
+   a mis deux cadeaux, on lui propose « trois idées de plus » qu'il *ajoute* s'il veut. Leur lien
+   est à nous, donc affilié proprement dès le départ, et le renversement reste intact — c'est
+   toujours le donneur qui propose. Si MyPresentsForYou proposait les cadeaux à sa place, on
+   entrerait frontalement sur le marché des listes et des idées cadeaux (The Good List, Listy,
+   MyLittleWishList, Milirose…), où ce qui nous distingue ne compterait plus. Les expériences —
+   coffrets, restaurants, activités — passent en premier : paniers plus gros, commissions souvent
+   plus élevées, à vérifier réseau par réseau.
 
-**Le seul changement déjà fait au titre de cette réflexion** est le déplacement de l'occasion avant
-les cadeaux (voir « Ce qui est personnalisable »). Il est bon en soi, et n'engage rien.
+### Le risque : le volume
+
+Une page-cadeau, c'est **un** acheteur : une conversion presque certaine, mais sur une base de un.
+*Estimation, hypothèses explicites* — panier de 45 €, commission moyenne 4,5 % (Amazon FR : 3-4 %
+high-tech, 6-7 % maison/beauté), 70 % des cartes aboutissant à un achat traçable — soit **≈ 1,40 €
+par carte créée**, et **~7 000 cartes par an** pour 10 000 € de revenu. Au 13 septembre 2026, aucune
+carte n'a encore été créée : ce chiffre reste une fiction utile, que les trois compteurs
+remplaceront.
+
+### Dans quel ordre
+
+La feuille de route du projet : le business model, puis des textes plus humains, le multilingue,
+le référencement, et seulement ensuite la publicité du site. Le modèle s'y insère ainsi :
+
+1. **Avant la publicité** : le bouton « Acheter » et ses compteurs, sans affiliation — pour mesurer
+   dès la première carte.
+2. **Après le multilingue** : l'e-mail de notification, écrit d'emblée dans les six langues.
+3. **Une fois le site traduit et en ligne** : l'inscription au réseau d'affiliation. Les réseaux
+   examinent un site avant d'accepter son éditeur ; un site vide et monolingue passerait mal.
+4. **Avec du trafic** : les suggestions.
 
 ## Décisions structurantes
 
@@ -1219,17 +1250,15 @@ n'importe quelle édition.
 
 ## Hors périmètre (volontairement non implémenté)
 
-- **Paiement / paywall.** La colonne `plan` existe (`free` | `paid`), mais rien ne produit encore
-  une page `paid` et aucun flux Stripe n'est branché. Tout est traité comme `free`.
+- **Paiement.** Aucun : le modèle économique est l'affiliation seule (voir « Modèle économique »).
+  La colonne `plan` (`free` | `paid`) reste en base, inerte ; tout est traité comme `free`.
 - **Comptes utilisateurs.** L'accès admin repose uniquement sur le token secret dans l'URL.
 - **Navigateur headless.** L'extraction se limite à `fetch` + parsing HTML.
-- **Notification du choix.** Le donneur découvre le choix en rouvrant son lien admin.
+- **Notification du choix.** Le donneur découvre le choix en rouvrant son lien admin. Un e-mail
+  facultatif est décidé (voir « Modèle économique »), pas encore construit.
 - **Collecte d'adresse ou d'infos du receveur.** Il ne saisit que son choix.
-- **Multi-devise et i18n.**
-- **Paywall.** L'ordre choisi est : étoffer d'abord les options de personnalisation, puis décider
-  lesquelles passent derrière le paiement. Aucune option n'est aujourd'hui marquée payante, et
-  l'assistant n'affiche rien à ce sujet — mieux vaut ne rien annoncer que d'annoncer des cases
-  inertes. La colonne `plan` reste en place pour le jour où.
+- **Multi-devise.** Sans paiement, sans objet. Le multilingue, lui, est à la feuille de route :
+  français, anglais, italien, espagnol, allemand, néerlandais.
 
 ## Limites connues
 
