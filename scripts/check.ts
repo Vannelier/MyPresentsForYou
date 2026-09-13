@@ -8,7 +8,8 @@ import assert from "node:assert/strict";
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { canonicaliseUrl, cleanTitle, parseHtml } from "../lib/extract";
 import { sslFor, toQuery } from "../lib/db";
-import { EXEMPLE } from "../lib/exemple";
+import { exemple } from "../lib/exemple";
+import { dictionnaire } from "../lib/i18n";
 // @ts-expect-error — module JavaScript simple, volontairement hors du bundle Next.
 import { sslFor as bootSslFor, mediaDir as bootMediaDir } from "./boot.mjs";
 import {
@@ -18,8 +19,6 @@ import {
   DEFAULT_OPENING_ID,
   EFFECTS,
   FONTS,
-  ITEMS_MESSAGE_HINT,
-  ITEMS_TITLE_HINT,
   OCCASIONS,
   OCCASION_GROUPS,
   OPENINGS,
@@ -207,8 +206,8 @@ test("la page d'exemple reste en mode apercu", () => {
  * qui ne trouverait plus rien passerait en silence.
  */
 test("chaque photo de la page d'exemple existe", () => {
-  assert.equal(EXEMPLE.items.length, 4, "l'exemple montre quatre cadeaux");
-  for (const item of EXEMPLE.items) {
+  assert.equal(exemple("fr").items.length, 4, "l'exemple montre quatre cadeaux");
+  for (const item of exemple("fr").items) {
     assert.ok(item.image_url, `${item.label} : pas de photo`);
     assert.ok(item.image_url.startsWith("/"), `${item.label} : photo hors du site (${item.image_url})`);
     /*
@@ -674,10 +673,14 @@ test("chaque occasion pointe vers une palette qui existe", () => {
   }
 });
 
-test("chaque occasion propose un message d'ouverture non vide", () => {
-  for (const o of OCCASIONS) {
-    assert.ok(o.intro.trim().length > 0, o.id);
-    assert.ok(o.intro.length <= LIMITS.intro, `${o.id} depasse ${LIMITS.intro}`);
+test("chaque occasion propose un message d'ouverture non vide, dans chaque langue", () => {
+  for (const langue of LANGUES) {
+    const d = dictionnaire(langue);
+    for (const o of OCCASIONS) {
+      const intro = d.occasions[o.id].intro;
+      assert.ok(intro.trim().length > 0, `${langue}/${o.id}`);
+      assert.ok(intro.length <= LIMITS.intro, `${langue}/${o.id} depasse ${LIMITS.intro}`);
+    }
   }
 });
 
@@ -722,18 +725,25 @@ test("le voile ne se refuse plus, meme sur une carte ancienne", () => {
   );
 });
 
-test("chaque occasion propose une suggestion de titre et de remerciement", () => {
-  for (const o of OCCASIONS) {
-    assert.ok(o.welcomeHint.trim().length > 0, o.id);
-    assert.ok(o.thanksHint.trim().length > 0, o.id);
-    assert.ok(o.welcomeHint.length <= LIMITS.message, o.id);
-    assert.ok(o.thanksHint.length <= LIMITS.message, o.id);
+test("chaque occasion propose une suggestion de titre et de remerciement, dans chaque langue", () => {
+  for (const langue of LANGUES) {
+    const d = dictionnaire(langue);
+    for (const o of OCCASIONS) {
+      const f = d.occasions[o.id];
+      assert.ok(f.bienvenue.trim().length > 0, `${langue}/${o.id}`);
+      assert.ok(f.remerciement.trim().length > 0, `${langue}/${o.id}`);
+      assert.ok(f.bienvenue.length <= LIMITS.message, `${langue}/${o.id}`);
+      assert.ok(f.remerciement.length <= LIMITS.message, `${langue}/${o.id}`);
+    }
   }
 });
 
-test("les suggestions de titre sont distinctes d'une occasion a l'autre", () => {
-  const hints = OCCASIONS.map((o) => o.welcomeHint);
-  assert.equal(new Set(hints).size, hints.length);
+test("les suggestions de titre sont distinctes d'une occasion a l'autre, dans chaque langue", () => {
+  for (const langue of LANGUES) {
+    const d = dictionnaire(langue);
+    const titres = OCCASIONS.map((o) => d.occasions[o.id].bienvenue);
+    assert.equal(new Set(titres).size, titres.length, langue);
+  }
 });
 
 
@@ -787,10 +797,13 @@ test("le style d'ouverture retombe sur le voile si inconnu", () => {
   );
 });
 
-test("chaque style d'ouverture a un nom et une explication", () => {
-  for (const o of OPENINGS) {
-    assert.ok(o.name.trim().length > 0, o.id);
-    assert.ok(o.hint.trim().length > 0, o.id);
+test("chaque style d'ouverture a un nom et une explication, dans chaque langue", () => {
+  for (const langue of LANGUES) {
+    const d = dictionnaire(langue);
+    for (const o of OPENINGS) {
+      assert.ok(d.ouvertures[o.id].nom.trim().length > 0, `${langue}/${o.id}`);
+      assert.ok(d.ouvertures[o.id].aide.trim().length > 0, `${langue}/${o.id}`);
+    }
   }
   assert.equal(new Set(OPENINGS.map((o) => o.id)).size, OPENINGS.length);
 });
@@ -826,15 +839,21 @@ test("le socle d'occasions est present", () => {
 });
 
 test("chaque occasion a un nom et un pictogramme uniques", () => {
-  const noms = OCCASIONS.map((o) => o.name);
+  for (const langue of LANGUES) {
+    const d = dictionnaire(langue);
+    const noms = OCCASIONS.map((o) => d.occasions[o.id].nom);
+    assert.equal(new Set(noms).size, noms.length, `${langue} : noms en double`);
+  }
   const icones = OCCASIONS.map((o) => o.icon);
-  assert.equal(new Set(noms).size, noms.length, "noms en double");
   assert.equal(new Set(icones).size, icones.length, "pictogrammes en double");
 });
 
-test("les mots d'ouverture sont distincts d'une occasion a l'autre", () => {
-  const intros = OCCASIONS.map((o) => o.intro);
-  assert.equal(new Set(intros).size, intros.length);
+test("les mots d'ouverture sont distincts d'une occasion a l'autre, dans chaque langue", () => {
+  for (const langue of LANGUES) {
+    const d = dictionnaire(langue);
+    const intros = OCCASIONS.map((o) => d.occasions[o.id].intro);
+    assert.equal(new Set(intros).size, intros.length, langue);
+  }
 });
 
 test("les rubriques couvrent toutes les occasions, sans doublon", () => {
@@ -1004,24 +1023,25 @@ test("validatePatch ne renvoie que les textes d'ecran fournis", () => {
   assert.equal(out.items_title, "Choisis");
 });
 
-test("chaque occasion propose un texte de bouton et un mot d'attente", () => {
-  for (const o of OCCASIONS) {
-    assert.ok(o.openHint.trim().length > 0, `openHint vide : ${o.id}`);
-    assert.ok(o.waitHint.trim().length > 0, `waitHint vide : ${o.id}`);
-    assert.ok(
-      o.openHint.length <= LIMITS.openLabel,
-      `openHint dépasse la limite du champ : ${o.id}`,
-    );
-    assert.ok(
-      o.waitHint.length <= LIMITS.waitMessage,
-      `waitHint dépasse la limite du champ : ${o.id}`,
-    );
+test("chaque occasion propose un texte de bouton et un mot d'attente, dans chaque langue", () => {
+  for (const langue of LANGUES) {
+    const d = dictionnaire(langue);
+    for (const o of OCCASIONS) {
+      const f = d.occasions[o.id];
+      assert.ok(f.ouvrir.trim().length > 0, `bouton vide : ${langue}/${o.id}`);
+      assert.ok(f.attente.trim().length > 0, `attente vide : ${langue}/${o.id}`);
+      assert.ok(f.ouvrir.length <= LIMITS.openLabel, `bouton trop long : ${langue}/${o.id}`);
+      assert.ok(f.attente.length <= LIMITS.waitMessage, `attente trop longue : ${langue}/${o.id}`);
+    }
   }
 });
 
-test("les suggestions communes tiennent dans leurs champs", () => {
-  assert.ok(ITEMS_TITLE_HINT.length <= LIMITS.itemsTitle);
-  assert.ok(ITEMS_MESSAGE_HINT.length <= LIMITS.itemsMessage);
+test("les suggestions communes tiennent dans leurs champs, dans chaque langue", () => {
+  for (const langue of LANGUES) {
+    const d = dictionnaire(langue);
+    assert.ok(d.carte.titreCadeaux.length <= LIMITS.itemsTitle, langue);
+    assert.ok(d.carte.messageCadeaux.length <= LIMITS.itemsMessage, langue);
+  }
 });
 
 // --- Fenetre du mot du receveur --------------------------------------------
@@ -1052,18 +1072,24 @@ test("la borne exacte de la fenetre reste recevable", () => {
 test("chaque ouverture a un identifiant unique, un nom et une description", () => {
   const ids = OPENINGS.map((o) => o.id);
   assert.equal(new Set(ids).size, ids.length, "identifiants dupliques");
-  for (const o of OPENINGS) {
-    assert.ok(o.name.trim().length > 0, `nom vide : ${o.id}`);
-    assert.ok(o.hint.trim().length > 0, `description vide : ${o.id}`);
+  for (const langue of LANGUES) {
+    const d = dictionnaire(langue);
+    for (const o of OPENINGS) {
+      assert.ok(d.ouvertures[o.id].nom.trim().length > 0, `nom vide : ${langue}/${o.id}`);
+      assert.ok(d.ouvertures[o.id].aide.trim().length > 0, `description vide : ${langue}/${o.id}`);
+    }
   }
 });
 
 test("chaque effet a un identifiant unique, un nom et une description", () => {
   const ids = EFFECTS.map((e) => e.id);
   assert.equal(new Set(ids).size, ids.length, "identifiants dupliques");
-  for (const e of EFFECTS) {
-    assert.ok(e.name.trim().length > 0, `nom vide : ${e.id}`);
-    assert.ok(e.hint.trim().length > 0, `description vide : ${e.id}`);
+  for (const langue of LANGUES) {
+    const d = dictionnaire(langue);
+    for (const e of EFFECTS) {
+      assert.ok(d.effets[e.id].nom.trim().length > 0, `nom vide : ${langue}/${e.id}`);
+      assert.ok(d.effets[e.id].aide.trim().length > 0, `description vide : ${langue}/${e.id}`);
+    }
   }
 });
 
@@ -1534,7 +1560,8 @@ async function checkImages() {
     const readme = lire(new URL("../README.md", import.meta.url)).toLowerCase();
     for (const e of EFFECTS) {
       if (e.id === "aucun") continue;
-      assert.ok(readme.includes(e.name.toLowerCase()), `effet absent du README : ${e.name}`);
+      const nom = dictionnaire("fr").effets[e.id].nom;
+      assert.ok(readme.includes(nom.toLowerCase()), `effet absent du README : ${nom}`);
     }
     for (const m of PRINT_MOTIFS) {
       if (m.id === "none") continue;

@@ -4,6 +4,8 @@ import GiftView from "@/components/GiftView";
 import { lireCarte } from "@/lib/carte";
 import { incrementViewCount } from "@/lib/db";
 import { baseUrl, publicUrlFor } from "@/lib/env";
+import { dictionnaire } from "@/lib/i18n";
+import { LANGUE_PAR_DEFAUT, LOCALES, langueOuDefaut } from "@/lib/i18n/langues";
 import { RESERVED_SLUGS } from "@/lib/slug";
 import { isExpired, isLocked, toPublicPage } from "@/lib/types";
 
@@ -11,16 +13,17 @@ export const dynamic = "force-dynamic";
 
 type Props = { params: Promise<{ slug: string }> };
 
-const OG_DESCRIPTION = "Choisis ton cadeau.";
-
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  if (RESERVED_SLUGS.has(slug)) return { title: "Page introuvable" };
+  const introuvable = { title: dictionnaire(LANGUE_PAR_DEFAUT).carte.titreIntrouvable };
+  if (RESERVED_SLUGS.has(slug)) return introuvable;
   const page = await lireCarte(slug).catch(() => null);
-  if (!page) return { title: "Page introuvable" };
+  if (!page) return introuvable;
 
+  const langue = langueOuDefaut(page.theme.langue);
+  const d = dictionnaire(langue).carte;
   // Le donneur peut choisir ce que WhatsApp affiche, sans toucher au titre de la page.
-  const title = page.link_title.trim() || page.welcome_message || "Un cadeau pour toi";
+  const title = page.link_title.trim() || page.welcome_message || d.titreRepli;
   /*
    * Uniquement l'image choisie par le donneur, jamais celle d'un cadeau.
    *
@@ -34,20 +37,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     metadataBase: new URL(baseUrl()),
     title,
-    description: OG_DESCRIPTION,
+    description: d.ogDescription,
     openGraph: {
       type: "website",
       title,
-      description: OG_DESCRIPTION,
+      description: d.ogDescription,
       url,
       siteName: "MyPresentsForYou",
-      locale: "fr_BE",
+      locale: LOCALES[langue].og,
       images: image ? [{ url: image }] : undefined,
     },
     twitter: {
       card: image ? "summary_large_image" : "summary",
       title,
-      description: OG_DESCRIPTION,
+      description: d.ogDescription,
       images: image ? [image] : undefined,
     },
     robots: { index: false, follow: false },
@@ -56,18 +59,19 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function GiftPageRoute({ params }: Props) {
   const { slug } = await params;
-  // /favicon.ico, /robots.txt et compagnie retombent ici : 404 sans toucher la base.
+  // Une adresse reservee n'arrive ici que par /carte/<nom> : 404 sans toucher la base.
   if (RESERVED_SLUGS.has(slug)) notFound();
 
   const page = await lireCarte(slug);
   if (!page) notFound();
 
   if (isExpired(page)) {
+    const d = dictionnaire(langueOuDefaut(page.theme.langue)).carte;
     return (
       <div className="shell shell--flush">
         <div className="state">
-          <h1>Ce cadeau n&apos;est plus disponible</h1>
-          <p>Le lien a expiré. Demande à la personne qui te l&apos;a envoyé d&apos;en créer un nouveau.</p>
+          <h1>{d.expireTitre}</h1>
+          <p>{d.expireTexte}</p>
         </div>
       </div>
     );

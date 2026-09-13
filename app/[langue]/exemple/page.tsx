@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import GiftView from "@/components/GiftView";
-import { EXEMPLE } from "@/lib/exemple";
+import { exemple } from "@/lib/exemple";
 import { dictionnaire } from "@/lib/i18n";
 import { cheminVers } from "@/lib/i18n/chemins";
 import { LOCALES, langueOuDefaut } from "@/lib/i18n/langues";
@@ -76,7 +76,7 @@ export default async function ExemplePage({ params }: Params) {
         </Link>
       </div>
       <GiftView
-        page={EXEMPLE}
+        page={exemple(langue)}
         mode="preview"
         pleineFenetre
         lienSortie={{ libelle: d.composer, href: creer }}

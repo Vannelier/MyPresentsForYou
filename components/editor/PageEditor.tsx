@@ -13,8 +13,6 @@ import { LIMITS } from "@/lib/limits";
 import {
   EFFECTS,
   FONTS,
-  ITEMS_MESSAGE_HINT,
-  ITEMS_TITLE_HINT,
   OCCASION_GROUPS,
   OPENINGS,
   effectById,
@@ -34,6 +32,7 @@ import {
   lireBrouillon,
   type Brouillon,
 } from "@/components/editor/draft";
+import { useDictionnaire } from "@/components/i18n/Dictionnaire";
 import { slugError, slugify } from "@/lib/slug";
 import type { Item, PublicPage, Theme } from "@/lib/types";
 
@@ -163,6 +162,7 @@ function emptyRow(): DraftItem {
 
 export default function PageEditor(props: Props) {
   const { mode, initial } = props;
+  const { langue, d } = useDictionnaire();
   const router = useRouter();
 
   const [step, setStep] = useState<StepNumber>(1);
@@ -421,6 +421,7 @@ export default function PageEditor(props: Props) {
   }, [preview]);
 
   const current = occasionById(occasion);
+  const formules = d.occasions[current.id];
 
   /**
    * Plus rien n'est obligatoire : un champ laissé vide retombe sur la suggestion
@@ -432,7 +433,7 @@ export default function PageEditor(props: Props) {
   const effectiveName =
     name.trim() ||
     (() => {
-      const base = current.id === "aucune" ? "Carte cadeau" : current.name;
+      const base = current.id === "aucune" ? "Carte cadeau" : d.occasions[current.id].nom;
       const who = recipient.trim();
       return who ? `${base} — ${who}` : base;
     })();
@@ -606,6 +607,7 @@ export default function PageEditor(props: Props) {
     opening,
     effect,
     reply: replyOn,
+    langue,
   };
 
   /**
@@ -621,7 +623,7 @@ export default function PageEditor(props: Props) {
     setMotif(next.motif !== "none");
     // L'effet suit l'occasion tant que le donneur n'en a pas choisi un autre.
     setEffect((cur) => (cur === previous.effect ? next.effect : cur));
-    setIntro((cur) => (cur.trim() === previous.intro ? "" : cur));
+    setIntro((cur) => (cur.trim() === d.occasions[previous.id].intro ? "" : cur));
   }
 
   const previewPage: PublicPage = {
@@ -634,12 +636,12 @@ export default function PageEditor(props: Props) {
     reveal_at: revealAt ? new Date(revealAt).toISOString() : null,
     // Champ vide : on montre la suggestion de l'occasion, pas un texte fige.
     // L'apercu doit refleter le theme choisi, comme les placeholders du formulaire.
-    welcome_message: welcome.trim() || current.welcomeHint,
+    welcome_message: welcome.trim() || formules.bienvenue,
     open_label: openLabel,
     wait_message: waitMessage,
     items_title: itemsTitle,
     items_message: itemsMessage,
-    thank_you_message: thanks.trim() || current.thanksHint,
+    thank_you_message: thanks.trim() || formules.remerciement,
     theme,
     items: draftItems,
     chosen_item_id: null,
@@ -704,12 +706,12 @@ export default function PageEditor(props: Props) {
       reveal_at: revealAt ? new Date(revealAt).toISOString() : null,
       // Champ vide : on enregistre la suggestion affichée en placeholder, celle
       // que le donneur avait sous les yeux et a implicitement acceptée.
-      welcome_message: welcome.trim() || current.welcomeHint,
-      open_label: openLabel.trim() || current.openHint,
-      wait_message: waitMessage.trim() || current.waitHint,
-      items_title: itemsTitle.trim() || ITEMS_TITLE_HINT,
-      items_message: itemsMessage.trim() || ITEMS_MESSAGE_HINT,
-      thank_you_message: thanks.trim() || current.thanksHint,
+      welcome_message: welcome.trim() || formules.bienvenue,
+      open_label: openLabel.trim() || formules.ouvrir,
+      wait_message: waitMessage.trim() || formules.attente,
+      items_title: itemsTitle.trim() || d.carte.titreCadeaux,
+      items_message: itemsMessage.trim() || d.carte.messageCadeaux,
+      thank_you_message: thanks.trim() || formules.remerciement,
       cover_image_url: cover.trim() || null,
       theme,
       items: filledItems().map((it) => ({
@@ -774,7 +776,7 @@ export default function PageEditor(props: Props) {
           ...(data as unknown as Omit<CreateResult, "carte">),
           carte: {
             to: envoye.recipient_name,
-            intro: envoye.intro_message || current.intro,
+            intro: envoye.intro_message || formules.intro,
             title: envoye.welcome_message,
             signature: envoye.signature,
             theme: envoye.theme,
@@ -907,7 +909,7 @@ export default function PageEditor(props: Props) {
           <div className="occasion-groups" role="radiogroup" aria-label="Occasion">
             {OCCASION_GROUPS.map((groupe) => (
               <div key={groupe.label ?? "base"}>
-                {groupe.label && <p className="occasion-group__title">{groupe.label}</p>}
+                {groupe.label && <p className="occasion-group__title">{d.rubriques[groupe.label]}</p>}
                 <div className="occasions">
                   {groupe.items.map((o) => (
                     <button
@@ -921,7 +923,7 @@ export default function PageEditor(props: Props) {
                       <span className="occasion__icon" aria-hidden="true">
                         {o.icon}
                       </span>
-                      <span className="occasion__name">{o.name}</span>
+                      <span className="occasion__name">{d.occasions[o.id].nom}</span>
                     </button>
                   ))}
                 </div>
@@ -1207,7 +1209,7 @@ export default function PageEditor(props: Props) {
                   value={intro}
                   aria-label="Mot d'ouverture"
                   maxLength={LIMITS.intro}
-                  placeholder={current.intro}
+                  placeholder={formules.intro}
                   onChange={(e) => setIntro(e.target.value)}
                 />
                 <Counter value={intro} max={LIMITS.intro} />
@@ -1223,7 +1225,7 @@ export default function PageEditor(props: Props) {
                   maxLength={LIMITS.message}
                   rows={2}
                   onChange={(e) => setWelcome(e.target.value)}
-                  placeholder={current.welcomeHint}
+                  placeholder={formules.bienvenue}
                 />
                 <Counter value={welcome} max={LIMITS.message} />
               </Field>
@@ -1237,7 +1239,7 @@ export default function PageEditor(props: Props) {
                   value={openLabel}
                   aria-label="Texte du bouton d'ouverture"
                   maxLength={LIMITS.openLabel}
-                  placeholder={current.openHint}
+                  placeholder={formules.ouvrir}
                   onChange={(e) => setOpenLabel(e.target.value)}
                 />
                 <Counter value={openLabel} max={LIMITS.openLabel} />
@@ -1258,8 +1260,8 @@ export default function PageEditor(props: Props) {
                         <i />
                         <i />
                       </span>
-                      <span className="opening__name">{o.name}</span>
-                      <span className="opening__hint">{o.hint}</span>
+                      <span className="opening__name">{d.ouvertures[o.id].nom}</span>
+                      <span className="opening__hint">{d.ouvertures[o.id].aide}</span>
                     </button>
                   ))}
                 </div>
@@ -1293,7 +1295,7 @@ export default function PageEditor(props: Props) {
                       value={waitMessage}
                       aria-label="Mot d'attente"
                       maxLength={LIMITS.waitMessage}
-                      placeholder={current.waitHint}
+                      placeholder={formules.attente}
                       onChange={(e) => setWaitMessage(e.target.value)}
                     />
                     <Counter value={waitMessage} max={LIMITS.waitMessage} />
@@ -1320,7 +1322,7 @@ export default function PageEditor(props: Props) {
                   value={itemsTitle}
                   aria-label="Titre de l'écran des cadeaux"
                   maxLength={LIMITS.itemsTitle}
-                  placeholder={ITEMS_TITLE_HINT}
+                  placeholder={d.carte.titreCadeaux}
                   onChange={(e) => setItemsTitle(e.target.value)}
                 />
                 <Counter value={itemsTitle} max={LIMITS.itemsTitle} />
@@ -1332,7 +1334,7 @@ export default function PageEditor(props: Props) {
                   aria-label="Contenu de l'écran des cadeaux"
                   maxLength={LIMITS.itemsMessage}
                   rows={2}
-                  placeholder={ITEMS_MESSAGE_HINT}
+                  placeholder={d.carte.messageCadeaux}
                   onChange={(e) => setItemsMessage(e.target.value)}
                 />
                 <Counter value={itemsMessage} max={LIMITS.itemsMessage} />
@@ -1385,7 +1387,7 @@ export default function PageEditor(props: Props) {
                   maxLength={LIMITS.message}
                   rows={2}
                   onChange={(e) => setThanks(e.target.value)}
-                  placeholder={current.thanksHint}
+                  placeholder={formules.remerciement}
                 />
                 <Counter value={thanks} max={LIMITS.message} />
               </Field>
@@ -1423,7 +1425,7 @@ export default function PageEditor(props: Props) {
                           <span key={c} style={{ background: c }} />
                         ))}
                       </span>
-                      <span className="palette__name">{p.name}</span>
+                      <span className="palette__name">{d.palettes[p.id]}</span>
                     </button>
                   ))}
                 </div>
@@ -1443,7 +1445,7 @@ export default function PageEditor(props: Props) {
                       <span className="font-choice__sample" style={{ fontFamily: f.cssVar }}>
                         {f.sample}
                       </span>
-                      <span className="font-choice__name">{f.name}</span>
+                      <span className="font-choice__name">{d.polices[f.id]}</span>
                     </button>
                   ))}
                 </div>
@@ -1489,8 +1491,8 @@ export default function PageEditor(props: Props) {
                       <span className="effect__glyph" aria-hidden="true">
                         {EFFECT_GLYPHS[e.id]}
                       </span>
-                      <span className="effect__name">{e.name}</span>
-                      <span className="effect__hint">{e.hint}</span>
+                      <span className="effect__name">{d.effets[e.id].nom}</span>
+                      <span className="effect__hint">{d.effets[e.id].aide}</span>
                     </button>
                   ))}
                 </div>
@@ -1560,7 +1562,7 @@ export default function PageEditor(props: Props) {
                       value={linkTitle}
                       aria-label="Texte affiché dans l'aperçu du lien"
                       maxLength={LIMITS.linkTitle}
-                      placeholder={welcome.trim() || current.welcomeHint}
+                      placeholder={welcome.trim() || formules.bienvenue}
                       onChange={(e) => setLinkTitle(e.target.value)}
                     />
                     <Counter value={linkTitle} max={LIMITS.linkTitle} />

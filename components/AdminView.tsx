@@ -154,7 +154,7 @@ export default function AdminView({ page, token }: { page: AdminSnapshot; token:
         <CardPreview
           url={page.publicUrl}
           to={page.recipient_name}
-          intro={page.intro_message.trim() || occasionById(page.theme.occasion).intro}
+          intro={page.intro_message.trim() || d.occasions[occasionById(page.theme.occasion).id].intro}
           title={page.welcome_message}
           signature={page.signature}
           theme={page.theme}
