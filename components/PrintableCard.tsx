@@ -349,7 +349,7 @@ export default function PrintableCard({
                 type="text"
                 value={mots.to}
                 maxLength={PRINT_LIMITS.to}
-                placeholder="Sophie"
+                placeholder="Camille"
                 onChange={(e) => changer("to", e.target.value)}
               />
             </label>
@@ -381,7 +381,7 @@ export default function PrintableCard({
                 type="text"
                 value={mots.signature}
                 maxLength={PRINT_LIMITS.signature}
-                placeholder="Avec toute mon affection, Nathan"
+                placeholder="Avec toute mon affection, Sacha"
                 onChange={(e) => changer("signature", e.target.value)}
               />
             </label>

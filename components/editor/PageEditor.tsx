@@ -425,7 +425,7 @@ export default function PageEditor(props: Props) {
   /**
    * Plus rien n'est obligatoire : un champ laissé vide retombe sur la suggestion
    * que le donneur avait sous les yeux en placeholder. Le nom, lui, n'a pas de
-   * placeholder utilisable tel quel — « Anniversaire de Sophie » deviendrait
+   * placeholder utilisable tel quel — « Anniversaire de Camille » deviendrait
    * l'adresse de toutes les cartes anonymes — alors on le compose à partir de
    * l'occasion et du prénom déjà saisis.
    */
@@ -1095,7 +1095,7 @@ export default function PageEditor(props: Props) {
                           value={row.label}
                           aria-label={`Titre du cadeau ${index + 1}`}
                           maxLength={LIMITS.itemLabel}
-                          placeholder="Collier Fluorite"
+                          placeholder="Un appareil photo instantané"
                           onChange={(e) => patchItem(row.key, { label: e.target.value })}
                         />
                       </Field>
@@ -1108,7 +1108,7 @@ export default function PageEditor(props: Props) {
                           value={row.note}
                           aria-label={`Note du cadeau ${index + 1}`}
                           maxLength={LIMITS.itemNote}
-                          placeholder="Un soir de semaine, sans se presser"
+                          placeholder="Avec trois recharges pour commencer."
                           onChange={(e) => patchItem(row.key, { note: e.target.value })}
                         />
                       </Field>
@@ -1195,7 +1195,7 @@ export default function PageEditor(props: Props) {
                   value={recipient}
                   aria-label="Prénom de la personne"
                   maxLength={LIMITS.recipient}
-                  placeholder="Sophie"
+                  placeholder="Camille"
                   onChange={(e) => setRecipient(e.target.value)}
                 />
                 <Counter value={recipient} max={LIMITS.recipient} />
@@ -1344,7 +1344,7 @@ export default function PageEditor(props: Props) {
                   value={signature}
                   aria-label="Signature"
                   maxLength={LIMITS.signature}
-                  placeholder="Avec toute mon affection, Nathan"
+                  placeholder="Avec toute mon affection, Sacha"
                   onChange={(e) => setSignature(e.target.value)}
                 />
                 <Counter value={signature} max={LIMITS.signature} />
@@ -1532,7 +1532,7 @@ export default function PageEditor(props: Props) {
                   value={name}
                   aria-label="Nom de la carte"
                   maxLength={LIMITS.name}
-                  placeholder="Anniversaire de Sophie"
+                  placeholder="Anniversaire de Camille"
                   onChange={(e) => setName(e.target.value)}
                 />
                 <Counter value={name} max={LIMITS.name} />

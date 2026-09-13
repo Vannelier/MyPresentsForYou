@@ -202,7 +202,7 @@ reçoit — **Intro**, **Cadeaux**, **Choix** — suivis du thème et du lien.
 | réglage | cadre | effet |
 |---|---|---|
 | **Occasion** | *étape 1* | Preset complet : palette, décor, effet et formulations de départ d'un coup. Seize occasions, rangées en quatre rubriques. Toute l'étape à elle seule. |
-| **Prénom** | Intro | « Pour Sophie », tout en haut du voile. |
+| **Prénom** | Intro | « Pour Camille », tout en haut du voile. |
 | **Mot d'ouverture** | Intro | La ligne au-dessus du titre. Vide = celle de l'occasion. |
 | **Message principal** | Intro | Le grand titre du voile, et le titre de l'aperçu de lien. |
 | **Texte du bouton** | Intro | Le bouton qui lève le voile. Vide = la suggestion de l'occasion (« Ouvrir », « Ouvrir mon cadeau »…). |
