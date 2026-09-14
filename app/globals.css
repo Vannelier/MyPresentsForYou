@@ -2253,6 +2253,31 @@ select {
   font-weight: 600;
 }
 
+/*
+ * Sur l'ecran de confirmation, `.state p` l'emporte sur `.made-with` par sa
+ * specificite : sans cette reprise, la mention y prenait l'encre et la marge
+ * d'un paragraphe ordinaire.
+ */
+.state .made-with {
+  margin-top: clamp(2.5rem, 7vw, 3.5rem);
+  color: var(--ink-faint);
+}
+
+/*
+ * Le lien garde l'allure de la mention : le souligne n'apparait qu'au survol et
+ * au clavier, pour que le pied de page reste une signature et non une sortie.
+ */
+.made-with a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.made-with a:hover,
+.made-with a:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
 /* --- Messages inline ------------------------------------------------------- */
 
 .notice {
