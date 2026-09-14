@@ -11,13 +11,14 @@ import type { MetadataRoute } from "next";
  * L'entrée `maskable` est distincte : Android rogne l'icône jusqu'à 20 % de
  * chaque bord pour la mettre à la forme du système, et la version courante y
  * perdrait le couvercle du paquet.
+ *
+ * Un seul manifeste pour six langues : il ne porte que la marque, qui ne se
+ * traduit pas, et aucune phrase.
  */
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "MyPresentsForYou — offre le choix",
+    name: "MyPresentsForYou",
     short_name: "MyPresentsForYou",
-    description: "Compose une petite page-cadeau, envoie le lien, laisse la personne choisir.",
-    lang: "fr",
     start_url: "/",
     display: "standalone",
     background_color: "#faf6f0",

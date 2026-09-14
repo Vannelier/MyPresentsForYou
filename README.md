@@ -181,7 +181,8 @@ la liste dise ce qui est pris.
 sous `/fr`, et non `/`, qui redirige —, jamais les cartes.
 
 `/llms.txt` résume le site pour les assistants conversationnels, au format de llmstxt.org : ce que
-fait le service, et les pages qui comptent, en français et vers les pages `/fr/…`. Comme le sitemap, il ne cite jamais une carte, et il est
+fait le service, et les pages qui comptent : un résumé en anglais, puis une section par langue où
+chaque page est citée dans la sienne. Comme le sitemap, il ne cite jamais une carte, et il est
 figé au build — `NEXT_PUBLIC_BASE_URL` doit donc exister dès cette phase.
 
 `/ads.txt` déclare le compte AdSense autorisé à vendre de l'espace publicitaire sur le site. Il est
@@ -949,10 +950,9 @@ deux cartes de suite depuis deux réseaux différents suffit à savoir.
 
 ## Le multilingue
 
-Six langues sont prévues — français, anglais, italien, espagnol, allemand, néerlandais —, sans
-bibliothèque et sans cookie. **Seul le français est actif aujourd'hui** : les autres arrivent avec
-leurs dictionnaires, et une langue sans dictionnaire servirait du français sous une adresse
-étrangère.
+Six langues — français, anglais, italien, espagnol, allemand, néerlandais —, sans bibliothèque et
+sans cookie. Le français fait foi ; les cinq autres en sont traduites, **sans relecture par des
+locuteurs natifs pour l'instant**. Les pages légales n'existent qu'en français : voir plus bas.
 
 **Les adresses.** Chaque page du site vit sous sa langue, avec des mots de cette langue :
 `/fr/creer`, `/en/create`, `/de/erstellen`. Le code ne garde qu'un dossier par page, qui porte son
@@ -996,10 +996,34 @@ s'écrivent `Pour {prenom}` et se remplissent par `remplir()`.
 dans quelle langue répondre, et seul le bout qui répond traduit. Le navigateur annonce la langue de
 sa page par l'en-tête `x-langue` ; sans lui, le français.
 
-**Ajouter une langue** : son dictionnaire (`lib/i18n/<code>.ts`, `satisfies Dictionnaire`), son
-entrée dans `DICTIONNAIRES` (`lib/i18n/index.ts`), puis son code dans `LANGUES_ACTIVES`. Le sitemap,
-les `hreflang` et le sélecteur de langue du pied de page — absent tant qu'une seule langue est
-active — la prennent en compte d'eux-mêmes.
+**Les traductions** suivent le ton du français : sobre, le donneur parle à la première personne,
+tutoiement partout (« du », « tú », « je »). Rien ne suppose le genre de la personne qui reçoit —
+« la persona », « die andere Person », « de ander » —, ni celui du donneur quand la grammaire
+l'imposerait (« non riuscivo a decidere » plutôt que « ero indeciso »). L'italien dit « biglietto »
+pour la carte, là où « carta » désignerait le papier. Les prénoms d'exemple changent avec la langue
+et ne désignent pas de genre : Camille et Sacha en français, Alex, Sam ou Kim ailleurs.
+
+`npm run check` compare chaque traduction au français, texte par texte : même forme (mêmes clés,
+tableaux de même longueur), mêmes marques `{…}`, aucun texte vide, et moins de 5 % de textes
+identiques au français — un pan oublié s'y voit. Les contraintes du catalogue (mots d'ouverture
+distincts, bouton de 40 signes au plus…) tournent dans chaque langue.
+
+**Ce qui reste en français.** Les pages légales — conditions, confidentialité, mentions — dont la
+traduction engage et vient à part : servies sous chaque langue, elles le disent au visiteur dans la
+sienne, déclarent leur article en français et désignent la version française comme canonique, sans
+`hreflang` ; le sitemap ne les liste qu'en français (`PAGES_EN_FRANCAIS`, `lib/i18n/chemins.ts`).
+Restent aussi la note de la page de contact quand `lib/site.ts` n'a pas d'adresse, que seul
+l'éditeur du site voit, et la réponse de la purge, que seule la tâche planifiée lit.
+
+**La bannière de partage** existe dans chaque langue (`app/[langue]/opengraph-image.tsx`, sur un
+rendu commun dans `app/banniere.tsx`). Une carte sans image retombe sur une bannière neutre, la
+marque seule : elle a sa propre langue, que la racine ne connaît pas. Le manifeste, unique, ne porte
+lui aussi que la marque.
+
+**Ajouter une langue** : son code dans `LANGUES` (`lib/i18n/langues.ts`), avec sa locale et son nom ;
+ses chemins dans `CHEMINS` ; son dictionnaire (`lib/i18n/<code>.ts`, `satisfies Dictionnaire`) dans
+`DICTIONNAIRES`. La compilation refuse tout oubli parmi les quatre. Le sitemap, les `hreflang`,
+`llms.txt` et le sélecteur de langue du pied de page la prennent en compte d'eux-mêmes.
 
 ## Être trouvé sur Google
 
@@ -1322,8 +1346,10 @@ n'importe quelle édition.
   mais rien n'oblige à le lancer : modifier la géométrie dans `scripts/brand.mjs` sans régénérer
   laisse le favicon et les icônes en désaccord avec leur source, et aucune vérification ne le
   signalera.
-- **Seul le français est actif.** Les cinq autres langues ont leurs adresses, pas encore leurs
-  dictionnaires — voir « Le multilingue ». Leurs pages répondent « introuvable » d'ici là.
+- **Les traductions n'ont pas été relues par des locuteurs natifs.** Elles viennent du français, qui
+  fait foi ; une relecture par langue reste à faire avant de faire connaître le site dans ces pays.
+- **Les pages légales n'existent qu'en français.** Sous les autres langues, elles l'annoncent et
+  désignent la version française comme canonique — voir « Le multilingue ».
 - **Le slug public est devinable.** Ne rien mettre de sensible dans une page-cadeau.
 - **Des images restent orphelines.** Celles qu'on remplace en modifiant une carte, et celles
   téléversées pour une carte jamais créée : plus aucune ligne ne les référence, et la purge part des

@@ -21,6 +21,14 @@ export const PAGES = [
 ] as const;
 export type Page = (typeof PAGES)[number];
 
+/*
+ * Les pages dont le texte n'existe encore qu'en francais : les pages legales,
+ * dont la traduction engage et vient a part. Elles restent servies sous chaque
+ * langue — le pied de page y mene — mais le disent au visiteur, et designent la
+ * version francaise comme canonique (lib/i18n/alternates.ts).
+ */
+export const PAGES_EN_FRANCAIS: readonly Page[] = ["conditions", "confidentialite", "mentions-legales"];
+
 export const CHEMINS: Record<Page, Record<Langue, string>> = {
   accueil: { fr: "", en: "", it: "", es: "", de: "", nl: "" },
   creer: { fr: "creer", en: "create", it: "crea", es: "crear", de: "erstellen", nl: "maken" },

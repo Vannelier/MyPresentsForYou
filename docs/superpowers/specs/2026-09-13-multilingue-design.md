@@ -202,3 +202,23 @@ Ce que l'implémentation du socle a changé à cette spécification, et pourquoi
 - **Des garde-fous au-delà de la liste** : aucun message en dur dans les routes, chaque appel du
   navigateur à l'API annonce sa langue, chaque marque d'un message est remplie, et le sitemap comme
   les `hreflang` ne citent que des adresses que le routeur sert telles quelles.
+
+### Les cinq langues
+
+- **Les pages légales restent en français** jusqu'à leur PR. Servies sous chaque langue, elles le
+  disent au visiteur dans la sienne (`pageTexte.enFrancais`), déclarent leur article `lang="fr"` et
+  désignent la version française comme canonique, sans `hreflang`. Le sitemap ne les liste qu'en
+  français.
+- **`llms.txt` n'est pas décliné par langue** : la norme n'en prévoit qu'un, à la racine. Il résume
+  le service en anglais, puis donne une section par langue où chaque page est citée dans la sienne.
+- **La bannière de partage est déclinée par langue.** Celle des cartes sans image devient neutre —
+  la marque seule —, une carte ayant sa propre langue. Le manifeste ne porte plus que la marque.
+- **Les questions fréquentes et la page de contact passent au dictionnaire** : leur texte était
+  resté dans leurs composants, et le socle ne les avait pas extraites.
+- **Deux erreurs du français corrigées avant d'être traduites** : la méta-description de la
+  création annonçait deux étapes pour un assistant qui en compte trois, et une réponse de la FAQ
+  parlait d'une « carte A6 » quand la carte à imprimer est une feuille A4 pliée en deux.
+- **Les prénoms d'exemple changent avec la langue**, choisis pour ne pas désigner de genre : Camille
+  et Sacha n'y parviennent qu'en français.
+- **Un garde-fou compare chaque traduction au français** : forme, marques, textes vides, et part de
+  textes restés identiques.

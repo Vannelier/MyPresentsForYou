@@ -37,7 +37,7 @@ import { adsensePublisherId, baseUrl, freePageTtlDays, secretDePurge } from "../
 import sitemap from "../app/sitemap";
 import { GET as llmsTxt } from "../app/llms.txt/route";
 import { alternatesDe } from "../lib/i18n/alternates";
-import { CHEMINS, PAGES, cheminVers } from "../lib/i18n/chemins";
+import { CHEMINS, PAGES, PAGES_EN_FRANCAIS, cheminVers } from "../lib/i18n/chemins";
 import {
   LANGUES,
   LANGUES_ACTIVES,
@@ -2279,6 +2279,66 @@ test("le navigateur ne recoit jamais les dictionnaires par import", () => {
   }
 });
 
+test("aucun composant ne change la casse d'un texte du dictionnaire", () => {
+  /*
+   * « Suivant : les cadeaux » se fabriquait en mettant le titre de l'etape en
+   * minuscules : juste en francais, faux en allemand, ou « Weiter: die
+   * geschenke » perdait la majuscule de son nom. La casse d'un texte traduit se
+   * decide dans le dictionnaire, jamais dans le code.
+   */
+  const CASSE = /\b(?:d|ed|mots|im|t|tout)\.[\w.[\]]+\.(?:toLowerCase|toUpperCase|toLocaleLowerCase|toLocaleUpperCase)\(/;
+  let fichiers = 0;
+  const parcourir = (dossier: string) => {
+    for (const e of readdirSync(dossier, { withFileTypes: true })) {
+      const chemin = `${dossier}/${e.name}`;
+      if (e.isDirectory()) parcourir(chemin);
+      else if (/\.tsx?$/.test(e.name)) {
+        fichiers++;
+        lire(chemin).split("\n").forEach((ligne, i) => {
+          assert.doesNotMatch(ligne, CASSE, `${chemin}:${i + 1}`);
+        });
+      }
+    }
+  };
+  parcourir("components");
+  parcourir("app");
+  assert.ok(fichiers >= 20, `fichiers lus : ${fichiers}`);
+});
+
+test("chaque traduction garde la forme et les marques du francais", () => {
+  /*
+   * Une cle manquante ne compile pas ; une chaine vide, un tableau raccourci ou
+   * une marque renommee, si — et « {max} » s'afficherait tel quel. Chaque texte
+   * est compare a son pendant francais, a la meme place.
+   */
+  const feuilles = (x: unknown, chemin = ""): [string, string][] => {
+    if (typeof x === "string") return [[chemin, x]];
+    if (Array.isArray(x)) return x.flatMap((v, i) => feuilles(v, `${chemin}[${i}]`));
+    if (x && typeof x === "object") {
+      return Object.entries(x).flatMap(([k, v]) => feuilles(v, chemin ? `${chemin}.${k}` : k));
+    }
+    return [];
+  };
+  const marques = (s: string) => [...s.matchAll(/\{(\w+)\}/g)].map((m) => m[1]).sort().join(",");
+  const reference = new Map(feuilles(dictionnaire("fr")));
+  for (const langue of LANGUES) {
+    if (langue === "fr") continue;
+    assert.notStrictEqual(dictionnaire(langue), dictionnaire("fr"), `${langue} retombe sur le francais`);
+    const traduction = new Map(feuilles(dictionnaire(langue)));
+    assert.deepEqual([...traduction.keys()].sort(), [...reference.keys()].sort(), `${langue} : forme differente`);
+    let identiques = 0;
+    for (const [chemin, texteFr] of reference) {
+      const texte = traduction.get(chemin) ?? "";
+      assert.ok(texte.trim() || !texteFr.trim(), `${langue} : ${chemin} vide`);
+      assert.equal(marques(texte), marques(texteFr), `${langue} : ${chemin} ne garde pas ses marques`);
+      if (texteFr.length >= 8 && texte === texteFr) identiques++;
+    }
+    // Un pan laisse en francais se voit ici : les textes identiques d'une langue
+    // a l'autre (la marque, « Contact — MyPresentsForYou ») restent rares.
+    assert.ok(identiques / reference.size < 0.05, `${langue} : ${identiques} textes identiques au francais`);
+  }
+});
+
 /** Une adresse que le routeur sert telle quelle : ni redirigee, ni introuvable. */
 function servie(url: string): boolean {
   const d = router(new URL(url, "http://x").pathname, null, LANGUES_ACTIVES);
@@ -2293,7 +2353,9 @@ test("le sitemap et les hreflang ne citent que des adresses servies", () => {
    */
   const base = baseUrl();
   const plan = sitemap();
-  assert.equal(plan.length, LANGUES_ACTIVES.length * 7);
+  // Sept pages publiques ; celles en francais seulement n'y sont qu'une fois.
+  const traduites = 7 - PAGES_EN_FRANCAIS.filter((p) => p !== "mentions-legales").length;
+  assert.equal(plan.length, 7 + (LANGUES_ACTIVES.length - 1) * traduites);
   for (const entree of plan) {
     assert.ok(entree.url.startsWith(`${base}/`), entree.url);
     assert.ok(servie(entree.url), `sitemap : ${entree.url} n'est pas servie`);
@@ -2307,12 +2369,17 @@ test("le sitemap et les hreflang ne citent que des adresses servies", () => {
       assert.ok(LANGUES_ACTIVES.includes(hreflang as Langue), `version dans une langue inactive : ${hreflang}`);
       assert.ok(servie(String(url)), `hreflang : ${url} n'est pas servie`);
     }
-    assert.equal(versions.filter(([h]) => h !== "x-default").length, LANGUES_ACTIVES.length, entree.url);
+    // Une page en francais seulement n'annonce aucune version ; les autres
+    // les annoncent toutes.
+    const seule = PAGES_EN_FRANCAIS.some((p) => entree.url === `${base}${cheminVers("fr", p)}`);
+    const attendues = seule ? 0 : LANGUES_ACTIVES.length;
+    assert.equal(versions.filter(([h]) => h !== "x-default").length, attendues, entree.url);
   }
   for (const langue of LANGUES_ACTIVES) {
     for (const page of PAGES) {
       const a = alternatesDe(langue, page);
-      assert.equal(a?.canonical, cheminVers(langue, page));
+      const canonique = PAGES_EN_FRANCAIS.includes(page) ? cheminVers("fr", page) : cheminVers(langue, page);
+      assert.equal(a?.canonical, canonique, `${langue}/${page}`);
       for (const [hreflang, url] of Object.entries(a?.languages ?? {})) {
         if (hreflang !== "x-default") assert.ok(servie(String(url)), `${page} : ${url}`);
       }
@@ -2553,14 +2620,16 @@ async function checkPurge() {
 
 async function checkLlms() {
   const texte = await llmsTxt().text();
-  test("llms.txt ne cite que des adresses servies, en francais", () => {
+  test("llms.txt cite chaque langue active, et seulement des adresses servies", () => {
     // Ecrits a la main, ses liens pointaient vers d'anciennes adresses : une
     // redirection pour chaque assistant qui les suivait.
     const liens = [...texte.matchAll(/\]\((http[^)]+)\)/g)].map((m) => m[1]);
-    assert.equal(liens.length, 7, `liens trouves : ${liens.length}`);
-    for (const lien of liens) {
-      assert.ok(lien.startsWith(`${baseUrl()}/fr`), lien);
-      assert.ok(servie(lien), `${lien} n'est pas servie`);
+    for (const lien of liens) assert.ok(servie(lien), `${lien} n'est pas servie`);
+    for (const langue of LANGUES_ACTIVES) {
+      for (const page of ["accueil", "exemple", "creer", "questions", "contact"] as const) {
+        const attendu = `${baseUrl()}${cheminVers(langue, page)}`;
+        assert.ok(liens.includes(attendu), `${langue} : ${page} absente de llms.txt`);
+      }
     }
   });
 }

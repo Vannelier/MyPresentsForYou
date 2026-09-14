@@ -1,0 +1,837 @@
+import type { Dictionnaire } from "./index";
+
+/*
+ * Il dizionario italiano — le dictionnaire italien, traduit du francais qui
+ * fait foi, sans relecture par un locuteur natif.
+ *
+ * « Biglietto » rend « carte » : c'est le mot du billet qu'on glisse avec un
+ * cadeau, la ou « carta » designerait le papier. Le donneur parle a la premiere
+ * personne sans que la grammaire trahisse son genre (« non riuscivo a decidere »
+ * plutot que « ero indeciso »), et la personne qui recoit reste « la persona ».
+ */
+export const it = {
+  commun: {
+    marque: "MyPresentsForYou",
+    retourAccueil: "← MyPresentsForYou",
+  },
+
+  site: {
+    titreMeta: "MyPresentsForYou — crea una pagina regalo",
+    descriptionMeta: "Crea una piccola pagina regalo, invia il link e lascia scegliere l'altra persona.",
+    titrePartage: "MyPresentsForYou — regala la scelta",
+  },
+
+  pied: {
+    navigation: "Link a piè di pagina",
+    questions: "Domande frequenti",
+    contact: "Contatti",
+    confidentialite: "Privacy",
+    conditions: "Termini",
+    mentionsLegales: "Note legali",
+    langues: "Lingua del sito",
+  },
+
+  pageTexte: {
+    miseAJour: "Ultimo aggiornamento:",
+    enFrancais: "Per ora questa pagina esiste solo in francese.",
+  },
+
+  banniere: {
+    titre: "Regala la scelta.",
+    texte: "Raccogli qualche idea in una piccola pagina, invia il link e scopri quale è stata scelta.",
+    pied: "Niente account, niente pagamenti, nessun indirizzo da dare.",
+  },
+
+  questions: {
+    titreMeta: "Domande frequenti — MyPresentsForYou",
+    descriptionMeta:
+      "Regalare lasciando scegliere: come funziona, quanto costa, cosa vede chi riceve e cosa fare se un'immagine non viene recuperata.",
+    titre: "Domande frequenti",
+    chapo:
+      "Regalare lasciando scegliere: come funziona, quanto costa e cosa succede quando il recupero automatico non riesce.",
+    liste: [
+      {
+        q: "Come faccio un regalo lasciando scegliere l'altra persona?",
+        r: [
+          "Raccogli qualche idea in una piccola pagina — fino a dieci — poi invii il link. La persona apre la pagina, guarda le proposte e conferma quella che le piace di più. Ritrovi la sua scelta nel tuo link privato e compri tu il regalo.",
+          "Il vantaggio: riceve qualcosa che le piace davvero, senza che tu abbia dovuto chiederle cosa desiderava — quindi senza rovinare la sorpresa.",
+        ],
+      },
+      {
+        q: "MyPresentsForYou è gratuito?",
+        r: [
+          "Sì, del tutto. Nessun pagamento passa dal sito e non c'è nulla da pagare per creare un biglietto. Compri il regalo scelto nel negozio che preferisci, esattamente come avresti fatto senza MyPresentsForYou.",
+        ],
+      },
+      {
+        q: "Serve un account?",
+        r: [
+          "No. Niente account, niente password, niente indirizzo e-mail — né per te né per chi riceve il biglietto.",
+          "Alla creazione ricevi due link: un link pubblico da inviare e un link privato da conservare. Il secondo è l'unico modo per tornare sul tuo biglietto e vedere la scelta. Conservalo: dato che niente collega un biglietto a un'identità, non può esserti rimandato.",
+        ],
+      },
+      {
+        q: "Cosa vede chi riceve il biglietto?",
+        r: [
+          "Una pagina con il suo nome, il tuo messaggio e le tue proposte. Sceglie e conferma, tutto qui: nessun account da creare, nessun modulo da compilare, nessun nome, indirizzo o e-mail da inserire.",
+          "I prezzi non vengono mai mostrati. Vede ciò che proponi, non quanto costa.",
+        ],
+      },
+      {
+        q: "Quante idee posso proporre?",
+        r: [
+          "Da una a {max}. Con una sola proposta, il biglietto smette di essere una scelta e diventa un annuncio: la persona conferma semplicemente di averlo ricevuto, e tu sai quando l'ha aperto.",
+        ],
+      },
+      {
+        q: "Per quanto tempo la pagina resta online?",
+        r: [
+          "Un anno se nessuno sceglie — trascorso questo periodo viene eliminata automaticamente. Una volta fatta la scelta, il biglietto resta fissato su quella scelta ed è consultabile finché non lo elimini tu.",
+        ],
+      },
+      {
+        q: "Posso modificare il biglietto dopo averlo inviato?",
+        r: [
+          "Sì, finché nessuno ha confermato una scelta. Puoi cambiare i messaggi, i regali, l'aspetto — e i link già inviati continuano a funzionare, perché non cambiano mai.",
+          "Appena una scelta viene confermata, il biglietto si blocca: non sarebbe più onesto se potesse cambiare dopo.",
+        ],
+      },
+      {
+        q: "Come invio il biglietto?",
+        r: [
+          "Con WhatsApp, SMS, e-mail o qualsiasi mezzo che accetti un link. Incollato in una chat, il link appare con il tuo messaggio e un'immagine invece che come un indirizzo nudo.",
+          "C'è anche un codice QR, da stampare e infilare in un vero biglietto di carta: la persona lo scansiona e la pagina si apre. È disponibile un biglietto pronto da stampare, con i colori del tuo tema: un foglio A4 piegato a metà.",
+        ],
+      },
+      {
+        q: "L'immagine del prodotto non viene recuperata: è un bug?",
+        r: [
+          "No. Quando incolli l'indirizzo di una pagina prodotto, titolo e immagine vengono recuperati automaticamente — ma molti negozi, a partire da Amazon e dai social network, rifiutano le richieste automatiche. È previsto, non è un guasto.",
+          "In quel caso compili a mano: una foto dal telefono, un'immagine copiata e incollata o l'indirizzo di un'immagine. Alla fine il biglietto è identico.",
+        ],
+      },
+      {
+        q: "In cosa è diverso da una lista dei desideri?",
+        r: [
+          "In una lista dei desideri è l'altra persona a scrivere ciò che vuole, e tu scegli da lì. Qui sei tu a proporre ed è lei a scegliere.",
+          "E a differenza di una lista nozze o di una colletta, qui non si incassa nulla: MyPresentsForYou non tocca mai il denaro.",
+        ],
+      },
+      {
+        q: "I miei dati vengono raccolti?",
+        r: [
+          "Il sito non usa cookie né strumenti di statistica, e non chiede alcun account. Viene salvato solo ciò che scrivi tu nel modulo.",
+          "Tutti i dettagli sono nella pagina Privacy.",
+        ],
+      },
+    ],
+    autreQuestion: "Un'altra domanda?",
+    autreDebut: "Scrivici dalla pagina ",
+    autreContact: "Contatti",
+    autreMilieu: ". Per tutto ciò che riguarda i dati, l'",
+    autreConfidentialite: "informativa sulla privacy",
+    autreFin: " entra nei dettagli.",
+  },
+
+  contact: {
+    titreMeta: "Contatti — MyPresentsForYou",
+    descriptionMeta:
+      "Una domanda, un bug, un biglietto da segnalare o un link di amministrazione perso: come contattarci.",
+    titre: "Contatti",
+    chapo: "MyPresentsForYou è un piccolo progetto. Le risposte non sono immediate, ma arrivano.",
+    ecrire: "Scrivici",
+    sansFormulaire:
+      "In questa pagina non c'è un modulo, ed è voluto: un modulo significherebbe salvare ciò che scrivi e usare un cookie anti-robot. Il resto del sito non ne usa nessuno, meglio restare coerenti.",
+    aide: "Cosa ci aiuta a risponderti in fretta",
+    lienPerduTitre: "Hai perso il tuo link di amministrazione",
+    lienPerduDebut: "Indica ",
+    lienPerduFort: "l'indirizzo pubblico del biglietto",
+    lienPerduFin:
+      " — quello che hai inviato. Senza di esso non possiamo ritrovare nulla: nessun biglietto è collegato a un'identità, e non c'è né account né e-mail da consultare. È il rovescio accettato del non chiederti nulla all'inizio.",
+    suppressionTitre: "Vuoi far eliminare un biglietto",
+    suppressionTexte:
+      "La via più rapida resta il tuo link di amministrazione: il pulsante di eliminazione è in fondo alla pagina e la cancellazione è immediata. Scrivici solo se hai perso quel link, indicando l'indirizzo pubblico del biglietto.",
+    signalementTitre: "Segnali un contenuto",
+    signalementTexte:
+      "Indica l'indirizzo del biglietto e qual è il problema. I biglietti si creano liberamente e senza account: la segnalazione è l'unico modo che abbiamo per venirne a conoscenza.",
+    bugTitre: "Segnali un bug",
+    bugTexte:
+      "Cosa stavi facendo, cosa ti aspettavi, cosa è successo — più il tuo browser e se eri al telefono o al computer. Uno screenshot vale spesso tre paragrafi.",
+    avantTitre: "Prima di scrivere",
+    avantDebut: "Molte domande hanno già una risposta nella pagina ",
+    avantLien: "Domande frequenti",
+    avantFin:
+      " — in particolare sul recupero automatico delle immagini, che con alcuni negozi non riesce senza che ci sia un guasto.",
+  },
+
+  introuvable: {
+    titre: "Niente a questo indirizzo",
+    texte: "Forse il link è incompleto, oppure la pagina è stata eliminata.",
+    accueil: "Vai alla home",
+  },
+
+  accueil: {
+    titreMeta: "Fare un regalo lasciando scegliere — MyPresentsForYou",
+    descriptionMeta:
+      "Raccogli qualche idea regalo in una pagina e invia il link: l'altra persona sceglie, tu regali. Gratis e senza account.",
+    motsCles: [
+      "regalo a scelta",
+      "lasciar scegliere il regalo",
+      "idee regalo da inviare",
+      "biglietto regalo personalizzato",
+      "alternativa alla lista dei desideri",
+    ],
+    donnees: {
+      systeme: "Qualsiasi browser web",
+      description:
+        "Raccogli qualche idea regalo in una pagina e invia il link: l'altra persona sceglie, tu regali.",
+      fonctions: [
+        "Fino a dieci proposte per biglietto",
+        "Nessun account richiesto",
+        "Codice QR da stampare",
+        "Biglietto modificabile fino alla scelta",
+      ],
+    },
+    titre: "Regalare giusto, senza chiedere nulla.",
+    sousTitre:
+      "Raccogli qualche idea regalo in una pagina curata, poi inviala. L'altra persona sceglie; tu regali.",
+    composer: "Crea la mia pagina regalo",
+    voirExemple: "Vedi un esempio",
+    note: "Gratis · senza account · tre passaggi",
+    telephone: {
+      surtitre: "Buon compleanno",
+      titre: "Scegli tu",
+      cadeaux: ["Una macchina fotografica", "Una cena al ristorante", "Un weekend alle terme"],
+      confirmer: "Conferma la mia scelta",
+    },
+    etapes: [
+      {
+        titre: "Raccogli le tue idee",
+        texte:
+          "Incolla il link di un prodotto: titolo e foto di solito si compilano da soli. Altrimenti basta una foto scattata con il telefono.",
+      },
+      {
+        titre: "Invii il biglietto",
+        texte:
+          "In una chat, il link appare come un biglietto, con il tuo messaggio e il nome della persona. Puoi anche stampare il codice QR, infilarlo in una busta ed esserci quando il biglietto si apre.",
+      },
+      {
+        titre: "Scopri la sua scelta",
+        texte:
+          "Un link privato, che tieni per te, ti indica il regalo scelto e il giorno della scelta. Non resta che comprarlo.",
+      },
+    ],
+    avantages: [
+      {
+        titre: "Niente bisogno di chiedere",
+        texte:
+          "«Cosa ti farebbe piacere?» rovina la sorpresa e rimanda la domanda all'altra persona. Qui hai già cercato tu; resta solo da scegliere.",
+      },
+      {
+        titre: "Più personale di una lista dei desideri",
+        texte:
+          "In una lista dei desideri si spunta una riga scritta dall'altra persona. Qui ogni idea viene da te, e si sente.",
+      },
+      {
+        titre: "Nessun prezzo in vista",
+        texte:
+          "La persona sceglie ciò che le piace davvero, senza confrontare i prezzi né chiedersi quanto hai speso.",
+      },
+      {
+        titre: "La sorpresa resta intatta",
+        texte:
+          "Niente è visibile prima dell'apertura. E il biglietto può restare sigillato fino al giorno della festa.",
+      },
+      {
+        titre: "Un solo gesto da fare",
+        texte:
+          "Una decorazione e parole adatte all'occasione. Dall'altra parte c'è una sola cosa da fare: scegliere.",
+      },
+      {
+        titre: "Un messaggio in cambio",
+        texte:
+          "Insieme alla scelta, la persona può lasciarti un messaggio. Lo ritrovi nel tuo link privato, accanto al regalo scelto.",
+      },
+    ],
+    objections: [
+      {
+        titre: "Niente da pagare qui",
+        texte: "Nessun pagamento passa da MyPresentsForYou. Compri il regalo dove vuoi, come sempre.",
+      },
+      {
+        titre: "Nessun account",
+        texte:
+          "Nessun account da creare. Chi riceve inserisce solo la sua scelta: né nome, né indirizzo, né e-mail.",
+      },
+      {
+        titre: "Modificabile fino alla scelta",
+        texte: "Finché nulla è stato scelto, puoi modificare tutto. I link già inviati restano validi.",
+      },
+    ],
+    finTitre: "E se creassi la tua?",
+    finTexte: "Due idee bastano per iniziare, dieci al massimo. Potrai modificare tutto dopo.",
+    piedNote:
+      "Ogni biglietto resta online per un anno. Conserva il tuo link privato: ti mostrerà il regalo scelto.",
+  },
+
+  creation: {
+    titreMeta: "Crea una pagina regalo gratuita — MyPresentsForYou",
+    descriptionMeta:
+      "Crea la tua pagina in tre passaggi: l'occasione, le tue idee regalo, poi la presentazione. Senza account, senza pagamenti, in pochi minuti.",
+    titre: "Crea la tua pagina regalo",
+    chapo:
+      "Da due a dieci idee, un messaggio, ed è pronta. Il pulsante «Anteprima» ti mostra in ogni momento ciò che vedrà l'altra persona.",
+    pret: "La tua pagina è pronta",
+    rienNestFige:
+      "Niente è definitivo: finché nessuno ha scelto, puoi modificare tutto — i testi, i regali, il tema. I due link qui sotto non cambieranno.",
+    lienRecuperation: "Il tuo link di recupero",
+    lienRecuperationFort: "Salvalo adesso",
+    lienRecuperationSuite:
+      ": viene mostrato solo qui ed è l'unico modo per tornare a vedere il regalo scelto.",
+    lienEnvoi: "Link da inviare",
+    lienEnvoiAide: "È ciò che riceve l'altra persona.",
+    reprendre: "Riprendi la modifica",
+    voirPublique: "Vedi la pagina pubblica",
+  },
+
+  exemple: {
+    titreMeta: "Esempio di pagina regalo — MyPresentsForYou",
+    descriptionMeta:
+      "Una vera pagina regalo da provare: solleva il velo, scegli tra quattro idee, conferma. Non viene inviato nulla.",
+    bandeau: "Esempio — non viene inviato nulla",
+    composerLaMienne: "Crea la mia",
+    composer: "Crea la mia pagina regalo",
+    destinataire: "Alex",
+    signature: "Sam",
+    cadeaux: [
+      { label: "Un lancio col paracadute", note: "In tandem con un istruttore. Scegli tu il giorno." },
+      { label: "Una fotocamera istantanea", note: "E tre ricariche per cominciare." },
+      { label: "Una cena al ristorante", note: "Un tavolo per due, dove preferisci." },
+      { label: "Delle cuffie senza fili", note: "Per i tuoi spostamenti, e la calma che portano." },
+    ],
+  },
+
+  copier: {
+    copier: "Copia",
+    copie: "Copiato",
+  },
+
+  admin: {
+    titreMeta: "Amministrazione — MyPresentsForYou",
+    surtitre: "Amministrazione",
+    choixFait: "La scelta è fatta",
+    enAttente: "In attesa di una scelta",
+    cadeauChoisi: "Regalo scelto",
+    cadeauChoisiAide: "Tocca a te: ordinalo e regalalo. Nulla è passato dalla piattaforma.",
+    motDuReceveur: "«{mot}»",
+    pageOrigine: "Apri la pagina d'origine ↗",
+    partager: "Condividi il biglietto",
+    sOuvreLe: "Si apre il {date}.",
+    ouverteDepuis: "Aperto dal {date}.",
+    lienEnvoi: "Link da inviare",
+    modifier: "Modifica la pagina",
+    modifierAide: "I link non cambiano: quello che hai già inviato continua a funzionare.",
+    bienRecu: "Tutto annotato?",
+    ranger: "Archivia il biglietto",
+    clotureAide:
+      "Hai annotato il regalo? Puoi chiudere: la pagina si chiude definitivamente e i due link smettono di funzionare.",
+    suppressionAide:
+      "Definitivo. La pagina e il suo contenuto spariscono, i due link smettono di funzionare.",
+    enCloture: "Chiusura…",
+    enSuppression: "Eliminazione…",
+    confirmerCloture: "Sì, chiudi definitivamente",
+    confirmerSuppression: "Sì, elimina definitivamente",
+    annuler: "Annulla",
+    cloturer: "Annotato, chiudi la pagina",
+    supprimer: "Elimina questa pagina",
+    suppressionEchouee: "L'eliminazione non è riuscita.",
+    connexionPerdue: "Connessione persa. Riprova.",
+  },
+
+  apercuCarte: {
+    pour: "Per {prenom}",
+    legende: "Un foglio A4 piegato a metà: la copertina davanti, il codice QR sul retro.",
+    imprimer: "Biglietto da stampare",
+    telechargerQr: "Scarica il codice QR",
+    qrRate: "Non è stato possibile generare il codice QR. Il link resta utilizzabile così com'è.",
+    adresseLocaleDebut:
+      "Questo link punta a un indirizzo locale: i telefoni lo mostrano ma non riescono ad aprirlo. Imposta ",
+    adresseLocaleFin: " con l'indirizzo pubblico del sito.",
+  },
+
+  occasions: {
+    aucune: {
+      nom: "Senza occasione",
+      intro: "Un regalo per te",
+      bienvenue: "Non riuscivo a decidere tra diverse idee. Ti lascio scegliere.",
+      remerciement: "Bella scelta. Al resto penso io.",
+      ouvrir: "Apri",
+      attente: "Ancora un po' di pazienza.",
+    },
+    anniversaire: {
+      nom: "Compleanno",
+      intro: "Buon compleanno",
+      bienvenue: "Un anno in più, e la scelta è tua.",
+      remerciement: "Bella scelta. Buon compleanno.",
+      ouvrir: "Apri il mio regalo",
+      attente: "Ci vediamo il giorno del tuo compleanno.",
+    },
+    noel: {
+      nom: "Natale",
+      intro: "Buon Natale",
+      bienvenue: "Quest'anno scegli tu cosa trovare sotto l'albero.",
+      remerciement: "Ottima scelta. Buone feste.",
+      ouvrir: "Apri il mio regalo",
+      attente: "Non prima di Natale.",
+    },
+    "saint-valentin": {
+      nom: "San Valentino",
+      intro: "Da parte di qualcuno che tiene a te",
+      bienvenue: "Volevo regalarti qualcosa che ti somigli. Scegli tu.",
+      remerciement: "Ci penso io. A prestissimo.",
+      ouvrir: "Apri",
+      attente: "Pazienza, manca poco.",
+    },
+    naissance: {
+      nom: "Nascita",
+      intro: "Un caloroso benvenuto al mondo",
+      bienvenue: "Un pensiero per questi primi giorni.",
+      remerciement: "Ci penso io. Tante felicitazioni.",
+      ouvrir: "Apri",
+      attente: "Manca pochissimo.",
+    },
+    felicitations: {
+      nom: "Congratulazioni",
+      intro: "Complimenti",
+      bienvenue: "Te lo meriti: scegli tu.",
+      remerciement: "Ottima scelta. Ancora complimenti.",
+      ouvrir: "Apri",
+      attente: "Ancora qualche giorno.",
+    },
+    merci: {
+      nom: "Grazie",
+      intro: "Grazie",
+      bienvenue: "Per ringraziarti, ti lascio scegliere.",
+      remerciement: "Ci penso io. Grazie ancora.",
+      ouvrir: "Apri",
+      attente: "Ancora un po' di pazienza.",
+    },
+    "fete-des-meres": {
+      nom: "Festa della mamma",
+      intro: "Per te, mamma",
+      bienvenue: "Grazie di tutto. Scegli ciò che ti farebbe piacere.",
+      remerciement: "Ci penso io. Un abbraccio.",
+      ouvrir: "Apri il mio regalo",
+      attente: "Ci vediamo il giorno della festa.",
+    },
+    "fete-des-peres": {
+      nom: "Festa del papà",
+      intro: "Per te, papà",
+      bienvenue: "Non chiedi mai niente. Questa volta scegli tu.",
+      remerciement: "Buona scelta. A prestissimo.",
+      ouvrir: "Apri il mio regalo",
+      attente: "Ci vediamo il giorno della festa.",
+    },
+    "nouvel-an": {
+      nom: "Capodanno",
+      intro: "Buon anno",
+      bienvenue: "Per iniziare bene l'anno, scegli ciò che ti va.",
+      remerciement: "Ottima scelta. Buon anno a te.",
+      ouvrir: "Apri",
+      attente: "Ci vediamo a mezzanotte.",
+    },
+    mariage: {
+      nom: "Matrimonio",
+      intro: "Per voi due",
+      bienvenue: "Per la vostra vita insieme, la scelta è vostra.",
+      remerciement: "Inteso. Tanti auguri di felicità.",
+      ouvrir: "Apri il nostro regalo",
+      attente: "Ancora un po' di pazienza.",
+    },
+    reussite: {
+      nom: "Traguardo",
+      intro: "Le mie più sincere congratulazioni",
+      bienvenue: "Dopo tanto lavoro, tocca a te scegliere.",
+      remerciement: "Scelta eccellente. Goditela, te la sei meritata.",
+      ouvrir: "Apri",
+      attente: "Manca poco.",
+    },
+    cremaillere: {
+      nom: "Casa nuova",
+      intro: "Per la tua nuova casa",
+      bienvenue: "Scegli tu cosa manca ancora in casa.",
+      remerciement: "Ci penso io. Goditi la casa nuova.",
+      ouvrir: "Apri",
+      attente: "Ancora qualche giorno.",
+    },
+    retraite: {
+      nom: "Pensione",
+      intro: "Buona pensione",
+      bienvenue: "Si chiude un capitolo: scegli con cosa riempire il prossimo.",
+      remerciement: "Bella scelta. Goditi questo tempo.",
+      ouvrir: "Apri",
+      attente: "Manca poco.",
+    },
+    "pot-de-depart": {
+      nom: "Festa di addio",
+      intro: "Buona fortuna",
+      bienvenue: "Per il seguito del tuo percorso, scegli tu.",
+      remerciement: "Buona scelta. Buona continuazione.",
+      ouvrir: "Apri",
+      attente: "Manca poco.",
+    },
+    animaux: {
+      nom: "Animali",
+      intro: "Per il tuo amico a quattro zampe",
+      bienvenue: "Qualcosa per lui, o per tutti e due.",
+      remerciement: "Bella scelta. Una carezza da parte mia.",
+      ouvrir: "Apri",
+      attente: "Manca pochissimo.",
+    },
+  },
+
+  rubriques: {
+    calendrier: "Feste del calendario",
+    etapes: "Grandi tappe",
+    mot: "Una parola",
+    theme: "Attorno a un tema",
+  },
+
+  polices: {
+    elegant: "Elegante",
+    classique: "Classico",
+    delicat: "Delicato",
+    net: "Netto",
+    rond: "Tondo",
+    manuscrit: "Scritto a mano",
+    calligraphie: "Calligrafia",
+  },
+
+  ouvertures: {
+    voile: { nom: "Velo", aide: "Svanisce in dissolvenza." },
+    rideau: { nom: "Sipario", aide: "Due teli si aprono ai lati." },
+    volets: { nom: "Ante", aide: "La parte alta e quella bassa si aprono." },
+    enveloppe: { nom: "Busta", aide: "Il lembo si solleva, il biglietto esce." },
+    couvercle: { nom: "Coperchio", aide: "La parte superiore si solleva in un solo blocco." },
+    halo: { nom: "Alone", aide: "Un cerchio che si stringe e scompare." },
+  },
+
+  effets: {
+    aucun: { nom: "Nessuno", aide: "Non cade nulla." },
+    confettis: { nom: "Coriandoli", aide: "Una pioggia colorata, una volta." },
+    petales: { nom: "Petali", aide: "Scendono volteggiando." },
+    etincelles: { nom: "Scintille", aide: "Salgono e si spengono." },
+    neige: { nom: "Neve", aide: "Fiocchi, lentamente." },
+    notes: { nom: "Note musicali", aide: "Scendono ondeggiando." },
+    bulles: { nom: "Bolle", aide: "Salgono e scoppiano." },
+    feuilles: { nom: "Foglie", aide: "Cadono volteggiando." },
+    ballons: { nom: "Palloncini", aide: "Qualcuno, che sale." },
+    poussiere: { nom: "Polvere d'oro", aide: "Uno scintillio, senza cadere." },
+  },
+
+  palettes: {
+    terracotta: "Terracotta",
+    olive: "Oliva",
+    encre: "Inchiostro",
+    prune: "Prugna",
+    sapin: "Abete",
+    rose: "Rosa",
+    brume: "Foschia",
+    ivoire: "Avorio",
+    noisette: "Nocciola",
+  },
+
+  erreurs: {
+    corpsInvalide: "Corpo della richiesta non valido.",
+    corpsIllisible: "Corpo della richiesta illeggibile: previsto JSON.",
+    champObligatoire: "Questo campo è obbligatorio.",
+    champTexte: "Questo campo deve essere testo.",
+    champTropLong: "Questo campo non può superare {max} caratteri.",
+    urlInvalide: "URL non valido.",
+    urlProtocole: "L'URL deve iniziare con http:// o https://.",
+    dateInvalide: "Data non valida.",
+    listeInvalide: "La lista dei regali non è valida.",
+    auMoinsUnCadeau: "Serve almeno un regalo.",
+    tropDeCadeaux: "Non più di {max} regali.",
+    aucuneModification: "Nessuna modifica da salvare.",
+    slugLongueur: "L'indirizzo deve avere tra {min} e {max} caratteri.",
+    slugFormat:
+      "L'indirizzo può contenere solo lettere minuscole, cifre e trattini, senza trattino all'inizio o alla fine.",
+    slugReservee: "Questo indirizzo è riservato, scegline un altro.",
+    introuvable: "Non trovato.",
+    baseNonConfiguree: "Database non configurato su questa installazione.",
+    inattendue: "Si è verificato un errore imprevisto.",
+    tropDeRequetes:
+      "Troppe richieste in poco tempo. Riprova tra qualche minuto — è una protezione contro gli abusi, non contro di te.",
+    revelationTardive:
+      "La data di apertura deve cadere prima della scadenza della pagina, tra {jours} giorni.",
+    nomTropPris: "Troppi biglietti hanno già questo nome. Cambia il nome del biglietto.",
+    adresseVientDetrePrise: "Riprova: un altro biglietto ha appena preso questo indirizzo.",
+    aucunCadeauChoisi: "Nessun regalo selezionato.",
+    pageInexistante: "Questa pagina non esiste.",
+    cadeauExpire: "Questo regalo non è più disponibile: il link è scaduto.",
+    choixDejaFait: "Per questa pagina è già stata registrata una scelta.",
+    carteScellee: "Questo biglietto non è ancora aperto.",
+    cadeauHorsPage: "Questo regalo non fa parte della pagina.",
+    motVide: "Il messaggio è vuoto.",
+    motTropLong: "Il messaggio non può superare {max} caratteri.",
+    lienExpire: "Questo link è scaduto.",
+    choixNonConfirme: "La scelta non è ancora stata confermata.",
+    carteSansMot: "Questo biglietto non prevede un messaggio.",
+    motDejaLaisse: "Su questo biglietto è già stato lasciato un messaggio.",
+    delaiMotPasse: "Il tempo per lasciare un messaggio è scaduto.",
+    choixFaitVerrou: "La scelta è stata fatta: la pagina non è più modificabile.",
+    pageExpireeVerrou: "La pagina è scaduta: non è più modificabile.",
+    choixVientDetreFait: "La scelta è appena stata fatta: la pagina non è più modificabile.",
+    stockageNonConfigure:
+      "L'archiviazione delle immagini non è configurata su questa installazione (BLOB_READ_WRITE_TOKEN). Incolla piuttosto l'URL di un'immagine.",
+    stockageIndisponible:
+      "L'archiviazione delle immagini non è disponibile. Incolla piuttosto l'URL di un'immagine.",
+    aucunFichier: "Nessun file ricevuto.",
+    formatsAcceptes: "Formati accettati: JPEG, PNG o WebP.",
+    fichierVide: "Il file è vuoto.",
+    imageTropLourde: "L'immagine non deve superare {mo} MB.",
+    imageApercu: "Immagine di anteprima",
+    copieStockageIndisponible:
+      "Archiviazione immagini non disponibile: l'immagine resta ospitata dal sito d'origine.",
+    copieNonRecuperable: "Immagine non recuperabile ({statut}): resta ospitata dal sito d'origine.",
+    copieFormat: "Formato immagine non supportato: resta ospitata dal sito d'origine.",
+    copieTropLourde: "Immagine troppo pesante: resta ospitata dal sito d'origine.",
+    copieImpossible: "Copia dell'immagine impossibile: resta ospitata dal sito d'origine.",
+  },
+
+  impression: {
+    titreMeta: "Biglietto da stampare — MyPresentsForYou",
+    cta: "Scansiona per aprire il tuo biglietto",
+    retour: "← Indietro",
+    imprimer: "Stampa",
+    pour: "Per {prenom}",
+    legende:
+      "Foglio A4, piegato a metà. Ripiega la metà sinistra dietro la destra: la copertina finisce davanti, il codice QR sul retro.",
+    dispositionAria: "Disposizione del biglietto",
+    dispositions: { centre: "Classica", affiche: "Manifesto", sobre: "Sobria" },
+    pictogrammes: {
+      none: "Nessuno",
+      coeurs: "Cuori",
+      etoiles: "Stelle",
+      flocons: "Fiocchi di neve",
+      feuilles: "Foglie",
+      confetti: "Coriandoli",
+      guirlande: "Festone",
+      pattes: "Zampe",
+      pieds: "Piedini",
+      bougies: "Candeline",
+      cadeaux: "Regali",
+      alliances: "Fedi",
+    },
+    pictogrammePrecedent: "Motivo precedente",
+    pictogrammeSuivant: "Motivo successivo",
+    couleur: "Colore del biglietto",
+    couleurTheme: "Colore del tema",
+    teinteDegres: "Tonalità {n} gradi",
+    couleurThemePage: "Colore del tema della pagina regalo",
+    tailleDecor: "Dimensione della decorazione",
+    contrasteDecor: "Contrasto della decorazione",
+    formatTaille: "×{v}",
+    formatContraste: "{v}%",
+    reinitialiser: "Ripristina",
+    masquerMots: "Nascondi le parole",
+    modifierMots: "Modifica le parole del biglietto",
+    motsAide:
+      "Riprendono quelle della pagina regalo e se ne staccano appena le tocchi. La pagina invece non cambia. Salvate su questo dispositivo, mai inviate.",
+    destinataire: "Per chi è",
+    motOuverture: "Frase d'apertura",
+    titre: "Titolo",
+    signature: "Firma",
+    ligneQr: "Riga sotto il codice QR",
+    exempleDestinataire: "Alex",
+    exempleIntro: "Buon compleanno",
+    exempleSignature: "Con tutto il mio affetto, Sam",
+    reprendre: "Riprendi le parole della pagina",
+  },
+
+  editeur: {
+    etapes: {
+      occasion: { titre: "L'occasione", court: "Occasione", suite: "l'occasione" },
+      cadeaux: { titre: "I regali", court: "Regali", suite: "i regali" },
+      presentation: { titre: "La presentazione", court: "Presentazione", suite: "la presentazione" },
+    },
+    nomParDefaut: "Biglietto regalo",
+    sansTitre: "Senza titolo",
+    collerAdresseDabord: "Incolla prima l'indirizzo della pagina del prodotto.",
+    titreEtImageRecuperes: "Titolo e immagine recuperati. Puoi sostituirli.",
+    imageRecuperee: "Immagine recuperata. Puoi sostituirla se non ti piace.",
+    titreRecupere: " Anche il titolo è stato recuperato.",
+    recuperationImpossible:
+      "Recupero impossibile. Incolla l'indirizzo di un'immagine o carica una foto.",
+    echecs: {
+      connexionRequise:
+        "Questo sito non apre le sue pagine ai robot. Incolla l'indirizzo di un'immagine o carica una foto.",
+      bloque: "Il sito ha rifiutato la richiesta. Incolla l'indirizzo di un'immagine o carica una foto.",
+      injoignable: "Pagina irraggiungibile. Controlla l'indirizzo, oppure compila titolo e immagine a mano.",
+      pasUnePage:
+        "Questo indirizzo non porta a una pagina web. Se è già un'immagine, incollala nel campo Immagine.",
+      pasDImage:
+        "Nessuna immagine trovata in questa pagina. Incolla l'indirizzo di un'immagine o carica una foto.",
+    },
+    televersement: {
+      formats: "Formati accettati: JPEG, PNG o WebP.",
+      taille: "L'immagine non deve superare 5 MB.",
+      echec: "Il caricamento non è riuscito.",
+      echecConnexion: "Il caricamento non è riuscito. Controlla la connessione.",
+    },
+    adresseImageCollee: "Indirizzo dell'immagine incollato.",
+    auMoinsUnCadeau: "Serve almeno un regalo.",
+    pasPlusDe: "Non più di {max} regali.",
+    nomTropLong: "Il nome supera {max} caratteri.",
+    messageTropLong: "Il messaggio principale supera {max} caratteri.",
+    finTropLongue: "Il messaggio finale supera {max} caratteri.",
+    enregistrementEchoue: "Il salvataggio non è riuscito.",
+    connexionPerdue: "Connessione persa. Controlla la connessione e riprova.",
+    apercuTitre: "Anteprima della pagina regalo",
+    apercuBandeau: "Anteprima — non viene salvato nulla",
+    fermer: "Chiudi",
+    enregistreA: "Modifiche salvate alle {heure}.",
+    brouillonRetrouve: "Il tuo biglietto in corso è stato ritrovato così come l'avevi lasciato.",
+    repartirDeZero: "Ricomincia da capo",
+    occasionTitre: "L'occasione",
+    occasionAide:
+      "Imposta in un colpo solo una palette, una decorazione e dei testi di partenza. Tutto resta modificabile all'ultimo passaggio.",
+    occasionAria: "Occasione",
+    cadeauxTitre: "I regali",
+    cadeauxAide:
+      "Fino a {max} proposte, nell'ordine che vuoi. Incolla l'indirizzo di un prodotto per recuperarne titolo e immagine — è anche il link che ritroverai, dopo la scelta, per comprarlo. Un regalo che non si compra online si descrive benissimo a mano.",
+    unSeulFort: "Con un solo regalo",
+    unSeulSuite: ", il biglietto diventa un annuncio: niente da scegliere, solo una conferma di ricezione.",
+    monter: "Sposta su il regalo {n}",
+    descendre: "Sposta giù il regalo {n}",
+    retirer: "Rimuovi il regalo {n}",
+    lienProduit: "Link del prodotto — facoltativo",
+    adresseProduit: "Indirizzo della pagina prodotto del regalo {n}",
+    recuperer: "Recupera",
+    ceQueVerra: "Ciò che vedrà l'altra persona",
+    imageCadeau: "Immagine del regalo {n}",
+    envoiImage: "invio…",
+    choisisImage: "scegli o incolla un'immagine",
+    retirerImage: "Rimuovi l'immagine del regalo {n}",
+    titre: "Titolo",
+    titreCadeau: "Titolo del regalo {n}",
+    exempleTitre: "Una fotocamera istantanea",
+    note: "Nota",
+    noteAide: "Facoltativa. Due parole per inquadrare il regalo.",
+    noteCadeau: "Nota del regalo {n}",
+    exempleNote: "Con tre ricariche per cominciare.",
+    ajouter: "+ Aggiungi un regalo",
+    apercuDirect: "Anteprima dal vivo",
+    rejouer: "Rivedi",
+    pleinEcran: "Schermo intero",
+    intro: "Intro",
+    introAide: "La prima schermata: ciò che appare prima dei regali.",
+    prenom: "Nome della persona",
+    prenomAide: "Mostrato in alto.",
+    exemplePrenom: "Alex",
+    motOuverture: "Frase d'apertura",
+    motOuvertureAide: "La piccola riga sopra il titolo.",
+    messagePrincipal: "Messaggio principale",
+    messagePrincipalAide: "Il titolo grande. Serve anche per l'anteprima del link.",
+    texteBouton: "Testo del pulsante",
+    texteBoutonAide: "Il pulsante che solleva il velo.",
+    texteBoutonAria: "Testo del pulsante di apertura",
+    maniereOuvrir: "Modo di apertura",
+    dateOption: "Apri in una data precisa",
+    dateOptionAide:
+      "Prima di quella data, il biglietto resta sigillato con un conto alla rovescia — puoi quindi inviare il link in anticipo.",
+    dateRevelation: "Data di apertura",
+    motAttente: "Messaggio d'attesa",
+    motAttenteAide: "Sotto il conto alla rovescia, mentre il biglietto è ancora sigillato.",
+    cadeaux: "Regali",
+    cadeauxEcranAide:
+      "La schermata dopo l'apertura. Le sue parole le appartengono: ripetere quelle del velo farebbe leggere due volte la stessa cosa.",
+    titreEcranAide: "Sopra i regali.",
+    titreEcranAria: "Titolo della schermata dei regali",
+    contenu: "Contenuto",
+    contenuAide: "La riga sotto questo titolo.",
+    contenuAria: "Contenuto della schermata dei regali",
+    signature: "Firma",
+    signatureAide: "In fondo alla pagina, per dire da chi arriva.",
+    exempleSignature: "Con tutto il mio affetto, Sam",
+    photoEnTeteOption: "Aggiungi una foto d'intestazione",
+    photoEnTeteOptionAide: "Una foto larga in cima a questa schermata, sopra il titolo.",
+    photoEnTete: "Foto d'intestazione",
+    choix: "Scelta",
+    choixAide: "L'ultima schermata, una volta confermato il regalo.",
+    messageFin: "Messaggio finale",
+    messageFinAide: "Ciò che appare al posto dei regali.",
+    motOption: "Proponi di lasciare un messaggio",
+    motOptionAide: "Dà alla persona la possibilità di risponderti subito dopo aver fatto la sua scelta.",
+    motOptionNote: "Il messaggio apparirà nella tua vista di amministrazione.",
+    theme: "Il tema",
+    palette: "Palette",
+    police: "Carattere del titolo",
+    disposition: "Disposizione",
+    grille: "Griglia",
+    liste: "Elenco",
+    effet: "Effetto",
+    effetAide: "Riprodotto una volta, non in loop.",
+    decor: "Mostra la decorazione dell'occasione",
+    lien: "Il link",
+    adresseLien: "Indirizzo del link: ",
+    adresseLienTitre: "Indirizzo del link",
+    adresseLienAide: "Fisso: il link che hai già inviato continua a funzionare.",
+    nomCarte: "Nome del biglietto",
+    exempleNomCarte: "Compleanno di Alex",
+    lienOption: "Personalizza il link",
+    lienOptionAide: "Ciò che mostrano WhatsApp, Signal e gli SMS quando incolli il link.",
+    texteAffiche: "Testo mostrato",
+    texteAfficheAide: "Il titolo cliccabile dell'anteprima. In mancanza, il messaggio principale.",
+    texteAfficheAria: "Testo mostrato nell'anteprima del link",
+    imageAffichee: "Immagine mostrata",
+    imageApercuAria: "Immagine di anteprima del link",
+    precedent: "← Indietro",
+    apercu: "Anteprima",
+    suivant: "Avanti →",
+    enregistrement: "Salvataggio…",
+    creer: "Crea la pagina",
+    enregistrer: "Salva le modifiche",
+    suivantVers: "Avanti: {etape}",
+    collerImagePour: "Incolla un'immagine per: {champ}",
+    colleImageIci: "incolla un'immagine qui",
+    televerser: "Carica",
+  },
+
+  carte: {
+    titreCadeaux: "Scegli tu",
+    messageCadeaux: "Scegli quello che ti piace di più.",
+    messageSolo: "È per te.",
+    pour: "Per {prenom}",
+    aOuvrirLe: "Da aprire il {date}",
+    rebours: { jours: "{j} g {h} h", heures: "{h} h {m} min", minutes: "{m}:{s}" },
+    tonCadeau: "Il tuo regalo: ",
+    tonChoix: "La tua scelta: ",
+    motCite: "«{mot}»",
+    laisserMot: "Lascia un messaggio",
+    tonMot: "Il tuo messaggio",
+    facultatif: "Facoltativo",
+    exempleMot: "Grazie, mi fa davvero piacere…",
+    envoi: "Invio…",
+    envoyer: "Invia",
+    rejouer: "Rivedi l'anteprima",
+    revenirFormulaire: "Torna al modulo",
+    voirPhoto: "Vedi la foto di {cadeau} in grande",
+    photo: "Foto: {cadeau}",
+    fermerPhoto: "Chiudi la foto",
+    faitAvec: "Pagina regalo creata con ",
+    enregistrement: "Salvataggio…",
+    merci: "Grazie!",
+    confirmer: "Conferma la mia scelta",
+    selectionne: "Seleziona un regalo",
+    choixRate: "Non è stato possibile registrare la scelta.",
+    motRate: "Non è stato possibile inviare il messaggio.",
+    connexionPerdue: "Connessione persa. Controlla la connessione e riprova.",
+    expireTitre: "Questo regalo non è più disponibile",
+    expireTexte: "Il link è scaduto. Chiedi a chi te l'ha inviato di crearne uno nuovo.",
+    ogDescription: "Scegli il tuo regalo.",
+    titreRepli: "Un regalo per te",
+    titreIntrouvable: "Pagina non trovata",
+  },
+} satisfies Dictionnaire;

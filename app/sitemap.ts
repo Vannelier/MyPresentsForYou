@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { baseUrl } from "@/lib/env";
 import { variantes } from "@/lib/i18n/alternates";
-import { cheminVers, type Page } from "@/lib/i18n/chemins";
+import { PAGES_EN_FRANCAIS, cheminVers, type Page } from "@/lib/i18n/chemins";
 import { LANGUES_ACTIVES } from "@/lib/i18n/langues";
 
 /**
@@ -15,7 +15,9 @@ import { LANGUES_ACTIVES } from "@/lib/i18n/langues";
  *
  * Chaque page y figure une fois par langue active, avec ses versions dans les
  * autres. L'accueil y est sous `/fr`, et non `/` : la racine redirige selon le
- * navigateur, et une adresse qui redirige n'a rien a faire dans un sitemap.
+ * navigateur, et une adresse qui redirige n'a rien a faire dans un sitemap. Une
+ * page dont le texte n'existe qu'en francais n'y figure qu'en francais : ses
+ * autres adresses designent la francaise comme canonique.
  */
 const PAGES_PUBLIQUES: [page: Page, priorite: number][] = [
   ["accueil", 1],
@@ -30,11 +32,13 @@ const PAGES_PUBLIQUES: [page: Page, priorite: number][] = [
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = baseUrl();
   return LANGUES_ACTIVES.flatMap((langue) =>
-    PAGES_PUBLIQUES.map(([page, priority]) => ({
-      url: `${base}${cheminVers(langue, page)}`,
-      changeFrequency: "monthly" as const,
-      priority,
-      alternates: { languages: variantes(page, base) },
-    })),
+    PAGES_PUBLIQUES.filter(([page]) => langue === "fr" || !PAGES_EN_FRANCAIS.includes(page)).map(
+      ([page, priority]) => ({
+        url: `${base}${cheminVers(langue, page)}`,
+        changeFrequency: "monthly" as const,
+        priority,
+        alternates: PAGES_EN_FRANCAIS.includes(page) ? undefined : { languages: variantes(page, base) },
+      }),
+    ),
   );
 }
