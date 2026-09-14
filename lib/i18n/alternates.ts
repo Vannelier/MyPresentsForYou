@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { PAGES_EN_FRANCAIS, cheminVers, type Page } from "./chemins";
+import { cheminVers, type Page } from "./chemins";
 import { LANGUES_ACTIVES, type Langue } from "./langues";
 
 /*
@@ -18,15 +18,7 @@ export function variantes(page: Page, base = ""): Record<string, string> {
   return liens;
 }
 
-/**
- * Canonique dans la langue de la page, et ses versions dans les autres.
- *
- * Une page dont le texte n'existe qu'en francais n'a qu'une version : sa
- * canonique est la francaise, quelle que soit l'adresse, et elle n'annonce
- * aucune autre langue — une page « anglaise » qui dit la meme chose en
- * francais serait un doublon, pas une traduction.
- */
+/** Canonique dans la langue de la page, et ses versions dans les autres. */
 export function alternatesDe(langue: Langue, page: Page): Metadata["alternates"] {
-  if (PAGES_EN_FRANCAIS.includes(page)) return { canonical: cheminVers("fr", page) };
   return { canonical: cheminVers(langue, page), languages: variantes(page) };
 }

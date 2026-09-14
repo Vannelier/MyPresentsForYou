@@ -32,7 +32,9 @@ export const nl = {
 
   pageTexte: {
     miseAJour: "Laatst bijgewerkt:",
-    enFrancais: "Deze pagina bestaat voorlopig alleen in het Frans.",
+    faitFoiDebut: "Deze vertaling is louter ter informatie. Bij verschillen geldt ",
+    faitFoiLien: "de Franse versie",
+    faitFoiFin: ".",
   },
 
   banniere: {

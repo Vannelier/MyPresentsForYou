@@ -33,7 +33,9 @@ export const it = {
 
   pageTexte: {
     miseAJour: "Ultimo aggiornamento:",
-    enFrancais: "Per ora questa pagina esiste solo in francese.",
+    faitFoiDebut: "Traduzione fornita a solo titolo informativo. In caso di discordanza, fa fede ",
+    faitFoiLien: "la versione francese",
+    faitFoiFin: ".",
   },
 
   banniere: {

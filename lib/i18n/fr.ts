@@ -34,9 +34,11 @@ export const fr = {
 
   pageTexte: {
     miseAJour: "Dernière mise à jour :",
-    // Sur une page dont le texte n'existe qu'en francais, dans la langue du
-    // visiteur : jamais affichee en francais, donc.
-    enFrancais: "Cette page n'existe pour l'instant qu'en français.",
+    // En tete d'une page legale traduite, dans la langue du visiteur : jamais
+    // affichee en francais, donc. Le lien mene a la version qui engage.
+    faitFoiDebut: "Traduction donnée pour information. En cas de divergence, ",
+    faitFoiLien: "la version française",
+    faitFoiFin: " fait foi.",
   },
 
   banniere: {

@@ -222,3 +222,15 @@ Ce que l'implémentation du socle a changé à cette spécification, et pourquoi
   et Sacha n'y parviennent qu'en français.
 - **Un garde-fou compare chaque traduction au français** : forme, marques, textes vides, et part de
   textes restés identiques.
+
+### Les pages légales
+
+- **Un composant par page et par langue** (`components/legal/<page>/<langue>.tsx`), comme prévu ; le
+  titre, le chapô et les métadonnées y vivent avec la prose, et `TEXTES_LEGAUX` les réunit dans un
+  `Record` complet — une langue sans sa traduction juridique ne compile pas.
+- **La mention que la version française fait foi** est posée par la coquille des pages de texte,
+  avec un lien vers la version française, plutôt que répétée dans chaque traduction.
+- **Le régime transitoire disparaît** avec `PAGES_EN_FRANCAIS` : canoniques, `hreflang` et sitemap
+  traitent les pages légales comme les autres.
+- **Un garde-fou compare chaque traduction au français**, section pour section : mêmes intertitres,
+  mêmes puces, mêmes pages citées.

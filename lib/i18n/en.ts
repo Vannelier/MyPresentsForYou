@@ -32,7 +32,9 @@ export const en = {
 
   pageTexte: {
     miseAJour: "Last updated:",
-    enFrancais: "This page is only available in French for now.",
+    faitFoiDebut: "This translation is provided for information only. In case of discrepancy, ",
+    faitFoiLien: "the French version",
+    faitFoiFin: " prevails.",
   },
 
   banniere: {

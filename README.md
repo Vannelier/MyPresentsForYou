@@ -138,6 +138,7 @@ Les deux écrivent dans le même `.next` et le graphe de modules du serveur de d
 | `lib/rateLimit.ts` | quotas des routes anonymes ; logique pure, horloge injectable |
 | `lib/site.ts` | **identité de l'éditeur** — le seul fichier à remplir pour les mentions légales |
 | `components/TextPage.tsx` | coquille commune aux pages de texte |
+| `components/legal/` | le texte des pages légales, une prose par page et par langue ; le français fait foi |
 | `components/SiteFooter.tsx` | pied de page, liens légaux et sélecteur de langue |
 | `lib/db.ts` | **seul** point de contact avec Postgres (pilote `pg`, gabarit paramétré) |
 | `middleware.ts` | applique les règles d'adresse : langue, anciennes adresses, cartes |
@@ -964,7 +965,8 @@ deux cartes de suite depuis deux réseaux différents suffit à savoir.
 
 Six langues — français, anglais, italien, espagnol, allemand, néerlandais —, sans bibliothèque et
 sans cookie. Le français fait foi ; les cinq autres en sont traduites, **sans relecture par des
-locuteurs natifs pour l'instant**. Les pages légales n'existent qu'en français : voir plus bas.
+locuteurs natifs pour l'instant**. Les pages légales aussi, la version française faisant foi : voir
+plus bas.
 
 **Les adresses.** Chaque page du site vit sous sa langue, avec des mots de cette langue :
 `/fr/creer`, `/en/create`, `/de/erstellen`. Le code ne garde qu'un dossier par page, qui porte son
@@ -1020,12 +1022,16 @@ tableaux de même longueur), mêmes marques `{…}`, aucun texte vide, et moins 
 identiques au français — un pan oublié s'y voit. Les contraintes du catalogue (mots d'ouverture
 distincts, bouton de 40 signes au plus…) tournent dans chaque langue.
 
-**Ce qui reste en français.** Les pages légales — conditions, confidentialité, mentions — dont la
-traduction engage et vient à part : servies sous chaque langue, elles le disent au visiteur dans la
-sienne, déclarent leur article en français et désignent la version française comme canonique, sans
-`hreflang` ; le sitemap ne les liste qu'en français (`PAGES_EN_FRANCAIS`, `lib/i18n/chemins.ts`).
-Restent aussi la note de la page de contact quand `lib/site.ts` n'a pas d'adresse, que seul
-l'éditeur du site voit, et la réponse de la purge, que seule la tâche planifiée lit.
+**Les pages légales** — conditions, confidentialité, mentions — sont traduites comme les autres, mais
+c'est la version française qui engage : une traduction le dit en tête, avec un lien vers elle
+(`components/TextPage.tsx`). Leur texte vit dans `components/legal/<page>/<langue>.tsx`, une prose
+par langue plutôt que des clés de dictionnaire : un texte juridique se relit d'un seul tenant.
+`npm run check` compare chaque traduction au français, section pour section — mêmes intertitres,
+mêmes puces, mêmes pages citées. Chaque langue y nomme le règlement comme on le connaît chez elle :
+GDPR, RGPD, DSGVO, AVG.
+
+**Ce qui reste en français** : la note de la page de contact quand `lib/site.ts` n'a pas d'adresse,
+que seul l'éditeur du site voit, et la réponse de la purge, que seule la tâche planifiée lit.
 
 **La bannière de partage** existe dans chaque langue (`app/[langue]/opengraph-image.tsx`, sur un
 rendu commun dans `app/banniere.tsx`). Une carte sans image retombe sur une bannière neutre, la
@@ -1360,8 +1366,9 @@ n'importe quelle édition.
   signalera.
 - **Les traductions n'ont pas été relues par des locuteurs natifs.** Elles viennent du français, qui
   fait foi ; une relecture par langue reste à faire avant de faire connaître le site dans ces pays.
-- **Les pages légales n'existent qu'en français.** Sous les autres langues, elles l'annoncent et
-  désignent la version française comme canonique — voir « Le multilingue ».
+- **Les pages légales traduites n'ont été relues ni par un juriste ni par des locuteurs natifs.**
+  Elles annoncent que la version française fait foi ; une relecture reste à faire, et la version
+  française elle-même porte encore des champs « À REMPLIR » (voir « Les mentions légales »).
 - **Le slug public est devinable.** Ne rien mettre de sensible dans une page-cadeau.
 - **Des images restent orphelines.** Celles qu'on remplace en modifiant une carte, et celles
   téléversées pour une carte jamais créée : plus aucune ligne ne les référence, et la purge part des

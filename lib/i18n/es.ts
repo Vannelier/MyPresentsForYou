@@ -34,7 +34,9 @@ export const es = {
 
   pageTexte: {
     miseAJour: "Última actualización:",
-    enFrancais: "Por ahora, esta página solo existe en francés.",
+    faitFoiDebut: "Traducción facilitada solo a título informativo. En caso de discrepancia, prevalece ",
+    faitFoiLien: "la versión francesa",
+    faitFoiFin: ".",
   },
 
   banniere: {

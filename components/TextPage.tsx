@@ -1,7 +1,7 @@
 import Link from "next/link";
 import SiteFooter from "@/components/SiteFooter";
 import { dictionnaire } from "@/lib/i18n";
-import { PAGES_EN_FRANCAIS, cheminVers, type Page } from "@/lib/i18n/chemins";
+import { PAGES_LEGALES, cheminVers, type Page } from "@/lib/i18n/chemins";
 import { LOCALES, type Langue } from "@/lib/i18n/langues";
 
 /**
@@ -13,9 +13,9 @@ import { LOCALES, type Langue } from "@/lib/i18n/langues";
  * La date de mise à jour est affichée quand elle existe — sur une page qui
  * engage, un texte sans date ne dit pas s'il est encore valable.
  *
- * Une page dont le texte n'existe qu'en français le dit, dans la langue du
- * visiteur, et déclare son article en français : un lecteur d'écran lirait
- * sinon du français avec une voix anglaise.
+ * Une page légale traduite le dit en tête, avec un lien vers la version
+ * française : c'est elle qui engage, la traduction n'est donnée que pour
+ * information.
  */
 export default function TextPage({
   langue,
@@ -33,24 +33,28 @@ export default function TextPage({
   children: React.ReactNode;
 }) {
   const d = dictionnaire(langue);
-  const enFrancais = langue !== "fr" && PAGES_EN_FRANCAIS.includes(page);
+  const traduite = langue !== "fr" && (PAGES_LEGALES as readonly Page[]).includes(page);
   return (
     <main className="landing">
-      <article className="prose" lang={enFrancais ? "fr" : undefined}>
+      <article className="prose">
         <Link className="back-link" href={cheminVers(langue, "accueil")}>
           {d.commun.retourAccueil}
         </Link>
 
-        {enFrancais && (
-          <p className="prose__note" lang={langue}>
-            {d.pageTexte.enFrancais}
+        {traduite && (
+          <p className="prose__note">
+            {d.pageTexte.faitFoiDebut}
+            <Link href={cheminVers("fr", page)} hrefLang="fr">
+              {d.pageTexte.faitFoiLien}
+            </Link>
+            {d.pageTexte.faitFoiFin}
           </p>
         )}
 
         <h1>{titre}</h1>
         {chapo && <p className="prose__chapo">{chapo}</p>}
         {miseAJour && (
-          <p className="prose__date" lang={enFrancais ? langue : undefined}>
+          <p className="prose__date">
             {d.pageTexte.miseAJour}{" "}
             <time dateTime={miseAJour}>{formatDate(miseAJour, LOCALES[langue].intl)}</time>
           </p>

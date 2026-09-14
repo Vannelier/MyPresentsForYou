@@ -37,7 +37,7 @@ import { adsensePublisherId, baseUrl, freePageTtlDays, secretDePurge } from "../
 import sitemap from "../app/sitemap";
 import { GET as llmsTxt } from "../app/llms.txt/route";
 import { alternatesDe } from "../lib/i18n/alternates";
-import { CHEMINS, PAGES, PAGES_EN_FRANCAIS, cheminVers } from "../lib/i18n/chemins";
+import { CHEMINS, PAGES, PAGES_LEGALES, cheminVers } from "../lib/i18n/chemins";
 import {
   LANGUES,
   LANGUES_ACTIVES,
@@ -2308,6 +2308,28 @@ test("le navigateur ne recoit jamais les dictionnaires par import", () => {
   }
 });
 
+test("chaque page legale a sa traduction, section pour section", () => {
+  /*
+   * Une traduction juridique qui perd une section, une puce ou un renvoi ne se
+   * voit pas en relisant une seule langue. Chaque composant est compare au
+   * francais, qui fait foi : memes intertitres, memes puces, memes pages citees.
+   */
+  const forme = (source: string) => ({
+    h2: (source.match(/<h2>/g) ?? []).length,
+    li: (source.match(/<li>/g) ?? []).length,
+    liens: [...source.matchAll(/cheminVers\(langue, "([\w-]+)"\)/g)].map((m) => m[1]).sort().join(","),
+  });
+  for (const page of PAGES_LEGALES) {
+    const reference = forme(lire(`components/legal/${page}/fr.tsx`));
+    assert.ok(reference.h2 >= 4, `${page} : ${reference.h2} intertitres en francais`);
+    for (const langue of LANGUES) {
+      const chemin = `components/legal/${page}/${langue}.tsx`;
+      assert.ok(existsSync(chemin), `${chemin} absent`);
+      assert.deepEqual(forme(lire(chemin)), reference, chemin);
+    }
+  }
+});
+
 test("aucun composant ne change la casse d'un texte du dictionnaire", () => {
   /*
    * « Suivant : les cadeaux » se fabriquait en mettant le titre de l'etape en
@@ -2382,9 +2404,7 @@ test("le sitemap et les hreflang ne citent que des adresses servies", () => {
    */
   const base = baseUrl();
   const plan = sitemap();
-  // Sept pages publiques ; celles en francais seulement n'y sont qu'une fois.
-  const traduites = 7 - PAGES_EN_FRANCAIS.filter((p) => p !== "mentions-legales").length;
-  assert.equal(plan.length, 7 + (LANGUES_ACTIVES.length - 1) * traduites);
+  assert.equal(plan.length, LANGUES_ACTIVES.length * 7);
   for (const entree of plan) {
     assert.ok(entree.url.startsWith(`${base}/`), entree.url);
     assert.ok(servie(entree.url), `sitemap : ${entree.url} n'est pas servie`);
@@ -2398,17 +2418,12 @@ test("le sitemap et les hreflang ne citent que des adresses servies", () => {
       assert.ok(LANGUES_ACTIVES.includes(hreflang as Langue), `version dans une langue inactive : ${hreflang}`);
       assert.ok(servie(String(url)), `hreflang : ${url} n'est pas servie`);
     }
-    // Une page en francais seulement n'annonce aucune version ; les autres
-    // les annoncent toutes.
-    const seule = PAGES_EN_FRANCAIS.some((p) => entree.url === `${base}${cheminVers("fr", p)}`);
-    const attendues = seule ? 0 : LANGUES_ACTIVES.length;
-    assert.equal(versions.filter(([h]) => h !== "x-default").length, attendues, entree.url);
+    assert.equal(versions.filter(([h]) => h !== "x-default").length, LANGUES_ACTIVES.length, entree.url);
   }
   for (const langue of LANGUES_ACTIVES) {
     for (const page of PAGES) {
       const a = alternatesDe(langue, page);
-      const canonique = PAGES_EN_FRANCAIS.includes(page) ? cheminVers("fr", page) : cheminVers(langue, page);
-      assert.equal(a?.canonical, canonique, `${langue}/${page}`);
+      assert.equal(a?.canonical, cheminVers(langue, page), `${langue}/${page}`);
       for (const [hreflang, url] of Object.entries(a?.languages ?? {})) {
         if (hreflang !== "x-default") assert.ok(servie(String(url)), `${page} : ${url}`);
       }
