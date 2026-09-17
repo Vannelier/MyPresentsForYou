@@ -139,11 +139,14 @@ Les deux écrivent dans le même `.next` et le graphe de modules du serveur de d
 | `lib/site.ts` | **identité de l'éditeur** — le seul fichier à remplir pour les mentions légales |
 | `components/TextPage.tsx` | coquille commune aux pages de texte |
 | `components/legal/` | le texte des pages légales, une prose par page et par langue ; le français fait foi |
-| `components/SiteFooter.tsx` | pied de page, liens légaux et sélecteur de langue |
+| `components/SiteFooter.tsx` | pied de page : idées cadeaux, questions, contact, pages légales |
+| `components/EnTeteSite.tsx`, `components/i18n/SelecteurLangue.tsx` | le sélecteur de langue à drapeaux, en tête des pages du site |
+| `lib/guides/` | le texte des guides par occasion, une langue par fichier ; module serveur, hors du dictionnaire |
+| `components/guides/ApercuOccasion.tsx` | la maquette de carte aux couleurs d'une occasion, rendue par le serveur |
 | `lib/db.ts` | **seul** point de contact avec Postgres (pilote `pg`, gabarit paramétré) |
 | `middleware.ts` | applique les règles d'adresse : langue, anciennes adresses, cartes |
 | `lib/i18n/routage.ts` | ces règles, en fonction pure, testées sans serveur |
-| `lib/i18n/langues.ts`, `lib/i18n/chemins.ts` | les six langues, les actives, et l'adresse de chaque page dans chacune |
+| `lib/i18n/langues.ts`, `lib/i18n/chemins.ts` | les six langues, les actives, l'adresse de chaque page et de chaque guide dans chacune |
 | `lib/i18n/fr.ts` | le dictionnaire français, qui fait foi : les autres langues en dérivent leur type |
 | `lib/i18n/erreurs.ts` | une erreur voyage par sa clé ; seul le bout qui répond la traduit |
 | `lib/i18n/alternates.ts` | les `hreflang` d'une page, pour ses métadonnées et le sitemap |
@@ -157,7 +160,9 @@ Les deux écrivent dans le même `.next` et le graphe de modules du serveur de d
 | `/fr` | accueil — invite à composer |
 | `/fr/creer` | formulaire de création, puis l'écran « Ta page est prête » |
 | `/fr/exemple` | une page-cadeau d'exemple, jouable de bout en bout ; rien n'est envoyé |
-| `/fr/questions` | questions fréquentes — la page faite pour être trouvée |
+| `/fr/questions` | questions fréquentes |
+| `/fr/idees-cadeaux` | les guides par occasion, réunis |
+| `/fr/idees-cadeaux/[occasion]` | un guide : anniversaire, noel, mariage, naissance, cremaillere, fete-des-meres — les pages faites pour être trouvées |
 | `/fr/contact` | comment nous joindre |
 | `/fr/confidentialite` | politique de confidentialité |
 | `/fr/conditions` | conditions d'utilisation |
@@ -170,7 +175,7 @@ Chaque page du site existe dans chaque langue active, sous une adresse traduite 
 `/questions`…), redirigent en 308 vers `/fr/…`.
 
 Les slugs `admin`, `api`, `carte`, `creer`, `_next`, `contact`, `conditions`, `confidentialite`,
-`mentions-legales`, `questions`, `exemple`, `favicon.ico`, `robots.txt`, `llms.txt`, `ads.txt`,
+`mentions-legales`, `questions`, `exemple`, `idees-cadeaux`, `favicon.ico`, `robots.txt`, `llms.txt`, `ads.txt`,
 `sitemap.xml`, `manifest.webmanifest`, `icon`, `icon.svg`, `apple-icon`, `apple-touch-icon.png`,
 `opengraph-image` et `twitter-image` sont réservés : `/[slug]` les traite en 404 sans requête en
 base. Les noms à points ne peuvent de toute façon pas former un slug ; ils restent listés pour que
@@ -178,7 +183,7 @@ la liste dise ce qui est pris.
 
 `/robots.txt` laisse explorer les pages-cadeau — c'est en les lisant qu'un robot voit leur
 `noindex` — mais interdit `/admin/` : un jeton d'administration n'a rien à faire dans un index.
-`/sitemap.xml` déclare les pages du site dans chaque langue active, avec leurs `hreflang` — l'accueil
+`/sitemap.xml` déclare les pages du site et les six guides dans chaque langue active, avec leurs `hreflang` — l'accueil
 sous `/fr`, et non `/`, qui redirige —, jamais les cartes.
 
 `/llms.txt` résume le site pour les assistants conversationnels, au format de llmstxt.org : ce que
@@ -1040,13 +1045,14 @@ lui aussi que la marque.
 
 **Ajouter une langue** : son code dans `LANGUES` (`lib/i18n/langues.ts`), avec sa locale et son nom ;
 ses chemins dans `CHEMINS` ; son dictionnaire (`lib/i18n/<code>.ts`, `satisfies Dictionnaire`) dans
-`DICTIONNAIRES`. La compilation refuse tout oubli parmi les quatre. Le sitemap, les `hreflang`,
-`llms.txt` et le sélecteur de langue du pied de page la prennent en compte d'eux-mêmes.
+`DICTIONNAIRES` ; ses guides (`lib/guides/<code>.ts`) dans `TEXTES_GUIDES`, et le segment de chaque
+guide dans `SEGMENTS_GUIDES` ; son drapeau dans `DRAPEAUX`. La compilation refuse tout oubli. Le
+sitemap, les `hreflang`, `llms.txt` et le sélecteur de langue la prennent en compte d'eux-mêmes.
 
 ## Être trouvé sur Google
 
 Une page-cadeau ne doit jamais être indexée — c'est du courrier privé. Ce qui doit l'être, c'est
-l'outil : l'accueil, le formulaire, et surtout `/questions`.
+l'outil : l'accueil, le formulaire, `/questions`, et surtout les guides par occasion.
 
 **Ce qui est en place**
 
@@ -1070,6 +1076,17 @@ l'outil : l'accueil, le formulaire, et surtout `/questions`.
   « offrir un cadeau au choix », « laisser choisir son cadeau » — plutôt que le vocabulaire interne
   du projet. Le texte affiché et le balisage `FAQPage` sont produits par le même tableau : Google
   exige qu'ils coïncident, et deux listes tenues en parallèle auraient divergé.
+- **Des guides par occasion** (`/fr/idees-cadeaux/…`) : anniversaire, Noël, mariage, naissance,
+  crémaillère, fête des mères — les occasions les plus cherchées, la fête des pères écartée parce que
+  ses recherches sont surtout des bricolages d'enfants. Titres et introductions suivent les
+  suggestions de recherche de chaque langue (« idée cadeau anniversaire », « Geschenkideen zum
+  Einzug »…) ; quatre profils de pistes, sans marque ni lien marchand ; trois questions balisées
+  `FAQPage` et un fil d'Ariane `BreadcrumbList`. Le bouton ouvre l'éditeur l'occasion déjà choisie
+  (`?occasion=`), jamais par-dessus un brouillon. Les guides sont liés depuis l'accueil et le pied de
+  page ; leur texte vit dans `lib/guides/`, hors du dictionnaire que reçoit le navigateur. La
+  démarche est dans `docs/superpowers/specs/2026-09-17-referencement-occasions-design.md`.
+- **Un sélecteur de langue à drapeaux**, en tête des pages du site — jamais sur une carte : il mène
+  à la même page dans l'autre langue, et ses liens restent dans le HTML pour les moteurs.
 
 **Ce qu'il ne faut pas en attendre**
 

@@ -17,6 +17,7 @@ import {
   OPENINGS,
   effectById,
   fontById,
+  isOccasionId,
   occasionById,
   openingById,
   type EffectId,
@@ -299,7 +300,15 @@ export default function PageEditor(props: Props) {
     restaure.current = true;
 
     const b = lireBrouillon();
-    if (!b || !brouillonUtile(b)) return;
+    if (!b || !brouillonUtile(b)) {
+      // Arrive d'un guide d'occasion : l'occasion est deja choisie. Jamais par-
+      // dessus un brouillon — un lien suivi par curiosite ne doit pas repeindre
+      // une page en cours. Lue ici plutot qu'avec `useSearchParams`, qui ferait
+      // basculer toute la page de creation en rendu cote client.
+      const demandee = new URLSearchParams(window.location.search).get("occasion");
+      if (isOccasionId(demandee)) chooseOccasion(demandee);
+      return;
+    }
 
     const etape = (b.etape === 3 ? 3 : b.etape === 2 ? 2 : 1) as StepNumber;
     setStep(etape);

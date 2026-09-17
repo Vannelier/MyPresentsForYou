@@ -121,6 +121,16 @@ les guides de chaque langue. L'accueil gagne une section « idées par occasion 
   (`Record` complet).
 - Sitemap et `llms.txt` citent les guides, et seulement des adresses servies.
 
+## Écarts à la mise en œuvre
+
+- **Longueur.** Les guides font de 520 à 650 mots selon la langue et l'occasion, sous les 600 à 900
+  visés. Le plan est complet ; allonger aurait voulu dire délayer, ce qui dessert la page plus que
+  sa longueur ne la sert.
+- **Tête du guide en colonne**, à toutes les largeurs : la prose ne dépasse pas 36rem, et le bouton
+  posé à côté de la maquette tenait sur deux lignes en allemand.
+- **Espaces insécables** avant « : ? ! ; » et dans les guillemets des guides français : « anniversaire
+  : et si… » se coupait avant les deux-points.
+
 ## Hors périmètre
 
 La fête des pères et les dix autres occasions (selon ce que ces six pages attireront) ; un blog ;

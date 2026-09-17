@@ -1,0 +1,209 @@
+/* --- Guides par occasion ------------------------------------------------------ */
+
+/*
+ * Les guides vivent dans un article `.prose` : titres, paragraphes et listes en
+ * heritent. Ce fichier n'ajoute que ce que la prose n'a pas — l'apercu de carte,
+ * les cartes de profils, la grille des occasions.
+ */
+
+.guide__fil {
+  font-size: 0.8rem;
+  color: var(--ink-faint);
+  margin-bottom: 1.25rem;
+}
+
+.guide__fil a {
+  color: inherit;
+}
+
+/*
+ * `.prose a` colore les liens du texte, et passe devant `.btn` : meme
+ * specificite, feuille chargee plus tard. Le bouton s'ecrivait en brique sur
+ * fond brique — mesure : rgb(142, 65, 48) sur rgb(176, 83, 60).
+ */
+.prose a.btn {
+  color: #fff;
+}
+
+.guide__tete {
+  display: grid;
+  justify-items: center;
+  gap: 1.5rem;
+  margin: 2rem 0 2.5rem;
+}
+
+/*
+ * Toujours en colonne : la prose ne depasse pas 36rem, et la colonne laissee a
+ * cote de la maquette (292 px) coupait « Meine Geschenkseite erstellen » sur
+ * deux lignes dans un bouton de hauteur fixe.
+ */
+
+/*
+ * Le decor est en position absolue dans l'ecran de la maquette : tout ce qui suit
+ * doit etre positionne pour se peindre par-dessus, sinon le motif passe devant
+ * le texte.
+ */
+.guide__apercu .lp-phone__screen {
+  position: relative;
+  overflow: hidden;
+}
+
+.guide__apercu .lp-phone__screen > :not(.motif) {
+  position: relative;
+}
+
+.guide__profils {
+  display: grid;
+  gap: 1rem;
+  margin: 1.25rem 0 0.5rem;
+}
+
+@media (min-width: 44rem) {
+  .guide__profils {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.guide__profil {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--card);
+  padding: 1rem 1.15rem;
+}
+
+.guide__profil h3 {
+  margin-top: 0;
+}
+
+.guide__profil ul {
+  margin: 0.5rem 0 0;
+  padding-left: 1.1rem;
+}
+
+.guide__profil li + li {
+  margin-top: 0.45rem;
+}
+
+.guide__cta {
+  margin: 1.5rem 0 0.5rem;
+}
+
+/*
+ * Les listes qui suivent vivent dans `.prose`, dont `ul` et `li + li` (0,1,1)
+ * passent devant une classe seule : d'ou le prefixe. Sans lui, la grille des
+ * guides gardait le retrait de la prose, et chaque carte sauf la premiere un
+ * decalage de 7 px — mesure au getBoundingClientRect.
+ */
+.prose .guide__autres {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
+  padding: 0;
+  list-style: none;
+}
+
+/* --- La page qui les reunit ---------------------------------------------------- */
+
+.prose .guides-grille {
+  display: grid;
+  gap: 1rem;
+  margin: 1.75rem 0 2rem;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 40rem) {
+  .prose .guides-grille {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.prose .guides-grille li,
+.prose .guide__autres li {
+  margin: 0;
+}
+
+.guides-grille a {
+  position: relative;
+  display: block;
+  height: 100%;
+  overflow: hidden;
+  padding: 1.25rem 1.3rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper);
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.guides-grille a > :not(.motif) {
+  position: relative;
+}
+
+.guides-carte__nom {
+  display: block;
+  font-family: var(--font-display, Georgia, serif);
+  font-size: 1.35rem;
+  color: var(--accent);
+}
+
+.guides-carte__texte {
+  display: block;
+  margin-top: 0.35rem;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+
+.guides-carte__lire {
+  display: block;
+  margin-top: 0.75rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+/* --- Section de l'accueil ------------------------------------------------------ */
+
+.lp-guides {
+  text-align: center;
+}
+
+.lp-guides__liste {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem;
+  margin: 1.25rem 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lp-guides__liste a {
+  display: inline-block;
+  padding: 0.45rem 0.95rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.lp-guides__liste a:hover {
+  border-color: var(--accent);
+}
+
+.lp-guides__tout {
+  font-size: 0.9rem;
+  color: var(--accent);
+}
+
+.lp-guides h2 {
+  font-size: clamp(1.5rem, 4.5vw, 2rem);
+}
+
+.lp-guides > p {
+  margin: 0.8rem auto 0;
+  max-width: 32rem;
+  color: var(--ink-soft);
+}

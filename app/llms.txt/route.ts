@@ -1,6 +1,7 @@
 import { baseUrl } from "@/lib/env";
+import { textesGuides } from "@/lib/guides";
 import { dictionnaire } from "@/lib/i18n";
-import { cheminVers, type Page } from "@/lib/i18n/chemins";
+import { GUIDES, cheminGuide, cheminVers, type Page } from "@/lib/i18n/chemins";
 import { LANGUES_ACTIVES, NOMS_DES_LANGUES, type Langue } from "@/lib/i18n/langues";
 import { LIMITS } from "@/lib/limits";
 
@@ -36,6 +37,7 @@ export function GET() {
 
   const sections = LANGUES_ACTIVES.map((langue) => {
     const d = dictionnaire(langue);
+    const guides = textesGuides(langue);
     return [
       `## ${NOMS_DES_LANGUES[langue]}`,
       "",
@@ -43,6 +45,11 @@ export function GET() {
       `- [${sansMarque(d.exemple.titreMeta)}](${lien(langue, "exemple")}): ${d.exemple.descriptionMeta}`,
       `- [${sansMarque(d.creation.titreMeta)}](${lien(langue, "creer")}): ${d.creation.descriptionMeta}`,
       `- [${d.questions.titre}](${lien(langue, "questions")}): ${d.questions.descriptionMeta}`,
+      `- [${guides.page.titre}](${lien(langue, "idees")}): ${guides.page.descriptionMeta}`,
+      ...GUIDES.map(
+        (guide) =>
+          `  - [${sansMarque(guides.guides[guide].titreMeta)}](${base}${cheminGuide(langue, guide)}): ${guides.guides[guide].descriptionMeta}`,
+      ),
     ].join("\n");
   });
 

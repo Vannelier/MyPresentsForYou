@@ -273,6 +273,9 @@ export const es = {
           "Mientras no se haya elegido nada, puedes modificarlo todo. Los enlaces ya enviados siguen siendo válidos.",
       },
     ],
+    guidesTitre: "Ideas para cada ocasión",
+    guidesTexte: "Cumpleaños, Navidad, boda… ideas ordenadas por perfil, y una página con los colores de la ocasión.",
+    guidesTout: "Todas las ideas de regalo",
     finTitre: "¿Y si creas la tuya?",
     finTexte: "Dos ideas bastan para empezar, diez como máximo. Podrás modificarlo todo después.",
     piedNote:

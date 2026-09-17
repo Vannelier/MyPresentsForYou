@@ -278,6 +278,9 @@ export const fr = {
         texte: "Tant que rien n'est choisi, tu peux tout modifier. Les liens déjà envoyés restent valables.",
       },
     ],
+    guidesTitre: "Des idées pour chaque occasion",
+    guidesTexte: "Anniversaire, Noël, mariage… des pistes rangées par profil, et une page aux couleurs de l'occasion.",
+    guidesTout: "Toutes les idées cadeaux",
     finTitre: "Et si tu composais la tienne ?",
     finTexte: "Deux idées suffisent pour commencer, dix au plus. Tu pourras tout modifier ensuite.",
     piedNote:

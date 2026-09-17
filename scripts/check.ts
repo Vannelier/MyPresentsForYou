@@ -36,7 +36,8 @@ import { LIMITS } from "../lib/limits";
 import { adsensePublisherId, baseUrl, freePageTtlDays, secretDePurge } from "../lib/env";
 import sitemap from "../app/sitemap";
 import { GET as llmsTxt } from "../app/llms.txt/route";
-import { alternatesDe } from "../lib/i18n/alternates";
+import { alternatesDe, alternatesGuide } from "../lib/i18n/alternates";
+import { TEXTES_GUIDES } from "../lib/guides";
 import {
   CHEMINS,
   GUIDES,
@@ -2413,7 +2414,7 @@ test("le sitemap et les hreflang ne citent que des adresses servies", () => {
    */
   const base = baseUrl();
   const plan = sitemap();
-  assert.equal(plan.length, LANGUES_ACTIVES.length * 7);
+  assert.equal(plan.length, LANGUES_ACTIVES.length * (8 + GUIDES.length));
   for (const entree of plan) {
     assert.ok(entree.url.startsWith(`${base}/`), entree.url);
     assert.ok(servie(entree.url), `sitemap : ${entree.url} n'est pas servie`);
@@ -2437,7 +2438,109 @@ test("le sitemap et les hreflang ne citent que des adresses servies", () => {
         if (hreflang !== "x-default") assert.ok(servie(String(url)), `${page} : ${url}`);
       }
     }
+    for (const guide of GUIDES) {
+      const a = alternatesGuide(langue, guide);
+      assert.equal(a?.canonical, cheminGuide(langue, guide), `${langue}/${guide}`);
+      for (const url of Object.values(a?.languages ?? {})) assert.ok(servie(String(url)), `${guide} : ${url}`);
+    }
   }
+});
+
+/** Les chaines d'un objet, chacune avec son chemin : `guides.noel.questions.liste[0].q`. */
+function feuillesDe(x: unknown, chemin = ""): [string, string][] {
+  if (typeof x === "string") return [[chemin, x]];
+  if (Array.isArray(x)) return x.flatMap((v, i) => feuillesDe(v, `${chemin}[${i}]`));
+  if (x && typeof x === "object") {
+    return Object.entries(x).flatMap(([k, v]) => feuillesDe(v, chemin ? `${chemin}.${k}` : k));
+  }
+  return [];
+}
+
+test("chaque guide traduit garde la forme du francais, sans pan laisse en francais", () => {
+  /*
+   * Les guides vivent hors du dictionnaire : le test des traductions ne les voit
+   * pas. Un profil ou une question en moins compilerait — ce sont des tableaux —
+   * et le guide de cette langue serait simplement plus pauvre.
+   */
+  const reference = new Map(feuillesDe(TEXTES_GUIDES.fr));
+  for (const langue of LANGUES) {
+    if (langue === "fr") continue;
+    const traduction = new Map(feuillesDe(TEXTES_GUIDES[langue]));
+    assert.deepEqual([...traduction.keys()].sort(), [...reference.keys()].sort(), `${langue} : forme differente`);
+    let identiques = 0;
+    for (const [chemin, texteFr] of reference) {
+      const texte = traduction.get(chemin) ?? "";
+      assert.ok(texte.trim(), `${langue} : ${chemin} vide`);
+      if (texteFr.length >= 8 && texte === texteFr) identiques++;
+    }
+    assert.ok(identiques / reference.size < 0.02, `${langue} : ${identiques} textes identiques au francais`);
+  }
+  for (const guide of GUIDES) {
+    const g = TEXTES_GUIDES.fr.guides[guide];
+    assert.equal(g.idees.profils.length, 4, `${guide} : quatre profils`);
+    for (const profil of g.idees.profils) assert.equal(profil.idees.length, 4, `${guide} : ${profil.nom}`);
+    assert.equal(g.etapes.liste.length, 3, `${guide} : trois etapes`);
+    assert.equal(g.questions.liste.length, 3, `${guide} : trois questions`);
+    assert.equal(g.apercu.length, 3, `${guide} : l'apercu montre trois idees`);
+  }
+});
+
+test("titres et descriptions tiennent dans ce que Google affiche, dans chaque langue", () => {
+  /*
+   * Au-dela d'environ 60 signes, Google coupe le titre ; au-dela de 160, la
+   * description. Une traduction s'allonge souvent — l'allemand d'un quart — et
+   * c'est la marque, en fin de titre, qui disparaissait la premiere.
+   */
+  for (const langue of LANGUES) {
+    const d = dictionnaire(langue);
+    const t = TEXTES_GUIDES[langue];
+    const metas: [string, string, string][] = [
+      ["accueil", d.accueil.titreMeta, d.accueil.descriptionMeta],
+      ["creation", d.creation.titreMeta, d.creation.descriptionMeta],
+      ["exemple", d.exemple.titreMeta, d.exemple.descriptionMeta],
+      ["questions", d.questions.titreMeta, d.questions.descriptionMeta],
+      ["contact", d.contact.titreMeta, d.contact.descriptionMeta],
+      ["idees", t.page.titreMeta, t.page.descriptionMeta],
+      ...GUIDES.map((g): [string, string, string] => [g, t.guides[g].titreMeta, t.guides[g].descriptionMeta]),
+    ];
+    for (const [page, titre, description] of metas) {
+      assert.ok(titre.length <= 60, `${langue}/${page} : titre de ${titre.length} signes`);
+      assert.ok(description.length <= 160, `${langue}/${page} : description de ${description.length} signes`);
+    }
+  }
+});
+
+test("les guides : balisage tire des questions affichees, occasion transmise a l'editeur", () => {
+  const page = lire("app/[langue]/idees-cadeaux/[occasion]/page.tsx");
+  // Google refuse un FAQPage dont les questions ne sont pas celles de la page.
+  assert.equal(page.match(/t\.questions\.liste\.map/g)?.length, 2, "FAQPage et questions affichees divergent");
+  assert.match(page, /\?occasion=\$\{guide\}/, "le guide n'ouvre plus l'editeur sur son occasion");
+
+  // L'occasion demandee ne s'applique que sans brouillon : jamais par-dessus une page en cours.
+  const editeur = lire("components/editor/PageEditor.tsx");
+  const sansBrouillon = editeur.indexOf("if (!b || !brouillonUtile(b)) {");
+  const demandee = editeur.indexOf('.get("occasion")');
+  const restauration = editeur.indexOf("const etape = ");
+  assert.ok(sansBrouillon > 0 && sansBrouillon < demandee && demandee < restauration, "l'occasion demandee ecrase le brouillon");
+  assert.match(editeur.slice(demandee, restauration), /isOccasionId\(demandee\)/);
+
+  // Un guide que rien ne lie depuis une page indexee n'existe pour aucun moteur.
+  assert.match(lire("app/[langue]/page.tsx"), /GUIDES\.map[\s\S]*cheminGuide\(langue, guide\)/);
+  assert.match(lire("components/SiteFooter.tsx"), /"idees"/);
+
+  // Six langues de guides dans le paquet du navigateur : aucun composant client ne les importe.
+  const parcourir = (dossier: string) => {
+    for (const e of readdirSync(dossier, { withFileTypes: true })) {
+      const chemin = `${dossier}/${e.name}`;
+      if (e.isDirectory()) parcourir(chemin);
+      else if (/\.tsx?$/.test(e.name)) {
+        const source = lire(chemin);
+        if (/^["']use client["']/m.test(source)) assert.doesNotMatch(source, /lib\/guides/, `${chemin} importe les guides`);
+      }
+    }
+  };
+  parcourir("components");
+  parcourir("app");
 });
 
 test("le selecteur de langue est en tete du site, jamais sur une carte ni sur l'administration", () => {
@@ -2778,6 +2881,9 @@ async function checkLlms() {
       for (const page of ["accueil", "exemple", "creer", "questions", "contact"] as const) {
         const attendu = `${baseUrl()}${cheminVers(langue, page)}`;
         assert.ok(liens.includes(attendu), `${langue} : ${page} absente de llms.txt`);
+      }
+      for (const url of [cheminVers(langue, "idees"), ...GUIDES.map((g) => cheminGuide(langue, g))]) {
+        assert.ok(liens.includes(`${baseUrl()}${url}`), `${langue} : ${url} absente de llms.txt`);
       }
     }
   });
