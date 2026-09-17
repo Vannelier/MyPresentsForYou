@@ -41,8 +41,8 @@ export const de = {
 
   banniere: {
     titre: "Ein Geschenk, das auffällt — zu jedem Anlass.",
-    texte: "Eine persönliche Seite mit deinen Geschenkideen, ein Motiv und ein Schleier zum Lüften. Die Person öffnet, wählt, und dir bleibt nur noch das Schenken.",
-    pied: "Ohne Konto, ohne Zahlung, ohne Adresse.",
+    texte: "Du stellst ein paar Geschenkideen auf eine Seite, die für eine einzige Person gemacht ist. Sie öffnet sie, wählt, und du kaufst.",
+    pied: "Kostenlos, und ohne Konto.",
   },
 
   questions: {
@@ -201,7 +201,7 @@ export const de = {
       "Ein Geschenk, das auffällt, zu jedem Anlass: eine persönliche Seite mit deinen Geschenkideen. Du schickst den Link, die Person wählt, und dir bleibt nur noch das Schenken.",
     composer: "Meine Geschenkseite erstellen",
     voirExemple: "Beispiel ansehen",
-    note: "Kostenlos · ohne Konto · in wenigen Minuten fertig",
+    note: "Kostenlos · ohne Konto · zehn Minuten genügen",
     telephone: {
       surtitre: "Alles Gute zum Geburtstag",
       titre: "Du hast die Wahl",
@@ -212,60 +212,60 @@ export const de = {
       {
         titre: "Du gestaltest ihre Seite",
         texte:
-          "Wähle den Anlass: Die Seite übernimmt Farben, Motiv und Worte. Füge deine Geschenkideen hinzu — füge den Link zu einem Produkt ein, Titel und Foto füllen sich meist von selbst.",
+          "Du wählst den Anlass, und die Seite bekommt ihre Farben. Dann kommen deine Ideen dazu: Link zu einem Produkt einfügen, Titel und Foto sind meist schon da. Sonst reicht ein Foto vom Handy.",
       },
       {
         titre: "Du schickst den Link oder druckst ihn aus",
         texte:
-          "In einem Messenger erscheint der Link als Karte, mit deiner Nachricht und dem Vornamen der Person. Du kannst auch den QR-Code ausdrucken, in einen Umschlag legen und dabei sein, wenn sich der Schleier hebt.",
+          "Per WhatsApp oder SMS kommt der Link mit deiner Nachricht und dem Vornamen an, nicht als nackte Adresse. Du kannst den QR-Code auch ausdrucken und in einen Umschlag legen, um dabei zu sein, wenn die Seite aufgeht.",
       },
       {
         titre: "Du erfährst die Wahl",
         texte:
-          "Über deinen privaten Link: das gewählte Geschenk, der Tag der Wahl und die Nachricht, die man dir hinterlassen hat. Dann musst du es nur noch kaufen.",
+          "Dein privater Link sagt dir, welches Geschenk gewählt wurde, und wann. Dazu die Nachricht, die man dir vielleicht hinterlassen hat. Dann musst du es nur noch kaufen.",
       },
     ],
     avantages: [
       {
         titre: "Keine Frage nötig",
         texte:
-          "„Was wünschst du dir?“ verdirbt die Überraschung und gibt die Frage an die andere Person zurück. Hier hast du schon gesucht; es bleibt nur noch die Wahl.",
+          "„Was wünschst du dir?“ gibt die Frage zurück und verrät alles. Hier hast du schon gesucht. Bleibt nur noch das Wählen.",
       },
       {
         titre: "Eine persönliche Seite, kein Link",
         texte:
-          "Eine Palette, ein Motiv, eine Schrift, ein Schleier zum Lüften: Die Seite sieht nach der Person und dem Anlass aus, nicht nach einem Formular.",
+          "Du wählst die Farben, das Motiv, die Schrift und den Schleier, der beim Öffnen weggezogen wird. Nach Formular sieht das nicht aus.",
       },
       {
         titre: "Keine Preise sichtbar",
         texte:
-          "Die Person wählt, was ihr wirklich gefällt, ohne Preise zu vergleichen oder sich zu fragen, wie viel du ausgegeben hast.",
+          "Preise tauchen nirgends auf. Niemand vergleicht, niemand fragt sich, was du ausgegeben hast.",
       },
       {
         titre: "Die Überraschung bleibt ganz",
         texte:
-          "Vor dem Öffnen ist nichts zu sehen. Und die Karte kann bis zum Tag des Festes versiegelt bleiben.",
+          "Vorher sieht man nichts, und du kannst die Karte bis zum Tag selbst versiegelt halten.",
       },
       {
         titre: "Inszeniert von Anfang bis Ende",
         texte:
-          "Der Vorname, ein Eröffnungssatz, ein Effekt, der startet, und eine Karte zum Ausdrucken mit QR-Code. Auf der anderen Seite gibt es nur eines zu tun: wählen.",
+          "Ihr Vorname steht oben auf der Seite, und du schreibst die Worte, die sie beim Öffnen liest. Du kannst die Karte samt QR-Code sogar ausdrucken. Der Mensch, der dir wichtig ist, muss nur noch wählen.",
       },
       {
         titre: "Eine Nachricht zurück",
         texte:
-          "Zusammen mit der Wahl kann die Person dir eine Nachricht hinterlassen. Du findest sie über deinen privaten Link, neben dem gewählten Geschenk.",
+          "Beim Bestätigen kann man dir eine Nachricht hinterlassen. Du liest sie über deinen privaten Link, neben dem gewählten Geschenk.",
       },
     ],
     objections: [
       {
         titre: "Hier ist nichts zu bezahlen",
-        texte: "Über MyPresentsForYou läuft keine Zahlung. Du kaufst das Geschenk, wo du willst, wie immer.",
+        texte: "Über die Website läuft keine Zahlung. Du kaufst das Geschenk, wo du willst, wie immer.",
       },
       {
         titre: "Kein Konto",
         texte:
-          "Kein Konto nötig. Die beschenkte Person gibt nur ihre Wahl ein: keinen Namen, keine Adresse, keine E-Mail.",
+          "Nichts anzulegen, weder für dich noch für sie. Sie öffnet den Link und wählt, ohne Namen und ohne Adresse.",
       },
       {
         titre: "Änderbar bis zur Wahl",
@@ -273,11 +273,11 @@ export const de = {
       },
     ],
     guidesTitre: "Ideen für jeden Anlass",
-    guidesTexte: "Geburtstag, Weihnachten, Hochzeit … Ideen nach Typ sortiert, und eine Seite in den Farben des Anlasses.",
+    guidesTexte: "Geburtstag, Weihnachten, Hochzeit, Geburt … Ideen nach Typ sortiert, wenn dir nichts einfällt.",
     guidesTout: "Alle Geschenkideen",
     finTitre: "Wie wäre es mit ihrer eigenen Seite?",
-    finTexte: "Zwei Ideen reichen für den Anfang, höchstens zehn. Motiv, Worte und Öffnung stellst du unterwegs ein.",
-    piedNote: "Jede Karte bleibt ein Jahr online. Bewahre deinen privaten Link auf: Er zeigt dir das gewählte Geschenk.",
+    finTexte: "Fang mit zwei Ideen an, mach zehn daraus, wenn du magst. Das Übrige ergibt sich unterwegs.",
+    piedNote: "Eine Karte bleibt ein Jahr online. Behalte deinen privaten Link: Er sagt dir, was gewählt wurde.",
   },
 
   creation: {
@@ -286,10 +286,10 @@ export const de = {
       "Gestalte eine persönliche Geschenkseite in drei Schritten: Anlass und Motiv, deine Geschenkideen, die Gestaltung. Ohne Konto, ohne Zahlung.",
     titre: "Erstelle deine Geschenkseite",
     chapo:
-      "Der Anlass, deine Geschenkideen, die Gestaltung. Die Schaltfläche „Vorschau“ zeigt dir jederzeit, was die andere Person sehen wird.",
+      "Drei Schritte: der Anlass, deine Ideen, die Gestaltung. Jederzeit zeigt dir „Vorschau“ die Seite so, wie sie gesehen wird.",
     pret: "Deine Seite ist fertig",
     rienNestFige:
-      "Nichts ist endgültig: Solange niemand gewählt hat, kannst du alles ändern — Texte, Geschenke, Thema. Die beiden Links unten bleiben gleich.",
+      "Solange niemand gewählt hat, kannst du alles neu machen: die Texte, die Geschenke, die Farben. Die beiden Links unten ändern sich nie.",
     lienRecuperation: "Dein Link zum Wiederfinden",
     lienRecuperationFort: "Speichere ihn jetzt",
     lienRecuperationSuite:
@@ -303,7 +303,7 @@ export const de = {
   exemple: {
     titreMeta: "Beispiel einer Geschenkseite — MyPresentsForYou",
     descriptionMeta:
-      "Eine echte Geschenkseite zum Ausprobieren: Schleier lüften, Motiv ansehen, aus vier Ideen wählen. Es wird nichts verschickt.",
+      "Eine echte Geschenkseite zum Ausprobieren: Schleier lüften und aus vier Ideen wählen. Es wird nichts verschickt.",
     bandeau: "Beispiel — es wird nichts verschickt",
     composerLaMienne: "Meine eigene erstellen",
     composer: "Meine Geschenkseite erstellen",

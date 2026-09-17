@@ -40,8 +40,8 @@ export const en = {
 
   banniere: {
     titre: "A gift that stands out, for any occasion.",
-    texte: "A personalised page with your gift ideas, a pattern and a veil to lift. They open it, choose, and all that's left is to give.",
-    pied: "No account, no payment, no address to give.",
+    texte: "You put a few gift ideas on a page made for one person. They open it, they choose, you buy.",
+    pied: "Free, and no account to create.",
   },
 
   questions: {
@@ -198,7 +198,7 @@ export const en = {
     sousTitre: "A gift that stands out, for any occasion: a personalised page with your gift ideas. You send the link, they choose, and all that's left is to give.",
     composer: "Create my gift page",
     voirExemple: "See an example",
-    note: "Free · no account · ready in minutes",
+    note: "Free · no account · ten minutes is enough",
     telephone: {
       surtitre: "Happy birthday",
       titre: "Yours to choose",
@@ -209,60 +209,60 @@ export const en = {
       {
         titre: "You compose their page",
         texte:
-          "Choose the occasion: the page takes on its colours, pattern and words. Add your gift ideas — paste a product link and the title and photo usually fill in by themselves.",
+          "You pick the occasion, and the page takes its colours. Then you add your ideas: paste a product link and the title and photo usually turn up on their own. If not, a photo from your phone does the job.",
       },
       {
         titre: "You send the link, or print it",
         texte:
-          "In a messaging app, the link shows up as a card, with your message and their first name. You can also print the QR code, slip it into an envelope, and be there when the veil lifts.",
+          "Sent by WhatsApp or text, the link arrives with your message and their first name, not as a bare address. You can also print the QR code and put it in an envelope, so you're there when the page opens.",
       },
       {
         titre: "You find out what they chose",
         texte:
-          "On your private link: the chosen gift, the day it was chosen, and any note left for you. All that's left is to buy it.",
+          "Your private link tells you which gift was chosen, and when. Plus any note left for you. All you have to do is buy it.",
       },
     ],
     avantages: [
       {
         titre: "No need to ask",
         texte:
-          "“What would you like?” spoils the surprise and hands the question back to them. Here, you've already done the searching; all that's left is to choose.",
+          "Asking \"what would you like?\" hands the question back and gives the game away. Here you've already done the looking. All that's left is to choose.",
       },
       {
         titre: "A personalised page, not a link",
         texte:
-          "A palette, a pattern, a font, a veil to lift: the page looks like the person and the occasion, not like a form.",
+          "You pick the colours, the pattern, the font, and the veil that gets lifted to reveal the page. It looks nothing like a form.",
       },
       {
         titre: "No prices shown",
         texte:
-          "They choose what they really like, without comparing prices or wondering how much you spent.",
+          "Prices show up nowhere. Nobody compares, nobody wonders how much you spent.",
       },
       {
         titre: "The surprise stays whole",
         texte:
-          "Nothing is visible before it's opened. And the card can stay sealed until the day of the celebration.",
+          "Nothing shows before it's opened, and you can keep the card sealed until the day itself.",
       },
       {
         titre: "Staged from beginning to end",
         texte:
-          "Their first name, an opening line, an effect that plays, and a printable card with its QR code. On their side, there is only one thing to do: choose.",
+          "Their first name sits at the top of the page, and you write the words they'll read when it opens. You can even print the card with its QR code. The person you care about just has to choose.",
       },
       {
         titre: "A note in return",
         texte:
-          "Along with their choice, they can leave you a note. You'll find it on your private link, next to the chosen gift.",
+          "When confirming, they can leave you a note. You read it on your private link, next to the chosen gift.",
       },
     ],
     objections: [
       {
         titre: "Nothing to pay here",
-        texte: "No payment goes through MyPresentsForYou. You buy the gift wherever you like, as usual.",
+        texte: "No payment goes through the site. You buy the gift wherever you like, as usual.",
       },
       {
         titre: "No account",
         texte:
-          "No account to create. The person receiving the card only enters their choice: no name, no address, no email.",
+          "Nothing to create, for you or for them. They open the link and choose, without giving a name or an address.",
       },
       {
         titre: "Editable until the choice",
@@ -270,11 +270,11 @@ export const en = {
       },
     ],
     guidesTitre: "Ideas for every occasion",
-    guidesTexte: "Birthday, Christmas, wedding… ideas sorted by profile, and a page in the colours of the occasion.",
+    guidesTexte: "Birthday, Christmas, wedding, new baby… ideas sorted by profile, for when you're stuck.",
     guidesTout: "All gift ideas",
     finTitre: "Why not make theirs?",
-    finTexte: "Two ideas are enough to start, ten at most. The pattern, the words and the opening are set as you go.",
-    piedNote: "Each card stays online for a year. Keep your private link: it will show you the chosen gift.",
+    finTexte: "Start with two ideas, go up to ten if you want. The rest sorts itself out along the way.",
+    piedNote: "A card stays online for a year. Keep your private link: it's what tells you what was chosen.",
   },
 
   creation: {
@@ -283,10 +283,10 @@ export const en = {
       "Compose a personalised gift page in three steps: the occasion and its pattern, your gift ideas, the presentation. No account, no payment.",
     titre: "Create your gift page",
     chapo:
-      "The occasion, your gift ideas, the presentation. The “Preview” button shows you at any time what they will see.",
+      "Three steps: the occasion, your ideas, the presentation. At any point, \"Preview\" shows you the page as they'll see it.",
     pret: "Your page is ready",
     rienNestFige:
-      "Nothing is final: as long as nobody has chosen, you can change everything — the text, the gifts, the theme. The two links below won't change.",
+      "As long as nobody has chosen, you can redo anything: the words, the gifts, the colours. The two links below never change.",
     lienRecuperation: "Your recovery link",
     lienRecuperationFort: "Save it now",
     lienRecuperationSuite: ": it is only shown here, and it is the only way to come back and see the chosen gift.",
@@ -299,7 +299,7 @@ export const en = {
   exemple: {
     titreMeta: "Gift page example — MyPresentsForYou",
     descriptionMeta:
-      "A real gift page to try: lift the veil, look at the pattern, choose from four ideas. Nothing is sent.",
+      "A real gift page to try: lift the veil and choose from four ideas. Nothing is sent.",
     bandeau: "Example — nothing is sent",
     composerLaMienne: "Create mine",
     composer: "Create my gift page",

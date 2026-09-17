@@ -42,8 +42,8 @@ export const es = {
 
   banniere: {
     titre: "Un regalo que sale de lo común, para cualquier ocasión.",
-    texte: "Una página personalizada con tus ideas de regalo, una decoración y un velo que levantar. La otra persona abre, elige, y a ti solo te queda regalar.",
-    pied: "Sin cuenta, sin pago, sin dirección que dar.",
+    texte: "Pones unas cuantas ideas de regalo en una página hecha para una sola persona. La abre, elige, y tú compras.",
+    pied: "Gratis, y sin cuenta que crear.",
   },
 
   questions: {
@@ -202,7 +202,7 @@ export const es = {
       "Un regalo que sale de lo común para cualquier ocasión, una página personalizada con tus ideas de regalo. Envías el enlace, la otra persona elige y a ti solo te queda regalar.",
     composer: "Crear mi página regalo",
     voirExemple: "Ver un ejemplo",
-    note: "Gratis · sin cuenta · lista en pocos minutos",
+    note: "Gratis · sin cuenta · diez minutos bastan",
     telephone: {
       surtitre: "Feliz cumpleaños",
       titre: "Te toca elegir",
@@ -213,60 +213,60 @@ export const es = {
       {
         titre: "Creas su página",
         texte:
-          "Elige la ocasión: la página toma sus colores, su decoración y sus palabras. Añade tus ideas de regalo — pega el enlace de un producto y el título y la foto suelen rellenarse solos.",
+          "Eliges la ocasión y la página toma sus colores. Luego añades tus ideas: pegas el enlace de un producto y el título y la foto suelen llegar solos. Si no, una foto hecha con el móvil sirve igual.",
       },
       {
         titre: "Envías el enlace o lo imprimes",
         texte:
-          "En una aplicación de mensajería, el enlace aparece como una tarjeta, con tu mensaje y el nombre de la persona. También puedes imprimir el código QR, meterlo en un sobre y estar presente cuando se levante el velo.",
+          "Enviado por WhatsApp o por SMS, el enlace llega con tu mensaje y su nombre, no como una dirección pelada. También puedes imprimir el código QR y meterlo en un sobre, para estar ahí cuando se abra la página.",
       },
       {
         titre: "Descubres su elección",
         texte:
-          "En tu enlace privado: el regalo elegido, el día de la elección y el mensaje que te hayan dejado. Solo queda comprarlo.",
+          "Tu enlace privado te dice qué regalo se ha elegido, y cuándo. Con el mensaje que te hayan dejado. Después solo te queda comprarlo.",
       },
     ],
     avantages: [
       {
         titre: "Sin necesidad de preguntar",
         texte:
-          "«¿Qué te gustaría?» estropea la sorpresa y le devuelve la pregunta a la otra persona. Aquí ya has buscado tú; solo queda elegir.",
+          "Preguntar «¿qué te apetecería?» devuelve la pregunta y descubre el pastel. Aquí ya has buscado tú. Solo queda elegir.",
       },
       {
         titre: "Una página personalizada, no un enlace",
         texte:
-          "Una paleta, una decoración, una tipografía, un velo que levantar: la página se parece a la persona y a la ocasión, no a un formulario.",
+          "Eliges los colores, la decoración, la tipografía y el velo que se levanta para descubrir la página. No se parece a un formulario.",
       },
       {
         titre: "Ningún precio a la vista",
         texte:
-          "La persona elige lo que de verdad le gusta, sin comparar precios ni preguntarse cuánto has gastado.",
+          "Los precios no aparecen en ninguna parte. Nadie compara, nadie se pregunta cuánto has gastado.",
       },
       {
         titre: "La sorpresa sigue intacta",
         texte:
-          "Nada es visible antes de abrirla. Y la tarjeta puede quedar sellada hasta el día de la celebración.",
+          "Nada se ve antes de abrirla, y puedes mantener la tarjeta sellada hasta el día señalado.",
       },
       {
         titre: "Una puesta en escena de principio a fin",
         texte:
-          "Su nombre, una frase de apertura, un efecto que se activa y una tarjeta para imprimir con su código QR. Por su parte, solo hay una cosa que hacer: elegir.",
+          "Su nombre aparece arriba en la página, y tú escribes las palabras que leerá al abrirla. Incluso puedes imprimir la tarjeta con su código QR. A la persona que te importa solo le queda elegir.",
       },
       {
         titre: "Un mensaje de vuelta",
         texte:
-          "Junto con su elección, la persona puede dejarte un mensaje. Lo encuentras en tu enlace privado, junto al regalo elegido.",
+          "Al confirmar, se te puede dejar un mensaje. Lo lees en tu enlace privado, junto al regalo elegido.",
       },
     ],
     objections: [
       {
         titre: "Nada que pagar aquí",
-        texte: "Ningún pago pasa por MyPresentsForYou. Compras el regalo donde quieras, como siempre.",
+        texte: "Ningún pago pasa por el sitio. Compras el regalo donde quieras, como siempre.",
       },
       {
         titre: "Sin cuenta",
         texte:
-          "No hay cuenta que crear. Quien recibe la tarjeta solo introduce su elección: ni nombre, ni dirección, ni correo.",
+          "Nada que crear, ni para ti ni para la otra persona. Abre el enlace y elige, sin dar nombre ni dirección.",
       },
       {
         titre: "Modificable hasta la elección",
@@ -275,12 +275,12 @@ export const es = {
       },
     ],
     guidesTitre: "Ideas para cada ocasión",
-    guidesTexte: "Cumpleaños, Navidad, boda… ideas ordenadas por perfil, y una página con los colores de la ocasión.",
+    guidesTexte: "Cumpleaños, Navidad, boda, nacimiento… ideas ordenadas por perfil, si te quedas en blanco.",
     guidesTout: "Todas las ideas de regalo",
     finTitre: "¿Y si creas la suya?",
-    finTexte: "Dos ideas bastan para empezar, diez como máximo. La decoración, las palabras y la apertura se ajustan por el camino.",
+    finTexte: "Empieza con dos ideas, llega a diez si quieres. El resto se arregla por el camino.",
     piedNote:
-      "Cada tarjeta permanece en línea un año. Guarda tu enlace privado: te mostrará el regalo elegido.",
+      "Una tarjeta permanece en línea un año. Guarda tu enlace privado: es el que te dirá qué se ha elegido.",
   },
 
   creation: {
@@ -289,10 +289,10 @@ export const es = {
       "Crea una página regalo personalizada en tres pasos: la ocasión y su decoración, tus ideas de regalo y la presentación. Sin cuenta, sin pago.",
     titre: "Crea tu página regalo",
     chapo:
-      "La ocasión, tus ideas de regalo, la presentación. El botón «Vista previa» te muestra en todo momento lo que verá la otra persona.",
+      "Tres pasos: la ocasión, tus ideas, la presentación. En cualquier momento, «Vista previa» te muestra la página tal como la verá la otra persona.",
     pret: "Tu página está lista",
     rienNestFige:
-      "Nada es definitivo: mientras nadie haya elegido, puedes modificarlo todo — los textos, los regalos, el tema. Los dos enlaces de abajo no cambiarán.",
+      "Mientras nadie haya elegido, puedes rehacerlo todo: los textos, los regalos, los colores. Los dos enlaces de abajo, en cambio, no cambian nunca.",
     lienRecuperation: "Tu enlace de recuperación",
     lienRecuperationFort: "Guárdalo ahora",
     lienRecuperationSuite:
@@ -306,7 +306,7 @@ export const es = {
   exemple: {
     titreMeta: "Ejemplo de página regalo — MyPresentsForYou",
     descriptionMeta:
-      "Una página regalo real para probar: levanta el velo, mira la decoración, elige entre cuatro ideas. No se envía nada.",
+      "Una página regalo real para probar: levanta el velo y elige entre cuatro ideas. No se envía nada.",
     bandeau: "Ejemplo — no se envía nada",
     composerLaMienne: "Crear la mía",
     composer: "Crear mi página regalo",

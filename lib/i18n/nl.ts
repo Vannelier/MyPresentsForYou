@@ -40,8 +40,8 @@ export const nl = {
 
   banniere: {
     titre: "Een cadeau dat opvalt, voor elke gelegenheid.",
-    texte: "Een persoonlijke pagina met jouw cadeau-ideeën, een decor en een sluier om op te lichten. De ander opent, kiest, en jij hoeft alleen nog te geven.",
-    pied: "Geen account, geen betaling, geen adres nodig.",
+    texte: "Je zet een paar cadeau-ideeën op een pagina die voor één persoon gemaakt is. Die opent hem, kiest, en jij koopt.",
+    pied: "Gratis, en zonder account.",
   },
 
   questions: {
@@ -199,7 +199,7 @@ export const nl = {
       "Een cadeau dat opvalt, voor elke gelegenheid: een persoonlijke pagina met jouw cadeau-ideeën. Je stuurt de link, de ander kiest en jij hoeft alleen nog te geven.",
     composer: "Mijn cadeaupagina maken",
     voirExemple: "Een voorbeeld bekijken",
-    note: "Gratis · zonder account · klaar in een paar minuten",
+    note: "Gratis · zonder account · tien minuten is genoeg",
     telephone: {
       surtitre: "Gelukkige verjaardag",
       titre: "Aan jou de keuze",
@@ -210,60 +210,60 @@ export const nl = {
       {
         titre: "Je maakt de pagina voor de ander",
         texte:
-          "Kies de gelegenheid: de pagina krijgt haar kleuren, decor en woorden. Voeg je cadeau-ideeën toe — plak de link van een product, titel en foto vullen zich meestal vanzelf in.",
+          "Je kiest de gelegenheid en de pagina krijgt haar kleuren. Daarna voeg je je ideeën toe: plak de link van een product, titel en foto komen er meestal vanzelf bij. Zo niet, dan is een foto met je telefoon genoeg.",
       },
       {
         titre: "Je stuurt de link, of je print hem",
         texte:
-          "In een chatapp verschijnt de link als een kaart, met je bericht en de voornaam van de ander. Je kunt ook de QR-code afdrukken, in een envelop steken en erbij zijn als de sluier opgaat.",
+          "Via WhatsApp of sms komt de link binnen met jouw bericht en de voornaam erbij, niet als een kaal adres. Je kunt de QR-code ook printen en in een envelop doen, zodat je erbij bent als de pagina opengaat.",
       },
       {
         titre: "Je ontdekt de keuze",
         texte:
-          "Via je privélink: het gekozen cadeau, de dag van de keuze en het bericht dat voor je is achtergelaten. Dan hoef je het alleen nog te kopen.",
+          "Je privélink vertelt je welk cadeau gekozen is, en wanneer. Plus het bericht dat iemand voor je heeft achtergelaten. Daarna hoef je het alleen nog te kopen.",
       },
     ],
     avantages: [
       {
         titre: "Niets hoeven vragen",
         texte:
-          "“Wat zou je leuk vinden?” bederft de verrassing en legt de vraag terug bij de ander. Hier heb jij al gezocht; alleen kiezen blijft over.",
+          "Vragen \"wat wil je graag?\" geeft de vraag terug en verklapt alles. Hier heb jij het zoeken al gedaan. Alleen kiezen blijft over.",
       },
       {
         titre: "Een persoonlijke pagina, geen link",
         texte:
-          "Een palet, een decor, een lettertype, een sluier om op te lichten: de pagina lijkt op de ander en op de gelegenheid, niet op een formulier.",
+          "Jij kiest de kleuren, het decor, het lettertype en de sluier die opzij gaat als de pagina opengaat. Het lijkt in niets op een formulier.",
       },
       {
         titre: "Geen prijzen te zien",
         texte:
-          "De ander kiest wat echt bevalt, zonder prijzen te vergelijken of zich af te vragen hoeveel je uitgaf.",
+          "Prijzen komen er nergens in voor. Niemand vergelijkt, niemand vraagt zich af wat je hebt uitgegeven.",
       },
       {
         titre: "De verrassing blijft heel",
         texte:
-          "Voor het openen is niets zichtbaar. En de kaart kan verzegeld blijven tot de dag van het feest.",
+          "Vooraf is er niets te zien, en je kunt de kaart verzegeld houden tot de dag zelf.",
       },
       {
         titre: "Een mise-en-scène van begin tot eind",
         texte:
-          "De voornaam, een openingszin, een effect dat afgaat, en een kaart om af te drukken met QR-code. Aan de andere kant is er maar één ding te doen: kiezen.",
+          "De voornaam staat bovenaan de pagina, en jij schrijft de woorden die bij het openen te lezen zijn. Je kunt de kaart met QR-code zelfs printen. Degene om wie het jou gaat, hoeft alleen nog te kiezen.",
       },
       {
         titre: "Een bericht terug",
         texte:
-          "Samen met de keuze kan de ander je een bericht achterlaten. Je vindt het via je privélink, naast het gekozen cadeau.",
+          "Bij het bevestigen kan er een bericht voor je achtergelaten worden. Dat lees je via je privélink, naast het gekozen cadeau.",
       },
     ],
     objections: [
       {
         titre: "Hier niets te betalen",
-        texte: "Er loopt geen betaling via MyPresentsForYou. Je koopt het cadeau waar je wilt, zoals altijd.",
+        texte: "Er loopt geen betaling via de site. Je koopt het cadeau waar je wilt, zoals altijd.",
       },
       {
         titre: "Geen account",
         texte:
-          "Geen account aan te maken. Wie de kaart krijgt, geeft alleen de keuze op: geen naam, geen adres, geen e-mail.",
+          "Niets aan te maken, niet voor jou en niet voor de ander. Die opent de link en kiest, zonder naam of adres.",
       },
       {
         titre: "Aanpasbaar tot de keuze",
@@ -271,11 +271,11 @@ export const nl = {
       },
     ],
     guidesTitre: "Ideeën voor elke gelegenheid",
-    guidesTexte: "Verjaardag, kerst, huwelijk… ideeën per profiel, en een pagina in de kleuren van de gelegenheid.",
+    guidesTexte: "Verjaardag, kerst, huwelijk, geboorte… ideeën per profiel, als je vastloopt.",
     guidesTout: "Alle cadeau-ideeën",
     finTitre: "Maak je die van de ander?",
-    finTexte: "Twee ideeën volstaan om te beginnen, tien op zijn hoogst. Decor, woorden en opening stel je onderweg in.",
-    piedNote: "Elke kaart blijft een jaar online. Bewaar je privélink: hij toont je het gekozen cadeau.",
+    finTexte: "Begin met twee ideeën, maak er tien van als je wilt. De rest regel je onderweg.",
+    piedNote: "Een kaart blijft een jaar online. Bewaar je privélink: die vertelt je wat er gekozen is.",
   },
 
   creation: {
@@ -284,10 +284,10 @@ export const nl = {
       "Maak een persoonlijke cadeaupagina in drie stappen: de gelegenheid en het decor, je cadeau-ideeën, de vormgeving. Zonder account, zonder betaling.",
     titre: "Maak je cadeaupagina",
     chapo:
-      "De gelegenheid, je cadeau-ideeën, de vormgeving. De knop “Voorbeeld” toont je op elk moment wat de ander zal zien.",
+      "Drie stappen: de gelegenheid, je ideeën, de vormgeving. Met \"Voorbeeld\" zie je op elk moment de pagina zoals de ander hem ziet.",
     pret: "Je pagina is klaar",
     rienNestFige:
-      "Niets ligt vast: zolang niemand gekozen heeft, kun je alles aanpassen — de teksten, de cadeaus, het thema. De twee links hieronder veranderen niet.",
+      "Zolang niemand heeft gekozen, kun je alles opnieuw doen: de teksten, de cadeaus, de kleuren. De twee links hieronder veranderen nooit.",
     lienRecuperation: "Je herstellink",
     lienRecuperationFort: "Bewaar hem nu",
     lienRecuperationSuite:
@@ -301,7 +301,7 @@ export const nl = {
   exemple: {
     titreMeta: "Voorbeeld van een cadeaupagina — MyPresentsForYou",
     descriptionMeta:
-      "Een echte cadeaupagina om uit te proberen: licht de sluier op, bekijk het decor, kies uit vier ideeën. Er wordt niets verstuurd.",
+      "Een echte cadeaupagina om te proberen: licht de sluier op en kies uit vier ideeën. Er wordt niets verstuurd.",
     bandeau: "Voorbeeld — er wordt niets verstuurd",
     composerLaMienne: "Mijn eigen maken",
     composer: "Mijn cadeaupagina maken",
