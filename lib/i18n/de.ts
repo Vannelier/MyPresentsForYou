@@ -16,8 +16,8 @@ export const de = {
   },
 
   site: {
-    titreMeta: "MyPresentsForYou — die Geschenkseite zum Gestalten",
-    descriptionMeta: "Gestalte eine animierte Geschenkseite für jemanden: ein Motiv, ein Schleier zum Lüften, deine Geschenkideen. Die Person wählt, du schenkst.",
+    titreMeta: "MyPresentsForYou — die persönliche Geschenkseite",
+    descriptionMeta: "Ein Geschenk, das auffällt, zu jedem Anlass: eine persönliche Seite mit deinen Ideen. Du schickst den Link, die Person wählt, du schenkst.",
     titrePartage: "MyPresentsForYou, gestalte eine animierte Geschenkseite.",
   },
 
@@ -40,8 +40,8 @@ export const de = {
   },
 
   banniere: {
-    titre: "Eine Geschenkseite, für eine einzige Person gemacht.",
-    texte: "Ein Motiv zum Anlass, ein Schleier zum Lüften, darunter deine Geschenkideen. Die Person öffnet, wählt, und du weißt, was du schenkst.",
+    titre: "Ein Geschenk, das auffällt — zu jedem Anlass.",
+    texte: "Eine persönliche Seite mit deinen Geschenkideen, ein Motiv und ein Schleier zum Lüften. Die Person öffnet, wählt, und dir bleibt nur noch das Schenken.",
     pied: "Ohne Konto, ohne Zahlung, ohne Adresse.",
   },
 
@@ -56,7 +56,7 @@ export const de = {
       {
         q: "Wie verschenke ich etwas und lasse die andere Person wählen?",
         r: [
-          "Du sammelst ein paar Ideen auf einer Seite, die du in Szene setzt — ein Anlass, ein Motiv, ein Schleier zum Lüften — und schickst den Link. Die Person öffnet die Seite, sieht sich die Vorschläge an und bestätigt den, der ihr am meisten gefällt. Die Wahl findest du über deinen privaten Link, und das Geschenk kaufst du selbst.",
+          "Du gestaltest eine persönliche Seite — ein Anlass, ein Motiv, ein Schleier zum Lüften — mit ein paar Geschenkideen und schickst den Link. Die Person öffnet die Seite, sieht sich die Vorschläge an und bestätigt den, der ihr am meisten gefällt. Die Wahl findest du über deinen privaten Link, und das Geschenk kaufst du selbst.",
           "Der Vorteil: Sie bekommt etwas, das ihr wirklich gefällt, ohne dass du fragen musstest, was sie sich wünscht — die Überraschung bleibt also erhalten.",
         ],
       },
@@ -188,7 +188,7 @@ export const de = {
     donnees: {
       systeme: "Jeder Webbrowser",
       description:
-        "Gestalte eine animierte Geschenkseite für jemanden, mit deinen Geschenkideen: Die Person öffnet sie, wählt, und du schenkst.",
+        "Gestalte eine persönliche Geschenkseite mit deinen Geschenkideen, schick den Link, und lass die Person wählen, was sie möchte.",
       fonctions: [
         "Bis zu zehn Vorschläge pro Karte",
         "Kein Konto nötig",
@@ -196,9 +196,9 @@ export const de = {
         "QR-Code und Karte zum Ausdrucken",
       ],
     },
-    titre: "Gestalte eine Geschenkseite und lass die andere Person wählen.",
+    titre: "Gestalte eine persönliche Geschenkseite, schick sie ab und lass die andere Person wählen, was sie möchte.",
     sousTitre:
-      "Ein Motiv zum Anlass, ein Schleier zum Lüften, darunter deine Geschenkideen. Du schickst den Link; die Person entdeckt sie, wählt, und dir bleibt nur noch das Schenken.",
+      "Ein Geschenk, das auffällt, zu jedem Anlass: eine persönliche Seite mit deinen Geschenkideen. Du schickst den Link, die Person wählt, und dir bleibt nur noch das Schenken.",
     composer: "Meine Geschenkseite erstellen",
     voirExemple: "Beispiel ansehen",
     note: "Kostenlos · ohne Konto · in wenigen Minuten fertig",
@@ -210,12 +210,12 @@ export const de = {
     },
     etapes: [
       {
-        titre: "Du gestaltest die Seite",
+        titre: "Du gestaltest ihre Seite",
         texte:
-          "Wähle den Anlass: Die Seite übernimmt Farben, Motiv und Worte. Füge deine Ideen hinzu — füge den Link zu einem Produkt ein, Titel und Foto füllen sich meist von selbst.",
+          "Wähle den Anlass: Die Seite übernimmt Farben, Motiv und Worte. Füge deine Geschenkideen hinzu — füge den Link zu einem Produkt ein, Titel und Foto füllen sich meist von selbst.",
       },
       {
-        titre: "Du schickst sie oder druckst sie aus",
+        titre: "Du schickst den Link oder druckst ihn aus",
         texte:
           "In einem Messenger erscheint der Link als Karte, mit deiner Nachricht und dem Vornamen der Person. Du kannst auch den QR-Code ausdrucken, in einen Umschlag legen und dabei sein, wenn sich der Schleier hebt.",
       },
@@ -232,7 +232,7 @@ export const de = {
           "„Was wünschst du dir?“ verdirbt die Überraschung und gibt die Frage an die andere Person zurück. Hier hast du schon gesucht; es bleibt nur noch die Wahl.",
       },
       {
-        titre: "Eine Seite, kein Link",
+        titre: "Eine persönliche Seite, kein Link",
         texte:
           "Eine Palette, ein Motiv, eine Schrift, ein Schleier zum Lüften: Die Seite sieht nach der Person und dem Anlass aus, nicht nach einem Formular.",
       },
@@ -247,7 +247,7 @@ export const de = {
           "Vor dem Öffnen ist nichts zu sehen. Und die Karte kann bis zum Tag des Festes versiegelt bleiben.",
       },
       {
-        titre: "Inszeniert bis zum Schluss",
+        titre: "Inszeniert von Anfang bis Ende",
         texte:
           "Der Vorname, ein Eröffnungssatz, ein Effekt, der startet, und eine Karte zum Ausdrucken mit QR-Code. Auf der anderen Seite gibt es nur eines zu tun: wählen.",
       },
@@ -283,10 +283,10 @@ export const de = {
   creation: {
     titreMeta: "Kostenlose Geschenkseite erstellen — MyPresentsForYou",
     descriptionMeta:
-      "Gestalte eine animierte Geschenkseite in drei Schritten: Anlass und Motiv, deine Geschenkideen, die Gestaltung. Ohne Konto, ohne Zahlung.",
+      "Gestalte eine persönliche Geschenkseite in drei Schritten: Anlass und Motiv, deine Geschenkideen, die Gestaltung. Ohne Konto, ohne Zahlung.",
     titre: "Erstelle deine Geschenkseite",
     chapo:
-      "Der Anlass, deine Ideen, die Gestaltung. Die Schaltfläche „Vorschau“ zeigt dir jederzeit, was die andere Person sehen wird.",
+      "Der Anlass, deine Geschenkideen, die Gestaltung. Die Schaltfläche „Vorschau“ zeigt dir jederzeit, was die andere Person sehen wird.",
     pret: "Deine Seite ist fertig",
     rienNestFige:
       "Nichts ist endgültig: Solange niemand gewählt hat, kannst du alles ändern — Texte, Geschenke, Thema. Die beiden Links unten bleiben gleich.",

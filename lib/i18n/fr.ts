@@ -17,8 +17,8 @@ export const fr = {
   },
 
   site: {
-    titreMeta: "MyPresentsForYou — la page-cadeau à composer",
-    descriptionMeta: "Compose une page-cadeau animée pour quelqu'un : un décor, un voile à soulever, tes idées de cadeaux. La personne choisit, tu offres.",
+    titreMeta: "MyPresentsForYou — la page-cadeau personnalisée",
+    descriptionMeta: "Un cadeau qui sort du commun pour n'importe quelle occasion : une page personnalisée avec tes idées. Tu envoies le lien, la personne choisit, tu offres.",
     titrePartage: "MyPresentsForYou, compose une carte cadeau animée.",
   },
 
@@ -43,8 +43,8 @@ export const fr = {
   },
 
   banniere: {
-    titre: "Une page-cadeau, faite pour une seule personne.",
-    texte: "Un décor pour l'occasion, un voile à soulever, tes idées de cadeaux dessous. La personne ouvre, choisit, et tu sais quoi offrir.",
+    titre: "Un cadeau qui sort du commun, pour n'importe quelle occasion.",
+    texte: "Une page personnalisée avec tes idées de cadeaux, un décor et un voile à soulever. La personne ouvre, choisit, et tu n'as plus qu'à offrir.",
     pied: "Sans compte, sans paiement, sans adresse à donner.",
   },
 
@@ -62,7 +62,7 @@ export const fr = {
       {
         q: "Comment offrir un cadeau en laissant la personne choisir ?",
         r: [
-          "Tu rassembles quelques idées sur une page que tu mets en scène — une occasion, un décor, un voile à soulever — puis tu envoies le lien. La personne ouvre la page, regarde les propositions, et confirme celle qui lui fait le plus envie. Tu retrouves son choix sur ton lien privé, et tu achètes le cadeau toi-même.",
+          "Tu composes une page personnalisée — une occasion, un décor, un voile à soulever — avec quelques idées de cadeaux, puis tu envoies le lien. La personne ouvre la page, regarde les propositions, et confirme celle qui lui fait le plus envie. Tu retrouves son choix sur ton lien privé, et tu achètes le cadeau toi-même.",
           "L'intérêt : elle reçoit quelque chose qui lui plaît vraiment, sans que tu aies eu à lui demander ce qu'elle voulait — donc sans gâcher la surprise.",
         ],
       },
@@ -194,7 +194,7 @@ export const fr = {
     donnees: {
       systeme: "Tout navigateur web",
       description:
-        "Compose une page-cadeau animée pour quelqu'un, avec tes idées de cadeaux : la personne ouvre, choisit, et tu offres.",
+        "Compose une page-cadeau personnalisée avec tes idées de cadeaux, envoie le lien, et laisse la personne choisir ce qu'elle souhaite.",
       fonctions: [
         "Jusqu'à dix propositions par carte",
         "Aucun compte requis",
@@ -202,9 +202,9 @@ export const fr = {
         "QR code et carte à imprimer",
       ],
     },
-    titre: "Compose une page-cadeau, et laisse la personne choisir.",
+    titre: "Compose une page-cadeau personnalisée, envoie-la et laisse la personne choisir ce qu'elle souhaite.",
     sousTitre:
-      "Un décor pour l'occasion, un voile à soulever, tes idées de cadeaux dessous. Tu envoies le lien ; la personne découvre, choisit, et tu n'as plus qu'à offrir.",
+      "Un cadeau qui sort du commun pour n'importe quelle occasion, une page personnalisée avec tes idées de cadeaux. Tu envoies le lien, la personne choisit et tu n'as plus qu'à offrir.",
     composer: "Composer ma page-cadeau",
     voirExemple: "Voir un exemple",
     note: "Gratuit · sans compte · prêt en quelques minutes",
@@ -216,12 +216,12 @@ export const fr = {
     },
     etapes: [
       {
-        titre: "Tu composes la page",
+        titre: "Tu composes sa page",
         texte:
-          "Choisis l'occasion : la page prend ses couleurs, son décor et ses mots. Ajoute tes idées — colle le lien d'un produit, le titre et la photo se remplissent le plus souvent d'eux-mêmes.",
+          "Choisis l'occasion : la page prend ses couleurs, son décor et ses mots. Ajoute tes idées de cadeaux — colle le lien d'un produit, le titre et la photo se remplissent le plus souvent d'eux-mêmes.",
       },
       {
-        titre: "Tu l'envoies, ou tu l'imprimes",
+        titre: "Tu envoies le lien, ou tu l'imprimes",
         texte:
           "Dans une messagerie, le lien s'affiche comme une carte, avec ton message et son prénom. Tu peux aussi imprimer le QR code, le glisser dans une enveloppe, et être là quand le voile se lève.",
       },
@@ -238,7 +238,7 @@ export const fr = {
           "« Qu'est-ce qui te ferait plaisir ? » gâche la surprise et renvoie la question à l'autre. Ici, tu as déjà cherché ; il ne reste qu'à choisir.",
       },
       {
-        titre: "Une page, pas un lien",
+        titre: "Une page personnalisée, pas un lien",
         texte:
           "Une palette, un décor, une police, un voile à soulever : la page ressemble à la personne et à l'occasion, pas à un formulaire.",
       },
@@ -253,7 +253,7 @@ export const fr = {
           "Rien n'est visible avant l'ouverture. Et la carte peut rester scellée jusqu'au jour de la fête.",
       },
       {
-        titre: "Une mise en scène jusqu'au bout",
+        titre: "Une mise en scène du début à la fin",
         texte:
           "Son prénom, un mot d'ouverture, un effet qui se déclenche, et une carte à imprimer avec son QR code. De son côté, il n'y a qu'une chose à faire : choisir.",
       },
@@ -291,10 +291,10 @@ export const fr = {
   creation: {
     titreMeta: "Créer une page-cadeau gratuite — MyPresentsForYou",
     descriptionMeta:
-      "Compose une page-cadeau animée en trois étapes : l'occasion et son décor, tes idées de cadeau, la présentation. Sans compte, sans paiement.",
+      "Compose une page-cadeau personnalisée en trois étapes : l'occasion et son décor, tes idées de cadeaux, la présentation. Sans compte, sans paiement.",
     titre: "Compose ta page-cadeau",
     chapo:
-      "L'occasion, tes idées, la présentation. Le bouton « Aperçu » te montre à tout moment ce que verra la personne.",
+      "L'occasion, tes idées de cadeaux, la présentation. Le bouton « Aperçu » te montre à tout moment ce que verra la personne.",
     pret: "Ta page est prête",
     rienNestFige:
       "Rien n'est figé : tant que personne n'a choisi, tu peux tout modifier — les textes, les cadeaux, le thème. Les deux liens ci-dessous ne changeront pas.",
