@@ -47,16 +47,16 @@ export const nl = {
   questions: {
     titreMeta: "Veelgestelde vragen — MyPresentsForYou",
     descriptionMeta:
-      "Een cadeau geven en laten kiezen: hoe het werkt, wat het kost, wat de ander ziet en wat je doet als een afbeelding niet opgehaald wordt.",
+      "Hoe het werkt, wat het kost, wat de ander ziet en wat je doet als een afbeelding niet laadt.",
     titre: "Veelgestelde vragen",
     chapo:
-      "Een cadeau geven en laten kiezen: hoe het werkt, wat het kost en wat er gebeurt als het automatisch ophalen mislukt.",
+      "Hoe het werkt, wat het kost en wat er gebeurt als een afbeelding niet binnenkomt.",
     liste: [
       {
         q: "Hoe geef ik een cadeau en laat ik de ander kiezen?",
         r: [
           "Je maakt een persoonlijke pagina — een gelegenheid, een decor, een sluier om op te lichten — met een paar cadeau-ideeën, en stuurt de link. De ander opent de pagina, bekijkt de voorstellen en bevestigt het idee dat het meest aanspreekt. Je vindt die keuze terug via je privélink en koopt het cadeau zelf.",
-          "Het voordeel: de ander krijgt iets wat echt bevalt, zonder dat je hoefde te vragen wat er gewenst was — en dus zonder de verrassing te bederven.",
+          "Die krijgt iets wat echt bevalt, en jij hoefde er niet naar te vragen. De verrassing blijft.",
         ],
       },
       {
@@ -69,21 +69,21 @@ export const nl = {
       {
         q: "Heb ik een account nodig?",
         r: [
-          "Nee. Geen account, geen wachtwoord, geen e-mailadres — niet voor jou en niet voor wie de kaart krijgt.",
+          "Nee. Geen account, geen wachtwoord, geen e-mail. Niet voor jou en niet voor de ander.",
           "Bij het maken krijg je twee links: een openbare link om te versturen en een privélink om te bewaren. Die tweede link is de enige manier om naar je kaart terug te gaan en de keuze te zien. Bewaar hem goed: omdat niets een kaart aan een identiteit koppelt, kan hij niet opnieuw verstuurd worden.",
         ],
       },
       {
         q: "Wat ziet wie de kaart krijgt?",
         r: [
-          "Een pagina met de eigen naam, jouw bericht en jouw voorstellen. Kiezen en bevestigen, meer niet: geen account aanmaken, geen formulier invullen, en geen naam, adres of e-mail opgeven.",
+          "Een pagina met de eigen naam erop, jouw bericht en jouw voorstellen. Kiezen, bevestigen, klaar. Geen account, geen formulier, niets in te vullen.",
           "Prijzen worden nooit getoond. De ander ziet wat je voorstelt, niet wat het kost.",
         ],
       },
       {
         q: "Hoeveel ideeën kan ik voorstellen?",
         r: [
-          "Van één tot {max}. Met één voorstel is de kaart geen keuze meer maar een aankondiging: de ander bevestigt gewoon de ontvangst, en jij weet wanneer de kaart geopend is.",
+          "Van één tot {max}. Met één idee valt er niets meer te kiezen: de ander bevestigt de ontvangst, en jij weet wanneer de pagina is geopend.",
         ],
       },
       {
@@ -95,7 +95,7 @@ export const nl = {
       {
         q: "Kan ik de kaart aanpassen nadat ik ze verstuurd heb?",
         r: [
-          "Ja, zolang niemand een keuze bevestigd heeft. Je kunt de berichten, de cadeaus en het uiterlijk aanpassen — en al verstuurde links blijven werken, want ze veranderen nooit.",
+          "Ja, zolang niemand heeft bevestigd. Je kunt de berichten, de cadeaus en het uiterlijk aanpassen. Verstuurde links blijven werken: die veranderen nooit.",
           "Zodra een keuze bevestigd is, wordt de kaart vergrendeld: ze zou niet meer eerlijk zijn als ze achteraf nog kon veranderen.",
         ],
       },
@@ -109,8 +109,8 @@ export const nl = {
       {
         q: "De productafbeelding wordt niet opgehaald. Is dat een fout?",
         r: [
-          "Nee. Als je het adres van een productpagina plakt, worden titel en afbeelding automatisch opgehaald — maar veel winkels, met Amazon en sociale netwerken voorop, weigeren automatische verzoeken. Dat is voorzien, niet stuk.",
-          "In dat geval vul je het met de hand in: een foto van je telefoon, een gekopieerde afbeelding of een afbeeldingsadres. De kaart ziet er uiteindelijk hetzelfde uit.",
+          "Nee. Als je het adres van een productpagina plakt, komen titel en afbeelding er meestal vanzelf bij. Maar veel winkels weigeren automatische verzoeken, Amazon en de sociale netwerken vooraan. Er is niets stuk.",
+          "Dan vul je het zelf in: een foto met je telefoon, een gekopieerde afbeelding of het adres van een afbeelding. De kaart wordt er niet minder van.",
         ],
       },
       {
@@ -326,7 +326,7 @@ export const nl = {
     choixFait: "De keuze is gemaakt",
     enAttente: "Wacht op een keuze",
     cadeauChoisi: "Gekozen cadeau",
-    cadeauChoisiAide: "Nu is het aan jou: bestel het en geef het. Er is niets via het platform gegaan.",
+    cadeauChoisiAide: "Nu jij: bestellen en geven. Er is niets via de site gelopen.",
     motDuReceveur: "“{mot}”",
     acheter: "Dit cadeau kopen ↗",
     lienAffilie: "Affiliatelink: als je na deze klik koopt, kan de winkel ons een commissie betalen. Je prijs blijft hetzelfde.",
@@ -692,17 +692,17 @@ export const nl = {
     apercuBandeau: "Voorbeeld — er wordt niets opgeslagen",
     fermer: "Sluiten",
     enregistreA: "Wijzigingen opgeslagen om {heure}.",
-    brouillonRetrouve: "Je kaart in wording is teruggevonden zoals je ze achterliet.",
+    brouillonRetrouve: "We hebben je kaart in wording terugghevonden, precies zoals je hem achterliet.",
     repartirDeZero: "Opnieuw beginnen",
     occasionTitre: "De gelegenheid",
     occasionAide:
-      "Ze legt in één keer een palet, een decor en eerste formuleringen vast. Alles blijft aanpasbaar in de laatste stap.",
+      "Die zet de kleuren, het decor en de eerste teksten. In de laatste stap kun je alles nog wijzigen.",
     occasionAria: "Gelegenheid",
     cadeauxTitre: "De cadeaus",
     cadeauxAide:
-      "Tot {max} voorstellen, in de volgorde die je wilt. Plak het adres van een product om titel en afbeelding op te halen — dat is ook de link die je na de keuze terugkrijgt om het te kopen. Een cadeau dat je niet online koopt, beschrijf je heel goed met de hand.",
+      "Tot {max} ideeën, in de volgorde die jij wilt. Plak het adres van een product om titel en afbeelding op te halen; die link komt na de keuze ook bij jou terug, om te kopen. Een cadeau dat niet online te koop is, beschrijf je gewoon zelf.",
     unSeulFort: "Met één cadeau",
-    unSeulSuite: " wordt de kaart een aankondiging: niets te kiezen, alleen een ontvangstbevestiging.",
+    unSeulSuite: ", valt er niets meer te kiezen: de ander bevestigt de ontvangst, en dat is het.",
     monter: "Cadeau {n} omhoog",
     descendre: "Cadeau {n} omlaag",
     retirer: "Cadeau {n} verwijderen",
@@ -724,8 +724,8 @@ export const nl = {
     ajouter: "+ Cadeau toevoegen",
     idees: {
       titre: "Ideeën nodig?",
-      aide: "Een paar ideeën, per profiel. Eén klik zet het idee in je lijst; daarna voeg je zelf de link van je keuze toe.",
-      aideOccasion: "{occasion}: een paar ideeën, per profiel. Eén klik zet het idee in je lijst; daarna voeg je zelf de link van je keuze toe.",
+      aide: "Een paar ideeën, per profiel. Eén klik zet het op je lijst; de link voeg je daarna toe.",
+      aideOccasion: "{occasion}: een paar ideeën, per profiel. Eén klik zet het op je lijst; de link voeg je daarna toe.",
       plein: "De lijst is vol.",
       guide: "Lees de gids: {occasion} ↗",
     },
@@ -747,13 +747,13 @@ export const nl = {
     maniereOuvrir: "Manier van openen",
     dateOption: "Openen op een bepaalde datum",
     dateOptionAide:
-      "Tot dan blijft de kaart verzegeld achter een aftelling — je kunt de link dus vooraf versturen.",
+      "Tot die datum blijft de kaart verzegeld achter een aftelklok. Je kunt de link dus eerder sturen.",
     dateRevelation: "Openingsdatum",
     motAttente: "Wachttekst",
     motAttenteAide: "Onder de aftelling, zolang de kaart nog verzegeld is.",
     cadeaux: "Cadeaus",
     cadeauxEcranAide:
-      "Het scherm na het openen. Het heeft zijn eigen woorden: die van de sluier herhalen zou twee keer hetzelfde laten lezen.",
+      "Het scherm na het openen. Geef het eigen woorden, anders lees je twee keer hetzelfde.",
     titreEcranAide: "Boven de cadeaus.",
     titreEcranAria: "Titel van het cadeauscherm",
     contenu: "Inhoud",
@@ -770,7 +770,7 @@ export const nl = {
     messageFin: "Slotbericht",
     messageFinAide: "Wat er in plaats van de cadeaus verschijnt.",
     motOption: "Aanbieden om een bericht achter te laten",
-    motOptionAide: "Geeft de ander de kans om je meteen na de keuze te antwoorden.",
+    motOptionAide: "De ander kan je vlak na het kiezen antwoorden.",
     motOptionNote: "Het bericht verschijnt in je beheerweergave.",
     theme: "Het thema",
     palette: "Palet",

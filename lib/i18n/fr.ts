@@ -51,10 +51,10 @@ export const fr = {
   questions: {
     titreMeta: "Questions fréquentes — MyPresentsForYou",
     descriptionMeta:
-      "Offrir en laissant choisir : comment ça marche, combien ça coûte, ce que voit la personne qui reçoit, et que faire si une image ne se récupère pas.",
+      "Comment ça marche, ce que ça coûte, ce que voit la personne qui reçoit, et quoi faire quand une image ne se récupère pas.",
     titre: "Questions fréquentes",
     chapo:
-      "Offrir en laissant choisir : comment ça marche, ce que ça coûte, et ce qui se passe quand la récupération automatique échoue.",
+      "Comment ça marche, ce que ça coûte, et ce qui se passe quand la récupération d'image échoue.",
     // Les mots que les gens tapent — « laisser choisir son cadeau », « sans
     // inscription » — plutot que le vocabulaire interne du projet : une page ne
     // se trouve pas avec les mots de celui qui l'ecrit.
@@ -63,7 +63,7 @@ export const fr = {
         q: "Comment offrir un cadeau en laissant la personne choisir ?",
         r: [
           "Tu composes une page personnalisée — une occasion, un décor, un voile à soulever — avec quelques idées de cadeaux, puis tu envoies le lien. La personne ouvre la page, regarde les propositions, et confirme celle qui lui fait le plus envie. Tu retrouves son choix sur ton lien privé, et tu achètes le cadeau toi-même.",
-          "L'intérêt : elle reçoit quelque chose qui lui plaît vraiment, sans que tu aies eu à lui demander ce qu'elle voulait — donc sans gâcher la surprise.",
+          "Elle reçoit quelque chose qui lui plaît vraiment, et tu n'as pas eu à le lui demander. La surprise tient.",
         ],
       },
       {
@@ -76,21 +76,21 @@ export const fr = {
       {
         q: "Faut-il créer un compte ?",
         r: [
-          "Non. Ni compte, ni mot de passe, ni adresse e-mail — ni pour toi, ni pour la personne qui reçoit la carte.",
+          "Non. Pas de compte, pas de mot de passe, pas d'e-mail. Ni pour toi, ni pour elle.",
           "À la création, tu reçois deux liens : un lien public à envoyer, et un lien privé à garder. Ce second lien est le seul moyen de revenir sur ta carte et d'y voir le choix. Conserve-le : comme rien ne relie une carte à une identité, il ne peut pas être renvoyé.",
         ],
       },
       {
         q: "Que voit la personne qui reçoit la carte ?",
         r: [
-          "Une page à son nom, avec ton message et tes propositions. Elle choisit et confirme, c'est tout : elle n'a ni compte à créer, ni formulaire à remplir, et ne saisit ni nom, ni adresse, ni e-mail.",
+          "Une page à son nom, avec ton message et tes propositions. Elle choisit, elle confirme, c'est fini. Aucun compte, aucun formulaire, rien à saisir.",
           "Les prix ne sont jamais affichés. Elle voit ce que tu proposes, pas ce que ça coûte.",
         ],
       },
       {
         q: "Combien d'idées puis-je proposer ?",
         r: [
-          "De une à {max}. Avec une seule proposition, la carte cesse d'être un choix pour devenir une annonce : la personne confirme simplement qu'elle l'a reçue, et tu sais quand elle l'a ouverte.",
+          "De une à {max}. Avec une seule idée, il n'y a plus rien à choisir : la personne confirme qu'elle l'a reçue, et tu sais quand elle a ouvert la page.",
         ],
       },
       {
@@ -102,7 +102,7 @@ export const fr = {
       {
         q: "Puis-je modifier la carte après l'avoir envoyée ?",
         r: [
-          "Oui, tant que personne n'a confirmé son choix. Tu peux changer les messages, les cadeaux, l'apparence — et les liens déjà envoyés continuent de fonctionner, car ils ne changent jamais.",
+          "Oui, tant que personne n'a confirmé. Tu peux changer les messages, les cadeaux, l'apparence. Les liens déjà envoyés continuent de marcher : ils ne changent jamais.",
           "Dès qu'un choix est confirmé, la carte se verrouille : elle ne serait plus honnête si elle pouvait changer après coup.",
         ],
       },
@@ -116,8 +116,8 @@ export const fr = {
       {
         q: "L'image du produit n'est pas récupérée, est-ce un bug ?",
         r: [
-          "Non. Quand tu colles l'adresse d'une page produit, le titre et l'image sont récupérés automatiquement — mais beaucoup de marchands, Amazon et les réseaux sociaux en tête, refusent les requêtes automatisées. C'est prévu, pas cassé.",
-          "Dans ce cas tu remplis à la main : une photo depuis ton téléphone, une image copiée-collée, ou une adresse d'image. La carte est identique au final.",
+          "Non. Quand tu colles l'adresse d'une page produit, le titre et l'image se récupèrent tout seuls. Mais beaucoup de marchands refusent les requêtes automatiques, Amazon et les réseaux sociaux en tête. Ce n'est pas une panne.",
+          "Dans ce cas tu remplis à la main : une photo prise au téléphone, une image copiée, ou l'adresse d'une image. Au final, la carte est la même.",
         ],
       },
       {
@@ -336,7 +336,7 @@ export const fr = {
     choixFait: "Le choix est fait",
     enAttente: "En attente d'un choix",
     cadeauChoisi: "Cadeau choisi",
-    cadeauChoisiAide: "À toi de jouer : commande-le et offre-le. Rien n'a transité par la plateforme.",
+    cadeauChoisiAide: "À toi de jouer : commande-le et offre-le. Rien n'est passé par le site.",
     motDuReceveur: "« {mot} »",
     acheter: "Acheter ce cadeau ↗",
     lienAffilie: "Lien affilié : si tu achètes après ce clic, le marchand peut nous verser une commission. Ton prix ne change pas.",
@@ -714,17 +714,17 @@ export const fr = {
     apercuBandeau: "Aperçu — rien n'est enregistré",
     fermer: "Fermer",
     enregistreA: "Modifications enregistrées à {heure}.",
-    brouillonRetrouve: "Ta carte en cours a été retrouvée telle que tu l'avais laissée.",
+    brouillonRetrouve: "On a retrouvé ta carte en cours, telle que tu l'avais laissée.",
     repartirDeZero: "Repartir de zéro",
     occasionTitre: "L'occasion",
     occasionAide:
-      "Elle pose d'un coup une palette, un décor et des formulations de départ. Tout reste modifiable à la dernière étape.",
+      "Elle pose les couleurs, le décor et les premières formules. Tu pourras tout changer à la dernière étape.",
     occasionAria: "Occasion",
     cadeauxTitre: "Les cadeaux",
     cadeauxAide:
-      "Jusqu'à {max} propositions, dans l'ordre que tu veux. Colle l'adresse d'un produit pour en récupérer le titre et l'image — c'est aussi le lien qui te reviendra, après le choix, pour acheter. Un cadeau qui ne s'achète pas en ligne se décrit très bien à la main.",
+      "Jusqu'à {max} idées, dans l'ordre que tu veux. Colle l'adresse d'un produit pour en récupérer le titre et l'image ; c'est aussi ce lien qui te reviendra, après le choix, pour acheter. Un cadeau qui ne s'achète pas en ligne se décrit très bien à la main.",
     unSeulFort: "Avec un seul cadeau",
-    unSeulSuite: ", la carte devient une annonce : rien à choisir, juste un accusé de réception.",
+    unSeulSuite: ", il n'y a plus rien à choisir : la personne confirme qu'elle a bien reçu, et c'est tout.",
     monter: "Monter le cadeau {n}",
     descendre: "Descendre le cadeau {n}",
     retirer: "Retirer le cadeau {n}",
@@ -746,8 +746,8 @@ export const fr = {
     ajouter: "+ Ajouter un cadeau",
     idees: {
       titre: "Besoin d'idées ?",
-      aide: "Quelques pistes, rangées par profil. Un clic ajoute l'idée à ta liste ; à toi d'y mettre ensuite le lien de ton choix.",
-      aideOccasion: "{occasion} : quelques pistes, rangées par profil. Un clic ajoute l'idée à ta liste ; à toi d'y mettre ensuite le lien de ton choix.",
+      aide: "Quelques idées, classées par profil. Un clic l'ajoute à ta liste ; le lien, tu le mets ensuite.",
+      aideOccasion: "{occasion} : quelques idées, classées par profil. Un clic l'ajoute à ta liste ; le lien, tu le mets ensuite.",
       plein: "La liste est pleine.",
       guide: "Lire le guide : {occasion} ↗",
     },
@@ -769,13 +769,13 @@ export const fr = {
     maniereOuvrir: "Manière de l'ouvrir",
     dateOption: "Ouvrir à une date précise",
     dateOptionAide:
-      "Avant elle, la carte reste scellée sur un compte à rebours — tu peux donc envoyer le lien à l'avance.",
+      "Avant cette date, la carte reste scellée derrière un compte à rebours. Tu peux donc envoyer le lien en avance.",
     dateRevelation: "Date de révélation",
     motAttente: "Mot d'attente",
     motAttenteAide: "Sous le compte à rebours, pendant que la carte est encore scellée.",
     cadeaux: "Cadeaux",
     cadeauxEcranAide:
-      "L'écran qui suit l'ouverture. Ses mots lui appartiennent : répéter ceux du voile ferait lire deux fois la même chose.",
+      "L'écran qui suit l'ouverture. Écris-lui ses propres mots, sinon on lit deux fois la même chose.",
     titreEcranAide: "Au-dessus des cadeaux.",
     titreEcranAria: "Titre de l'écran des cadeaux",
     contenu: "Contenu",
@@ -793,7 +793,7 @@ export const fr = {
     messageFinAide: "Ce qui s'affiche à la place des cadeaux.",
     motOption: "Proposer de laisser un mot",
     motOptionAide:
-      "Laisse l'opportunité à la personne de te répondre directement après avoir fait son choix.",
+      "La personne pourra te répondre juste après avoir choisi.",
     motOptionNote: "Le mot apparaîtra dans ta vue d'administration.",
     theme: "Le thème",
     palette: "Palette",

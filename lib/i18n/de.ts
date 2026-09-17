@@ -48,16 +48,16 @@ export const de = {
   questions: {
     titreMeta: "Häufige Fragen — MyPresentsForYou",
     descriptionMeta:
-      "Schenken und wählen lassen: wie es funktioniert, was es kostet, was die beschenkte Person sieht und was zu tun ist, wenn ein Bild nicht geladen wird.",
+      "Wie es funktioniert, was es kostet, was die beschenkte Person sieht und was zu tun ist, wenn ein Bild nicht lädt.",
     titre: "Häufige Fragen",
     chapo:
-      "Schenken und wählen lassen: wie es funktioniert, was es kostet und was passiert, wenn der automatische Abruf nicht klappt.",
+      "Wie es funktioniert, was es kostet und was passiert, wenn das Bild nicht geladen wird.",
     liste: [
       {
         q: "Wie verschenke ich etwas und lasse die andere Person wählen?",
         r: [
           "Du gestaltest eine persönliche Seite — ein Anlass, ein Motiv, ein Schleier zum Lüften — mit ein paar Geschenkideen und schickst den Link. Die Person öffnet die Seite, sieht sich die Vorschläge an und bestätigt den, der ihr am meisten gefällt. Die Wahl findest du über deinen privaten Link, und das Geschenk kaufst du selbst.",
-          "Der Vorteil: Sie bekommt etwas, das ihr wirklich gefällt, ohne dass du fragen musstest, was sie sich wünscht — die Überraschung bleibt also erhalten.",
+          "Sie bekommt etwas, das ihr wirklich gefällt, und du musstest nicht fragen. Die Überraschung hält.",
         ],
       },
       {
@@ -70,21 +70,21 @@ export const de = {
       {
         q: "Brauche ich ein Konto?",
         r: [
-          "Nein. Kein Konto, kein Passwort, keine E-Mail-Adresse — weder für dich noch für die Person, die die Karte bekommt.",
+          "Nein. Kein Konto, kein Passwort, keine E-Mail. Weder für dich noch für sie.",
           "Beim Erstellen bekommst du zwei Links: einen öffentlichen Link zum Verschicken und einen privaten Link zum Aufbewahren. Nur über diesen zweiten Link kommst du zu deiner Karte zurück und siehst die Wahl. Bewahre ihn gut auf: Da keine Karte mit einer Identität verknüpft ist, kann er dir nicht erneut geschickt werden.",
         ],
       },
       {
         q: "Was sieht die Person, die die Karte bekommt?",
         r: [
-          "Eine Seite mit ihrem Namen, deiner Nachricht und deinen Vorschlägen. Sie wählt und bestätigt, das ist alles: kein Konto, kein Formular, und sie gibt weder Namen noch Adresse noch E-Mail ein.",
+          "Eine Seite mit ihrem Namen, deiner Nachricht und deinen Vorschlägen. Sie wählt, sie bestätigt, fertig. Kein Konto, kein Formular, nichts einzutragen.",
           "Preise werden nie angezeigt. Sie sieht, was du vorschlägst, nicht, was es kostet.",
         ],
       },
       {
         q: "Wie viele Ideen kann ich vorschlagen?",
         r: [
-          "Eine bis {max}. Mit nur einem Vorschlag ist die Karte keine Wahl mehr, sondern eine Ankündigung: Die Person bestätigt einfach, dass sie ihn erhalten hat, und du weißt, wann sie die Karte geöffnet hat.",
+          "Eine bis {max}. Mit nur einer Idee gibt es nichts mehr zu wählen: Die Person bestätigt, dass sie sie bekommen hat, und du weißt, wann sie die Seite geöffnet hat.",
         ],
       },
       {
@@ -96,7 +96,7 @@ export const de = {
       {
         q: "Kann ich die Karte nach dem Verschicken ändern?",
         r: [
-          "Ja, solange niemand eine Wahl bestätigt hat. Du kannst Texte, Geschenke und Aussehen ändern — und bereits verschickte Links funktionieren weiter, denn sie ändern sich nie.",
+          "Ja, solange niemand bestätigt hat. Du kannst die Nachrichten, die Geschenke und das Aussehen ändern. Verschickte Links funktionieren weiter: Sie ändern sich nie.",
           "Sobald eine Wahl bestätigt ist, wird die Karte gesperrt: Sie wäre nicht mehr ehrlich, wenn sie sich danach noch ändern könnte.",
         ],
       },
@@ -110,8 +110,8 @@ export const de = {
       {
         q: "Das Produktbild wird nicht geladen — ist das ein Fehler?",
         r: [
-          "Nein. Wenn du die Adresse einer Produktseite einfügst, werden Titel und Bild automatisch abgerufen — aber viele Händler, allen voran Amazon und soziale Netzwerke, lehnen automatische Anfragen ab. Das ist so vorgesehen, nicht kaputt.",
-          "Dann füllst du es von Hand aus: ein Foto vom Handy, ein kopiertes Bild oder eine Bildadresse. Am Ende sieht die Karte genauso aus.",
+          "Nein. Wenn du die Adresse einer Produktseite einfügst, kommen Titel und Bild von allein. Viele Händler lehnen automatische Anfragen aber ab, Amazon und die sozialen Netzwerke voran. Kaputt ist da nichts.",
+          "Dann trägst du es von Hand ein: ein Foto vom Handy, ein kopiertes Bild oder die Adresse eines Bildes. Am Ende sieht die Karte gleich aus.",
         ],
       },
       {
@@ -328,7 +328,7 @@ export const de = {
     choixFait: "Die Wahl ist getroffen",
     enAttente: "Warten auf eine Wahl",
     cadeauChoisi: "Gewähltes Geschenk",
-    cadeauChoisiAide: "Jetzt bist du dran: Bestell es und verschenk es. Über die Plattform ist nichts gelaufen.",
+    cadeauChoisiAide: "Jetzt du: bestellen und schenken. Über die Website ist nichts gelaufen.",
     motDuReceveur: "„{mot}“",
     acheter: "Dieses Geschenk kaufen ↗",
     lienAffilie: "Affiliate-Link: Wenn du nach diesem Klick kaufst, kann uns der Shop eine Provision zahlen. Dein Preis bleibt gleich.",
@@ -694,17 +694,17 @@ export const de = {
     apercuBandeau: "Vorschau — nichts wird gespeichert",
     fermer: "Schließen",
     enregistreA: "Änderungen um {heure} gespeichert.",
-    brouillonRetrouve: "Deine angefangene Karte wurde so wiederhergestellt, wie du sie verlassen hast.",
+    brouillonRetrouve: "Wir haben deine begonnene Karte wiedergefunden, genau wie du sie verlassen hast.",
     repartirDeZero: "Neu anfangen",
     occasionTitre: "Der Anlass",
     occasionAide:
-      "Er legt auf einmal eine Palette, ein Motiv und erste Formulierungen fest. Im letzten Schritt bleibt alles änderbar.",
+      "Er setzt die Farben, das Motiv und die ersten Formulierungen. Im letzten Schritt kannst du alles ändern.",
     occasionAria: "Anlass",
     cadeauxTitre: "Die Geschenke",
     cadeauxAide:
-      "Bis zu {max} Vorschläge, in der Reihenfolge, die du willst. Füge die Adresse eines Produkts ein, um Titel und Bild abzurufen — das ist auch der Link, den du nach der Wahl zum Kaufen wiederfindest. Ein Geschenk, das man nicht online kauft, lässt sich sehr gut von Hand beschreiben.",
+      "Bis zu {max} Ideen, in der Reihenfolge, die du willst. Füge die Adresse eines Produkts ein, um Titel und Bild zu holen; dieser Link kommt nach der Wahl auch zu dir zurück, zum Kaufen. Ein Geschenk, das es online nicht gibt, beschreibst du einfach selbst.",
     unSeulFort: "Mit nur einem Geschenk",
-    unSeulSuite: " wird die Karte zur Ankündigung: nichts zu wählen, nur eine Empfangsbestätigung.",
+    unSeulSuite: ", gibt es nichts mehr zu wählen: Die Person bestätigt den Empfang, das ist alles.",
     monter: "Geschenk {n} nach oben",
     descendre: "Geschenk {n} nach unten",
     retirer: "Geschenk {n} entfernen",
@@ -726,8 +726,8 @@ export const de = {
     ajouter: "+ Geschenk hinzufügen",
     idees: {
       titre: "Brauchst du Ideen?",
-      aide: "Ein paar Ideen, nach Typ sortiert. Ein Klick fügt die Idee deiner Liste hinzu; den Link deiner Wahl ergänzt du danach selbst.",
-      aideOccasion: "{occasion}: ein paar Ideen, nach Typ sortiert. Ein Klick fügt die Idee deiner Liste hinzu; den Link deiner Wahl ergänzt du danach selbst.",
+      aide: "Ein paar Ideen, nach Typ sortiert. Ein Klick setzt sie auf deine Liste; den Link ergänzt du danach.",
+      aideOccasion: "{occasion}: ein paar Ideen, nach Typ sortiert. Ein Klick setzt sie auf deine Liste; den Link ergänzt du danach.",
       plein: "Die Liste ist voll.",
       guide: "Zum Ratgeber: {occasion} ↗",
     },
@@ -749,13 +749,13 @@ export const de = {
     maniereOuvrir: "Art des Öffnens",
     dateOption: "An einem bestimmten Datum öffnen",
     dateOptionAide:
-      "Bis dahin bleibt die Karte hinter einem Countdown versiegelt — du kannst den Link also schon vorher verschicken.",
+      "Vor diesem Datum bleibt die Karte hinter einem Countdown versiegelt. Du kannst den Link also früher schicken.",
     dateRevelation: "Öffnungsdatum",
     motAttente: "Wartetext",
     motAttenteAide: "Unter dem Countdown, solange die Karte noch versiegelt ist.",
     cadeaux: "Geschenke",
     cadeauxEcranAide:
-      "Der Bildschirm nach dem Öffnen. Er hat seine eigenen Worte: Die des Schleiers zu wiederholen hieße, dasselbe zweimal zu lesen.",
+      "Der Bildschirm nach dem Öffnen. Schreib ihm eigene Worte, sonst liest man zweimal dasselbe.",
     titreEcranAide: "Über den Geschenken.",
     titreEcranAria: "Titel des Geschenkbildschirms",
     contenu: "Inhalt",
@@ -772,7 +772,7 @@ export const de = {
     messageFin: "Schlussnachricht",
     messageFinAide: "Was an Stelle der Geschenke erscheint.",
     motOption: "Anbieten, eine Nachricht zu hinterlassen",
-    motOptionAide: "Gibt der Person die Möglichkeit, dir direkt nach ihrer Wahl zu antworten.",
+    motOptionAide: "Die Person kann dir direkt nach der Wahl antworten.",
     motOptionNote: "Die Nachricht erscheint in deiner Verwaltungsansicht.",
     theme: "Das Thema",
     palette: "Palette",

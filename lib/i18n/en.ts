@@ -47,16 +47,16 @@ export const en = {
   questions: {
     titreMeta: "Frequently asked questions — MyPresentsForYou",
     descriptionMeta:
-      "Giving a gift and letting them choose: how it works, what it costs, what the recipient sees, and what to do if an image can't be fetched.",
+      "How it works, what it costs, what the person receiving sees, and what to do when an image won't load.",
     titre: "Frequently asked questions",
     chapo:
-      "Giving a gift and letting them choose: how it works, what it costs, and what happens when automatic fetching fails.",
+      "How it works, what it costs, and what happens when an image can't be fetched.",
     liste: [
       {
         q: "How do I give a gift and let the person choose?",
         r: [
           "You compose a personalised page — an occasion, a pattern, a veil to lift — with a few gift ideas, then you send the link. The person opens the page, looks at the ideas, and confirms the one they like most. You find their choice on your private link, and you buy the gift yourself.",
-          "The point: they receive something they really like, without you having to ask what they wanted — so the surprise stays intact.",
+          "They get something they actually want, and you never had to ask. The surprise holds.",
         ],
       },
       {
@@ -69,21 +69,21 @@ export const en = {
       {
         q: "Do I need an account?",
         r: [
-          "No. No account, no password, no email address — neither for you nor for the person receiving the card.",
+          "No. No account, no password, no email. Not for you, not for them.",
           "When you create a card, you get two links: a public link to send, and a private link to keep. That second link is the only way to come back to your card and see the choice. Keep it safe: since nothing ties a card to an identity, it can't be sent to you again.",
         ],
       },
       {
         q: "What does the person receiving the card see?",
         r: [
-          "A page with their name, your message and your ideas. They choose and confirm, and that's all: no account to create, no form to fill in, and no name, address or email to enter.",
+          "A page with their name on it, your message and your ideas. They choose, they confirm, done. No account, no form, nothing to fill in.",
           "Prices are never shown. They see what you're offering, not what it costs.",
         ],
       },
       {
         q: "How many ideas can I offer?",
         r: [
-          "From one to {max}. With a single idea, the card stops being a choice and becomes an announcement: the person simply confirms they've received it, and you know when they opened it.",
+          "One to {max}. With a single idea there's nothing left to choose: they confirm they got it, and you know when they opened the page.",
         ],
       },
       {
@@ -95,7 +95,7 @@ export const en = {
       {
         q: "Can I change the card after sending it?",
         r: [
-          "Yes, as long as nobody has confirmed a choice. You can change the messages, the gifts, the look — and links already sent keep working, because they never change.",
+          "Yes, as long as nobody has confirmed. You can change the messages, the gifts, the look. Links you've already sent keep working: they never change.",
           "As soon as a choice is confirmed, the card locks: it would no longer be honest if it could change afterwards.",
         ],
       },
@@ -109,8 +109,8 @@ export const en = {
       {
         q: "The product image isn't fetched — is it a bug?",
         r: [
-          "No. When you paste the address of a product page, the title and image are fetched automatically — but many shops, Amazon and social networks first among them, refuse automated requests. That's expected, not broken.",
-          "In that case you fill it in by hand: a photo from your phone, a copied-and-pasted image, or an image address. The card looks exactly the same in the end.",
+          "No. When you paste a product page address, the title and image are fetched on their own. But plenty of shops refuse automated requests, Amazon and social networks first among them. Nothing is broken.",
+          "Then you fill it in by hand: a photo from your phone, a copied image, or an image address. The card ends up the same either way.",
         ],
       },
       {
@@ -324,7 +324,7 @@ export const en = {
     choixFait: "The choice is made",
     enAttente: "Waiting for a choice",
     cadeauChoisi: "Chosen gift",
-    cadeauChoisiAide: "It's your turn: order it and give it. Nothing went through the platform.",
+    cadeauChoisiAide: "Over to you: order it and give it. Nothing went through the site.",
     motDuReceveur: "“{mot}”",
     acheter: "Buy this gift ↗",
     lienAffilie: "Affiliate link: if you buy after this click, the shop may pay us a commission. Your price stays the same.",
@@ -689,17 +689,17 @@ export const en = {
     apercuBandeau: "Preview — nothing is saved",
     fermer: "Close",
     enregistreA: "Changes saved at {heure}.",
-    brouillonRetrouve: "Your card in progress was restored just as you left it.",
+    brouillonRetrouve: "We found your card in progress, just as you left it.",
     repartirDeZero: "Start over",
     occasionTitre: "The occasion",
     occasionAide:
-      "It sets a palette, a pattern and some starting words in one go. Everything can still be changed at the last step.",
+      "It sets the colours, the pattern and the first wordings. You can change all of it at the last step.",
     occasionAria: "Occasion",
     cadeauxTitre: "The gifts",
     cadeauxAide:
-      "Up to {max} ideas, in the order you like. Paste a product address to fetch its title and image — it's also the link you'll get back, after the choice, to buy it. A gift that can't be bought online is easy to describe by hand.",
+      "Up to {max} ideas, in whatever order you like. Paste a product address to fetch its title and image; that link also comes back to you after the choice, to buy from. A gift you can't buy online is easy to describe by hand.",
     unSeulFort: "With a single gift",
-    unSeulSuite: ", the card becomes an announcement: nothing to choose, just an acknowledgement.",
+    unSeulSuite: ", there's nothing left to choose: they confirm they got it, and that's it.",
     monter: "Move gift {n} up",
     descendre: "Move gift {n} down",
     retirer: "Remove gift {n}",
@@ -721,8 +721,8 @@ export const en = {
     ajouter: "+ Add a gift",
     idees: {
       titre: "Need ideas?",
-      aide: "A few ideas, sorted by profile. One click adds the idea to your list; then add the link of your choice.",
-      aideOccasion: "{occasion}: a few ideas, sorted by profile. One click adds the idea to your list; then add the link of your choice.",
+      aide: "A few ideas, sorted by profile. One click adds it to your list; the link you add afterwards.",
+      aideOccasion: "{occasion}: a few ideas, sorted by profile. One click adds it to your list; the link you add afterwards.",
       plein: "The list is full.",
       guide: "Read the guide: {occasion} ↗",
     },
@@ -744,13 +744,13 @@ export const en = {
     maniereOuvrir: "How it opens",
     dateOption: "Open on a specific date",
     dateOptionAide:
-      "Before then, the card stays sealed behind a countdown — so you can send the link ahead of time.",
+      "Before that date, the card stays sealed behind a countdown. So you can send the link early.",
     dateRevelation: "Reveal date",
     motAttente: "Waiting message",
     motAttenteAide: "Under the countdown, while the card is still sealed.",
     cadeaux: "Gifts",
     cadeauxEcranAide:
-      "The screen after the opening. Its words are its own: repeating the veil's words would mean reading the same thing twice.",
+      "The screen after the opening. Give it its own words, or the same thing gets read twice.",
     titreEcranAide: "Above the gifts.",
     titreEcranAria: "Gift screen title",
     contenu: "Content",
@@ -767,7 +767,7 @@ export const en = {
     messageFin: "Closing message",
     messageFinAide: "What shows in place of the gifts.",
     motOption: "Offer to leave a note",
-    motOptionAide: "Gives them the chance to reply to you right after making their choice.",
+    motOptionAide: "They'll be able to write back right after choosing.",
     motOptionNote: "The note will appear in your admin view.",
     theme: "The theme",
     palette: "Palette",

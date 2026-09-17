@@ -49,16 +49,16 @@ export const es = {
   questions: {
     titreMeta: "Preguntas frecuentes — MyPresentsForYou",
     descriptionMeta:
-      "Regalar dejando elegir: cómo funciona, cuánto cuesta, qué ve quien recibe y qué hacer si una imagen no se recupera.",
+      "Cómo funciona, cuánto cuesta, qué ve la persona que recibe y qué hacer cuando una imagen no se carga.",
     titre: "Preguntas frecuentes",
     chapo:
-      "Regalar dejando elegir: cómo funciona, cuánto cuesta y qué pasa cuando la recuperación automática falla.",
+      "Cómo funciona, cuánto cuesta y qué pasa cuando la imagen no se recupera.",
     liste: [
       {
         q: "¿Cómo hago un regalo dejando que la otra persona elija?",
         r: [
           "Creas una página personalizada — una ocasión, una decoración, un velo que levantar — con unas cuantas ideas de regalo, y envías el enlace. La persona abre la página, mira las propuestas y confirma la que más le apetece. Encuentras su elección en tu enlace privado y compras tú el regalo.",
-          "La ventaja: recibe algo que de verdad le gusta, sin que hayas tenido que preguntarle qué quería — así que sin estropear la sorpresa.",
+          "Recibe algo que le gusta de verdad, y tú no has tenido que preguntar. La sorpresa se mantiene.",
         ],
       },
       {
@@ -71,21 +71,21 @@ export const es = {
       {
         q: "¿Hace falta crear una cuenta?",
         r: [
-          "No. Ni cuenta, ni contraseña, ni dirección de correo — ni para ti ni para quien recibe la tarjeta.",
+          "No. Sin cuenta, sin contraseña, sin correo. Ni para ti, ni para ella.",
           "Al crearla, recibes dos enlaces: un enlace público para enviar y un enlace privado para guardar. Ese segundo enlace es la única forma de volver a tu tarjeta y ver la elección. Guárdalo: como nada vincula una tarjeta a una identidad, no se puede reenviar.",
         ],
       },
       {
         q: "¿Qué ve quien recibe la tarjeta?",
         r: [
-          "Una página con su nombre, tu mensaje y tus propuestas. Elige y confirma, y ya está: no tiene que crear una cuenta ni rellenar un formulario, y no introduce ni nombre, ni dirección, ni correo.",
+          "Una página con su nombre, tu mensaje y tus propuestas. Elige, confirma, listo. Sin cuenta, sin formulario, nada que escribir.",
           "Los precios nunca se muestran. Ve lo que propones, no lo que cuesta.",
         ],
       },
       {
         q: "¿Cuántas ideas puedo proponer?",
         r: [
-          "De una a {max}. Con una sola propuesta, la tarjeta deja de ser una elección y se convierte en un anuncio: la persona confirma simplemente que la ha recibido, y tú sabes cuándo la abrió.",
+          "De una a {max}. Con una sola idea ya no hay nada que elegir: la persona confirma que la ha recibido, y tú sabes cuándo abrió la página.",
         ],
       },
       {
@@ -97,7 +97,7 @@ export const es = {
       {
         q: "¿Puedo modificar la tarjeta después de enviarla?",
         r: [
-          "Sí, mientras nadie haya confirmado una elección. Puedes cambiar los mensajes, los regalos, el aspecto — y los enlaces ya enviados siguen funcionando, porque nunca cambian.",
+          "Sí, mientras nadie haya confirmado. Puedes cambiar los mensajes, los regalos, el aspecto. Los enlaces ya enviados siguen funcionando: no cambian nunca.",
           "En cuanto se confirma una elección, la tarjeta se bloquea: ya no sería honesta si pudiera cambiar después.",
         ],
       },
@@ -111,8 +111,8 @@ export const es = {
       {
         q: "No se recupera la imagen del producto, ¿es un error?",
         r: [
-          "No. Cuando pegas la dirección de una página de producto, el título y la imagen se recuperan automáticamente — pero muchas tiendas, con Amazon y las redes sociales a la cabeza, rechazan las solicitudes automáticas. Está previsto, no roto.",
-          "En ese caso lo rellenas a mano: una foto desde tu móvil, una imagen copiada y pegada o la dirección de una imagen. Al final, la tarjeta es idéntica.",
+          "No. Cuando pegas la dirección de una página de producto, el título y la imagen se recuperan solos. Pero muchas tiendas rechazan las peticiones automáticas, Amazon y las redes sociales a la cabeza. No es una avería.",
+          "En ese caso lo rellenas a mano: una foto hecha con el móvil, una imagen copiada o la dirección de una imagen. Al final la tarjeta queda igual.",
         ],
       },
       {
@@ -331,7 +331,7 @@ export const es = {
     choixFait: "La elección está hecha",
     enAttente: "A la espera de una elección",
     cadeauChoisi: "Regalo elegido",
-    cadeauChoisiAide: "Te toca a ti: pídelo y regálalo. Nada ha pasado por la plataforma.",
+    cadeauChoisiAide: "Te toca: encárgalo y regálalo. No ha pasado nada por el sitio.",
     motDuReceveur: "«{mot}»",
     acheter: "Comprar este regalo ↗",
     lienAffilie: "Enlace de afiliado: si compras después de este clic, la tienda puede pagarnos una comisión. Tu precio no cambia.",
@@ -702,17 +702,17 @@ export const es = {
     apercuBandeau: "Vista previa — no se guarda nada",
     fermer: "Cerrar",
     enregistreA: "Cambios guardados a las {heure}.",
-    brouillonRetrouve: "Hemos recuperado tu tarjeta en curso tal como la dejaste.",
+    brouillonRetrouve: "Hemos recuperado tu tarjeta en curso, tal como la dejaste.",
     repartirDeZero: "Empezar de cero",
     occasionTitre: "La ocasión",
     occasionAide:
-      "Define de una vez una paleta, una decoración y unos textos de partida. Todo se puede modificar en el último paso.",
+      "Pone los colores, la decoración y las primeras frases. Podrás cambiarlo todo en el último paso.",
     occasionAria: "Ocasión",
     cadeauxTitre: "Los regalos",
     cadeauxAide:
-      "Hasta {max} propuestas, en el orden que quieras. Pega la dirección de un producto para recuperar su título y su imagen — también es el enlace que volverás a tener, tras la elección, para comprarlo. Un regalo que no se compra en línea se describe muy bien a mano.",
+      "Hasta {max} ideas, en el orden que quieras. Pega la dirección de un producto para recuperar su título y su imagen; ese enlace es también el que te volverá, tras la elección, para comprar. Un regalo que no se compra en línea se describe muy bien a mano.",
     unSeulFort: "Con un solo regalo",
-    unSeulSuite: ", la tarjeta se convierte en un anuncio: nada que elegir, solo un acuse de recibo.",
+    unSeulSuite: ", ya no hay nada que elegir: la persona confirma que lo ha recibido, y se acabó.",
     monter: "Subir el regalo {n}",
     descendre: "Bajar el regalo {n}",
     retirer: "Quitar el regalo {n}",
@@ -734,8 +734,8 @@ export const es = {
     ajouter: "+ Añadir un regalo",
     idees: {
       titre: "¿Necesitas ideas?",
-      aide: "Algunas ideas, ordenadas por perfil. Un clic añade la idea a tu lista; luego añade tú el enlace que prefieras.",
-      aideOccasion: "{occasion}: algunas ideas, ordenadas por perfil. Un clic añade la idea a tu lista; luego añade tú el enlace que prefieras.",
+      aide: "Algunas ideas, ordenadas por perfil. Un clic la añade a tu lista; el enlace lo pones después.",
+      aideOccasion: "{occasion}: algunas ideas, ordenadas por perfil. Un clic la añade a tu lista; el enlace lo pones después.",
       plein: "La lista está llena.",
       guide: "Leer la guía: {occasion} ↗",
     },
@@ -757,13 +757,13 @@ export const es = {
     maniereOuvrir: "Forma de abrirla",
     dateOption: "Abrir en una fecha concreta",
     dateOptionAide:
-      "Antes de esa fecha, la tarjeta queda sellada con una cuenta atrás — así que puedes enviar el enlace con antelación.",
+      "Antes de esa fecha, la tarjeta queda sellada tras una cuenta atrás. Así puedes enviar el enlace con antelación.",
     dateRevelation: "Fecha de apertura",
     motAttente: "Mensaje de espera",
     motAttenteAide: "Bajo la cuenta atrás, mientras la tarjeta sigue sellada.",
     cadeaux: "Regalos",
     cadeauxEcranAide:
-      "La pantalla que sigue a la apertura. Sus palabras son suyas: repetir las del velo haría leer dos veces lo mismo.",
+      "La pantalla que sigue a la apertura. Escríbele sus propias palabras, o se lee dos veces lo mismo.",
     titreEcranAide: "Encima de los regalos.",
     titreEcranAria: "Título de la pantalla de regalos",
     contenu: "Contenido",
@@ -780,7 +780,7 @@ export const es = {
     messageFin: "Mensaje final",
     messageFinAide: "Lo que aparece en lugar de los regalos.",
     motOption: "Proponer dejar un mensaje",
-    motOptionAide: "Da a la persona la oportunidad de responderte justo después de hacer su elección.",
+    motOptionAide: "La persona podrá responderte justo después de elegir.",
     motOptionNote: "El mensaje aparecerá en tu vista de administración.",
     theme: "El tema",
     palette: "Paleta",

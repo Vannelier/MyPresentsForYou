@@ -48,16 +48,16 @@ export const it = {
   questions: {
     titreMeta: "Domande frequenti — MyPresentsForYou",
     descriptionMeta:
-      "Regalare lasciando scegliere: come funziona, quanto costa, cosa vede chi riceve e cosa fare se un'immagine non viene recuperata.",
+      "Come funziona, quanto costa, cosa vede la persona che riceve e cosa fare quando un'immagine non si carica.",
     titre: "Domande frequenti",
     chapo:
-      "Regalare lasciando scegliere: come funziona, quanto costa e cosa succede quando il recupero automatico non riesce.",
+      "Come funziona, quanto costa e cosa succede quando l'immagine non si recupera.",
     liste: [
       {
         q: "Come faccio un regalo lasciando scegliere l'altra persona?",
         r: [
           "Crei una pagina personalizzata — un'occasione, una decorazione, un velo da sollevare — con qualche idea regalo, poi invii il link. La persona apre la pagina, guarda le proposte e conferma quella che le piace di più. Ritrovi la sua scelta nel tuo link privato e compri tu il regalo.",
-          "Il vantaggio: riceve qualcosa che le piace davvero, senza che tu abbia dovuto chiederle cosa desiderava — quindi senza rovinare la sorpresa.",
+          "Riceve qualcosa che le piace davvero, e tu non hai dovuto chiederlo. La sorpresa regge.",
         ],
       },
       {
@@ -70,21 +70,21 @@ export const it = {
       {
         q: "Serve un account?",
         r: [
-          "No. Niente account, niente password, niente indirizzo e-mail — né per te né per chi riceve il biglietto.",
+          "No. Nessun account, nessuna password, nessuna e-mail. Né per te, né per lei.",
           "Alla creazione ricevi due link: un link pubblico da inviare e un link privato da conservare. Il secondo è l'unico modo per tornare sul tuo biglietto e vedere la scelta. Conservalo: dato che niente collega un biglietto a un'identità, non può esserti rimandato.",
         ],
       },
       {
         q: "Cosa vede chi riceve il biglietto?",
         r: [
-          "Una pagina con il suo nome, il tuo messaggio e le tue proposte. Sceglie e conferma, tutto qui: nessun account da creare, nessun modulo da compilare, nessun nome, indirizzo o e-mail da inserire.",
+          "Una pagina con il suo nome, il tuo messaggio e le tue proposte. Sceglie, conferma, finito. Nessun account, nessun modulo, niente da scrivere.",
           "I prezzi non vengono mai mostrati. Vede ciò che proponi, non quanto costa.",
         ],
       },
       {
         q: "Quante idee posso proporre?",
         r: [
-          "Da una a {max}. Con una sola proposta, il biglietto smette di essere una scelta e diventa un annuncio: la persona conferma semplicemente di averlo ricevuto, e tu sai quando l'ha aperto.",
+          "Da una a {max}. Con una sola idea non c'è più niente da scegliere: la persona conferma di averla ricevuta, e tu sai quando ha aperto la pagina.",
         ],
       },
       {
@@ -96,7 +96,7 @@ export const it = {
       {
         q: "Posso modificare il biglietto dopo averlo inviato?",
         r: [
-          "Sì, finché nessuno ha confermato una scelta. Puoi cambiare i messaggi, i regali, l'aspetto — e i link già inviati continuano a funzionare, perché non cambiano mai.",
+          "Sì, finché nessuno ha confermato. Puoi cambiare i messaggi, i regali, l'aspetto. I link già inviati continuano a funzionare: non cambiano mai.",
           "Appena una scelta viene confermata, il biglietto si blocca: non sarebbe più onesto se potesse cambiare dopo.",
         ],
       },
@@ -110,8 +110,8 @@ export const it = {
       {
         q: "L'immagine del prodotto non viene recuperata: è un bug?",
         r: [
-          "No. Quando incolli l'indirizzo di una pagina prodotto, titolo e immagine vengono recuperati automaticamente — ma molti negozi, a partire da Amazon e dai social network, rifiutano le richieste automatiche. È previsto, non è un guasto.",
-          "In quel caso compili a mano: una foto dal telefono, un'immagine copiata e incollata o l'indirizzo di un'immagine. Alla fine il biglietto è identico.",
+          "No. Quando incolli l'indirizzo di una pagina prodotto, titolo e immagine si recuperano da soli. Ma molti negozi rifiutano le richieste automatiche, Amazon e i social in testa. Non è un guasto.",
+          "In quel caso compili a mano: una foto fatta col telefono, un'immagine copiata o l'indirizzo di un'immagine. Alla fine il biglietto è lo stesso.",
         ],
       },
       {
@@ -329,7 +329,7 @@ export const it = {
     choixFait: "La scelta è fatta",
     enAttente: "In attesa di una scelta",
     cadeauChoisi: "Regalo scelto",
-    cadeauChoisiAide: "Tocca a te: ordinalo e regalalo. Nulla è passato dalla piattaforma.",
+    cadeauChoisiAide: "Tocca a te: ordinalo e regalalo. Non è passato niente dal sito.",
     motDuReceveur: "«{mot}»",
     acheter: "Acquista questo regalo ↗",
     lienAffilie: "Link di affiliazione: se acquisti dopo questo clic, il negozio può versarci una commissione. Il tuo prezzo non cambia.",
@@ -700,17 +700,17 @@ export const it = {
     apercuBandeau: "Anteprima — non viene salvato nulla",
     fermer: "Chiudi",
     enregistreA: "Modifiche salvate alle {heure}.",
-    brouillonRetrouve: "Il tuo biglietto in corso è stato ritrovato così come l'avevi lasciato.",
+    brouillonRetrouve: "Abbiamo ritrovato il tuo biglietto in corso, come l'avevi lasciato.",
     repartirDeZero: "Ricomincia da capo",
     occasionTitre: "L'occasione",
     occasionAide:
-      "Imposta in un colpo solo una palette, una decorazione e dei testi di partenza. Tutto resta modificabile all'ultimo passaggio.",
+      "Imposta i colori, la decorazione e le prime frasi. Potrai cambiare tutto all'ultimo passaggio.",
     occasionAria: "Occasione",
     cadeauxTitre: "I regali",
     cadeauxAide:
-      "Fino a {max} proposte, nell'ordine che vuoi. Incolla l'indirizzo di un prodotto per recuperarne titolo e immagine — è anche il link che ritroverai, dopo la scelta, per comprarlo. Un regalo che non si compra online si descrive benissimo a mano.",
+      "Fino a {max} idee, nell'ordine che vuoi. Incolla l'indirizzo di un prodotto per recuperarne titolo e immagine; è anche il link che ti tornerà, dopo la scelta, per comprare. Un regalo che non si compra online si descrive benissimo a mano.",
     unSeulFort: "Con un solo regalo",
-    unSeulSuite: ", il biglietto diventa un annuncio: niente da scegliere, solo una conferma di ricezione.",
+    unSeulSuite: ", non c'è più niente da scegliere: la persona conferma di averlo ricevuto, e basta.",
     monter: "Sposta su il regalo {n}",
     descendre: "Sposta giù il regalo {n}",
     retirer: "Rimuovi il regalo {n}",
@@ -732,8 +732,8 @@ export const it = {
     ajouter: "+ Aggiungi un regalo",
     idees: {
       titre: "Ti servono idee?",
-      aide: "Qualche spunto, diviso per profilo. Un clic aggiunge l'idea alla tua lista; poi aggiungi tu il link che preferisci.",
-      aideOccasion: "{occasion}: qualche spunto, diviso per profilo. Un clic aggiunge l'idea alla tua lista; poi aggiungi tu il link che preferisci.",
+      aide: "Qualche idea, divisa per profilo. Un clic la aggiunge alla tua lista; il link lo metti dopo.",
+      aideOccasion: "{occasion}: qualche idea, divisa per profilo. Un clic la aggiunge alla tua lista; il link lo metti dopo.",
       plein: "La lista è piena.",
       guide: "Leggi la guida: {occasion} ↗",
     },
@@ -755,13 +755,13 @@ export const it = {
     maniereOuvrir: "Modo di apertura",
     dateOption: "Apri in una data precisa",
     dateOptionAide:
-      "Prima di quella data, il biglietto resta sigillato con un conto alla rovescia — puoi quindi inviare il link in anticipo.",
+      "Prima di quella data il biglietto resta sigillato dietro un conto alla rovescia. Così puoi inviare il link in anticipo.",
     dateRevelation: "Data di apertura",
     motAttente: "Messaggio d'attesa",
     motAttenteAide: "Sotto il conto alla rovescia, mentre il biglietto è ancora sigillato.",
     cadeaux: "Regali",
     cadeauxEcranAide:
-      "La schermata dopo l'apertura. Le sue parole le appartengono: ripetere quelle del velo farebbe leggere due volte la stessa cosa.",
+      "La schermata dopo l'apertura. Scrivile parole sue, altrimenti si legge due volte la stessa cosa.",
     titreEcranAide: "Sopra i regali.",
     titreEcranAria: "Titolo della schermata dei regali",
     contenu: "Contenuto",
@@ -778,7 +778,7 @@ export const it = {
     messageFin: "Messaggio finale",
     messageFinAide: "Ciò che appare al posto dei regali.",
     motOption: "Proponi di lasciare un messaggio",
-    motOptionAide: "Dà alla persona la possibilità di risponderti subito dopo aver fatto la sua scelta.",
+    motOptionAide: "La persona potrà risponderti subito dopo aver scelto.",
     motOptionNote: "Il messaggio apparirà nella tua vista di amministrazione.",
     theme: "Il tema",
     palette: "Palette",
