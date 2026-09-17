@@ -22,6 +22,9 @@ const confidentialite: ContenuLegal = {
       <p>
         Il sito tiene soltanto <strong>tre totali giornalieri</strong>: il numero di biglietti creati, di scelte confermate e di clic verso il negozio dalla pagina di amministrazione. Nulla li collega a un biglietto, a una persona o a un dispositivo.
       </p>
+      <p>
+        Quando clicchi su «Acquista questo regalo», lasci MyPresentsForYou: il link può passare da una <strong>rete di affiliazione</strong> prima di arrivare al negozio. Questa rete e il negozio possono allora impostare i propri cookie, secondo le proprie regole. Nulla viene impostato su MyPresentsForYou, e la persona che riceve il biglietto non è mai coinvolta.
+      </p>
 
       <h2>Una sola cosa resta sul tuo dispositivo</h2>
       <p>

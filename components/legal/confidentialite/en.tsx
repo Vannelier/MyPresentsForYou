@@ -21,6 +21,9 @@ const confidentialite: ContenuLegal = {
       <p>
         The site keeps only <strong>three daily totals</strong>: the number of cards created, choices confirmed and clicks through to the shop from the admin page. Nothing links them to a card, a person or a device.
       </p>
+      <p>
+        When you click &quot;Buy this gift&quot;, you leave MyPresentsForYou: the link may go through an <strong>affiliate network</strong> before reaching the shop. That network and the shop may then set their own cookies, under their own rules. Nothing is set on MyPresentsForYou, and the person receiving the card is never involved.
+      </p>
 
       <h2>Only one thing is kept on your device</h2>
       <p>

@@ -22,6 +22,9 @@ const confidentialite: ContenuLegal = {
       <p>
         Le site tient seulement <strong>trois totaux par jour</strong> : le nombre de cartes créées, de choix confirmés et de clics vers la boutique depuis la page d&apos;administration. Rien ne les relie à une carte, à une personne ni à un appareil.
       </p>
+      <p>
+        Quand tu cliques sur « Acheter ce cadeau », tu quittes MyPresentsForYou : le lien peut passer par un <strong>réseau d&apos;affiliation</strong> avant d&apos;arriver chez le marchand. Ce réseau et le marchand peuvent alors déposer leurs propres cookies, selon leurs propres règles. Rien n&apos;est déposé sur MyPresentsForYou, et la personne qui reçoit la carte n&apos;est jamais concernée.
+      </p>
 
       <h2>Une seule chose est gardée sur ton appareil</h2>
       <p>

@@ -21,6 +21,9 @@ const confidentialite: ContenuLegal = {
       <p>
         De site houdt alleen <strong>drie dagtotalen</strong> bij: het aantal gemaakte kaarten, bevestigde keuzes en klikken naar de winkel vanaf de beheerpagina. Niets koppelt ze aan een kaart, een persoon of een apparaat.
       </p>
+      <p>
+        Als je op &quot;Dit cadeau kopen&quot; klikt, verlaat je MyPresentsForYou: de link kan via een <strong>affiliatenetwerk</strong> lopen voordat hij bij de winkel aankomt. Dat netwerk en de winkel kunnen dan hun eigen cookies plaatsen, volgens hun eigen regels. Op MyPresentsForYou wordt niets geplaatst, en degene die de kaart ontvangt, is er nooit bij betrokken.
+      </p>
 
       <h2>Er blijft maar één ding op je toestel</h2>
       <p>

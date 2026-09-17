@@ -48,6 +48,22 @@ export function urlAchat(page: Pick<GiftPage, "items" | "chosen_item_id">): stri
   }
 }
 
+/**
+ * L'adresse de sortie du bouton « Acheter » : par le Link Wrapper de Skimlinks
+ * quand un identifiant est pose, telle quelle sinon.
+ *
+ * Le Link Wrapper plutot que le script de Skimlinks : le script se chargerait
+ * sur toutes les pages et y poserait des cookies, ce que la politique de
+ * confidentialite exclut. La redirection, elle, ne concerne que l'offreur qui
+ * clique pour acheter. Un marchand que Skimlinks ne connait pas est servi sans
+ * commission, mais servi : le lien ne casse jamais.
+ */
+export function lienSortant(cible: string, idSkimlinks: string | null): string {
+  if (!idSkimlinks) return cible;
+  const params = new URLSearchParams({ id: idSkimlinks, url: cible, xcust: "bouton_acheter" });
+  return `https://go.skimresources.com/?${params}`;
+}
+
 export type LigneCompteur = { jour: string; evenement: string; total: number };
 
 export type Synthese = {

@@ -36,6 +36,18 @@ export function adsensePublisherId(): string | null {
 }
 
 /**
+ * L'identifiant d'editeur Skimlinks (`309459X1797814`), s'il est pose et bien
+ * forme ; `null` sinon, et le bouton « Acheter » envoie alors chez le marchand
+ * sans affiliation. Une variable plutot qu'une constante : l'affiliation se
+ * branche le jour ou le compte est approuve, et se coupe sans deploiement de
+ * code si le reseau la refuse.
+ */
+export function skimlinksId(): string | null {
+  const id = process.env.SKIMLINKS_ID?.trim() ?? "";
+  return /^\d+X\d+$/.test(id) ? id : null;
+}
+
+/**
  * Le secret de la purge, s'il est pose et assez long ; `null` sinon, et la
  * route se tait alors en 404. Trente-deux caracteres au moins : c'est tout ce
  * qui la protege, et `openssl rand -hex 32` en donne soixante-quatre.

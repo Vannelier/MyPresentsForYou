@@ -22,6 +22,9 @@ const confidentialite: ContenuLegal = {
       <p>
         El sitio solo guarda <strong>tres totales diarios</strong>: el número de tarjetas creadas, de elecciones confirmadas y de clics hacia la tienda desde la página de administración. Nada los relaciona con una tarjeta, una persona o un dispositivo.
       </p>
+      <p>
+        Cuando haces clic en «Comprar este regalo», sales de MyPresentsForYou: el enlace puede pasar por una <strong>red de afiliación</strong> antes de llegar a la tienda. Esa red y la tienda pueden entonces instalar sus propias cookies, según sus propias normas. No se instala nada en MyPresentsForYou, y la persona que recibe la tarjeta nunca se ve afectada.
+      </p>
 
       <h2>Solo se guarda una cosa en tu dispositivo</h2>
       <p>

@@ -21,6 +21,9 @@ const confidentialite: ContenuLegal = {
       <p>
         Die Website führt nur <strong>drei Tagessummen</strong>: die Zahl der erstellten Karten, der bestätigten Wahlen und der Klicks von der Verwaltungsseite zum Shop. Nichts verbindet sie mit einer Karte, einer Person oder einem Gerät.
       </p>
+      <p>
+        Wenn du auf „Dieses Geschenk kaufen“ klickst, verlässt du MyPresentsForYou: Der Link kann über ein <strong>Affiliate-Netzwerk</strong> laufen, bevor er beim Shop ankommt. Dieses Netzwerk und der Shop können dann eigene Cookies setzen, nach ihren eigenen Regeln. Auf MyPresentsForYou wird nichts gesetzt, und die Person, die die Karte erhält, ist nie betroffen.
+      </p>
 
       <h2>Nur eines bleibt auf deinem Gerät</h2>
       <p>

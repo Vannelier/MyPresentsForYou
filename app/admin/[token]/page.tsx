@@ -4,7 +4,7 @@ import AdminView, { type AdminSnapshot } from "@/components/AdminView";
 import { lireCarteAdmin } from "@/lib/carte";
 import { dictionnaire } from "@/lib/i18n";
 import { langueOuDefaut } from "@/lib/i18n/langues";
-import { publicUrlFor } from "@/lib/env";
+import { publicUrlFor, skimlinksId } from "@/lib/env";
 import { isExpired, isLocked, isSealed } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
@@ -57,6 +57,7 @@ export default async function AdminRoute({ params }: Props) {
     view_count: page.view_count,
     expired: isExpired(page),
     locked: isLocked(page),
+    affilie: skimlinksId() !== null,
   };
 
   return <AdminView page={snapshot} token={token} />;

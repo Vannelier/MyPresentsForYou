@@ -18,6 +18,9 @@ const conditions: ContenuLegal = {
         keine Zahlung entgegen, liefert nichts und steht nie zwischen dir und dem Geschäft, in dem du
         kaufst. Es ist eine gemeinsame Merkhilfe, kein Laden.
       </p>
+      <p>
+        Der Dienst finanziert sich über Affiliate-Links. Der Button „Dieses Geschenk kaufen“ auf deiner Verwaltungsseite kann über ein <strong>Affiliate-Netzwerk</strong> laufen: Wenn du nach diesem Klick kaufst, kann uns der Shop eine Provision zahlen. Du zahlst nichts extra, und die Seite, die die Person erhält, enthält keine Affiliate-Links.
+      </p>
 
       <h2>Kein Konto, also kein Sicherheitsnetz</h2>
       <p>

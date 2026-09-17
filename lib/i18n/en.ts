@@ -63,6 +63,7 @@ export const en = {
         q: "Is MyPresentsForYou free?",
         r: [
           "Yes, entirely. No payment goes through the site, and there is nothing to pay to create a card. You buy the chosen gift from the shop of your choice, exactly as you would have without MyPresentsForYou.",
+          "The site is funded by affiliate links: the \"Buy this gift\" button on your private page may go through an affiliate network, and if you then buy, the shop may pay us a small commission. Your price stays the same, and the page the person receives contains no affiliate links.",
         ],
       },
       {
@@ -326,6 +327,7 @@ export const en = {
     cadeauChoisiAide: "It's your turn: order it and give it. Nothing went through the platform.",
     motDuReceveur: "“{mot}”",
     acheter: "Buy this gift ↗",
+    lienAffilie: "Affiliate link: if you buy after this click, the shop may pay us a commission. Your price stays the same.",
     partager: "Share the card",
     sOuvreLe: "Opens on {date}.",
     ouverteDepuis: "Open since {date}.",

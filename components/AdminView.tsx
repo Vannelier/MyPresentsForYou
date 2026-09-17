@@ -42,6 +42,8 @@ export type AdminSnapshot = {
   view_count: number;
   expired: boolean;
   locked: boolean;
+  /** Le bouton « Acheter » passe par un reseau d'affiliation : la mention doit l'accompagner. */
+  affilie: boolean;
 };
 
 export default function AdminView({ page, token }: { page: AdminSnapshot; token: string }) {
@@ -135,6 +137,9 @@ export default function AdminView({ page, token }: { page: AdminSnapshot; token:
               </a>
             </p>
           )}
+          {/* Obligatoire, et visible avant le clic : jamais en petits caracteres
+              caches ailleurs sur la page. */}
+          {chosen.source_url && page.affilie && <p className="help">{t.lienAffilie}</p>}
         </section>
       )}
 

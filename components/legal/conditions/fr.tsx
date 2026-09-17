@@ -18,6 +18,9 @@ const conditions: ContenuLegal = {
         paiement, ne livre rien, et n&apos;intervient à aucun moment entre toi et le marchand chez
         qui tu achèteras. C&apos;est un aide-mémoire partagé, pas une boutique.
       </p>
+      <p>
+        Le service se finance par l&apos;affiliation. Le bouton « Acheter ce cadeau » de ta page d&apos;administration peut passer par un <strong>réseau d&apos;affiliation</strong> : si tu achètes après ce clic, le marchand peut nous verser une commission. Tu ne paies rien de plus, et la page que reçoit la personne ne contient aucun lien affilié.
+      </p>
 
       <h2>Pas de compte, donc pas de filet</h2>
       <p>

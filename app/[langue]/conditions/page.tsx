@@ -4,7 +4,7 @@ import { TEXTES_LEGAUX } from "@/components/legal";
 import { alternatesDe } from "@/lib/i18n/alternates";
 import { langueOuDefaut } from "@/lib/i18n/langues";
 
-const MISE_A_JOUR = "2026-09-13";
+const MISE_A_JOUR = "2026-09-17";
 
 type Params = { params: Promise<{ langue: string }> };
 

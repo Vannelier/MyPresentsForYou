@@ -33,7 +33,7 @@ import { hexToHsl, hslToHex, styleDeTeinte, teinteDuTheme } from "../lib/carteCo
 import { RESERVED_SLUGS, slugError, slugify, suggestVariant } from "../lib/slug";
 import { REPLY_WINDOW_MS, isExpired, isLocked, isSealed, replyWindowOpen } from "../lib/types";
 import { LIMITS } from "../lib/limits";
-import { adsensePublisherId, baseUrl, freePageTtlDays, secretDePurge } from "../lib/env";
+import { adsensePublisherId, baseUrl, freePageTtlDays, secretDePurge, skimlinksId } from "../lib/env";
 import sitemap from "../app/sitemap";
 import { GET as llmsTxt } from "../app/llms.txt/route";
 import { alternatesDe, alternatesGuide } from "../lib/i18n/alternates";
@@ -56,7 +56,7 @@ import {
   type Langue,
 } from "../lib/i18n/langues";
 import { router } from "../lib/i18n/routage";
-import { EVENEMENTS, synthese, urlAchat } from "../lib/compteurs";
+import { EVENEMENTS, lienSortant, synthese, urlAchat } from "../lib/compteurs";
 import {
   clesImages,
   effacerImagesDeCarte,
@@ -2885,6 +2885,47 @@ test("le bouton d'achat ne redirige que vers l'adresse web du cadeau choisi", ()
   assert.equal(urlAchat({ items, chosen_item_id: "c" }), null);
   assert.equal(urlAchat({ items, chosen_item_id: "d" }), null);
   assert.equal(urlAchat({ items, chosen_item_id: null }), null);
+});
+
+test("l'affiliation passe par le Link Wrapper, et seulement quand un identifiant valide est pose", () => {
+  const cible = "https://boutique.example/velo?taille=M&couleur=bleu";
+  assert.equal(lienSortant(cible, null), cible);
+  const sortie = new URL(lienSortant(cible, "309459X1797814"));
+  assert.equal(sortie.origin + sortie.pathname, "https://go.skimresources.com/");
+  assert.equal(sortie.searchParams.get("id"), "309459X1797814");
+  // Mal encodee, `&couleur=bleu` deviendrait un parametre de Skimlinks et le
+  // marchand recevrait une adresse tronquee.
+  assert.equal(sortie.searchParams.get("url"), cible);
+
+  const avant = process.env.SKIMLINKS_ID;
+  try {
+    process.env.SKIMLINKS_ID = " 309459X1797814 ";
+    assert.equal(skimlinksId(), "309459X1797814");
+    for (const faux of ["", "309459", "<script>", "pub-0000000000000000"]) {
+      process.env.SKIMLINKS_ID = faux;
+      assert.equal(skimlinksId(), null, faux);
+    }
+  } finally {
+    if (avant === undefined) delete process.env.SKIMLINKS_ID;
+    else process.env.SKIMLINKS_ID = avant;
+  }
+
+  const achat = lire("app/api/admin/[token]/acheter/route.ts");
+  assert.match(achat, /location: lienSortant\(cible, skimlinksId\(\)\)/, "la redirection n'ajoute plus l'affiliation");
+  // La mention accompagne le bouton des que l'affiliation est active, jamais sans elle.
+  assert.match(lire("app/admin/[token]/page.tsx"), /affilie: skimlinksId\(\) !== null/);
+  assert.match(lire("components/AdminView.tsx"), /chosen\.source_url && page\.affilie && <p className="help">\{t\.lienAffilie\}<\/p>/);
+  // Le script de Skimlinks poserait des cookies sur chaque page : il n'a rien a faire dans le code.
+  const parcourir = (d: string) => {
+    for (const e of readdirSync(d, { withFileTypes: true })) {
+      const chemin = `${d}/${e.name}`;
+      if (e.isDirectory()) parcourir(chemin);
+      else if (/\.(tsx?|css)$/.test(e.name)) {
+        assert.doesNotMatch(lire(chemin), /skimlinks\.js|amp-skimlinks|s\.skimresources\.com/, chemin);
+      }
+    }
+  };
+  for (const dossier of ["app", "components", "lib"]) parcourir(dossier);
 });
 
 test("la synthese des compteurs rapporte les choix aux cartes et les clics aux choix", () => {

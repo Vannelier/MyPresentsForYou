@@ -63,6 +63,7 @@ export const nl = {
         q: "Is MyPresentsForYou gratis?",
         r: [
           "Ja, helemaal. Er loopt geen betaling via de site, en een kaart maken kost niets. Je koopt het gekozen cadeau in de winkel van je keuze, precies zoals je zonder MyPresentsForYou zou doen.",
+          "De site wordt gefinancierd met affiliatelinks: de knop \"Dit cadeau kopen\" op je privépagina kan via een affiliatenetwerk lopen, en als je daarna koopt, kan de winkel ons een kleine commissie betalen. Je prijs blijft hetzelfde, en de pagina die de ander ontvangt bevat geen affiliatelinks.",
         ],
       },
       {
@@ -328,6 +329,7 @@ export const nl = {
     cadeauChoisiAide: "Nu is het aan jou: bestel het en geef het. Er is niets via het platform gegaan.",
     motDuReceveur: "“{mot}”",
     acheter: "Dit cadeau kopen ↗",
+    lienAffilie: "Affiliatelink: als je na deze klik koopt, kan de winkel ons een commissie betalen. Je prijs blijft hetzelfde.",
     partager: "Kaart delen",
     sOuvreLe: "Gaat open op {date}.",
     ouverteDepuis: "Open sinds {date}.",

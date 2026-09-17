@@ -48,6 +48,7 @@ récupère les valeurs du projet.
 | `NEXT_PUBLIC_BASE_URL` | base absolue des liens, balises Open Graph, `robots.txt` et sitemap |
 | `FREE_PAGE_TTL_DAYS` | durée de vie d'une page gratuite (défaut : 365) |
 | `ADSENSE_PUBLISHER_ID` | identifiant d'éditeur AdSense (`pub-…` ou `ca-pub-…`), publié dans `/ads.txt` ; absent, `/ads.txt` répond 404 |
+| `SKIMLINKS_ID` | identifiant d'éditeur Skimlinks (`309459X1797814`) ; posé, le bouton « Acheter » passe par le Link Wrapper et affiche « Lien affilié » ; absent, il va droit chez le marchand |
 | `PURGE_SECRET` | secret de `POST /api/purge`, 32 caractères au moins ; absent, la purge est désactivée — voir « La purge des cartes expirées » |
 | `RATE_LIMIT_DISABLED` | `1` coupe les quotas. Développement seulement — voir « Les routes anonymes » |
 
@@ -1326,6 +1327,16 @@ le référencement, et seulement ensuite la publicité du site. Le modèle s'y i
    survit à la purge, contrairement à `gift_pages`. `npm run compteurs` les affiche, avec les deux
    rapports qui décident de la suite : la part des cartes choisies, et les clics par choix. La
    politique de confidentialité mentionne ces trois totaux.
+
+   **L'affiliation est prête à brancher.** Avec `SKIMLINKS_ID` posé, la redirection envoie vers
+   `https://go.skimresources.com/?id=…&url=…&xcust=bouton_acheter` — le Link Wrapper, sans le script
+   Skimlinks, qui se chargerait sur chaque page et y poserait des cookies. Un marchand que Skimlinks
+   ne connaît pas est servi sans commission, mais servi. La mention « Lien affilié » s'affiche sous
+   le bouton dès que la variable est posée. La FAQ, les conditions et la politique de confidentialité
+   disent que le bouton « peut » passer par un réseau d'affiliation, qui peut poser ses propres
+   cookies une fois le site quitté : vrai avant comme après le branchement. Compte Skimlinks ouvert
+   le 17 septembre 2026, en attente d'approbation ; ne poser la variable qu'une fois le domaine
+   approuvé.
 2. **Après le multilingue** : l'e-mail de notification, écrit d'emblée dans les six langues.
 3. **Une fois le site traduit et en ligne** : l'inscription au réseau d'affiliation. Les réseaux
    examinent un site avant d'accepter son éditeur ; un site vide et monolingue passerait mal.

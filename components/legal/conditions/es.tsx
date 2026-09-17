@@ -18,6 +18,9 @@ const conditions: ContenuLegal = {
         nada y nunca se interpone entre tú y la tienda donde comprarás. Es un recordatorio compartido, no
         una tienda.
       </p>
+      <p>
+        El servicio se financia con la afiliación. El botón «Comprar este regalo» de tu página de administración puede pasar por una <strong>red de afiliación</strong>: si compras después de este clic, la tienda puede pagarnos una comisión. No pagas nada más, y la página que recibe la persona no contiene ningún enlace de afiliado.
+      </p>
 
       <h2>Sin cuenta, así que sin red de seguridad</h2>
       <p>

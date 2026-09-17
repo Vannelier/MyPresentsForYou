@@ -64,6 +64,7 @@ export const it = {
         q: "MyPresentsForYou è gratuito?",
         r: [
           "Sì, del tutto. Nessun pagamento passa dal sito e non c'è nulla da pagare per creare un biglietto. Compri il regalo scelto nel negozio che preferisci, esattamente come avresti fatto senza MyPresentsForYou.",
+          "Il sito si finanzia con l'affiliazione: il pulsante «Acquista questo regalo» della tua pagina privata può passare da una rete di affiliazione, e se poi acquisti, il negozio può versarci una piccola commissione. Il tuo prezzo non cambia, e la pagina che riceve la persona non contiene alcun link di affiliazione.",
         ],
       },
       {
@@ -331,6 +332,7 @@ export const it = {
     cadeauChoisiAide: "Tocca a te: ordinalo e regalalo. Nulla è passato dalla piattaforma.",
     motDuReceveur: "«{mot}»",
     acheter: "Acquista questo regalo ↗",
+    lienAffilie: "Link di affiliazione: se acquisti dopo questo clic, il negozio può versarci una commissione. Il tuo prezzo non cambia.",
     partager: "Condividi il biglietto",
     sOuvreLe: "Si apre il {date}.",
     ouverteDepuis: "Aperto dal {date}.",

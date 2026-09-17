@@ -18,6 +18,9 @@ const conditions: ContenuLegal = {
         consegna nulla e non si frappone mai tra te e il negozio in cui comprerai. È un promemoria
         condiviso, non un negozio.
       </p>
+      <p>
+        Il servizio si finanzia con l&apos;affiliazione. Il pulsante «Acquista questo regalo» della tua pagina di amministrazione può passare da una <strong>rete di affiliazione</strong>: se acquisti dopo questo clic, il negozio può versarci una commissione. Non paghi nulla in più, e la pagina che riceve la persona non contiene alcun link di affiliazione.
+      </p>
 
       <h2>Niente account, quindi niente rete di sicurezza</h2>
       <p>

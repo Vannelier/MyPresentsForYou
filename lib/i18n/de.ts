@@ -64,6 +64,7 @@ export const de = {
         q: "Ist MyPresentsForYou kostenlos?",
         r: [
           "Ja, vollständig. Über die Website läuft keine Zahlung, und für eine Karte ist nichts zu bezahlen. Du kaufst das gewählte Geschenk in einem Geschäft deiner Wahl — genau so, wie du es ohne MyPresentsForYou getan hättest.",
+          "Die Website finanziert sich über Affiliate-Links: Der Button „Dieses Geschenk kaufen“ auf deiner privaten Seite kann über ein Affiliate-Netzwerk laufen, und wenn du danach kaufst, kann uns der Shop eine kleine Provision zahlen. Dein Preis bleibt gleich, und die Seite, die die Person erhält, enthält keine Affiliate-Links.",
         ],
       },
       {
@@ -330,6 +331,7 @@ export const de = {
     cadeauChoisiAide: "Jetzt bist du dran: Bestell es und verschenk es. Über die Plattform ist nichts gelaufen.",
     motDuReceveur: "„{mot}“",
     acheter: "Dieses Geschenk kaufen ↗",
+    lienAffilie: "Affiliate-Link: Wenn du nach diesem Klick kaufst, kann uns der Shop eine Provision zahlen. Dein Preis bleibt gleich.",
     partager: "Karte teilen",
     sOuvreLe: "Öffnet sich am {date}.",
     ouverteDepuis: "Geöffnet seit dem {date}.",

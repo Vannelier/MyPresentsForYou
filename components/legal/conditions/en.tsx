@@ -17,6 +17,9 @@ const conditions: ContenuLegal = {
         nothing, and never stands between you and the shop where you will buy. It is a shared reminder,
         not a shop.
       </p>
+      <p>
+        The service is funded by affiliate links. The &quot;Buy this gift&quot; button on your admin page may go through an <strong>affiliate network</strong>: if you buy after this click, the shop may pay us a commission. You pay nothing extra, and the page the person receives contains no affiliate links.
+      </p>
 
       <h2>No account, so no safety net</h2>
       <p>

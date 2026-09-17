@@ -18,6 +18,9 @@ const conditions: ContenuLegal = {
         levert niets en komt nooit tussen jou en de winkel waar je koopt. Het is een gedeeld
         geheugensteuntje, geen winkel.
       </p>
+      <p>
+        De dienst wordt gefinancierd met affiliatelinks. De knop &quot;Dit cadeau kopen&quot; op je beheerpagina kan via een <strong>affiliatenetwerk</strong> lopen: als je na deze klik koopt, kan de winkel ons een commissie betalen. Je betaalt niets extra, en de pagina die de ander ontvangt bevat geen affiliatelinks.
+      </p>
 
       <h2>Geen account, dus geen vangnet</h2>
       <p>
