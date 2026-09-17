@@ -330,7 +330,7 @@ export const it = {
     cadeauChoisi: "Regalo scelto",
     cadeauChoisiAide: "Tocca a te: ordinalo e regalalo. Nulla è passato dalla piattaforma.",
     motDuReceveur: "«{mot}»",
-    pageOrigine: "Apri la pagina d'origine ↗",
+    acheter: "Acquista questo regalo ↗",
     partager: "Condividi il biglietto",
     sOuvreLe: "Si apre il {date}.",
     ouverteDepuis: "Aperto dal {date}.",

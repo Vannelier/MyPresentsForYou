@@ -325,7 +325,7 @@ export const en = {
     cadeauChoisi: "Chosen gift",
     cadeauChoisiAide: "It's your turn: order it and give it. Nothing went through the platform.",
     motDuReceveur: "“{mot}”",
-    pageOrigine: "Open the original page ↗",
+    acheter: "Buy this gift ↗",
     partager: "Share the card",
     sOuvreLe: "Opens on {date}.",
     ouverteDepuis: "Open since {date}.",

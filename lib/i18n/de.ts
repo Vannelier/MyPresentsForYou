@@ -329,7 +329,7 @@ export const de = {
     cadeauChoisi: "Gewähltes Geschenk",
     cadeauChoisiAide: "Jetzt bist du dran: Bestell es und verschenk es. Über die Plattform ist nichts gelaufen.",
     motDuReceveur: "„{mot}“",
-    pageOrigine: "Ursprüngliche Seite öffnen ↗",
+    acheter: "Dieses Geschenk kaufen ↗",
     partager: "Karte teilen",
     sOuvreLe: "Öffnet sich am {date}.",
     ouverteDepuis: "Geöffnet seit dem {date}.",

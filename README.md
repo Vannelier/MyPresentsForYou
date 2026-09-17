@@ -88,6 +88,7 @@ npm run dev
 | `npm run check` | vérifications de la logique pure : validation, slugs, extraction, expiration, quotas, réduction d'images — aucune base requise |
 | `npm run typecheck` | `tsc --noEmit` |
 | `npm run db:migrate` | applique `db/schema.sql` (`-- --seed` pour la page de démo) |
+| `npm run compteurs` | affiche les compteurs du modèle économique sur 30 jours (`-- 90` pour 90 jours) ; lecture seule |
 | `npm run brand` | régénère le favicon, les icônes et le SVG de la marque |
 
 ## En cas de pépin
@@ -206,6 +207,7 @@ aujourd'hui** : en afficher poserait des cookies, ce que la politique de confide
 | `POST /api/pages` | crée la page (aucun champ de texte obligatoire) → `{ slug, publicUrl, adminUrl, expiresAt, warnings }` |
 | `PATCH /api/admin/[token]` | édite la page ; 409 si verrouillée ou expirée |
 | `DELETE /api/admin/[token]` | supprime la page et ses images |
+| `GET /api/admin/[token]/acheter` | compte un clic vers la boutique, puis redirige (302, `Referrer-Policy: no-referrer`) vers l'adresse du cadeau choisi ; 404 sans choix ou sans adresse web |
 | `POST /api/pages/[slug]/choose` | `{ itemId }` → enregistre le choix et verrouille |
 | `POST /api/pages/[slug]/reply` | `{ reply }` → attache le mot du receveur, après le choix ; 409 hors fenêtre ou si un mot existe déjà |
 | `POST /api/purge` | purge les cartes expirées sans choix, images comprises. `Authorization: Bearer <PURGE_SECRET>` ; `?dry=1` à blanc ; 404 sans secret configuré |
@@ -1246,8 +1248,9 @@ En création, l'assistant avance pas à pas. En édition tout est déverrouillé
 ## Modèle économique
 
 **Décidé le 13 septembre 2026 : le site est gratuit, sans publicité et sans option payante. Il se
-finance par l'affiliation, au moment où l'offreur achète.** Rien n'est encore implémenté ; cette
-section dit ce qui est décidé, pourquoi, et dans quel ordre le construire.
+finance par l'affiliation, au moment où l'offreur achète.** La première étape est en place — le
+bouton « Acheter » et ses compteurs, sans affiliation ; cette section dit ce qui est décidé,
+pourquoi, et dans quel ordre construire la suite.
 
 ### Pourquoi l'affiliation, et pourquoi dans la page d'administration
 
@@ -1316,7 +1319,13 @@ La feuille de route du projet : le business model, puis des textes plus humains,
 le référencement, et seulement ensuite la publicité du site. Le modèle s'y insère ainsi :
 
 1. **Avant la publicité** : le bouton « Acheter » et ses compteurs, sans affiliation — pour mesurer
-   dès la première carte.
+   dès la première carte. **Fait.** Le bouton de l'administration passe par
+   `/api/admin/[token]/acheter`, qui compte le clic et redirige chez le marchand. La table
+   `compteurs` tient un total par jour pour chacun des trois événements — cartes créées, choix
+   confirmés, clics vers la boutique — et rien d'autre : ni carte, ni adresse IP, ni navigateur. Elle
+   survit à la purge, contrairement à `gift_pages`. `npm run compteurs` les affiche, avec les deux
+   rapports qui décident de la suite : la part des cartes choisies, et les clics par choix. La
+   politique de confidentialité mentionne ces trois totaux.
 2. **Après le multilingue** : l'e-mail de notification, écrit d'emblée dans les six langues.
 3. **Une fois le site traduit et en ligne** : l'inscription au réseau d'affiliation. Les réseaux
    examinent un site avant d'accepter son éditeur ; un site vide et monolingue passerait mal.

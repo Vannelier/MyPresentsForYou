@@ -18,6 +18,9 @@ const confidentialite: ContenuLegal = {
         — geen Google Analytics, niets vergelijkbaars. Niets volgt je surfgedrag, hier of elders. Daarom
         krijg je ook geen toestemmingsbanner te zien.
       </p>
+      <p>
+        De site houdt alleen <strong>drie dagtotalen</strong> bij: het aantal gemaakte kaarten, bevestigde keuzes en klikken naar de winkel vanaf de beheerpagina. Niets koppelt ze aan een kaart, een persoon of een apparaat.
+      </p>
 
       <h2>Er blijft maar één ding op je toestel</h2>
       <p>

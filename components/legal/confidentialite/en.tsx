@@ -18,6 +18,9 @@ const confidentialite: ContenuLegal = {
         Analytics, nothing equivalent. Nothing follows your browsing, here or elsewhere. That is why no
         consent banner is shown to you.
       </p>
+      <p>
+        The site keeps only <strong>three daily totals</strong>: the number of cards created, choices confirmed and clicks through to the shop from the admin page. Nothing links them to a card, a person or a device.
+      </p>
 
       <h2>Only one thing is kept on your device</h2>
       <p>

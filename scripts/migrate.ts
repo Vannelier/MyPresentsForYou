@@ -12,24 +12,9 @@ import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { Client } from "pg";
 import { sslFor } from "../lib/db";
+import { chargerEnv } from "./env";
 
-function loadEnvFile(name: string) {
-  try {
-    const text = readFileSync(resolve(process.cwd(), name), "utf8");
-    for (const line of text.split(/\r?\n/)) {
-      const m = line.match(/^\s*([A-Za-z0-9_]+)\s*=\s*(.*?)\s*$/);
-      if (!m) continue;
-      const key = m[1];
-      if (process.env[key]) continue;
-      process.env[key] = m[2].replace(/^["']|["']$/g, "");
-    }
-  } catch {
-    /* fichier absent : on se contente de l'environnement du process */
-  }
-}
-
-loadEnvFile(".env.local");
-loadEnvFile(".env");
+chargerEnv();
 
 const connectionString = process.env.POSTGRES_URL_NON_POOLING || process.env.POSTGRES_URL;
 if (!connectionString) {

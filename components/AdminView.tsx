@@ -118,10 +118,20 @@ export default function AdminView({ page, token }: { page: AdminSnapshot; token:
             </blockquote>
           )}
 
+          {/*
+            Par la redirection de `/api/admin/[token]/acheter`, qui compte le
+            clic — et ajoutera l'affiliation. `noreferrer` : sans lui, le
+            navigateur enverrait l'adresse de cette page, jeton compris.
+          */}
           {chosen.source_url && (
-            <p style={{ marginTop: "0.9rem", fontSize: "0.88rem" }}>
-              <a href={chosen.source_url} target="_blank" rel="noreferrer">
-                {t.pageOrigine}
+            <p style={{ marginTop: "1rem" }}>
+              <a
+                className="btn btn--auto"
+                href={`/api/admin/${encodeURIComponent(token)}/acheter`}
+                target="_blank"
+                rel="noreferrer"
+              >
+                {t.acheter}
               </a>
             </p>
           )}

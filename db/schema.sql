@@ -47,5 +47,16 @@ ALTER TABLE gift_pages ADD COLUMN IF NOT EXISTS wait_message text NOT NULL DEFAU
 ALTER TABLE gift_pages ADD COLUMN IF NOT EXISTS items_title text NOT NULL DEFAULT '';
 ALTER TABLE gift_pages ADD COLUMN IF NOT EXISTS items_message text NOT NULL DEFAULT '';
 
+-- Trois totaux par jour : cartes creees, choix confirmes, clics vers la
+-- boutique. Aucune colonne ne designe une carte ni une personne (voir
+-- lib/compteurs.ts) ; la purge des cartes n'y touche donc pas.
+CREATE TABLE IF NOT EXISTS compteurs (
+  jour       date    NOT NULL,
+  evenement  text    NOT NULL,
+  total      integer NOT NULL DEFAULT 0,
+  PRIMARY KEY (jour, evenement),
+  CONSTRAINT compteurs_evenement_check CHECK (evenement IN ('carte_creee', 'choix_confirme', 'clic_boutique'))
+);
+
 -- Les UNIQUE ci-dessus creent deja les index sur slug et admin_token.
 CREATE INDEX IF NOT EXISTS gift_pages_expires_at_idx ON gift_pages (expires_at);

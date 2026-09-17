@@ -1,3 +1,4 @@
+import { compter } from "@/lib/compteurs";
 import { findBySlug, sql } from "@/lib/db";
 import { erreursDe, fail, handleError, json, readJson, tropDeRequetes } from "@/lib/http";
 import { QUOTAS } from "@/lib/rateLimit";
@@ -46,6 +47,7 @@ export async function POST(req: Request, { params }: Params) {
     if (rowCount === 0) {
       return fail(e.choixDejaFait, 409);
     }
+    await compter("choix_confirme");
 
     return json({ ok: true, thank_you_message: page.thank_you_message });
   } catch (err) {

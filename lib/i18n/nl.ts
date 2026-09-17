@@ -327,7 +327,7 @@ export const nl = {
     cadeauChoisi: "Gekozen cadeau",
     cadeauChoisiAide: "Nu is het aan jou: bestel het en geef het. Er is niets via het platform gegaan.",
     motDuReceveur: "“{mot}”",
-    pageOrigine: "Oorspronkelijke pagina openen ↗",
+    acheter: "Dit cadeau kopen ↗",
     partager: "Kaart delen",
     sOuvreLe: "Gaat open op {date}.",
     ouverteDepuis: "Open sinds {date}.",

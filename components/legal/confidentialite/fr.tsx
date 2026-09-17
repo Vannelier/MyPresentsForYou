@@ -19,6 +19,9 @@ const confidentialite: ContenuLegal = {
         d&apos;équivalent. Rien ne suit ta navigation, ni ici ni ailleurs. C&apos;est pour cette
         raison qu&apos;aucune bannière de consentement ne t&apos;est présentée.
       </p>
+      <p>
+        Le site tient seulement <strong>trois totaux par jour</strong> : le nombre de cartes créées, de choix confirmés et de clics vers la boutique depuis la page d&apos;administration. Rien ne les relie à une carte, à une personne ni à un appareil.
+      </p>
 
       <h2>Une seule chose est gardée sur ton appareil</h2>
       <p>

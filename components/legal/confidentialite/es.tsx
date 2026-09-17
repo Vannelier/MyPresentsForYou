@@ -19,6 +19,9 @@ const confidentialite: ContenuLegal = {
         equivalente. Nada sigue tu navegación, ni aquí ni en otro sitio. Por eso no se te muestra ningún
         aviso de consentimiento.
       </p>
+      <p>
+        El sitio solo guarda <strong>tres totales diarios</strong>: el número de tarjetas creadas, de elecciones confirmadas y de clics hacia la tienda desde la página de administración. Nada los relaciona con una tarjeta, una persona o un dispositivo.
+      </p>
 
       <h2>Solo se guarda una cosa en tu dispositivo</h2>
       <p>

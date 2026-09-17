@@ -1,3 +1,4 @@
+import { compter } from "@/lib/compteurs";
 import { rowToPage, slugExists, sql } from "@/lib/db";
 import { mirrorCover, mirrorItemImages, type ImageWarning } from "@/lib/blob";
 import { adminUrlFor, freePageTtlDays, publicUrlFor } from "@/lib/env";
@@ -80,6 +81,7 @@ export async function POST(req: Request) {
     }
 
     const page = rowToPage(inserted.rows[0]);
+    await compter("carte_creee");
     return json(
       {
         slug: page.slug,

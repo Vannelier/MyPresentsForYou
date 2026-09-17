@@ -19,6 +19,9 @@ const confidentialite: ContenuLegal = {
         Nulla segue la tua navigazione, né qui né altrove. È per questo che non ti viene mostrato alcun
         banner di consenso.
       </p>
+      <p>
+        Il sito tiene soltanto <strong>tre totali giornalieri</strong>: il numero di biglietti creati, di scelte confermate e di clic verso il negozio dalla pagina di amministrazione. Nulla li collega a un biglietto, a una persona o a un dispositivo.
+      </p>
 
       <h2>Una sola cosa resta sul tuo dispositivo</h2>
       <p>

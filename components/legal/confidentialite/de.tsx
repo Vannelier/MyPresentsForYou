@@ -18,6 +18,9 @@ const confidentialite: ContenuLegal = {
         — kein Google Analytics, nichts Vergleichbares. Nichts verfolgt, wo du surfst, weder hier noch
         anderswo. Deshalb wird dir auch kein Einwilligungsbanner angezeigt.
       </p>
+      <p>
+        Die Website führt nur <strong>drei Tagessummen</strong>: die Zahl der erstellten Karten, der bestätigten Wahlen und der Klicks von der Verwaltungsseite zum Shop. Nichts verbindet sie mit einer Karte, einer Person oder einem Gerät.
+      </p>
 
       <h2>Nur eines bleibt auf deinem Gerät</h2>
       <p>

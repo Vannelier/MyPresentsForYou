@@ -56,6 +56,7 @@ import {
   type Langue,
 } from "../lib/i18n/langues";
 import { router } from "../lib/i18n/routage";
+import { EVENEMENTS, synthese, urlAchat } from "../lib/compteurs";
 import {
   clesImages,
   effacerImagesDeCarte,
@@ -2867,6 +2868,69 @@ async function checkPurge() {
     });
   }
 }
+
+// --- Compteurs et bouton d'achat -------------------------------------------
+
+test("le bouton d'achat ne redirige que vers l'adresse web du cadeau choisi", () => {
+  const items = [
+    { id: "a", label: "A", image_url: null, source_url: "https://boutique.example/velo?x=1", note: null },
+    { id: "b", label: "B", image_url: null, source_url: "javascript:alert(1)", note: null },
+    { id: "c", label: "C", image_url: null, source_url: "/admin/autre", note: null },
+    { id: "d", label: "D", image_url: null, source_url: null, note: null },
+  ];
+  assert.equal(urlAchat({ items, chosen_item_id: "a" }), "https://boutique.example/velo?x=1");
+  // Une redirection ouverte vers `javascript:` ou vers une page du site serait
+  // servie sous notre domaine, jeton d'administration en poche.
+  assert.equal(urlAchat({ items, chosen_item_id: "b" }), null);
+  assert.equal(urlAchat({ items, chosen_item_id: "c" }), null);
+  assert.equal(urlAchat({ items, chosen_item_id: "d" }), null);
+  assert.equal(urlAchat({ items, chosen_item_id: null }), null);
+});
+
+test("la synthese des compteurs rapporte les choix aux cartes et les clics aux choix", () => {
+  const s = synthese([
+    { jour: "2026-09-17", evenement: "carte_creee", total: 3 },
+    { jour: "2026-09-18", evenement: "carte_creee", total: 1 },
+    { jour: "2026-09-18", evenement: "choix_confirme", total: 2 },
+    { jour: "2026-09-19", evenement: "clic_boutique", total: 1 },
+    { jour: "2026-09-19", evenement: "inconnu", total: 50 },
+  ]);
+  assert.deepEqual(s.totaux, { carte_creee: 4, choix_confirme: 2, clic_boutique: 1 });
+  assert.equal(s.tauxChoix, 0.5);
+  assert.equal(s.tauxAchat, 0.5);
+  assert.deepEqual(synthese([]), { totaux: { carte_creee: 0, choix_confirme: 0, clic_boutique: 0 }, tauxChoix: null, tauxAchat: null });
+});
+
+test("chaque evenement est compte la ou il se produit, sans jamais bloquer l'action", () => {
+  /*
+   * Le schema refuse un evenement qu'il ne connait pas : un nom ajoute d'un seul
+   * cote ferait echouer chaque ecriture en silence, `compter` avalant l'erreur.
+   */
+  const contrainte = lire("db/schema.sql").match(/compteurs_evenement_check CHECK \(evenement IN \(([^)]*)\)\)/);
+  assert.ok(contrainte, "contrainte des evenements introuvable");
+  assert.deepEqual(contrainte[1].split(",").map((x) => x.trim().replace(/'/g, "")), [...EVENEMENTS]);
+  const source = lire("lib/compteurs.ts");
+  const corps = source.slice(source.indexOf("export async function compter"), source.indexOf("export function urlAchat"));
+  assert.match(corps, /try \{[\s\S]*\} catch \(/, "compter doit avaler ses erreurs");
+
+  // Apres l'insertion et apres le verrou : une creation refusee ou un choix
+  // perdu contre un autre ne se comptent pas.
+  const creation = lire("app/api/pages/route.ts");
+  assert.ok(creation.indexOf('compter("carte_creee")') > creation.indexOf("rowToPage(inserted"), "carte comptee avant l'insertion");
+  const choix = lire("app/api/pages/[slug]/choose/route.ts");
+  assert.ok(choix.indexOf('compter("choix_confirme")') > choix.indexOf("if (rowCount === 0)"), "choix compte avant le verrou");
+
+  const achat = lire("app/api/admin/[token]/acheter/route.ts");
+  assert.match(achat, /urlAchat\(page\)/);
+  assert.match(achat, /compter\("clic_boutique"\)/);
+  assert.match(achat, /"referrer-policy": "no-referrer"/, "le jeton partirait chez le marchand");
+
+  // Le bouton passe par la redirection, jamais directement chez le marchand :
+  // un clic direct ne serait pas compte.
+  const admin = lire("components/AdminView.tsx");
+  assert.match(admin, /href=\{`\/api\/admin\/\$\{encodeURIComponent\(token\)\}\/acheter`\}\s*target="_blank"\s*rel="noreferrer"/);
+  assert.doesNotMatch(admin, /href=\{chosen\.source_url\}/);
+});
 
 // --- llms.txt ----------------------------------------------------------------
 

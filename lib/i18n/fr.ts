@@ -337,7 +337,7 @@ export const fr = {
     cadeauChoisi: "Cadeau choisi",
     cadeauChoisiAide: "À toi de jouer : commande-le et offre-le. Rien n'a transité par la plateforme.",
     motDuReceveur: "« {mot} »",
-    pageOrigine: "Ouvrir la page d'origine ↗",
+    acheter: "Acheter ce cadeau ↗",
     partager: "Partager la carte",
     sOuvreLe: "S'ouvre le {date}.",
     ouverteDepuis: "Ouverte depuis le {date}.",

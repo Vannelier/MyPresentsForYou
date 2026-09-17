@@ -9,6 +9,7 @@
     "typecheck": "tsc --noEmit",
     "brand": "node scripts/brand.mjs",
     "db:migrate": "tsx scripts/migrate.ts",
+    "compteurs": "tsx scripts/compteurs.ts",
     "check": "tsx scripts/check.ts"
   },
   "dependencies": {
