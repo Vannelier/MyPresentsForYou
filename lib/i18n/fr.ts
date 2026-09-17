@@ -744,6 +744,13 @@ export const fr = {
     noteCadeau: "Note du cadeau {n}",
     exempleNote: "Avec trois recharges pour commencer.",
     ajouter: "+ Ajouter un cadeau",
+    idees: {
+      titre: "Besoin d'idées ?",
+      aide: "Quelques pistes, rangées par profil. Un clic ajoute l'idée à ta liste ; à toi d'y mettre ensuite le lien de ton choix.",
+      aideOccasion: "{occasion} : quelques pistes, rangées par profil. Un clic ajoute l'idée à ta liste ; à toi d'y mettre ensuite le lien de ton choix.",
+      plein: "La liste est pleine.",
+      guide: "Lire le guide : {occasion} ↗",
+    },
     apercuDirect: "Aperçu en direct",
     rejouer: "Rejouer",
     pleinEcran: "Plein écran",

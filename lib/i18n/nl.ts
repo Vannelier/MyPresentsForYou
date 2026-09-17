@@ -722,6 +722,13 @@ export const nl = {
     noteCadeau: "Notitie bij cadeau {n}",
     exempleNote: "Met drie filmpacks om te beginnen.",
     ajouter: "+ Cadeau toevoegen",
+    idees: {
+      titre: "Ideeën nodig?",
+      aide: "Een paar ideeën, per profiel. Eén klik zet het idee in je lijst; daarna voeg je zelf de link van je keuze toe.",
+      aideOccasion: "{occasion}: een paar ideeën, per profiel. Eén klik zet het idee in je lijst; daarna voeg je zelf de link van je keuze toe.",
+      plein: "De lijst is vol.",
+      guide: "Lees de gids: {occasion} ↗",
+    },
     apercuDirect: "Live voorbeeld",
     rejouer: "Opnieuw afspelen",
     pleinEcran: "Volledig scherm",

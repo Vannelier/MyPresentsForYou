@@ -33,7 +33,9 @@ import {
   lireBrouillon,
   type Brouillon,
 } from "@/components/editor/draft";
+import BesoinIdees from "@/components/editor/BesoinIdees";
 import { useDictionnaire } from "@/components/i18n/Dictionnaire";
+import { placerPiste, type Pistes } from "@/lib/pistes";
 import type { Dictionnaire } from "@/lib/i18n";
 import { traduire } from "@/lib/i18n/erreurs";
 import { EN_TETE_LANGUE, LOCALES } from "@/lib/i18n/langues";
@@ -83,8 +85,14 @@ export type CreateResult = {
 };
 
 type Props =
-  | { mode: "create"; initial: EditorInitial; baseUrlLabel: string; onCreated: (r: CreateResult) => void }
-  | { mode: "edit"; initial: EditorInitial; adminToken: string; slug: string };
+  | {
+      mode: "create";
+      initial: EditorInitial;
+      baseUrlLabel: string;
+      onCreated: (r: CreateResult) => void;
+      pistes: Pistes;
+    }
+  | { mode: "edit"; initial: EditorInitial; adminToken: string; slug: string; pistes: Pistes };
 
 type DraftItem = {
   key: string;
@@ -1139,6 +1147,14 @@ export default function PageEditor(props: Props) {
           >
             {ed.ajouter}
           </button>
+
+          <BesoinIdees
+            pistes={props.pistes}
+            occasion={occasion}
+            pris={items.map((it) => it.label.trim())}
+            plein={items.length >= LIMITS.itemsMax && !items.some((it) => !it.label.trim() && !it.source_url.trim() && !it.image_url.trim() && !it.note.trim())}
+            onChoisir={(nom) => setItems((prev) => placerPiste(prev, nom, LIMITS.itemsMax, emptyRow) ?? prev)}
+          />
         </section>
       )}
 

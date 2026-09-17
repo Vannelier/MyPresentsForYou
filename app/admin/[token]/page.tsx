@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import AdminView, { type AdminSnapshot } from "@/components/AdminView";
 import { lireCarteAdmin } from "@/lib/carte";
+import { pistesPourEditeur } from "@/lib/guides";
 import { dictionnaire } from "@/lib/i18n";
 import { langueOuDefaut } from "@/lib/i18n/langues";
 import { publicUrlFor, skimlinksId } from "@/lib/env";
@@ -60,5 +61,5 @@ export default async function AdminRoute({ params }: Props) {
     affilie: skimlinksId() !== null,
   };
 
-  return <AdminView page={snapshot} token={token} />;
+  return <AdminView page={snapshot} token={token} pistes={pistesPourEditeur(langueOuDefaut(page.theme.langue))} />;
 }

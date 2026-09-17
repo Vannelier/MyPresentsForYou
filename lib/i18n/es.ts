@@ -732,6 +732,13 @@ export const es = {
     noteCadeau: "Nota del regalo {n}",
     exempleNote: "Con tres cargas para empezar.",
     ajouter: "+ Añadir un regalo",
+    idees: {
+      titre: "¿Necesitas ideas?",
+      aide: "Algunas ideas, ordenadas por perfil. Un clic añade la idea a tu lista; luego añade tú el enlace que prefieras.",
+      aideOccasion: "{occasion}: algunas ideas, ordenadas por perfil. Un clic añade la idea a tu lista; luego añade tú el enlace que prefieras.",
+      plein: "La lista está llena.",
+      guide: "Leer la guía: {occasion} ↗",
+    },
     apercuDirect: "Vista previa en directo",
     rejouer: "Repetir",
     pleinEcran: "Pantalla completa",

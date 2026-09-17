@@ -37,7 +37,8 @@ import { adsensePublisherId, baseUrl, freePageTtlDays, secretDePurge, skimlinksI
 import sitemap from "../app/sitemap";
 import { GET as llmsTxt } from "../app/llms.txt/route";
 import { alternatesDe, alternatesGuide } from "../lib/i18n/alternates";
-import { TEXTES_GUIDES } from "../lib/guides";
+import { TEXTES_GUIDES, pistesPourEditeur } from "../lib/guides";
+import { placerPiste } from "../lib/pistes";
 import {
   CHEMINS,
   GUIDES,
@@ -2971,6 +2972,54 @@ test("chaque evenement est compte la ou il se produit, sans jamais bloquer l'act
   const admin = lire("components/AdminView.tsx");
   assert.match(admin, /href=\{`\/api\/admin\/\$\{encodeURIComponent\(token\)\}\/acheter`\}\s*target="_blank"\s*rel="noreferrer"/);
   assert.doesNotMatch(admin, /href=\{chosen\.source_url\}/);
+});
+
+// --- Besoin d'idees ? --------------------------------------------------------
+
+test("une piste remplit la premiere ligne vide, sans doublon ni depassement", () => {
+  const ligne = (label = "", source_url = "") => ({ label, image_url: "", source_url, note: "" });
+  const neuve = () => ligne();
+
+  // Les deux lignes vides de depart : la premiere se remplit, rien ne s'ajoute.
+  assert.deepEqual(placerPiste([ligne(), ligne()], "Un plaid", 10, neuve), [ligne("Un plaid"), ligne()]);
+  // Une ligne qui n'a qu'un lien n'est pas vide : elle n'est pas ecrasee.
+  assert.deepEqual(
+    placerPiste([ligne("", "https://x.example"), ligne()], "Un plaid", 10, neuve),
+    [ligne("", "https://x.example"), ligne("Un plaid")],
+  );
+  assert.deepEqual(placerPiste([ligne("A")], "Un plaid", 10, neuve), [ligne("A"), ligne("Un plaid")]);
+  assert.equal(placerPiste([ligne("Un plaid"), ligne()], "Un plaid", 10, neuve), null, "doublon");
+  assert.equal(placerPiste([ligne("A"), ligne("B")], "Un plaid", 2, neuve), null, "liste pleine");
+});
+
+test("les pistes de l'editeur sont celles des guides, dans chaque langue", () => {
+  /*
+   * Une seule source : une idee corrigee dans un guide l'est aussi dans
+   * l'editeur. Deux listes tenues a la main auraient diverge a la premiere
+   * retouche.
+   */
+  for (const langue of LANGUES) {
+    const pistes = pistesPourEditeur(langue);
+    for (const guide of GUIDES) {
+      const attendu = TEXTES_GUIDES[langue].guides[guide].idees.profils.map((p) => ({
+        profil: p.nom,
+        idees: p.idees.map((i) => i.nom),
+      }));
+      assert.deepEqual(pistes[guide], attendu, `${langue}/${guide}`);
+    }
+  }
+  // Les pistes arrivent par propriete depuis les pages serveur : l'editeur,
+  // composant navigateur, n'importe jamais les guides (voir plus haut).
+  assert.match(lire("app/[langue]/creer/page.tsx"), /pistes=\{pistesPourEditeur\(langue\)\}/);
+  assert.match(lire("app/admin/[token]/page.tsx"), /pistes=\{pistesPourEditeur\(/);
+
+  const encart = lire("components/editor/BesoinIdees.tsx");
+  // Replie par defaut : une aide pour qui cale, pas une liste imposee.
+  assert.match(encart, /<details className="idees">/);
+  assert.doesNotMatch(encart, /<details[^>]*\bopen\b/);
+  const editeur = lire("components/editor/PageEditor.tsx");
+  const etape2 = editeur.slice(editeur.indexOf("{step === 2 && ("), editeur.indexOf("{step === 3 && ("));
+  assert.match(etape2, /<BesoinIdees[\s\S]*placerPiste\(prev, nom, LIMITS\.itemsMax, emptyRow\)/, "l'encart a quitte l'etape des cadeaux");
 });
 
 // --- llms.txt ----------------------------------------------------------------

@@ -1340,7 +1340,13 @@ le référencement, et seulement ensuite la publicité du site. Le modèle s'y i
 2. **Après le multilingue** : l'e-mail de notification, écrit d'emblée dans les six langues.
 3. **Une fois le site traduit et en ligne** : l'inscription au réseau d'affiliation. Les réseaux
    examinent un site avant d'accepter son éditeur ; un site vide et monolingue passerait mal.
-4. **Avec du trafic** : les suggestions.
+4. **Avec du trafic** : les suggestions. **Une première version existe**, sans lien marchand : dans
+   l'étape « Cadeaux » de l'éditeur, un encart replié « Besoin d'idées ? » propose les pistes du guide
+   de l'occasion choisie (celles d'anniversaire pour une occasion sans guide). Un clic place le titre
+   dans la première ligne vide ; le lien reste à l'offreur. Les pistes viennent des guides
+   (`pistesPourEditeur`), passées en propriété par les pages serveur : l'éditeur n'importe jamais
+   `lib/guides`. La suite — des liens vers des marchands affiliés — attend la liste des marchands
+   Skimlinks.
 
 ## Décisions structurantes
 

@@ -11,6 +11,7 @@ import { cheminVers } from "@/lib/i18n/chemins";
 import { EN_TETE_LANGUE, LOCALES } from "@/lib/i18n/langues";
 import { remplir } from "@/lib/i18n/remplir";
 import { occasionById } from "@/lib/occasions";
+import type { Pistes } from "@/lib/pistes";
 import type { Item, Theme } from "@/lib/types";
 
 export type AdminSnapshot = {
@@ -46,7 +47,7 @@ export type AdminSnapshot = {
   affilie: boolean;
 };
 
-export default function AdminView({ page, token }: { page: AdminSnapshot; token: string }) {
+export default function AdminView({ page, token, pistes }: { page: AdminSnapshot; token: string; pistes: Pistes }) {
   const router = useRouter();
   const { langue, d } = useDictionnaire();
   const t = d.admin;
@@ -191,7 +192,7 @@ export default function AdminView({ page, token }: { page: AdminSnapshot; token:
             <h2>{t.modifier}</h2>
             <p className="help">{t.modifierAide}</p>
           </section>
-          <PageEditor mode="edit" initial={initial} adminToken={token} slug={page.slug} />
+          <PageEditor mode="edit" initial={initial} adminToken={token} slug={page.slug} pistes={pistes} />
         </>
       )}
 

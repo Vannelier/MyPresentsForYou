@@ -724,6 +724,13 @@ export const de = {
     noteCadeau: "Notiz zu Geschenk {n}",
     exempleNote: "Mit drei Filmen für den Anfang.",
     ajouter: "+ Geschenk hinzufügen",
+    idees: {
+      titre: "Brauchst du Ideen?",
+      aide: "Ein paar Ideen, nach Typ sortiert. Ein Klick fügt die Idee deiner Liste hinzu; den Link deiner Wahl ergänzt du danach selbst.",
+      aideOccasion: "{occasion}: ein paar Ideen, nach Typ sortiert. Ein Klick fügt die Idee deiner Liste hinzu; den Link deiner Wahl ergänzt du danach selbst.",
+      plein: "Die Liste ist voll.",
+      guide: "Zum Ratgeber: {occasion} ↗",
+    },
     apercuDirect: "Live-Vorschau",
     rejouer: "Nochmal abspielen",
     pleinEcran: "Vollbild",

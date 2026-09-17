@@ -7,6 +7,7 @@ import CardPreview from "@/components/CardPreview";
 import PageEditor, { type CreateResult, type EditorInitial } from "@/components/editor/PageEditor";
 import { useDictionnaire } from "@/components/i18n/Dictionnaire";
 import { cheminVers } from "@/lib/i18n/chemins";
+import type { Pistes } from "@/lib/pistes";
 import { DEFAULT_THEME } from "@/lib/types";
 
 const EMPTY: EditorInitial = {
@@ -28,7 +29,7 @@ const EMPTY: EditorInitial = {
   items: [],
 };
 
-export default function CreateFlow({ baseUrlLabel }: { baseUrlLabel: string }) {
+export default function CreateFlow({ baseUrlLabel, pistes }: { baseUrlLabel: string; pistes: Pistes }) {
   const [created, setCreated] = useState<CreateResult | null>(null);
   const { langue, d } = useDictionnaire();
 
@@ -44,7 +45,7 @@ export default function CreateFlow({ baseUrlLabel }: { baseUrlLabel: string }) {
         <p>{d.creation.chapo}</p>
       </header>
 
-      <PageEditor mode="create" initial={EMPTY} baseUrlLabel={baseUrlLabel} onCreated={setCreated} />
+      <PageEditor mode="create" initial={EMPTY} baseUrlLabel={baseUrlLabel} onCreated={setCreated} pistes={pistes} />
     </div>
   );
 }

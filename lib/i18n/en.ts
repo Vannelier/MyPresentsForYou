@@ -719,6 +719,13 @@ export const en = {
     noteCadeau: "Note for gift {n}",
     exempleNote: "With three film packs to get started.",
     ajouter: "+ Add a gift",
+    idees: {
+      titre: "Need ideas?",
+      aide: "A few ideas, sorted by profile. One click adds the idea to your list; then add the link of your choice.",
+      aideOccasion: "{occasion}: a few ideas, sorted by profile. One click adds the idea to your list; then add the link of your choice.",
+      plein: "The list is full.",
+      guide: "Read the guide: {occasion} ↗",
+    },
     apercuDirect: "Live preview",
     rejouer: "Replay",
     pleinEcran: "Full screen",

@@ -5,6 +5,7 @@ import { es } from "./es";
 import { fr } from "./fr";
 import { it } from "./it";
 import { nl } from "./nl";
+import type { Pistes } from "@/lib/pistes";
 import type { TextesGuides } from "./types";
 
 /*
@@ -16,4 +17,18 @@ export const TEXTES_GUIDES: Record<Langue, TextesGuides> = { fr, en, it, es, de,
 
 export function textesGuides(langue: Langue): TextesGuides {
   return TEXTES_GUIDES[langue];
+}
+
+/**
+ * Les pistes des guides d'une langue, pour « Besoin d'idees ? » dans l'editeur :
+ * les memes idees que les guides, sans leurs explications, pour qu'une seule
+ * source les tienne a jour.
+ */
+export function pistesPourEditeur(langue: Langue): Pistes {
+  return Object.fromEntries(
+    Object.entries(TEXTES_GUIDES[langue].guides).map(([guide, contenu]) => [
+      guide,
+      contenu.idees.profils.map((p) => ({ profil: p.nom, idees: p.idees.map((i) => i.nom) })),
+    ]),
+  );
 }
