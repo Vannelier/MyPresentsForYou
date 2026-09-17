@@ -1591,7 +1591,7 @@ export default function PageEditor(props: Props) {
           </button>
         ) : (
           <button type="button" className="btn" onClick={next}>
-            {remplir(ed.suivantVers, { etape: ed.etapes[STEPS[step].cle].titre.toLowerCase() })}
+            {remplir(ed.suivantVers, { etape: ed.etapes[STEPS[step].cle].suite })}
           </button>
         )}
       </div>

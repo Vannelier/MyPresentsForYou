@@ -1,32 +1,36 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import TextPage from "@/components/TextPage";
+import { dictionnaire } from "@/lib/i18n";
 import { alternatesDe } from "@/lib/i18n/alternates";
 import { cheminVers } from "@/lib/i18n/chemins";
 import { langueOuDefaut } from "@/lib/i18n/langues";
 import { SITE, aRemplir } from "@/lib/site";
 
-export const metadata: Metadata = {
-  title: "Contact — MyPresentsForYou",
-  description:
-    "Une question, un bug, une carte à signaler ou un lien d'administration perdu : comment nous joindre.",
-  alternates: alternatesDe("fr", "contact"),
-};
+type Params = { params: Promise<{ langue: string }> };
 
-export default async function Contact({ params }: { params: Promise<{ langue: string }> }) {
+export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const langue = langueOuDefaut((await params).langue);
+  const d = dictionnaire(langue).contact;
+  return {
+    title: d.titreMeta,
+    description: d.descriptionMeta,
+    alternates: alternatesDe(langue, "contact"),
+  };
+}
+
+export default async function Contact({ params }: Params) {
+  const langue = langueOuDefaut((await params).langue);
+  const d = dictionnaire(langue).contact;
   const sansAdresse = aRemplir(SITE.email);
 
   return (
-    <TextPage
-      langue={langue}
-      page="contact"
-      titre="Contact"
-      chapo="MyPresentsForYou est un petit projet. Les réponses ne sont pas instantanées, mais elles arrivent."
-    >
-      <h2>Nous écrire</h2>
+    <TextPage langue={langue} page="contact" titre={d.titre} chapo={d.chapo}>
+      <h2>{d.ecrire}</h2>
       {sansAdresse ? (
-        <div className="prose__note">
+        // Une note pour l'editeur du site, pas pour un visiteur : elle ne s'affiche
+        // que tant que lib/site.ts n'a pas d'adresse. Elle reste en francais.
+        <div className="prose__note" lang="fr">
           <p>
             <span className="prose__manquant">Adresse de contact à renseigner</span> dans{" "}
             <code>lib/site.ts</code>. Tant qu&apos;elle est vide, cette page ne peut pas en inventer
@@ -39,47 +43,31 @@ export default async function Contact({ params }: { params: Promise<{ langue: st
         </p>
       )}
 
+      <p>{d.sansFormulaire}</p>
+
+      <h2>{d.aide}</h2>
+
+      <h3>{d.lienPerduTitre}</h3>
       <p>
-        Il n&apos;y a pas de formulaire sur cette page, et c&apos;est volontaire : un formulaire
-        supposerait d&apos;enregistrer ce que tu écris et de poser un cookie anti-robot. Le reste du
-        site n&apos;en pose aucun, autant rester cohérent.
+        {d.lienPerduDebut}
+        <strong>{d.lienPerduFort}</strong>
+        {d.lienPerduFin}
       </p>
 
-      <h2>Ce qui aide à te répondre vite</h2>
+      <h3>{d.suppressionTitre}</h3>
+      <p>{d.suppressionTexte}</p>
 
-      <h3>Tu as perdu ton lien d&apos;administration</h3>
-      <p>
-        Indique <strong>l&apos;adresse publique de la carte</strong> — celle que tu as envoyée. Sans
-        elle, nous ne pouvons rien retrouver : aucune carte n&apos;est reliée à une identité, il
-        n&apos;y a ni compte ni e-mail à interroger. C&apos;est le revers assumé de ne rien te
-        demander à l&apos;inscription.
-      </p>
+      <h3>{d.signalementTitre}</h3>
+      <p>{d.signalementTexte}</p>
 
-      <h3>Tu veux faire supprimer une carte</h3>
-      <p>
-        Le plus rapide reste ton lien d&apos;administration : le bouton de suppression est en bas de
-        la page, et l&apos;effacement est immédiat. Écris-nous seulement si tu as perdu ce lien, en
-        joignant l&apos;adresse publique de la carte.
-      </p>
+      <h3>{d.bugTitre}</h3>
+      <p>{d.bugTexte}</p>
 
-      <h3>Tu signales un contenu</h3>
+      <h2>{d.avantTitre}</h2>
       <p>
-        Donne l&apos;adresse de la carte et ce qui pose problème. Les cartes sont créées librement et
-        sans compte : le signalement est le seul moyen que nous ayons d&apos;en avoir connaissance.
-      </p>
-
-      <h3>Tu rapportes un bug</h3>
-      <p>
-        Ce que tu faisais, ce que tu attendais, ce qui s&apos;est passé — plus ton navigateur et si
-        c&apos;était au téléphone ou à l&apos;ordinateur. Une capture d&apos;écran vaut souvent trois
-        paragraphes.
-      </p>
-
-      <h2>Avant d&apos;écrire</h2>
-      <p>
-        Beaucoup de questions ont déjà leur réponse sur la page{" "}
-        <Link href={cheminVers(langue, "questions")}>Questions fréquentes</Link> — notamment sur la récupération
-        automatique des images, qui échoue chez certains marchands sans que ce soit une panne.
+        {d.avantDebut}
+        <Link href={cheminVers(langue, "questions")}>{d.avantLien}</Link>
+        {d.avantFin}
       </p>
     </TextPage>
   );

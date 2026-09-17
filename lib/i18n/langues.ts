@@ -8,7 +8,7 @@
 export const LANGUES = ["fr", "en", "it", "es", "de", "nl"] as const;
 export type Langue = (typeof LANGUES)[number];
 
-export const LANGUES_ACTIVES: readonly Langue[] = ["fr"];
+export const LANGUES_ACTIVES: readonly Langue[] = LANGUES;
 
 /** La langue d'une carte creee avant le multilingue, ou dont l'identifiant est inconnu. */
 export const LANGUE_PAR_DEFAUT: Langue = "fr";

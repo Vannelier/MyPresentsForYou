@@ -34,6 +34,142 @@ export const fr = {
 
   pageTexte: {
     miseAJour: "Dernière mise à jour :",
+    // En tete d'une page legale traduite, dans la langue du visiteur : jamais
+    // affichee en francais, donc. Le lien mene a la version qui engage.
+    faitFoiDebut: "Traduction donnée pour information. En cas de divergence, ",
+    faitFoiLien: "la version française",
+    faitFoiFin: " fait foi.",
+  },
+
+  banniere: {
+    titre: "Offre le choix.",
+    texte: "Rassemble quelques idées sur une petite page, envoie le lien, découvre celle qui a été retenue.",
+    pied: "Sans compte, sans paiement, sans adresse à donner.",
+  },
+
+  questions: {
+    titreMeta: "Questions fréquentes — MyPresentsForYou",
+    descriptionMeta:
+      "Offrir en laissant choisir : comment ça marche, combien ça coûte, ce que voit la personne qui reçoit, et que faire si une image ne se récupère pas.",
+    titre: "Questions fréquentes",
+    chapo:
+      "Offrir en laissant choisir : comment ça marche, ce que ça coûte, et ce qui se passe quand la récupération automatique échoue.",
+    // Les mots que les gens tapent — « laisser choisir son cadeau », « sans
+    // inscription » — plutot que le vocabulaire interne du projet : une page ne
+    // se trouve pas avec les mots de celui qui l'ecrit.
+    liste: [
+      {
+        q: "Comment offrir un cadeau en laissant la personne choisir ?",
+        r: [
+          "Tu rassembles quelques idées sur une petite page — jusqu'à dix — puis tu envoies le lien. La personne ouvre la page, regarde les propositions, et confirme celle qui lui fait le plus envie. Tu retrouves son choix sur ton lien privé, et tu achètes le cadeau toi-même.",
+          "L'intérêt : elle reçoit quelque chose qui lui plaît vraiment, sans que tu aies eu à lui demander ce qu'elle voulait — donc sans gâcher la surprise.",
+        ],
+      },
+      {
+        q: "MyPresentsForYou est-il gratuit ?",
+        r: [
+          "Oui, entièrement. Aucun paiement ne transite par le site, et il n'y a rien à payer pour créer une carte. Tu achètes le cadeau retenu chez le marchand de ton choix, exactement comme tu l'aurais fait sans MyPresentsForYou.",
+        ],
+      },
+      {
+        q: "Faut-il créer un compte ?",
+        r: [
+          "Non. Ni compte, ni mot de passe, ni adresse e-mail — ni pour toi, ni pour la personne qui reçoit la carte.",
+          "À la création, tu reçois deux liens : un lien public à envoyer, et un lien privé à garder. Ce second lien est le seul moyen de revenir sur ta carte et d'y voir le choix. Conserve-le : comme rien ne relie une carte à une identité, il ne peut pas être renvoyé.",
+        ],
+      },
+      {
+        q: "Que voit la personne qui reçoit la carte ?",
+        r: [
+          "Une page à son nom, avec ton message et tes propositions. Elle choisit et confirme, c'est tout : elle n'a ni compte à créer, ni formulaire à remplir, et ne saisit ni nom, ni adresse, ni e-mail.",
+          "Les prix ne sont jamais affichés. Elle voit ce que tu proposes, pas ce que ça coûte.",
+        ],
+      },
+      {
+        q: "Combien d'idées puis-je proposer ?",
+        r: [
+          "De une à {max}. Avec une seule proposition, la carte cesse d'être un choix pour devenir une annonce : la personne confirme simplement qu'elle l'a reçue, et tu sais quand elle l'a ouverte.",
+        ],
+      },
+      {
+        q: "Combien de temps la page reste-t-elle en ligne ?",
+        r: [
+          "Un an si personne ne choisit — passé ce délai, elle est supprimée automatiquement. Une fois le choix fait, la carte se fige sur ce choix et reste consultable jusqu'à ce que tu la supprimes toi-même.",
+        ],
+      },
+      {
+        q: "Puis-je modifier la carte après l'avoir envoyée ?",
+        r: [
+          "Oui, tant que personne n'a confirmé son choix. Tu peux changer les messages, les cadeaux, l'apparence — et les liens déjà envoyés continuent de fonctionner, car ils ne changent jamais.",
+          "Dès qu'un choix est confirmé, la carte se verrouille : elle ne serait plus honnête si elle pouvait changer après coup.",
+        ],
+      },
+      {
+        q: "Comment envoyer la carte ?",
+        r: [
+          "Par WhatsApp, SMS, e-mail, ou n'importe quel moyen qui accepte un lien. Collé dans une messagerie, le lien s'affiche avec ton message et une image plutôt qu'avec une adresse nue.",
+          "Il existe aussi un QR code, à imprimer et glisser dans une vraie carte en papier : la personne le scanne et la page s'ouvre. Une carte prête à imprimer est fournie, aux couleurs de ton thème : une feuille A4 pliée en deux.",
+        ],
+      },
+      {
+        q: "L'image du produit n'est pas récupérée, est-ce un bug ?",
+        r: [
+          "Non. Quand tu colles l'adresse d'une page produit, le titre et l'image sont récupérés automatiquement — mais beaucoup de marchands, Amazon et les réseaux sociaux en tête, refusent les requêtes automatisées. C'est prévu, pas cassé.",
+          "Dans ce cas tu remplis à la main : une photo depuis ton téléphone, une image copiée-collée, ou une adresse d'image. La carte est identique au final.",
+        ],
+      },
+      {
+        q: "En quoi est-ce différent d'une liste de souhaits ?",
+        r: [
+          "Sur une liste de souhaits, c'est elle qui écrit ce qu'elle veut, et toi qui y pioches. Ici, c'est toi qui proposes et elle qui choisit.",
+          "Et contrairement à une liste de mariage ou une cagnotte, rien n'est encaissé ici : MyPresentsForYou ne touche jamais à l'argent.",
+        ],
+      },
+      {
+        q: "Mes données sont-elles collectées ?",
+        r: [
+          "Le site ne pose aucun cookie, n'utilise aucun outil de mesure d'audience, et ne demande aucun compte. Seul est enregistré ce que tu écris toi-même dans le formulaire.",
+          "Le détail complet est sur la page Politique de confidentialité.",
+        ],
+      },
+    ],
+    autreQuestion: "Une autre question ?",
+    autreDebut: "Écris-nous depuis la page ",
+    autreContact: "Contact",
+    autreMilieu: ". Pour tout ce qui touche aux données, la ",
+    autreConfidentialite: "politique de confidentialité",
+    autreFin: " entre dans le détail.",
+  },
+
+  contact: {
+    titreMeta: "Contact — MyPresentsForYou",
+    descriptionMeta:
+      "Une question, un bug, une carte à signaler ou un lien d'administration perdu : comment nous joindre.",
+    titre: "Contact",
+    chapo: "MyPresentsForYou est un petit projet. Les réponses ne sont pas instantanées, mais elles arrivent.",
+    ecrire: "Nous écrire",
+    sansFormulaire:
+      "Il n'y a pas de formulaire sur cette page, et c'est volontaire : un formulaire supposerait d'enregistrer ce que tu écris et de poser un cookie anti-robot. Le reste du site n'en pose aucun, autant rester cohérent.",
+    aide: "Ce qui aide à te répondre vite",
+    lienPerduTitre: "Tu as perdu ton lien d'administration",
+    lienPerduDebut: "Indique ",
+    lienPerduFort: "l'adresse publique de la carte",
+    lienPerduFin:
+      " — celle que tu as envoyée. Sans elle, nous ne pouvons rien retrouver : aucune carte n'est reliée à une identité, il n'y a ni compte ni e-mail à interroger. C'est le revers assumé de ne rien te demander à l'inscription.",
+    suppressionTitre: "Tu veux faire supprimer une carte",
+    suppressionTexte:
+      "Le plus rapide reste ton lien d'administration : le bouton de suppression est en bas de la page, et l'effacement est immédiat. Écris-nous seulement si tu as perdu ce lien, en joignant l'adresse publique de la carte.",
+    signalementTitre: "Tu signales un contenu",
+    signalementTexte:
+      "Donne l'adresse de la carte et ce qui pose problème. Les cartes sont créées librement et sans compte : le signalement est le seul moyen que nous ayons d'en avoir connaissance.",
+    bugTitre: "Tu rapportes un bug",
+    bugTexte:
+      "Ce que tu faisais, ce que tu attendais, ce qui s'est passé — plus ton navigateur et si c'était au téléphone ou à l'ordinateur. Une capture d'écran vaut souvent trois paragraphes.",
+    avantTitre: "Avant d'écrire",
+    avantDebut: "Beaucoup de questions ont déjà leur réponse sur la page ",
+    avantLien: "Questions fréquentes",
+    avantFin:
+      " — notamment sur la récupération automatique des images, qui échoue chez certains marchands sans que ce soit une panne.",
   },
 
   introuvable: {
@@ -150,7 +286,7 @@ export const fr = {
   creation: {
     titreMeta: "Créer une page-cadeau gratuite — MyPresentsForYou",
     descriptionMeta:
-      "Compose ta page en deux étapes : tes idées de cadeau, puis la présentation. Sans compte, sans paiement, en quelques minutes.",
+      "Compose ta page en trois étapes : l'occasion, tes idées de cadeau, puis la présentation. Sans compte, sans paiement, en quelques minutes.",
     titre: "Compose ta page-cadeau",
     chapo:
       "Deux à dix idées, un message, et c'est prêt. Le bouton « Aperçu » te montre à tout moment ce que verra la personne.",
@@ -530,11 +666,13 @@ export const fr = {
   },
 
   editeur: {
-    // Par etape, sous la cle que porte STEPS dans l'editeur.
+    // Par etape, sous la cle que porte STEPS dans l'editeur. `suite` est la
+    // forme qui suit « Suivant : » ; elle s'ecrit par langue plutot que de
+    // mettre le titre en minuscules, ce qui decapitalisait les noms allemands.
     etapes: {
-      occasion: { titre: "L'occasion", court: "Occasion" },
-      cadeaux: { titre: "Les cadeaux", court: "Cadeaux" },
-      presentation: { titre: "La présentation", court: "Présentation" },
+      occasion: { titre: "L'occasion", court: "Occasion", suite: "l'occasion" },
+      cadeaux: { titre: "Les cadeaux", court: "Cadeaux", suite: "les cadeaux" },
+      presentation: { titre: "La présentation", court: "Présentation", suite: "la présentation" },
     },
     nomParDefaut: "Carte cadeau",
     sansTitre: "Sans titre",

@@ -21,6 +21,15 @@ export const PAGES = [
 ] as const;
 export type Page = (typeof PAGES)[number];
 
+/*
+ * Les pages legales. Traduites comme les autres, mais c'est la version
+ * francaise qui engage : les traductions le disent en tete, avec un lien vers
+ * elle (components/TextPage.tsx). Leur texte vit dans components/legal, une
+ * prose par langue plutot que des cles de dictionnaire.
+ */
+export const PAGES_LEGALES = ["conditions", "confidentialite", "mentions-legales"] as const satisfies readonly Page[];
+export type PageLegale = (typeof PAGES_LEGALES)[number];
+
 export const CHEMINS: Record<Page, Record<Langue, string>> = {
   accueil: { fr: "", en: "", it: "", es: "", de: "", nl: "" },
   creer: { fr: "creer", en: "create", it: "crea", es: "crear", de: "erstellen", nl: "maken" },

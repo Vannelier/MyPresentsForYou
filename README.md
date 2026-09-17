@@ -138,6 +138,7 @@ Les deux écrivent dans le même `.next` et le graphe de modules du serveur de d
 | `lib/rateLimit.ts` | quotas des routes anonymes ; logique pure, horloge injectable |
 | `lib/site.ts` | **identité de l'éditeur** — le seul fichier à remplir pour les mentions légales |
 | `components/TextPage.tsx` | coquille commune aux pages de texte |
+| `components/legal/` | le texte des pages légales, une prose par page et par langue ; le français fait foi |
 | `components/SiteFooter.tsx` | pied de page, liens légaux et sélecteur de langue |
 | `lib/db.ts` | **seul** point de contact avec Postgres (pilote `pg`, gabarit paramétré) |
 | `middleware.ts` | applique les règles d'adresse : langue, anciennes adresses, cartes |
@@ -181,7 +182,8 @@ la liste dise ce qui est pris.
 sous `/fr`, et non `/`, qui redirige —, jamais les cartes.
 
 `/llms.txt` résume le site pour les assistants conversationnels, au format de llmstxt.org : ce que
-fait le service, et les pages qui comptent, en français et vers les pages `/fr/…`. Comme le sitemap, il ne cite jamais une carte, et il est
+fait le service, et les pages qui comptent : un résumé en anglais, puis une section par langue où
+chaque page est citée dans la sienne. Comme le sitemap, il ne cite jamais une carte, et il est
 figé au build — `NEXT_PUBLIC_BASE_URL` doit donc exister dès cette phase.
 
 `/ads.txt` déclare le compte AdSense autorisé à vendre de l'espace publicitaire sur le site. Il est
@@ -961,10 +963,10 @@ deux cartes de suite depuis deux réseaux différents suffit à savoir.
 
 ## Le multilingue
 
-Six langues sont prévues — français, anglais, italien, espagnol, allemand, néerlandais —, sans
-bibliothèque et sans cookie. **Seul le français est actif aujourd'hui** : les autres arrivent avec
-leurs dictionnaires, et une langue sans dictionnaire servirait du français sous une adresse
-étrangère.
+Six langues — français, anglais, italien, espagnol, allemand, néerlandais —, sans bibliothèque et
+sans cookie. Le français fait foi ; les cinq autres en sont traduites, **sans relecture par des
+locuteurs natifs pour l'instant**. Les pages légales aussi, la version française faisant foi : voir
+plus bas.
 
 **Les adresses.** Chaque page du site vit sous sa langue, avec des mots de cette langue :
 `/fr/creer`, `/en/create`, `/de/erstellen`. Le code ne garde qu'un dossier par page, qui porte son
@@ -1008,10 +1010,38 @@ s'écrivent `Pour {prenom}` et se remplissent par `remplir()`.
 dans quelle langue répondre, et seul le bout qui répond traduit. Le navigateur annonce la langue de
 sa page par l'en-tête `x-langue` ; sans lui, le français.
 
-**Ajouter une langue** : son dictionnaire (`lib/i18n/<code>.ts`, `satisfies Dictionnaire`), son
-entrée dans `DICTIONNAIRES` (`lib/i18n/index.ts`), puis son code dans `LANGUES_ACTIVES`. Le sitemap,
-les `hreflang` et le sélecteur de langue du pied de page — absent tant qu'une seule langue est
-active — la prennent en compte d'eux-mêmes.
+**Les traductions** suivent le ton du français : sobre, le donneur parle à la première personne,
+tutoiement partout (« du », « tú », « je »). Rien ne suppose le genre de la personne qui reçoit —
+« la persona », « die andere Person », « de ander » —, ni celui du donneur quand la grammaire
+l'imposerait (« non riuscivo a decidere » plutôt que « ero indeciso »). L'italien dit « biglietto »
+pour la carte, là où « carta » désignerait le papier. Les prénoms d'exemple changent avec la langue
+et ne désignent pas de genre : Camille et Sacha en français, Alex, Sam ou Kim ailleurs.
+
+`npm run check` compare chaque traduction au français, texte par texte : même forme (mêmes clés,
+tableaux de même longueur), mêmes marques `{…}`, aucun texte vide, et moins de 5 % de textes
+identiques au français — un pan oublié s'y voit. Les contraintes du catalogue (mots d'ouverture
+distincts, bouton de 40 signes au plus…) tournent dans chaque langue.
+
+**Les pages légales** — conditions, confidentialité, mentions — sont traduites comme les autres, mais
+c'est la version française qui engage : une traduction le dit en tête, avec un lien vers elle
+(`components/TextPage.tsx`). Leur texte vit dans `components/legal/<page>/<langue>.tsx`, une prose
+par langue plutôt que des clés de dictionnaire : un texte juridique se relit d'un seul tenant.
+`npm run check` compare chaque traduction au français, section pour section — mêmes intertitres,
+mêmes puces, mêmes pages citées. Chaque langue y nomme le règlement comme on le connaît chez elle :
+GDPR, RGPD, DSGVO, AVG.
+
+**Ce qui reste en français** : la note de la page de contact quand `lib/site.ts` n'a pas d'adresse,
+que seul l'éditeur du site voit, et la réponse de la purge, que seule la tâche planifiée lit.
+
+**La bannière de partage** existe dans chaque langue (`app/[langue]/opengraph-image.tsx`, sur un
+rendu commun dans `app/banniere.tsx`). Une carte sans image retombe sur une bannière neutre, la
+marque seule : elle a sa propre langue, que la racine ne connaît pas. Le manifeste, unique, ne porte
+lui aussi que la marque.
+
+**Ajouter une langue** : son code dans `LANGUES` (`lib/i18n/langues.ts`), avec sa locale et son nom ;
+ses chemins dans `CHEMINS` ; son dictionnaire (`lib/i18n/<code>.ts`, `satisfies Dictionnaire`) dans
+`DICTIONNAIRES`. La compilation refuse tout oubli parmi les quatre. Le sitemap, les `hreflang`,
+`llms.txt` et le sélecteur de langue du pied de page la prennent en compte d'eux-mêmes.
 
 ## Être trouvé sur Google
 
@@ -1198,51 +1228,82 @@ En création, l'assistant avance pas à pas. En édition tout est déverrouillé
 
 ## Modèle économique
 
-**Rien n'est décidé, et rien n'est implémenté.** Cette section existe pour que l'analyse ne se
-reperde pas, pas pour acter un choix.
+**Décidé le 13 septembre 2026 : le site est gratuit, sans publicité et sans option payante. Il se
+finance par l'affiliation, au moment où l'offreur achète.** Rien n'est encore implémenté ; cette
+section dit ce qui est décidé, pourquoi, et dans quel ordre le construire.
 
-La piste étudiée est l'**affiliation** : le donneur colle des liens produit, un achat s'ensuit,
-une commission tombe. Trois réserves, par ordre de gravité.
+### Pourquoi l'affiliation, et pourquoi dans la page d'administration
 
-**Le volume est structurellement minuscule.** Une page-cadeau, c'est **un** acheteur. Pas mille
-visiteurs dont 2 % convertissent : une personne, dont la conversion est presque certaine mais dont
-la base est 1. *Estimation, hypothèses explicites* — panier de 45 €, commission moyenne 4,5 %
-(Amazon FR : 3-4 % high-tech, 6-7 % maison/beauté), 70 % des pages aboutissant à un achat traçable
-— soit **≈ 1,40 € par page créée**, et **~7 000 pages/an** pour 10 000 € de revenu. La question
-n'est donc pas « quel taux ? » mais « peut-on faire 7 000 pages ? ».
+**Celui qui choisit n'est pas celui qui paie.** Un lien affilié sur la page-cadeau poserait le
+cookie chez le receveur, qui n'achète rien. Le seul clic qui rapporte est celui de l'offreur, dans
+sa page d'administration, quand il va acheter le cadeau choisi : l'intention y est presque
+certaine, et le cookie se pose sur le navigateur qui paiera.
 
-**Récrire les liens collés par le donneur est une zone grise.** L'injection d'un tag dans une URL
-que l'utilisateur a fournie n'est pas explicitement traitée par l'*Associates Operating Agreement*
-d'Amazon ; ce qui l'est : l'injection de tags sans intention de clic authentique, le cookie
-stuffing, les redirections forcées, avec fermeture de compte annoncée pour toute violation
-« however minor ». **À vérifier auprès d'Amazon avant de construire dessus** — le coût d'une erreur
-est la perte du canal entier.
+**C'est aussi ce qu'impose le cookie de 24 h.** Le cookie Amazon dure 24 h (90 jours si le produit
+part au panier), or le parcours est asynchrone par construction : création, envoi, choix des jours
+plus tard, achat après. Un lien affilié posé à la création aurait expiré depuis longtemps ; celui
+qu'on sert au moment de l'achat, non.
 
-**Le cookie de 24 h contre un parcours asynchrone.** Le cookie Amazon dure 24 h (90 jours si le
-produit part au panier), or MyPresentsForYou est asynchrone par construction : création, envoi, choix du
-receveur des jours plus tard, achat après. Contrainte de conception qui en découle : **le lien
-d'achat final doit être servi par MyPresentsForYou** depuis l'écran d'administration, pas copié-collé.
+**Pas de publicité.** Une carte est vue quelques fois, par une seule personne : même à quelques
+euros pour mille affichages, elle rapporterait moins d'un centime. La publicité abîmerait la mise
+en scène, qui est tout le produit, et poserait des cookies — un bandeau de consentement par-dessus
+le voile, et la fin de « aucun cookie, aucun traqueur ». `/ads.txt` existe mais reste inerte : sans
+`ADSENSE_PUBLISHER_ID`, il répond 404.
 
-**Ce que l'affiliation impliquerait sur le produit.** MyPresentsForYou repose sur un renversement : *c'est le
-donneur qui propose, pas le receveur qui demande*. Si MyPresentsForYou propose les cadeaux, la prémisse devient
-« MyPresentsForYou me dit quoi offrir », et l'on entre frontalement sur le marché des sites d'idées cadeaux.
-Les listes multi-enseignes gratuites existent déjà en France — The Good List, Listy, MyLittleWishList,
-Milirose — et ce qui distingue MyPresentsForYou n'est pas la liste, c'est le renversement et la mise en scène.
+**Pas d'option payante.** Envisagée — une carte imprimée et postée, des thèmes premium — et
+écartée : le produit reste gratuit sans réserve, et l'accueil peut le dire sans astérisque.
 
-**L'ordre à suivre, si la question revient :**
+### Comment
 
-1. **Instrumenter avant de construire.** Trois chiffres manquent : pages créées, choix confirmés,
-   clics vers la boutique depuis l'admin. Sans eux, tout calcul de revenu est de la fiction — y
-   compris celui ci-dessus.
-2. **Des suggestions complémentaires, jamais substitutives.** Le donneur a mis deux cadeaux →
-   « trois idées de plus pour un anniversaire », qu'il *ajoute* s'il veut. L'affiliation devient
-   propre — notre lien, notre produit, pas de récriture — et la prémisse du produit reste intacte.
-3. **Regarder un modèle qui ne dépend pas d'un tiers qui peut bannir.** La carte à imprimer est déjà
-   une valeur réelle. *Spéculation, à valider* : une carte imprimée et postée se vend au moment où
-   le donneur est le plus engagé, sans cookie et sans compte à faire fermer.
+1. **Un bouton « Acheter »** sur le cadeau choisi, dans la page d'administration, qui passe par une
+   redirection à nous. Elle compte les clics — le troisième chiffre de l'instrumentation, avec les
+   cartes créées et les choix confirmés — et ajoute l'affiliation. La redirection se fait côté
+   serveur : aucun cookie sur notre domaine, seul le marchand pose le sien après le clic. Aucun
+   script de réseau d'affiliation dans nos pages : il en poserait.
+2. **Un réseau multi-marchands et multi-pays**, plutôt que des accords marchand par marchand. Le
+   site vise six langues — français, anglais, italien, espagnol, allemand, néerlandais —, et les
+   programmes d'affiliation sont souvent propres à chaque pays : Amazon en a un par boutique
+   nationale. Un lien que le réseau ne sait pas affilier part tel quel.
+3. **Jamais de tag glissé dans un lien collé par le donneur hors d'un réseau qui l'autorise.**
+   L'*Associates Operating Agreement* d'Amazon ne traite pas explicitement ce cas, mais annonce la
+   fermeture du compte pour toute violation « however minor » : le coût d'une erreur serait la
+   perte du canal entier.
+4. **Un e-mail facultatif, « préviens-moi quand elle a choisi »**, proposé à la création, jamais
+   obligatoire, sans compte. Aujourd'hui l'offreur découvre le choix en rouvrant son lien — s'il y
+   pense. L'e-mail porte le bouton « Acheter » au moment où l'achat se décide, et rend possible la
+   relance à un an pour une occasion qui revient. Il met fin à la promesse « ni compte, ni
+   e-mail » : la politique de confidentialité, les conditions et la FAQ devront le dire.
+5. **Une mention « lien affilié »** visible à côté du bouton : c'est une obligation, et une question
+   de franchise.
+6. **Plus tard, des suggestions de cadeaux**, complémentaires et jamais substitutives : le donneur
+   a mis deux cadeaux, on lui propose « trois idées de plus » qu'il *ajoute* s'il veut. Leur lien
+   est à nous, donc affilié proprement dès le départ, et le renversement reste intact — c'est
+   toujours le donneur qui propose. Si MyPresentsForYou proposait les cadeaux à sa place, on
+   entrerait frontalement sur le marché des listes et des idées cadeaux (The Good List, Listy,
+   MyLittleWishList, Milirose…), où ce qui nous distingue ne compterait plus. Les expériences —
+   coffrets, restaurants, activités — passent en premier : paniers plus gros, commissions souvent
+   plus élevées, à vérifier réseau par réseau.
 
-**Le seul changement déjà fait au titre de cette réflexion** est le déplacement de l'occasion avant
-les cadeaux (voir « Ce qui est personnalisable »). Il est bon en soi, et n'engage rien.
+### Le risque : le volume
+
+Une page-cadeau, c'est **un** acheteur : une conversion presque certaine, mais sur une base de un.
+*Estimation, hypothèses explicites* — panier de 45 €, commission moyenne 4,5 % (Amazon FR : 3-4 %
+high-tech, 6-7 % maison/beauté), 70 % des cartes aboutissant à un achat traçable — soit **≈ 1,40 €
+par carte créée**, et **~7 000 cartes par an** pour 10 000 € de revenu. Au 13 septembre 2026, aucune
+carte n'a encore été créée : ce chiffre reste une fiction utile, que les trois compteurs
+remplaceront.
+
+### Dans quel ordre
+
+La feuille de route du projet : le business model, puis des textes plus humains, le multilingue,
+le référencement, et seulement ensuite la publicité du site. Le modèle s'y insère ainsi :
+
+1. **Avant la publicité** : le bouton « Acheter » et ses compteurs, sans affiliation — pour mesurer
+   dès la première carte.
+2. **Après le multilingue** : l'e-mail de notification, écrit d'emblée dans les six langues.
+3. **Une fois le site traduit et en ligne** : l'inscription au réseau d'affiliation. Les réseaux
+   examinent un site avant d'accepter son éditeur ; un site vide et monolingue passerait mal.
+4. **Avec du trafic** : les suggestions.
 
 ## Décisions structurantes
 
@@ -1306,19 +1367,16 @@ n'importe quelle édition.
 
 ## Hors périmètre (volontairement non implémenté)
 
-- **Paiement / paywall.** La colonne `plan` existe (`free` | `paid`), mais rien ne produit encore
-  une page `paid` et aucun flux Stripe n'est branché. Tout est traité comme `free`.
+- **Paiement.** Aucun : le modèle économique est l'affiliation seule (voir « Modèle économique »).
+  La colonne `plan` (`free` | `paid`) reste en base, inerte ; tout est traité comme `free`.
 - **Comptes utilisateurs.** L'accès admin repose uniquement sur le token secret dans l'URL.
 - **Navigateur headless.** L'extraction se limite à `fetch` + parsing HTML.
-- **Notification du choix.** Le donneur découvre le choix en rouvrant son lien admin.
+- **Notification du choix.** Le donneur découvre le choix en rouvrant son lien admin. Un e-mail
+  facultatif est décidé (voir « Modèle économique »), pas encore construit.
 - **Collecte d'adresse ou d'infos du receveur.** Il ne saisit que son choix.
 - **Multi-devise.** Sans paiement, sans objet.
 - **La traduction du texte écrit par le donneur.** Le multilingue traduit le produit, pas les mots
   de la carte : ils restent tels qu'ils ont été écrits.
-- **Paywall.** L'ordre choisi est : étoffer d'abord les options de personnalisation, puis décider
-  lesquelles passent derrière le paiement. Aucune option n'est aujourd'hui marquée payante, et
-  l'assistant n'affiche rien à ce sujet — mieux vaut ne rien annoncer que d'annoncer des cases
-  inertes. La colonne `plan` reste en place pour le jour où.
 
 ## Limites connues
 
@@ -1334,8 +1392,11 @@ n'importe quelle édition.
   mais rien n'oblige à le lancer : modifier la géométrie dans `scripts/brand.mjs` sans régénérer
   laisse le favicon et les icônes en désaccord avec leur source, et aucune vérification ne le
   signalera.
-- **Seul le français est actif.** Les cinq autres langues ont leurs adresses, pas encore leurs
-  dictionnaires — voir « Le multilingue ». Leurs pages répondent « introuvable » d'ici là.
+- **Les traductions n'ont pas été relues par des locuteurs natifs.** Elles viennent du français, qui
+  fait foi ; une relecture par langue reste à faire avant de faire connaître le site dans ces pays.
+- **Les pages légales traduites n'ont été relues ni par un juriste ni par des locuteurs natifs.**
+  Elles annoncent que la version française fait foi ; une relecture reste à faire, et la version
+  française elle-même porte encore des champs « À REMPLIR » (voir « Les mentions légales »).
 - **Le slug public est devinable.** Ne rien mettre de sensible dans une page-cadeau.
 - **Des images restent orphelines.** Celles qu'on remplace en modifiant une carte, et celles
   téléversées pour une carte jamais créée : plus aucune ligne ne les référence, et la purge part des

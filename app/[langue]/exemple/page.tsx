@@ -6,7 +6,7 @@ import { dictionnaire } from "@/lib/i18n";
 import { alternatesDe } from "@/lib/i18n/alternates";
 import { cheminVers } from "@/lib/i18n/chemins";
 import { LOCALES, langueOuDefaut } from "@/lib/i18n/langues";
-import { alt as altBanniere, size as tailleBanniere } from "@/app/opengraph-image";
+import { TAILLE_BANNIERE } from "@/app/banniere";
 
 type Params = { params: Promise<{ langue: string }> };
 
@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
      * ce qui justifiait une page plutot qu'un apercu — et son titre doit le dire.
      *
      * L'image, en revanche, est citee a la main : des que la page declare son
-     * propre openGraph, celle du fichier app/opengraph-image.tsx ne sort plus —
+     * propre openGraph, celle du fichier app/[langue]/opengraph-image.tsx ne sort plus —
      * mesure dans le HTML servi, aucune og:image. Ses dimensions et son texte
      * alternatif viennent de ce fichier, pour suivre la banniere si elle change.
      */
@@ -37,10 +37,10 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
       description: d.descriptionMeta,
       images: [
         {
-          url: "/opengraph-image",
-          width: tailleBanniere.width,
-          height: tailleBanniere.height,
-          alt: altBanniere,
+          url: `/${langue}/opengraph-image`,
+          width: TAILLE_BANNIERE.width,
+          height: TAILLE_BANNIERE.height,
+          alt: dictionnaire(langue).site.titrePartage,
         },
       ],
     },
@@ -48,7 +48,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
       card: "summary_large_image",
       title: d.titreMeta,
       description: d.descriptionMeta,
-      images: ["/opengraph-image"],
+      images: [`/${langue}/opengraph-image`],
     },
   };
 }

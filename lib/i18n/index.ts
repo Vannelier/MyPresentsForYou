@@ -1,5 +1,10 @@
+import { de } from "./de";
+import { en } from "./en";
+import { es } from "./es";
 import { fr } from "./fr";
+import { it } from "./it";
 import type { Langue } from "./langues";
+import { nl } from "./nl";
 
 export { remplir } from "./remplir";
 
@@ -14,9 +19,10 @@ export { remplir } from "./remplir";
  */
 export type Dictionnaire = typeof fr;
 
-const DICTIONNAIRES: Partial<Record<Langue, Dictionnaire>> = { fr };
+// Un `Record` complet, et non partiel : une langue ajoutee a LANGUES sans son
+// dictionnaire ne compile plus, au lieu de servir du francais en silence.
+const DICTIONNAIRES: Record<Langue, Dictionnaire> = { fr, en, it, es, de, nl };
 
-/** Le dictionnaire d'une langue ; le francais tant que la sienne n'existe pas. */
 export function dictionnaire(langue: Langue): Dictionnaire {
-  return DICTIONNAIRES[langue] ?? fr;
+  return DICTIONNAIRES[langue];
 }

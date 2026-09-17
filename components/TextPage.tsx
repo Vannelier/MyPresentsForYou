@@ -1,7 +1,7 @@
 import Link from "next/link";
 import SiteFooter from "@/components/SiteFooter";
 import { dictionnaire } from "@/lib/i18n";
-import { cheminVers, type Page } from "@/lib/i18n/chemins";
+import { PAGES_LEGALES, cheminVers, type Page } from "@/lib/i18n/chemins";
 import { LOCALES, type Langue } from "@/lib/i18n/langues";
 
 /**
@@ -12,6 +12,10 @@ import { LOCALES, type Langue } from "@/lib/i18n/langues";
  * comprendre la hiérarchie, et ce que suit un lecteur d'écran pour naviguer.
  * La date de mise à jour est affichée quand elle existe — sur une page qui
  * engage, un texte sans date ne dit pas s'il est encore valable.
+ *
+ * Une page légale traduite le dit en tête, avec un lien vers la version
+ * française : c'est elle qui engage, la traduction n'est donnée que pour
+ * information.
  */
 export default function TextPage({
   langue,
@@ -29,12 +33,23 @@ export default function TextPage({
   children: React.ReactNode;
 }) {
   const d = dictionnaire(langue);
+  const traduite = langue !== "fr" && (PAGES_LEGALES as readonly Page[]).includes(page);
   return (
     <main className="landing">
       <article className="prose">
         <Link className="back-link" href={cheminVers(langue, "accueil")}>
           {d.commun.retourAccueil}
         </Link>
+
+        {traduite && (
+          <p className="prose__note">
+            {d.pageTexte.faitFoiDebut}
+            <Link href={cheminVers("fr", page)} hrefLang="fr">
+              {d.pageTexte.faitFoiLien}
+            </Link>
+            {d.pageTexte.faitFoiFin}
+          </p>
+        )}
 
         <h1>{titre}</h1>
         {chapo && <p className="prose__chapo">{chapo}</p>}
