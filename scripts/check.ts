@@ -37,7 +37,16 @@ import { adsensePublisherId, baseUrl, freePageTtlDays, secretDePurge } from "../
 import sitemap from "../app/sitemap";
 import { GET as llmsTxt } from "../app/llms.txt/route";
 import { alternatesDe } from "../lib/i18n/alternates";
-import { CHEMINS, PAGES, PAGES_LEGALES, cheminVers } from "../lib/i18n/chemins";
+import {
+  CHEMINS,
+  GUIDES,
+  PAGES,
+  PAGES_LEGALES,
+  SEGMENTS_GUIDES,
+  cheminGuide,
+  cheminVers,
+  equivalents,
+} from "../lib/i18n/chemins";
 import {
   LANGUES,
   LANGUES_ACTIVES,
@@ -2466,6 +2475,80 @@ test("le routage : langues, anciennes adresses, cartes", () => {
   }
   assert.deepEqual(r("/a/b/c", "de-DE", toutes), { type: "reecriture", vers: "/de/introuvable" });
   assert.deepEqual(r("/-mauvais-"), { type: "reecriture", vers: "/fr/introuvable" });
+
+  // Les guides : deux mots traduits sous la langue, un dossier francais.
+  assert.deepEqual(r("/fr/idees-cadeaux"), { type: "suite" });
+  assert.deepEqual(r("/fr/idees-cadeaux/anniversaire"), { type: "suite" });
+  assert.deepEqual(r("/idees-cadeaux"), { type: "redirection", vers: "/fr/idees-cadeaux", permanente: true });
+  assert.deepEqual(r("/de/geschenkideen/geburtstag", null, toutes), {
+    type: "reecriture",
+    vers: "/de/idees-cadeaux/anniversaire",
+  });
+  assert.deepEqual(r("/nl/cadeau-ideeen/housewarming", null, toutes), {
+    type: "reecriture",
+    vers: "/nl/idees-cadeaux/cremaillere",
+  });
+  assert.deepEqual(r("/en/idees-cadeaux/anniversaire", null, toutes), {
+    type: "redirection",
+    vers: "/en/gift-ideas/birthday",
+    permanente: true,
+  });
+  assert.deepEqual(r("/en/gift-ideas/geburtstag", null, toutes), {
+    type: "redirection",
+    vers: "/en/gift-ideas/birthday",
+    permanente: true,
+  });
+  assert.deepEqual(r("/fr/idees-cadeaux/inconnue"), { type: "reecriture", vers: "/fr/introuvable" });
+  assert.deepEqual(r("/fr/autre/chose"), { type: "suite" });
+});
+
+test("chaque guide a une adresse dans chaque langue, unique et au format d'un segment", () => {
+  for (const langue of LANGUES) {
+    const vus = new Set<string>();
+    for (const guide of GUIDES) {
+      const segment = SEGMENTS_GUIDES[guide][langue];
+      assert.match(segment, /^[a-z0-9]+(-[a-z0-9]+)*$/, `${langue}/${guide} : ${segment}`);
+      assert.ok(!vus.has(segment), `${langue} : « ${segment} » designe deux guides`);
+      vus.add(segment);
+    }
+  }
+  for (const guide of GUIDES) assert.ok(OCCASIONS.some((o) => o.id === guide), `occasion inconnue : ${guide}`);
+  assert.equal(cheminGuide("de", "anniversaire"), "/de/geschenkideen/geburtstag");
+});
+
+test("le selecteur de langue retrouve la meme page dans chaque langue", () => {
+  assert.deepEqual(equivalents("/fr/idees-cadeaux/anniversaire"), {
+    fr: "/fr/idees-cadeaux/anniversaire",
+    en: "/en/gift-ideas/birthday",
+    it: "/it/idee-regalo/compleanno",
+    es: "/es/ideas-regalo/cumpleanos",
+    de: "/de/geschenkideen/geburtstag",
+    nl: "/nl/cadeau-ideeen/verjaardag",
+  });
+  assert.equal(equivalents("/de/erstellen")?.fr, "/fr/creer");
+  assert.equal(equivalents("/en")?.nl, "/nl");
+  assert.equal(equivalents("/nl/privacy")?.es, "/es/privacidad");
+  // Hors des pages du site, pas de selecteur.
+  assert.equal(equivalents("/camille-anniversaire"), null);
+  assert.equal(equivalents("/admin/abc"), null);
+  assert.equal(equivalents("/fr/idees-cadeaux/inconnue"), null);
+  for (const langue of LANGUES) {
+    for (const page of PAGES) assert.equal(equivalents(cheminVers(langue, page))?.[langue], cheminVers(langue, page));
+    for (const guide of GUIDES) {
+      assert.equal(equivalents(cheminGuide(langue, guide))?.[langue], cheminGuide(langue, guide));
+    }
+  }
+});
+
+test("tout chemin francais de page est un slug reserve", () => {
+  /*
+   * Une ancienne adresse sans langue (`/questions`) part vers `/fr/…` avant tout
+   * test de carte : une carte qui porterait ce slug serait inatteignable.
+   */
+  for (const page of PAGES) {
+    const segment = CHEMINS[page].fr;
+    if (segment) assert.ok(RESERVED_SLUGS.has(segment), `« ${segment} » manque dans RESERVED_SLUGS`);
+  }
 });
 
 test("la langue de la carte : connue, elle est gardee ; inconnue ou absente, le francais", () => {

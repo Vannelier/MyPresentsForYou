@@ -1,4 +1,12 @@
-import { CHEMINS, cheminVers, pageDansUneLangue, pageDuSegment } from "./chemins";
+import {
+  CHEMINS,
+  cheminGuide,
+  cheminVers,
+  guideDansUneLangue,
+  guideDuSegment,
+  pageDansUneLangue,
+  pageDuSegment,
+} from "./chemins";
 import { LANGUES_ACTIVES, estLangue, langueDuNavigateur, type Langue } from "./langues";
 
 /*
@@ -46,6 +54,7 @@ export function router(
    */
   if (estLangue(premier)) {
     if (!actives.includes(premier)) return introuvable();
+    if (segments.length === 3) return routerGuide(premier, segments[1], segments[2]) ?? introuvable();
     if (segments.length !== 2) return { type: "suite" };
     const segment = segments[1];
     const page = pageDuSegment(premier, segment);
@@ -66,4 +75,22 @@ export function router(
     if (SLUG.test(premier)) return { type: "reecriture", vers: `/carte/${premier}` };
   }
   return introuvable();
+}
+
+/*
+ * Un guide d'occasion, `/<langue>/<idees>/<occasion>` : deux mots traduits, et un
+ * dossier francais pour les deux. Le mot d'une autre langue, a l'une ou l'autre
+ * place, redirige vers la bonne adresse ; une occasion inconnue rend `null`, que
+ * l'appelant mene a la page introuvable. Hors de la page des idees, rien ne
+ * change : les autres adresses a trois segments suivent leur chemin.
+ */
+function routerGuide(langue: Langue, rubrique: string, occasion: string): Decision | null {
+  if ((pageDuSegment(langue, rubrique) ?? pageDansUneLangue(rubrique)) !== "idees") return { type: "suite" };
+  const guide = guideDuSegment(langue, occasion);
+  if (guide && rubrique === CHEMINS.idees[langue]) {
+    const dossier = `/${langue}/${CHEMINS.idees.fr}/${guide}`;
+    return `/${langue}/${rubrique}/${occasion}` === dossier ? { type: "suite" } : { type: "reecriture", vers: dossier };
+  }
+  const ailleurs = guide ?? guideDansUneLangue(occasion);
+  return ailleurs ? { type: "redirection", vers: cheminGuide(langue, ailleurs), permanente: true } : null;
 }
