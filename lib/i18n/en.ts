@@ -15,9 +15,9 @@ export const en = {
   },
 
   site: {
-    titreMeta: "MyPresentsForYou — create a gift page",
-    descriptionMeta: "Create a small gift page, send the link, and let them choose.",
-    titrePartage: "MyPresentsForYou — give the choice",
+    titreMeta: "MyPresentsForYou — the gift page you compose",
+    descriptionMeta: "Create an animated gift page for someone: a pattern, a veil to lift, your gift ideas. They choose, you give.",
+    titrePartage: "MyPresentsForYou, create an animated gift page.",
   },
 
   pied: {
@@ -39,8 +39,8 @@ export const en = {
   },
 
   banniere: {
-    titre: "Give the choice.",
-    texte: "Gather a few ideas on a small page, send the link, and find out which one was chosen.",
+    titre: "A gift page, made for one person.",
+    texte: "A pattern for the occasion, a veil to lift, your gift ideas underneath. They open it, choose, and you know what to give.",
     pied: "No account, no payment, no address to give.",
   },
 
@@ -55,7 +55,7 @@ export const en = {
       {
         q: "How do I give a gift and let the person choose?",
         r: [
-          "You gather a few ideas on a small page — up to ten — then send the link. The person opens the page, looks at the ideas, and confirms the one they like most. You find their choice on your private link, and you buy the gift yourself.",
+          "You gather a few ideas on a page you stage — an occasion, a pattern, a veil to lift — then you send the link. The person opens the page, looks at the ideas, and confirms the one they like most. You find their choice on your private link, and you buy the gift yourself.",
           "The point: they receive something they really like, without you having to ask what they wanted — so the surprise stays intact.",
         ],
       },
@@ -176,29 +176,29 @@ export const en = {
   accueil: {
     titreMeta: "Give a gift and let them choose — MyPresentsForYou",
     descriptionMeta:
-      "Put a few gift ideas on one page and send the link: they choose, you give. Free, with no account.",
+      "Put a few gift ideas on a page composed just for the person you care about, and send them the link to their own page.",
     motsCles: [
       "gift they can choose",
       "let someone choose their gift",
-      "gift ideas to send",
-      "personalised gift card",
+      "personalised gift page",
+      "animated gift page to send",
       "alternative to a wish list",
     ],
     donnees: {
       systeme: "Any web browser",
-      description: "Put a few gift ideas on one page and send the link: they choose, you give.",
+      description: "Create an animated gift page for someone, with your own gift ideas: they open it, choose, and you give.",
       fonctions: [
         "Up to ten ideas per card",
         "No account needed",
-        "Printable QR code",
-        "Editable until the choice is made",
+        "Patterns, palettes and opening effects",
+        "QR code and printable card",
       ],
     },
-    titre: "Give the right gift, without asking.",
-    sousTitre: "Gather a few gift ideas on a well-made page, then send it. They choose; you give.",
+    titre: "Create a gift page, and let them choose.",
+    sousTitre: "A pattern for the occasion, a veil to lift, your gift ideas underneath. You send the link; they discover it, choose, and all that's left is to give.",
     composer: "Create my gift page",
     voirExemple: "See an example",
-    note: "Free · no account · three steps",
+    note: "Free · no account · ready in minutes",
     telephone: {
       surtitre: "Happy birthday",
       titre: "Yours to choose",
@@ -207,19 +207,19 @@ export const en = {
     },
     etapes: [
       {
-        titre: "You gather your ideas",
+        titre: "You compose the page",
         texte:
-          "Paste a product link: the title and photo usually fill in by themselves. Otherwise, a photo taken with your phone is enough.",
+          "Choose the occasion: the page takes on its colours, pattern and words. Add your ideas — paste a product link and the title and photo usually fill in by themselves.",
       },
       {
-        titre: "You send the card",
+        titre: "You send it, or print it",
         texte:
-          "In a messaging app, the link shows up as a card, with your message and their first name. You can also print the QR code, slip it into an envelope, and be there when the card opens.",
+          "In a messaging app, the link shows up as a card, with your message and their first name. You can also print the QR code, slip it into an envelope, and be there when the veil lifts.",
       },
       {
         titre: "You find out what they chose",
         texte:
-          "A private link, which you keep to yourself, shows you the chosen gift and the day it was chosen. All that's left is to buy it.",
+          "On your private link: the chosen gift, the day it was chosen, and any note left for you. All that's left is to buy it.",
       },
     ],
     avantages: [
@@ -229,9 +229,9 @@ export const en = {
           "“What would you like?” spoils the surprise and hands the question back to them. Here, you've already done the searching; all that's left is to choose.",
       },
       {
-        titre: "More personal than a wish list",
+        titre: "A page, not a link",
         texte:
-          "On a wish list, you tick off a line someone else wrote. Here, every idea comes from you, and it shows.",
+          "A palette, a pattern, a font, a veil to lift: the page looks like the person and the occasion, not like a form.",
       },
       {
         titre: "No prices shown",
@@ -244,9 +244,9 @@ export const en = {
           "Nothing is visible before it's opened. And the card can stay sealed until the day of the celebration.",
       },
       {
-        titre: "A single step for them",
+        titre: "Staged from start to finish",
         texte:
-          "A pattern and words suited to the occasion. On their side, there is only one thing to do: choose.",
+          "Their first name, an opening line, an effect that plays, and a printable card with its QR code. On their side, there is only one thing to do: choose.",
       },
       {
         titre: "A note in return",
@@ -272,18 +272,18 @@ export const en = {
     guidesTitre: "Ideas for every occasion",
     guidesTexte: "Birthday, Christmas, wedding… ideas sorted by profile, and a page in the colours of the occasion.",
     guidesTout: "All gift ideas",
-    finTitre: "Why not create yours?",
-    finTexte: "Two ideas are enough to start, ten at most. You can change everything afterwards.",
+    finTitre: "Why not make theirs?",
+    finTexte: "Two ideas are enough to start, ten at most. The pattern, the words and the opening are set as you go.",
     piedNote: "Each card stays online for a year. Keep your private link: it will show you the chosen gift.",
   },
 
   creation: {
     titreMeta: "Create a free gift page — MyPresentsForYou",
     descriptionMeta:
-      "Build your page in three steps: the occasion, your gift ideas, then the presentation. No account, no payment, in a few minutes.",
+      "Create an animated gift page in three steps: the occasion and its pattern, your gift ideas, the presentation. No account, no payment.",
     titre: "Create your gift page",
     chapo:
-      "Two to ten ideas, a message, and it's ready. The “Preview” button shows you at any time what they will see.",
+      "The occasion, your ideas, the presentation. The “Preview” button shows you at any time what they will see.",
     pret: "Your page is ready",
     rienNestFige:
       "Nothing is final: as long as nobody has chosen, you can change everything — the text, the gifts, the theme. The two links below won't change.",
@@ -299,7 +299,7 @@ export const en = {
   exemple: {
     titreMeta: "Gift page example — MyPresentsForYou",
     descriptionMeta:
-      "A real gift page to try: lift the veil, choose from four ideas, confirm. Nothing is sent.",
+      "A real gift page to try: lift the veil, look at the pattern, choose from four ideas. Nothing is sent.",
     bandeau: "Example — nothing is sent",
     composerLaMienne: "Create mine",
     composer: "Create my gift page",

@@ -15,9 +15,9 @@ export const nl = {
   },
 
   site: {
-    titreMeta: "MyPresentsForYou — maak een cadeaupagina",
-    descriptionMeta: "Maak een kleine cadeaupagina, stuur de link en laat de ander kiezen.",
-    titrePartage: "MyPresentsForYou — geef de keuze",
+    titreMeta: "MyPresentsForYou — de cadeaupagina die je maakt",
+    descriptionMeta: "Maak een geanimeerde cadeaupagina voor iemand: een decor, een sluier om op te lichten, jouw cadeau-ideeën. De ander kiest, jij geeft.",
+    titrePartage: "MyPresentsForYou, maak een geanimeerde cadeaupagina.",
   },
 
   pied: {
@@ -39,8 +39,8 @@ export const nl = {
   },
 
   banniere: {
-    titre: "Geef de keuze.",
-    texte: "Verzamel een paar ideeën op een kleine pagina, stuur de link en ontdek welk idee gekozen is.",
+    titre: "Een cadeaupagina, voor één persoon gemaakt.",
+    texte: "Een decor voor de gelegenheid, een sluier om op te lichten, daaronder jouw cadeau-ideeën. De ander opent, kiest, en jij weet wat je geeft.",
     pied: "Geen account, geen betaling, geen adres nodig.",
   },
 
@@ -55,7 +55,7 @@ export const nl = {
       {
         q: "Hoe geef ik een cadeau en laat ik de ander kiezen?",
         r: [
-          "Je verzamelt een paar ideeën op een kleine pagina — tot tien — en stuurt de link. De ander opent de pagina, bekijkt de voorstellen en bevestigt het idee dat het meest aanspreekt. Je vindt die keuze terug via je privélink en koopt het cadeau zelf.",
+          "Je verzamelt een paar ideeën op een pagina die je vormgeeft — een gelegenheid, een decor, een sluier om op te lichten — en stuurt de link. De ander opent de pagina, bekijkt de voorstellen en bevestigt het idee dat het meest aanspreekt. Je vindt die keuze terug via je privélink en koopt het cadeau zelf.",
           "Het voordeel: de ander krijgt iets wat echt bevalt, zonder dat je hoefde te vragen wat er gewenst was — en dus zonder de verrassing te bederven.",
         ],
       },
@@ -176,30 +176,30 @@ export const nl = {
   accueil: {
     titreMeta: "Een cadeau geven en laten kiezen — MyPresentsForYou",
     descriptionMeta:
-      "Zet een paar cadeau-ideeën op een pagina en stuur de link: de ander kiest, jij geeft. Gratis en zonder account.",
+      "Zet een paar cadeau-ideeën op een pagina die je speciaal maakt voor iemand die je dierbaar is, en stuur de link naar die eigen pagina.",
     motsCles: [
       "cadeau naar keuze",
       "cadeau laten kiezen",
-      "cadeau-ideeën versturen",
-      "persoonlijke cadeaukaart",
+      "persoonlijke cadeaupagina",
+      "geanimeerde cadeaupagina versturen",
       "alternatief voor een verlanglijstje",
     ],
     donnees: {
       systeme: "Elke webbrowser",
-      description: "Zet een paar cadeau-ideeën op een pagina en stuur de link: de ander kiest, jij geeft.",
+      description: "Maak een geanimeerde cadeaupagina voor iemand, met jouw cadeau-ideeën: de ander opent, kiest, en jij geeft.",
       fonctions: [
         "Tot tien voorstellen per kaart",
         "Geen account nodig",
-        "QR-code om af te drukken",
-        "Aanpasbaar tot de keuze",
+        "Decors, paletten en openingseffecten",
+        "QR-code en kaart om af te drukken",
       ],
     },
-    titre: "Juist geven, zonder iets te vragen.",
+    titre: "Maak een cadeaupagina en laat de ander kiezen.",
     sousTitre:
-      "Verzamel een paar cadeau-ideeën op een verzorgde pagina en stuur ze op. De ander kiest; jij geeft.",
+      "Een decor voor de gelegenheid, een sluier om op te lichten, daaronder jouw cadeau-ideeën. Je stuurt de link; de ander ontdekt, kiest, en jij hoeft alleen nog te geven.",
     composer: "Mijn cadeaupagina maken",
     voirExemple: "Een voorbeeld bekijken",
-    note: "Gratis · zonder account · drie stappen",
+    note: "Gratis · zonder account · klaar in een paar minuten",
     telephone: {
       surtitre: "Gelukkige verjaardag",
       titre: "Aan jou de keuze",
@@ -208,19 +208,19 @@ export const nl = {
     },
     etapes: [
       {
-        titre: "Je verzamelt je ideeën",
+        titre: "Je maakt de pagina",
         texte:
-          "Plak de link van een product: titel en foto vullen zich meestal vanzelf in. Anders volstaat een foto met je telefoon.",
+          "Kies de gelegenheid: de pagina krijgt haar kleuren, decor en woorden. Voeg je ideeën toe — plak de link van een product, titel en foto vullen zich meestal vanzelf in.",
       },
       {
-        titre: "Je verstuurt de kaart",
+        titre: "Je stuurt of print hem",
         texte:
-          "In een chatapp verschijnt de link als een kaart, met je bericht en de voornaam van de ander. Je kunt ook de QR-code afdrukken, in een envelop steken en erbij zijn als de kaart opengaat.",
+          "In een chatapp verschijnt de link als een kaart, met je bericht en de voornaam van de ander. Je kunt ook de QR-code afdrukken, in een envelop steken en erbij zijn als de sluier opgaat.",
       },
       {
         titre: "Je ontdekt de keuze",
         texte:
-          "Een privélink, die je voor jezelf houdt, toont je het gekozen cadeau en de dag van de keuze. Dan hoef je het alleen nog te kopen.",
+          "Via je privélink: het gekozen cadeau, de dag van de keuze en het bericht dat voor je is achtergelaten. Dan hoef je het alleen nog te kopen.",
       },
     ],
     avantages: [
@@ -230,9 +230,9 @@ export const nl = {
           "“Wat zou je leuk vinden?” bederft de verrassing en legt de vraag terug bij de ander. Hier heb jij al gezocht; alleen kiezen blijft over.",
       },
       {
-        titre: "Persoonlijker dan een verlanglijstje",
+        titre: "Een pagina, geen link",
         texte:
-          "Op een verlanglijstje vink je een regel af die iemand anders schreef. Hier komt elk idee van jou, en dat voel je.",
+          "Een palet, een decor, een lettertype, een sluier om op te lichten: de pagina lijkt op de ander en op de gelegenheid, niet op een formulier.",
       },
       {
         titre: "Geen prijzen te zien",
@@ -245,9 +245,9 @@ export const nl = {
           "Voor het openen is niets zichtbaar. En de kaart kan verzegeld blijven tot de dag van het feest.",
       },
       {
-        titre: "Eén handeling voor de ander",
+        titre: "Een mise-en-scène tot het eind",
         texte:
-          "Een decor en woorden die bij de gelegenheid passen. Aan de andere kant is er maar één ding te doen: kiezen.",
+          "De voornaam, een openingszin, een effect dat afgaat, en een kaart om af te drukken met QR-code. Aan de andere kant is er maar één ding te doen: kiezen.",
       },
       {
         titre: "Een bericht terug",
@@ -273,18 +273,18 @@ export const nl = {
     guidesTitre: "Ideeën voor elke gelegenheid",
     guidesTexte: "Verjaardag, kerst, huwelijk… ideeën per profiel, en een pagina in de kleuren van de gelegenheid.",
     guidesTout: "Alle cadeau-ideeën",
-    finTitre: "Maak je de jouwe?",
-    finTexte: "Twee ideeën volstaan om te beginnen, tien op zijn hoogst. Je kunt alles later nog aanpassen.",
+    finTitre: "Maak je die van de ander?",
+    finTexte: "Twee ideeën volstaan om te beginnen, tien op zijn hoogst. Decor, woorden en opening stel je onderweg in.",
     piedNote: "Elke kaart blijft een jaar online. Bewaar je privélink: hij toont je het gekozen cadeau.",
   },
 
   creation: {
     titreMeta: "Maak gratis een cadeaupagina — MyPresentsForYou",
     descriptionMeta:
-      "Maak je pagina in drie stappen: de gelegenheid, je cadeau-ideeën en de vormgeving. Zonder account, zonder betaling, in een paar minuten.",
+      "Maak een geanimeerde cadeaupagina in drie stappen: de gelegenheid en het decor, je cadeau-ideeën, de vormgeving. Zonder account, zonder betaling.",
     titre: "Maak je cadeaupagina",
     chapo:
-      "Twee tot tien ideeën, een bericht, en klaar. De knop “Voorbeeld” toont je op elk moment wat de ander zal zien.",
+      "De gelegenheid, je ideeën, de vormgeving. De knop “Voorbeeld” toont je op elk moment wat de ander zal zien.",
     pret: "Je pagina is klaar",
     rienNestFige:
       "Niets ligt vast: zolang niemand gekozen heeft, kun je alles aanpassen — de teksten, de cadeaus, het thema. De twee links hieronder veranderen niet.",
@@ -301,7 +301,7 @@ export const nl = {
   exemple: {
     titreMeta: "Voorbeeld van een cadeaupagina — MyPresentsForYou",
     descriptionMeta:
-      "Een echte cadeaupagina om uit te proberen: licht de sluier op, kies uit vier ideeën, bevestig. Er wordt niets verstuurd.",
+      "Een echte cadeaupagina om uit te proberen: licht de sluier op, bekijk het decor, kies uit vier ideeën. Er wordt niets verstuurd.",
     bandeau: "Voorbeeld — er wordt niets verstuurd",
     composerLaMienne: "Mijn eigen maken",
     composer: "Mijn cadeaupagina maken",

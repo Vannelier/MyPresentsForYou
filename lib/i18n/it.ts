@@ -16,9 +16,9 @@ export const it = {
   },
 
   site: {
-    titreMeta: "MyPresentsForYou — crea una pagina regalo",
-    descriptionMeta: "Crea una piccola pagina regalo, invia il link e lascia scegliere l'altra persona.",
-    titrePartage: "MyPresentsForYou — regala la scelta",
+    titreMeta: "MyPresentsForYou — la pagina regalo da creare",
+    descriptionMeta: "Crea una pagina regalo animata per qualcuno: una decorazione, un velo da sollevare, le tue idee regalo. L'altra persona sceglie, tu regali.",
+    titrePartage: "MyPresentsForYou, crea una pagina regalo animata.",
   },
 
   pied: {
@@ -40,8 +40,8 @@ export const it = {
   },
 
   banniere: {
-    titre: "Regala la scelta.",
-    texte: "Raccogli qualche idea in una piccola pagina, invia il link e scopri quale è stata scelta.",
+    titre: "Una pagina regalo, fatta per una sola persona.",
+    texte: "Una decorazione per l'occasione, un velo da sollevare, le tue idee regalo sotto. L'altra persona apre, sceglie, e tu sai cosa regalare.",
     pied: "Niente account, niente pagamenti, nessun indirizzo da dare.",
   },
 
@@ -56,7 +56,7 @@ export const it = {
       {
         q: "Come faccio un regalo lasciando scegliere l'altra persona?",
         r: [
-          "Raccogli qualche idea in una piccola pagina — fino a dieci — poi invii il link. La persona apre la pagina, guarda le proposte e conferma quella che le piace di più. Ritrovi la sua scelta nel tuo link privato e compri tu il regalo.",
+          "Raccogli qualche idea in una pagina che metti in scena — un'occasione, una decorazione, un velo da sollevare — poi invii il link. La persona apre la pagina, guarda le proposte e conferma quella che le piace di più. Ritrovi la sua scelta nel tuo link privato e compri tu il regalo.",
           "Il vantaggio: riceve qualcosa che le piace davvero, senza che tu abbia dovuto chiederle cosa desiderava — quindi senza rovinare la sorpresa.",
         ],
       },
@@ -177,31 +177,31 @@ export const it = {
   accueil: {
     titreMeta: "Fare un regalo lasciando scegliere — MyPresentsForYou",
     descriptionMeta:
-      "Raccogli qualche idea regalo in una pagina e invia il link: l'altra persona sceglie, tu regali. Gratis e senza account.",
+      "Raccogli qualche idea regalo in una pagina creata appositamente per la persona a cui tieni e invia il link alla sua pagina personalizzata.",
     motsCles: [
       "regalo a scelta",
       "lasciar scegliere il regalo",
-      "idee regalo da inviare",
-      "biglietto regalo personalizzato",
+      "pagina regalo personalizzata",
+      "pagina regalo animata da inviare",
       "alternativa alla lista dei desideri",
     ],
     donnees: {
       systeme: "Qualsiasi browser web",
       description:
-        "Raccogli qualche idea regalo in una pagina e invia il link: l'altra persona sceglie, tu regali.",
+        "Crea una pagina regalo animata per qualcuno, con le tue idee regalo: l'altra persona apre, sceglie, e tu regali.",
       fonctions: [
         "Fino a dieci proposte per biglietto",
         "Nessun account richiesto",
-        "Codice QR da stampare",
-        "Biglietto modificabile fino alla scelta",
+        "Decorazioni, palette ed effetti di apertura",
+        "Codice QR e biglietto da stampare",
       ],
     },
-    titre: "Regalare giusto, senza chiedere nulla.",
+    titre: "Crea una pagina regalo, e lascia scegliere l'altra persona.",
     sousTitre:
-      "Raccogli qualche idea regalo in una pagina curata, poi inviala. L'altra persona sceglie; tu regali.",
+      "Una decorazione per l'occasione, un velo da sollevare, le tue idee regalo sotto. Invii il link; l'altra persona scopre, sceglie, e a te resta solo da regalare.",
     composer: "Crea la mia pagina regalo",
     voirExemple: "Vedi un esempio",
-    note: "Gratis · senza account · tre passaggi",
+    note: "Gratis · senza account · pronta in pochi minuti",
     telephone: {
       surtitre: "Buon compleanno",
       titre: "Scegli tu",
@@ -210,19 +210,19 @@ export const it = {
     },
     etapes: [
       {
-        titre: "Raccogli le tue idee",
+        titre: "Crei la pagina",
         texte:
-          "Incolla il link di un prodotto: titolo e foto di solito si compilano da soli. Altrimenti basta una foto scattata con il telefono.",
+          "Scegli l'occasione: la pagina prende i suoi colori, la sua decorazione e le sue parole. Aggiungi le tue idee — incolla il link di un prodotto, titolo e foto di solito si compilano da soli.",
       },
       {
-        titre: "Invii il biglietto",
+        titre: "La invii, o la stampi",
         texte:
-          "In una chat, il link appare come un biglietto, con il tuo messaggio e il nome della persona. Puoi anche stampare il codice QR, infilarlo in una busta ed esserci quando il biglietto si apre.",
+          "In una chat, il link appare come un biglietto, con il tuo messaggio e il nome della persona. Puoi anche stampare il codice QR, infilarlo in una busta ed esserci quando il velo si solleva.",
       },
       {
         titre: "Scopri la sua scelta",
         texte:
-          "Un link privato, che tieni per te, ti indica il regalo scelto e il giorno della scelta. Non resta che comprarlo.",
+          "Nel tuo link privato: il regalo scelto, il giorno della scelta e il messaggio che ti è stato lasciato. Non resta che comprarlo.",
       },
     ],
     avantages: [
@@ -232,9 +232,9 @@ export const it = {
           "«Cosa ti farebbe piacere?» rovina la sorpresa e rimanda la domanda all'altra persona. Qui hai già cercato tu; resta solo da scegliere.",
       },
       {
-        titre: "Più personale di una lista dei desideri",
+        titre: "Una pagina, non un link",
         texte:
-          "In una lista dei desideri si spunta una riga scritta dall'altra persona. Qui ogni idea viene da te, e si sente.",
+          "Una palette, una decorazione, un carattere, un velo da sollevare: la pagina somiglia alla persona e all'occasione, non a un modulo.",
       },
       {
         titre: "Nessun prezzo in vista",
@@ -247,9 +247,9 @@ export const it = {
           "Niente è visibile prima dell'apertura. E il biglietto può restare sigillato fino al giorno della festa.",
       },
       {
-        titre: "Un solo gesto da fare",
+        titre: "Una messa in scena fino in fondo",
         texte:
-          "Una decorazione e parole adatte all'occasione. Dall'altra parte c'è una sola cosa da fare: scegliere.",
+          "Il suo nome, una frase di apertura, un effetto che parte e un biglietto da stampare con il codice QR. Dall'altra parte c'è una sola cosa da fare: scegliere.",
       },
       {
         titre: "Un messaggio in cambio",
@@ -275,8 +275,8 @@ export const it = {
     guidesTitre: "Idee per ogni occasione",
     guidesTexte: "Compleanno, Natale, matrimonio… spunti divisi per profilo, e una pagina con i colori dell'occasione.",
     guidesTout: "Tutte le idee regalo",
-    finTitre: "E se creassi la tua?",
-    finTexte: "Due idee bastano per iniziare, dieci al massimo. Potrai modificare tutto dopo.",
+    finTitre: "E se creassi la sua?",
+    finTexte: "Due idee bastano per iniziare, dieci al massimo. Decorazione, parole e apertura si regolano strada facendo.",
     piedNote:
       "Ogni biglietto resta online per un anno. Conserva il tuo link privato: ti mostrerà il regalo scelto.",
   },
@@ -284,10 +284,10 @@ export const it = {
   creation: {
     titreMeta: "Crea una pagina regalo gratuita — MyPresentsForYou",
     descriptionMeta:
-      "Crea la tua pagina in tre passaggi: l'occasione, le tue idee regalo, poi la presentazione. Senza account, senza pagamenti, in pochi minuti.",
+      "Crea una pagina regalo animata in tre passaggi: l'occasione e la sua decorazione, le tue idee regalo, la presentazione. Senza account, senza pagamenti.",
     titre: "Crea la tua pagina regalo",
     chapo:
-      "Da due a dieci idee, un messaggio, ed è pronta. Il pulsante «Anteprima» ti mostra in ogni momento ciò che vedrà l'altra persona.",
+      "L'occasione, le tue idee, la presentazione. Il pulsante «Anteprima» ti mostra in ogni momento ciò che vedrà l'altra persona.",
     pret: "La tua pagina è pronta",
     rienNestFige:
       "Niente è definitivo: finché nessuno ha scelto, puoi modificare tutto — i testi, i regali, il tema. I due link qui sotto non cambieranno.",
@@ -304,7 +304,7 @@ export const it = {
   exemple: {
     titreMeta: "Esempio di pagina regalo — MyPresentsForYou",
     descriptionMeta:
-      "Una vera pagina regalo da provare: solleva il velo, scegli tra quattro idee, conferma. Non viene inviato nulla.",
+      "Una vera pagina regalo da provare: solleva il velo, guarda la decorazione, scegli tra quattro idee. Non viene inviato nulla.",
     bandeau: "Esempio — non viene inviato nulla",
     composerLaMienne: "Crea la mia",
     composer: "Crea la mia pagina regalo",
