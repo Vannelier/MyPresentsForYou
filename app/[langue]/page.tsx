@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import EnTeteSite from "@/components/EnTeteSite";
 import SiteFooter from "@/components/SiteFooter";
 import { dictionnaire } from "@/lib/i18n";
 import { alternatesDe } from "@/lib/i18n/alternates";
@@ -56,6 +57,7 @@ export default async function LandingPage({ params }: Params) {
 
   return (
     <main className="landing">
+      <EnTeteSite />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(donneesStructurees(langue)) }}
@@ -152,7 +154,7 @@ export default async function LandingPage({ params }: Params) {
         </Link>
       </section>
 
-      <SiteFooter langue={langue} page="accueil" note={d.piedNote} />
+      <SiteFooter langue={langue} note={d.piedNote} />
     </main>
   );
 }

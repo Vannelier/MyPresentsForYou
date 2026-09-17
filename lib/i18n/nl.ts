@@ -21,6 +21,7 @@ export const nl = {
   },
 
   pied: {
+    idees: "Cadeau-ideeën",
     navigation: "Links onderaan de pagina",
     questions: "Veelgestelde vragen",
     contact: "Contact",

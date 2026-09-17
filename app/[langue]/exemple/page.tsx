@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import GiftView from "@/components/GiftView";
+import SelecteurLangue from "@/components/i18n/SelecteurLangue";
 import { exemple } from "@/lib/exemple";
 import { dictionnaire } from "@/lib/i18n";
 import { alternatesDe } from "@/lib/i18n/alternates";
@@ -63,6 +64,9 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
  * dit deja « exemple ». Elle occupe la fenetre, comme une vraie page :
  * `pleineFenetre` lui rend le verrou du defilement sous le voile et la
  * remontee a l'ouverture, que l'editeur tient lui-meme autour de son apercu.
+ *
+ * Le selecteur de langue loge dans le bandeau plutot que dans une tete a part :
+ * la page occupe la fenetre, et une seconde barre la decalerait.
  */
 export default async function ExemplePage({ params }: Params) {
   const langue = langueOuDefaut((await params).langue);
@@ -75,6 +79,7 @@ export default async function ExemplePage({ params }: Params) {
         <Link className="preview-ribbon__exit" href={creer}>
           {d.composerLaMienne}
         </Link>
+        <SelecteurLangue variante="ruban" />
       </div>
       <GiftView
         page={exemple(langue)}

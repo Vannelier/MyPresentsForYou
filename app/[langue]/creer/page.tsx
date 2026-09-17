@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import CreateFlow from "@/components/CreateFlow";
+import EnTeteSite from "@/components/EnTeteSite";
 import { baseUrl } from "@/lib/env";
 import { dictionnaire } from "@/lib/i18n";
 import { alternatesDe } from "@/lib/i18n/alternates";
@@ -19,5 +20,10 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
 
 export default function CreatePage() {
   const label = baseUrl().replace(/^https?:\/\//, "");
-  return <CreateFlow baseUrlLabel={label} />;
+  return (
+    <>
+      <EnTeteSite />
+      <CreateFlow baseUrlLabel={label} />
+    </>
+  );
 }

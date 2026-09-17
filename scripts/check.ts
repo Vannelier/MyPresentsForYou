@@ -2440,10 +2440,32 @@ test("le sitemap et les hreflang ne citent que des adresses servies", () => {
   }
 });
 
-test("le selecteur de langue n'apparait qu'avec plusieurs langues, et mene a la meme page", () => {
-  const pied = lire("components/SiteFooter.tsx");
-  assert.match(pied, /\{LANGUES_ACTIVES\.length > 1 && \(/, "selecteur rendu sans condition");
-  assert.match(pied, /href=\{cheminVers\(l, page\)\}/, "le selecteur ne mene plus a la meme page");
+test("le selecteur de langue est en tete du site, jamais sur une carte ni sur l'administration", () => {
+  /*
+   * Une carte a sa langue : la personne qui la recoit n'a pas a la changer. Le
+   * selecteur mene a la meme page dans l'autre langue, et sa liste fermee reste
+   * dans le HTML, pour que les moteurs en suivent les liens.
+   */
+  const selecteur = lire("components/i18n/SelecteurLangue.tsx");
+  assert.match(selecteur, /equivalents\(/, "le selecteur ne cherche plus la meme page");
+  assert.match(selecteur, /hidden=\{!ouvert\}/, "la liste fermee doit rester dans le HTML");
+  for (const f of ["app/[langue]/page.tsx", "components/TextPage.tsx", "app/[langue]/creer/page.tsx"]) {
+    assert.match(lire(f), /<EnTeteSite \/>/, `${f} n'a plus de selecteur de langue`);
+  }
+  assert.match(lire("app/[langue]/exemple/page.tsx"), /<SelecteurLangue variante="ruban" \/>/);
+  const interdits: string[] = ["components/GiftView.tsx", "components/AdminView.tsx", "components/PrintableCard.tsx"];
+  const parcourir = (dossier: string) => {
+    for (const e of readdirSync(dossier, { withFileTypes: true })) {
+      const chemin = `${dossier}/${e.name}`;
+      if (e.isDirectory()) parcourir(chemin);
+      else if (/\.tsx?$/.test(e.name)) interdits.push(chemin);
+    }
+  };
+  parcourir("app/carte");
+  parcourir("app/admin");
+  for (const f of interdits) {
+    assert.doesNotMatch(lire(f), /SelecteurLangue|EnTeteSite/, `${f} porte le selecteur de langue`);
+  }
 });
 
 test("le routage : langues, anciennes adresses, cartes", () => {

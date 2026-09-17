@@ -22,6 +22,7 @@ export const de = {
   },
 
   pied: {
+    idees: "Geschenkideen",
     navigation: "Links in der Fußzeile",
     questions: "Häufige Fragen",
     contact: "Kontakt",

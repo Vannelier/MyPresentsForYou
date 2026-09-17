@@ -1,4 +1,5 @@
 import Link from "next/link";
+import EnTeteSite from "@/components/EnTeteSite";
 import SiteFooter from "@/components/SiteFooter";
 import { dictionnaire } from "@/lib/i18n";
 import { PAGES_LEGALES, cheminVers, type Page } from "@/lib/i18n/chemins";
@@ -36,6 +37,7 @@ export default function TextPage({
   const traduite = langue !== "fr" && (PAGES_LEGALES as readonly Page[]).includes(page);
   return (
     <main className="landing">
+      <EnTeteSite />
       <article className="prose">
         <Link className="back-link" href={cheminVers(langue, "accueil")}>
           {d.commun.retourAccueil}
@@ -63,7 +65,7 @@ export default function TextPage({
         {children}
       </article>
 
-      <SiteFooter langue={langue} page={page} />
+      <SiteFooter langue={langue} />
     </main>
   );
 }

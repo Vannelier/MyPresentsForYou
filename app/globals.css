@@ -2308,3 +2308,110 @@ select {
 .notice + .notice {
   margin-top: 0.5rem;
 }
+
+/* --- Sélecteur de langue ---------------------------------------------------- */
+
+/*
+ * En haut a droite des pages du site, la ou on le cherche. Le bouton montre la
+ * langue courante ; la liste s'ouvre dessous, alignee a droite pour ne jamais
+ * deborder a 375 px.
+ */
+.site-tete {
+  display: flex;
+  justify-content: flex-end;
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 0.75rem 1.25rem 0;
+  position: relative;
+  z-index: 20;
+}
+
+.langues {
+  position: relative;
+}
+
+.langues__bouton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.35rem 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.8rem;
+  line-height: 1.2;
+  cursor: pointer;
+}
+
+.langues__bouton:hover {
+  border-color: var(--ink-faint);
+}
+
+.langues__chevron {
+  font-size: 0.65rem;
+  color: var(--ink-faint);
+}
+
+.langues__liste {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 0.35rem);
+  min-width: 11rem;
+  margin: 0;
+  padding: 0.35rem;
+  list-style: none;
+  text-align: left;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  box-shadow: 0 14px 34px -18px rgba(52, 38, 28, 0.45);
+}
+
+.langues__liste a {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.45rem 0.6rem;
+  border-radius: 8px;
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 0.85rem;
+}
+
+.langues__liste a:hover,
+.langues__liste a:focus-visible {
+  background: var(--paper-warm);
+}
+
+.langues__liste a[aria-current="true"] {
+  font-weight: 600;
+}
+
+.drapeau {
+  display: block;
+  flex: none;
+  width: 1.25rem;
+  height: 0.8333rem;
+  border-radius: 2px;
+  box-shadow: 0 0 0 1px rgba(35, 31, 28, 0.12);
+}
+
+/* Dans le bandeau sombre de l'exemple : discret, sur le modele de son bouton. */
+.langues--ruban .langues__bouton {
+  border-color: rgba(250, 246, 240, 0.4);
+  background: transparent;
+  color: inherit;
+  font-size: 0.7rem;
+  padding: 0.15rem 0.6rem;
+}
+
+.langues--ruban .langues__chevron {
+  color: inherit;
+}
+
+.langues--ruban .langues__liste {
+  letter-spacing: normal;
+  text-transform: none;
+}

@@ -23,6 +23,7 @@ export const fr = {
   },
 
   pied: {
+    idees: "Idées cadeaux",
     navigation: "Liens de bas de page",
     questions: "Questions fréquentes",
     contact: "Contact",

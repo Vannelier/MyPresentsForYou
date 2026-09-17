@@ -21,6 +21,7 @@ export const en = {
   },
 
   pied: {
+    idees: "Gift ideas",
     navigation: "Footer links",
     questions: "FAQ",
     contact: "Contact",
