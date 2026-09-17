@@ -22,6 +22,7 @@ export const it = {
   },
 
   pied: {
+    idees: "Idee regalo",
     navigation: "Link a piè di pagina",
     questions: "Domande frequenti",
     contact: "Contatti",
@@ -270,6 +271,9 @@ export const it = {
         texte: "Finché nulla è stato scelto, puoi modificare tutto. I link già inviati restano validi.",
       },
     ],
+    guidesTitre: "Idee per ogni occasione",
+    guidesTexte: "Compleanno, Natale, matrimonio… spunti divisi per profilo, e una pagina con i colori dell'occasione.",
+    guidesTout: "Tutte le idee regalo",
     finTitre: "E se creassi la tua?",
     finTexte: "Due idee bastano per iniziare, dieci al massimo. Potrai modificare tutto dopo.",
     piedNote:

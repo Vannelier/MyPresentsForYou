@@ -21,6 +21,7 @@ export const en = {
   },
 
   pied: {
+    idees: "Gift ideas",
     navigation: "Footer links",
     questions: "FAQ",
     contact: "Contact",
@@ -267,6 +268,9 @@ export const en = {
         texte: "As long as nothing has been chosen, you can change everything. Links already sent keep working.",
       },
     ],
+    guidesTitre: "Ideas for every occasion",
+    guidesTexte: "Birthday, Christmas, wedding… ideas sorted by profile, and a page in the colours of the occasion.",
+    guidesTout: "All gift ideas",
     finTitre: "Why not create yours?",
     finTexte: "Two ideas are enough to start, ten at most. You can change everything afterwards.",
     piedNote: "Each card stays online for a year. Keep your private link: it will show you the chosen gift.",

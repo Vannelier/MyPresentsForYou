@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import EnTeteSite from "@/components/EnTeteSite";
 import SiteFooter from "@/components/SiteFooter";
 import { dictionnaire } from "@/lib/i18n";
 import { alternatesDe } from "@/lib/i18n/alternates";
-import { cheminVers } from "@/lib/i18n/chemins";
+import { GUIDES, cheminGuide, cheminVers } from "@/lib/i18n/chemins";
 import { langueOuDefaut, type Langue } from "@/lib/i18n/langues";
 
 type Params = { params: Promise<{ langue: string }> };
@@ -56,6 +57,7 @@ export default async function LandingPage({ params }: Params) {
 
   return (
     <main className="landing">
+      <EnTeteSite />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(donneesStructurees(langue)) }}
@@ -144,6 +146,25 @@ export default async function LandingPage({ params }: Params) {
         ))}
       </section>
 
+      {/*
+        Le chemin vers les guides depuis la page la plus liee du site : un guide
+        que rien n'atteint depuis une page indexee n'existe pour aucun moteur.
+      */}
+      <section className="lp-guides">
+        <h2>{d.guidesTitre}</h2>
+        <p>{d.guidesTexte}</p>
+        <ul className="lp-guides__liste">
+          {GUIDES.map((guide) => (
+            <li key={guide}>
+              <Link href={cheminGuide(langue, guide)}>{tout.occasions[guide].nom}</Link>
+            </li>
+          ))}
+        </ul>
+        <Link className="lp-guides__tout" href={cheminVers(langue, "idees")}>
+          {d.guidesTout} →
+        </Link>
+      </section>
+
       <section className="lp-final">
         <h2>{d.finTitre}</h2>
         <p>{d.finTexte}</p>
@@ -152,7 +173,7 @@ export default async function LandingPage({ params }: Params) {
         </Link>
       </section>
 
-      <SiteFooter langue={langue} page="accueil" note={d.piedNote} />
+      <SiteFooter langue={langue} note={d.piedNote} />
     </main>
   );
 }

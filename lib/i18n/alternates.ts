@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { cheminVers, type Page } from "./chemins";
+import { cheminGuide, cheminVers, type Guide, type Page } from "./chemins";
 import { LANGUES_ACTIVES, type Langue } from "./langues";
 
 /*
@@ -21,4 +21,15 @@ export function variantes(page: Page, base = ""): Record<string, string> {
 /** Canonique dans la langue de la page, et ses versions dans les autres. */
 export function alternatesDe(langue: Langue, page: Page): Metadata["alternates"] {
   return { canonical: cheminVers(langue, page), languages: variantes(page) };
+}
+
+/**
+ * La meme chose pour un guide d'occasion. Pas de `x-default` : la racine ne
+ * redirige que vers l'accueil, jamais vers un guide.
+ */
+export function alternatesGuide(langue: Langue, guide: Guide): Metadata["alternates"] {
+  return {
+    canonical: cheminGuide(langue, guide),
+    languages: Object.fromEntries(LANGUES_ACTIVES.map((l) => [l, cheminGuide(l, guide)])),
+  };
 }
