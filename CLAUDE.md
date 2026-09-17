@@ -95,10 +95,19 @@ Développer sur la branche indiquée par la tâche, commiter, pousser, ouvrir un
 brouillon**. Un message de commit décrit le défaut, la cause, la correction et la mesure — pas la
 liste des fichiers touchés.
 
-## Ce qui n'est pas décidé
+## Le modèle économique est décidé
 
-Le **modèle économique**. Voir la section du README : rien n'est implémenté, et la réflexion sur
-l'affiliation s'est arrêtée sur trois réserves — le volume (≈ 1,40 € par page), une zone grise
-juridique sur la récriture des liens, et un cookie de 24 h contre un parcours asynchrone. Ne rien
-construire là-dessus sans avoir instrumenté trois chiffres : pages créées, choix confirmés, clics
-vers la boutique.
+**Affiliation seule**, depuis la page d'administration, au moment où l'offreur achète — ni
+publicité, ni option payante. Le détail et les raisons sont dans la section « Modèle économique »
+du README. Deux conséquences pour tout travail : aucun lien affilié ailleurs que sur le chemin
+d'achat de l'offreur, et aucun script de tiers qui poserait un cookie — la politique de
+confidentialité promet qu'il n'y en a pas.
+
+## La feuille de route
+
+Dans cet ordre : le business model (fait), des textes plus humains — ceux de l'accueil et les
+textes d'exemple des champs — (fait), le multilingue (fait : français, anglais, italien, espagnol,
+allemand, néerlandais), le référencement, et seulement ensuite la publicité du site. Un travail qui
+en devance un autre se signale avant d'être fait. Tout nouveau texte d'interface s'écrit dans les
+six dictionnaires de `lib/i18n` — le français fait foi, `npm run check` refuse une traduction qui
+manque ou perd ses marques — et une page légale dans ses six composants de `components/legal`.
