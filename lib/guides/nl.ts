@@ -29,21 +29,21 @@ export const nl: TextesGuides = {
         "Verjaardagscadeau-ideeën per profiel — belevenissen, mooie spullen, kleine verwennerijen — en een eenvoudige manier om de ander te laten kiezen.",
       titre: "Cadeau-ideeën voor een verjaardag: waarom niet laten kiezen?",
       chapo:
-        "Een verjaardag komt elk jaar terug, en de inspiratie raakt sneller op. Hier zijn ideeën per profiel, en een eenvoudige manier om het cadeau te vermijden dat net niet goed valt: er een paar voorstellen, en de ander laten kiezen.",
-      accroche: "Ideeën per profiel, en geen cadeaus meer die net niet goed vallen.",
+        "Een verjaardag komt elk jaar terug, en op een gegeven moment weet je het niet meer. In plaats van op één idee te gokken, stel je er drie of vier voor en kiest de ander wat het meest bevalt. De ideeën hieronder staan per profiel.",
+      accroche: "Ideeën per profiel, en geen cadeaus meer die niet aankomen.",
       apercu: ["Een pottenbakworkshop", "Concertkaartjes", "Een mooie theepot"],
       pourquoi: {
         titre: "Waarom laten kiezen voor een verjaardag",
         paragraphes: [
-          "Hoe langer je iemand kent, hoe moeilijker het wordt om te verrassen: de voor de hand liggende cadeaus zijn al gegeven, en de smaak is inmiddels veranderd. Vragen \"wat wil je graag?\" lost het op, maar haalt alles weg wat een cadeau een cadeau maakt.",
-          "Drie of vier ideeën voorstellen houdt de verrassing intact — de ander ontdekt wat jij voor diegene hebt bedacht — en laat toch het laatste woord aan hen. Ze krijgen wat ze echt leuk vinden, en jij hoeft niet meer alles op één idee in te zetten.",
-          "Het is ook een manier om breder te geven dan anders: een belevenis naast een voorwerp, een kleine verwennerij naast een groter plan. De keuze zelf zegt iets, en jij komt het te weten.",
+          "Na tien jaar heb je het boek, de sjaal en de restaurantbon al gegeven. En de smaak is intussen veranderd. Blijft de vraag \"wat wil je graag?\", die het probleem oplost en de verrassing in één keer om zeep helpt.",
+          "Drie of vier ideeën, en de verrassing blijft toch: de ander ziet wat jij bedacht hebt, en beslist zelf. Je zet niet meer alles op één kaart.",
+          "Zo kun je ook breder geven dan anders. Een workshop naast een voorwerp, iets kleins naast een echt plan. En wat er gekozen wordt, vertelt je iets.",
         ],
       },
       idees: {
         titre: "Ideeën, per profiel",
         intro:
-          "Vier profielen, elk met ideeën die je op één pagina kunt mengen. Twee tot vier voorstellen is genoeg: daarboven wordt kiezen werk.",
+          "Vier profielen, vier ideeën per profiel, om te mengen op één pagina. Twee tot vier voorstellen, niet meer: daarna wordt kiezen vermoeiend.",
         profils: [
           {
             nom: "Voor wie herinneringen belangrijker vindt dan spullen",
@@ -96,15 +96,15 @@ export const nl: TextesGuides = {
         liste: [
           {
             q: "Hoeveel ideeën stel ik voor bij een verjaardag?",
-            r: "Drie of vier, het liefst van verschillende soort — een belevenis, een voorwerp, een kleine verwennerij. Boven de zes wordt kiezen twijfelen.",
+            r: "Drie of vier, liefst verschillend: een workshop, een voorwerp, iets kleins. Boven de zes wordt er getwijfeld in plaats van gekozen.",
           },
           {
             q: "Kan ik de pagina van tevoren klaarmaken?",
-            r: "Ja. Je kunt een openingsdatum instellen: tot dan blijft de kaart verzegeld achter een aftelklok. Je stuurt de link wanneer je wilt, en hij opent op de verjaardag.",
+            r: "Ja. Stel een openingsdatum in en de kaart blijft verzegeld achter een aftelklok. Je stuurt de link wanneer je wilt; de pagina gaat open op de verjaardag.",
           },
           {
             q: "Ziet de ander de prijs van de cadeaus?",
-            r: "Nee, nooit. Ze zien wat je voorstelt, niet wat het kost: ze kiezen wat ze leuk vinden, zonder te vergelijken.",
+            r: "Nooit. De ander ziet je ideeën, niet de prijzen, en niemand vergelijkt.",
           },
         ],
       },
@@ -116,21 +116,21 @@ export const nl: TextesGuides = {
         "Originele kerstcadeau-ideeën per profiel — belevenissen, winteravonden, wie alles al heeft — en een eenvoudige manier om te laten kiezen.",
       titre: "Kerstcadeau-ideeën: voorstellen, en laten kiezen",
       chapo:
-        "Met kerst stapelen de cadeaus zich op en lijken de ideeën op elkaar. Voor iemand die je echt wilt verwennen, hier originele ideeën per profiel — en een manier om het goed te doen: een paar ideeën voorstellen, en laten kiezen.",
-      accroche: "Originele ideeën, en een cadeau dat niet achter in de kast belandt.",
+        "Met kerst krijgt iedereen veel en weet niemand meer wat te geven. Voor iemand die je echt wilt verwennen, stel je drie of vier ideeën voor en laat je kiezen. De ideeën hieronder staan per profiel.",
+      accroche: "Ideeën die niet achter in de kast belanden.",
       apercu: ["Een weekend in de bergen", "Een theeselectie", "Een kookworkshop"],
       pourquoi: {
         titre: "Waarom laten kiezen met kerst",
         paragraphes: [
-          "Kerst bundelt de cadeaus van een heel jaar op één avond. Tussen de verlanglijstjes van de kinderen en iets kleins voor iedereen krijgen volwassenen vaak snel gevonden cadeaus: in het beste geval nuttig, in het slechtste vergeten.",
-          "Een paar ideeën voorstellen in plaats van één pakje verandert de manier van geven. De ander ontdekt wat je hebt bedacht, kiest waar diegene echt zin in heeft, en krijgt het cadeau dat diegene had gewild.",
-          "Het is ook handig als je op afstand geeft: de pagina deel je via een bericht, de keuze valt voor de feestdagen, en je hebt tijd om te bestellen voor kerstavond.",
+          "Kerst is alle cadeaus van het jaar op één avond. Tussen de verlanglijstjes van de kinderen en iets kleins voor iedereen krijgen volwassenen vaak wat er snel gevonden is.",
+          "Met een paar ideeën in plaats van één pakje ziet de ander wat jij bedacht hebt, pakt waar zin in is, en heeft uiteindelijk wat die zelf gekozen zou hebben.",
+          "Handig ook als je op afstand geeft. Je stuurt de pagina via een bericht, de keuze komt voor de feestdagen, en je hebt tijd om te bestellen.",
         ],
       },
       idees: {
         titre: "Ideeën, per profiel",
         intro:
-          "Ideeën om op één pagina te mengen. Met kerst wordt vaak gekozen voor een belevenis na de feestdagen: die rekt het moment op.",
+          "Ideeën om op één pagina te mengen. Met kerst wint vaak de belevenis voor januari: die rekt de feestdagen op.",
         profils: [
           {
             nom: "Voor wie houdt van samen beleven",
@@ -183,15 +183,15 @@ export const nl: TextesGuides = {
         liste: [
           {
             q: "Kan ik aan meerdere mensen uit dezelfde familie geven?",
-            r: "Ja: maak één pagina per persoon. Iedereen krijgt een eigen link en kiest apart; elke keuze vind je via de privélink van de betreffende pagina.",
+            r: "Ja, één pagina per persoon. Iedereen krijgt een eigen link en kiest apart; de keuzes vind je via de privélink van elke pagina.",
           },
           {
             q: "En als de ander niet voor kerst kiest?",
-            r: "Je kunt er even aan herinneren: de pagina blijft open. Zonder keuze wordt ze na een jaar verwijderd.",
+            r: "Je kunt er nog eens over beginnen, de pagina blijft open. Kiest er niemand, dan wordt hij na een jaar verwijderd.",
           },
           {
             q: "Kan de kaart pas op kerstavond opengaan?",
-            r: "Ja. Stel een openingsdatum in: tot dan blijft de kaart verzegeld achter een aftelklok, ook als de link eerder is verstuurd.",
+            r: "Ja. Stel een openingsdatum in: de kaart blijft verzegeld achter een aftelklok, ook als je de link eerder hebt gestuurd.",
           },
         ],
       },
@@ -203,21 +203,21 @@ export const nl: TextesGuides = {
         "Huwelijkscadeau-ideeën per soort stel, en een alternatief voor een envelop met geld: een paar ideeën voorstellen, en het bruidspaar laten kiezen.",
       titre: "Huwelijkscadeau-ideeën: laat het bruidspaar kiezen",
       chapo:
-        "Bij een bruiloft twijfel je vaak tussen de cadeaulijst, een envelop en een persoonlijk cadeau. Hier een andere weg: een paar ideeën die jij voor het stel uitkiest, op één pagina, en het bruidspaar beslist. Met ideeën per profiel.",
-      accroche: "Tussen de cadeaulijst en de envelop: een paar ideeën waaruit het stel kiest.",
+        "Bij een bruiloft twijfel je tussen de cadeaulijst, een envelop en een cadeau dat je zelf uitkiest. Er is nog een weg: je stelt het stel een paar ideeën voor, op één pagina, en zij beslissen. De ideeën hieronder staan per soort stel.",
+      accroche: "Tussen de lijst en de envelop: een paar ideeën, en het stel kiest.",
       apercu: ["Een gastronomisch diner", "Een wijnproeverij", "Een nacht in een B&B"],
       pourquoi: {
         titre: "Waarom laten kiezen bij een huwelijk",
         paragraphes: [
-          "Een cadeaulijst zegt precies wat je moet geven, en een envelop zegt niets over jou. Daartussen zoeken veel gasten een cadeau dat zowel persoonlijk als echt nuttig is voor het stel.",
-          "Een paar ideeën voorstellen brengt die twee samen: elk voorstel komt van jou, en het bruidspaar kiest wat bij hen past. Ze krijgen niet nog iets wat ze al hebben, en jij weet dat je cadeau gebruikt wordt.",
-          "De pagina kun je voor of na het feest sturen. Veel mensen geven hem liever een paar weken later, als het stel tijd heeft om te kijken en samen te kiezen.",
+          "De cadeaulijst zegt precies wat je moet kopen. De envelop zegt niets over jou. Veel gasten zoeken iets daartussen: een persoonlijk cadeau dat echt gebruikt wordt.",
+          "Een paar ideeën doen allebei tegelijk. Elk voorstel komt van jou, en het bruidspaar pakt het voorstel dat bij hen past. Geen dubbele cadeaus, en je cadeau wordt gebruikt.",
+          "Je kunt de pagina voor of na het feest sturen. Veel mensen wachten een paar weken, tot het stel op adem is gekomen en er samen naar kan kijken.",
         ],
       },
       idees: {
         titre: "Ideeën, per soort stel",
         intro:
-          "Ideeën voor twee. Belevenissen om samen te delen worden vaak gekozen door het bruidspaar: ze rekken het feest op.",
+          "Ideeën voor twee. Vaak kiest het bruidspaar de belevenis om samen te doen: die rekt het feest een paar maanden op.",
         profils: [
           {
             nom: "Een stel dat graag uitgaat",
@@ -270,15 +270,15 @@ export const nl: TextesGuides = {
         liste: [
           {
             q: "Vervangt dit een cadeaulijst?",
-            r: "Nee, het vult hem aan. Een cadeaulijst zegt wat het stel verwacht; jouw pagina stelt je eigen ideeën voor, en het bruidspaar kiest wat ze leuk vinden. Niets houdt je tegen om beide te doen.",
+            r: "Nee, het vult hem aan. De lijst zegt wat het stel verwacht; jouw pagina stelt je eigen ideeën voor. Niets houdt je tegen om allebei te doen.",
           },
           {
             q: "Kan het bruidspaar samen kiezen?",
-            r: "Ja: de link opent op elk apparaat. Ze bekijken de pagina samen en bevestigen één keuze.",
+            r: "Ja, de link opent op elk apparaat. Ze bekijken de pagina samen en bevestigen één keuze.",
           },
           {
             q: "Kunnen meerdere gasten samen geven?",
-            r: "Eén persoon maakt de pagina, maar niets houdt meerdere mensen tegen om het eens te worden over de ideeën, en de aankoop te delen zodra de keuze gemaakt is.",
+            r: "Eén persoon maakt de pagina, maar jullie kunnen het met meerdere mensen eens worden over de ideeën en de aankoop delen zodra er gekozen is.",
           },
         ],
       },
@@ -290,21 +290,21 @@ export const nl: TextesGuides = {
         "Originele en nuttige kraamcadeau-ideeën, voor de baby of voor de ouders, en een eenvoudige manier om de ouders te laten kiezen wat er ontbreekt.",
       titre: "Origineel en nuttig kraamcadeau: laat de ouders kiezen",
       chapo:
-        "Bij een geboorte stromen de cadeaus binnen, en vaak dubbel: drie rompertjes in dezelfde maat, twee knuffels, en niets van wat echt ontbreekt. Hier zijn ideeën per profiel — en een manier om precies goed te geven: een paar ideeën voorstellen, en de ouders laten kiezen.",
-      accroche: "In plaats van nog een knuffel: wat de ouders echt nodig hebben.",
+        "Als er een baby komt, stromen de cadeaus binnen, vaak dubbel: drie rompertjes in dezelfde maat, twee knuffels, en niets van wat echt ontbreekt. Stel een paar ideeën voor en laat de ouders pakken wat hen helpt. De ideeën hieronder staan per profiel.",
+      accroche: "In plaats van nog een knuffel: wat de ouders echt missen.",
       apercu: ["Maaltijden aan huis", "Een draagdoek", "Een fotoshoot"],
       pourquoi: {
         titre: "Waarom laten kiezen bij een geboorte",
         paragraphes: [
-          "De eerste maanden krijgen ouders veel, en vaak hetzelfde. Wat ze echt missen, weten alleen zij: een bepaald product, tijd, een maaltijd die ze niet zelf hoeven te koken.",
-          "Een paar ideeën voorstellen laat hen kiezen zonder dat ze een lijst hoeven te maken — nog een taak erbij, op een moment dat ze daar geen tijd voor hebben. Ze bekijken je voorstellen wanneer het uitkomt, en kiezen in één handeling.",
-          "Er is geen haast: de pagina blijft een jaar online. Veel ouders kiezen een paar weken na de geboorte, als ze eindelijk zien wat hen zou helpen.",
+          "De eerste maanden krijgen ouders veel, en vaak hetzelfde. Alleen zij weten wat er ontbreekt: bepaalde spullen, tijd, een avondeten dat ze niet zelf hoeven te koken.",
+          "Een paar ideeën voorstellen betekent hen de keuze laten zonder dat ze een lijst hoeven te schrijven. Ze kijken wanneer het uitkomt, en het kost ze tien seconden.",
+          "Er is geen haast: de pagina blijft een jaar online. Veel ouders kiezen een paar weken later, als ze eindelijk zien wat hen zou helpen.",
         ],
       },
       idees: {
         titre: "Ideeën, per profiel",
         intro:
-          "Ideeën voor de baby, en vooral voor de ouders, die vaak worden vergeten. Meng ze op één pagina.",
+          "Ideeën voor de baby, en vooral voor de ouders, die altijd vergeten worden. Om te mengen op één pagina.",
         profils: [
           {
             nom: "Om even op adem te komen",
@@ -357,15 +357,15 @@ export const nl: TextesGuides = {
         liste: [
           {
             q: "Moet ik wachten tot de geboorte om de pagina te sturen?",
-            r: "Nee. Je kunt hem vooraf klaarmaken en sturen wanneer je wilt; je kunt ook een openingsdatum instellen, zodat hij tot dan verzegeld blijft.",
+            r: "Nee. Je kunt hem vooraf klaarmaken en sturen wanneer je wilt. Je kunt ook een openingsdatum instellen, zodat hij tot dan verzegeld blijft.",
           },
           {
             q: "Is het gebruikelijk om de ouders iets te geven in plaats van de baby?",
-            r: "Steeds vaker. Een maaltijd aan huis of een paar uur hulp zijn vaak de cadeaus die ouders het best onthouden. Stel beide voor, en laat hen kiezen.",
+            r: "Steeds vaker. Een bezorgd avondeten of twee uur schoonmaakhulp zijn vaak de cadeaus die ouders onthouden. Stel allebei voor en laat hen kiezen.",
           },
           {
             q: "Moeten de ouders een account maken om te kiezen?",
-            r: "Nee. Ze openen de link, kiezen en bevestigen, zonder account of e-mailadres.",
+            r: "Nee. Ze openen de link, kiezen, bevestigen. Geen account, geen e-mailadres.",
           },
         ],
       },
@@ -377,20 +377,20 @@ export const nl: TextesGuides = {
         "Originele cadeau-ideeën voor een housewarming, voor een alleenstaande of een stel, en een eenvoudige manier om te laten kiezen wat nog ontbreekt.",
       titre: "Housewarming cadeau-ideeën: wat er nog ontbreekt",
       chapo:
-        "Bij een nieuw huis hoort een lijst van wat er ontbreekt die nog niemand heeft opgeschreven. Hier zijn ideeën per profiel — en een manier om iets nuttigs te geven zonder te raden: een paar ideeën voorstellen, en laten kiezen wat er echt ontbreekt.",
-      accroche: "Voor een nieuw huis: wat er echt ontbreekt, ter plekke gekozen.",
+        "Na een verhuizing ontdek je in de weken erna wat er ontbreekt. Van buitenaf is dat niet te raden. Dus kun je beter een paar ideeën voorstellen en de ander laten pakken wat van pas komt. Hier zijn er een paar, per profiel.",
+      accroche: "Wat er echt ontbreekt in het nieuwe huis.",
       apercu: ["Een kamerplant", "Een goed koksmes", "Kunst voor aan de muur"],
       pourquoi: {
         titre: "Waarom laten kiezen bij een housewarming",
         paragraphes: [
-          "Na een verhuizing weet je zelden wat er ontbreekt voordat je er een paar weken hebt gewoond. Gasten komen intussen met een fles, een plant of een decoratief voorwerp, gekozen zonder de plek te kennen.",
-          "Een paar ideeën voorstellen laat de keuze afhangen van wat er in huis te zien is: de beschikbare ruimte, de stijl van de woning, wat er al is. Het cadeau vindt zijn plek, in plaats van die te zoeken.",
-          "De pagina kun je na het feest sturen, als alles is ingericht. Vaak wordt dan pas duidelijk wat er nodig is.",
+          "Je weet pas wat er ontbreekt als je er een paar weken woont. Gasten komen intussen met een fles, een plant of een decoratiestuk dat ze kozen zonder het huis gezien te hebben.",
+          "Met een paar ideeën beslist de ander op basis van wat er te zien is: de ruimte die er nog is, de stijl, wat er al staat. Het cadeau vindt zijn plek in plaats van die te zoeken.",
+          "Je kunt de pagina na het feest sturen, als de dozen leeg zijn. Dan wordt duidelijk wat er nodig is.",
         ],
       },
       idees: {
         titre: "Ideeën, per profiel",
-        intro: "Ideeën om de plek tot een thuis te maken, van het meest nuttige tot het meest persoonlijke.",
+        intro: "Ideeën om de plek tot een thuis te maken, van het nuttigste tot het persoonlijkste.",
         profils: [
           {
             nom: "Voor wie graag gasten ontvangt",
@@ -443,15 +443,15 @@ export const nl: TextesGuides = {
         liste: [
           {
             q: "Moet ik het cadeau meenemen naar de housewarming?",
-            r: "Niet per se. Je kunt komen met een kaart met de QR-code van de pagina: er wordt later gekozen, als duidelijk is wat er ontbreekt.",
+            r: "Niet per se. Kom met een kaart en de QR-code van de pagina: er wordt later gekozen, als duidelijk is wat er ontbreekt.",
           },
           {
             q: "En voor een stel dat gaat samenwonen?",
-            r: "De link opent op elk apparaat: het stel bekijkt de pagina samen en bevestigt één keuze.",
+            r: "De link opent op elk apparaat. Het stel bekijkt de pagina samen en bevestigt één keuze.",
           },
           {
             q: "Kan ik een idee voorstellen zonder link naar een winkel?",
-            r: "Ja. Hulp bij het in elkaar zetten van meubels of een plant om samen uit te kiezen beschrijf je makkelijk met de hand, met een titel en een notitie.",
+            r: "Ja. Hulp bij het in elkaar zetten van meubels of een plant om samen uit te kiezen beschrijf je makkelijk zelf, met een titel en een notitie.",
           },
         ],
       },
@@ -463,20 +463,20 @@ export const nl: TextesGuides = {
         "Originele Moederdag cadeau-ideeën per profiel — samen tijd doorbrengen, ontspanning, hobby's — en een eenvoudige manier om haar te laten kiezen.",
       titre: "Moederdag cadeau-ideeën: laat haar kiezen",
       chapo:
-        "Met Moederdag wil je dankjewel zeggen zonder elk jaar op dezelfde attenties terug te vallen. Hier zijn ideeën per profiel — en een eenvoudig idee: een paar cadeaus voor haar uitkiezen, en haar laten beslissen.",
+        "Met Moederdag wil je dankjewel zeggen zonder het boeket van vorig jaar te herhalen. Stel drie of vier cadeaus voor die je voor haar uitkoos, en laat haar pakken wat het meest bevalt. De ideeën hieronder staan per profiel.",
       accroche: "Op een andere manier dankjewel zeggen, met ideeën waaruit zij kiest.",
       apercu: ["Een brunch met z'n tweeën", "Een wellnessdag", "Een bloemschikworkshop"],
       pourquoi: {
         titre: "Waarom haar laten kiezen met Moederdag",
         paragraphes: [
-          "Veel moeders antwoorden \"niks, ik ben blij dat je er bent\" als je vraagt wat ze graag willen. Dat antwoord is oprecht, maar zegt niet wat je moet geven.",
-          "Een paar ideeën voorstellen laat haar het plezier van de verrassing en de vrijheid om te kiezen: samen tijd doorbrengen, iets wat ze zichzelf niet zo snel zou kopen, een activiteit die ze al lang uitstelt. Onderweg ontdek jij waar ze echt zin in heeft.",
-          "De datum van Moederdag verschilt per land, en de pagina kan ruim van tevoren klaar zijn: stel een openingsdatum in, en de kaart blijft verzegeld tot de dag zelf.",
+          "Vraag een moeder wat ze graag wil en ze zegt: \"niks, ik ben blij dat je er bent\". Ze meent het, en je hebt er niets aan.",
+          "Met een paar ideeën voor zich houdt ze de verrassing en pakt ze waar ze echt zin in heeft: tijd samen, iets wat ze zelf nooit zou kopen, iets wat ze al maanden uitstelt. Onderweg leer jij wat ze mooi vindt.",
+          "De datum verschilt per land, en de pagina kan weken van tevoren klaar zijn. Stel een openingsdatum in, dan blijft hij verzegeld tot de dag zelf.",
         ],
       },
       idees: {
         titre: "Ideeën, per profiel",
-        intro: "Ideeën om dankjewel te zeggen — om op één pagina te mengen.",
+        intro: "Ideeën om dankjewel te zeggen, om te mengen op één pagina.",
         profils: [
           {
             nom: "Om samen tijd door te brengen",
@@ -529,15 +529,15 @@ export const nl: TextesGuides = {
         liste: [
           {
             q: "Kan ik de pagina een paar dagen van tevoren klaarmaken?",
-            r: "Ja. Stel een openingsdatum in: de kaart blijft verzegeld achter een aftelklok tot Moederdag zelf, ook als de link eerder wordt verstuurd.",
+            r: "Ja. Stel een openingsdatum in: de kaart blijft verzegeld achter een aftelklok tot Moederdag, ook als je de link eerder stuurt.",
           },
           {
             q: "En als ze niet zo handig is met schermen?",
-            r: "Print de kaart: een gevouwen vel met de QR-code, voor in een envelop. Scannen met een telefoon is genoeg, en jullie kunnen samen kiezen.",
+            r: "Print de kaart: een gevouwen vel met de QR-code, in een envelop. Ze scant hem met haar telefoon, en jullie kunnen de pagina samen bekijken.",
           },
           {
             q: "Kunnen meerdere kinderen samen geven?",
-            r: "Eén persoon maakt de pagina, maar jullie kunnen het eens worden over de ideeën, samen tekenen, en de aankoop delen zodra de keuze gemaakt is.",
+            r: "Eén persoon maakt de pagina, maar jullie kunnen samen de ideeën kiezen, met z'n allen tekenen en de aankoop delen zodra het cadeau gekozen is.",
           },
         ],
       },

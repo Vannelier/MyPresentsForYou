@@ -29,21 +29,21 @@ export const de: TextesGuides = {
         "Geschenkideen zum Geburtstag nach Typ sortiert — Erlebnisse, schöne Dinge, kleine Freuden — und eine einfache Art, die Person wählen zu lassen.",
       titre: "Geschenkideen zum Geburtstag: Warum nicht wählen lassen?",
       chapo:
-        "Der Geburtstag kommt jedes Jahr wieder, die Inspiration geht schneller aus. Hier sind Ideen nach Typ sortiert, und eine einfache Art, das Geschenk zu vermeiden, das danebengeht: mehrere vorschlagen und die Person wählen lassen.",
-      accroche: "Ideen nach Typ, und Schluss mit Geschenken, die danebengehen.",
+        "Geburtstage kommen jedes Jahr wieder, und irgendwann fällt dir nichts mehr ein. Statt alles auf eine Idee zu setzen, schlägst du drei oder vier vor, und die Person nimmt die, die ihr am besten gefällt. Die Ideen unten sind nach Typ sortiert.",
+      accroche: "Ideen nach Typ, und keine Geschenke mehr, die ins Leere gehen.",
       apercu: ["Ein Töpferkurs", "Konzertkarten", "Eine schöne Teekanne"],
       pourquoi: {
         titre: "Warum zum Geburtstag wählen lassen",
         paragraphes: [
-          "Je länger man jemanden kennt, desto schwerer lässt er sich überraschen: Die naheliegenden Geschenke sind längst gemacht, und der Geschmack hat sich seitdem geändert. „Was wünschst du dir?“ zu fragen, klärt die Sache — nimmt aber alles, was ein Geschenk ausmacht.",
-          "Drei oder vier Ideen vorzuschlagen, lässt die Überraschung bestehen — die Person entdeckt, was du dir für sie ausgedacht hast — und ihr trotzdem das letzte Wort. Sie bekommt, was ihr wirklich gefällt, und du musst nicht mehr alles auf eine einzige Idee setzen.",
-          "Es ist auch eine Möglichkeit, breiter zu schenken als sonst: ein Erlebnis neben einem Gegenstand, eine kleine Freude neben einem größeren Vorhaben. Die Wahl selbst verrät etwas, und du erfährst es.",
+          "Nach zehn Jahren hast du das Buch, den Schal und den Restaurantgutschein schon verschenkt. Und ihr Geschmack hat sich seitdem verändert. Bleibt die Frage „Was wünschst du dir?“, die das Problem löst und die Überraschung gleich mit erledigt.",
+          "Drei oder vier Ideen, und die Überraschung hält trotzdem: Sie sieht, was du dir ausgedacht hast, und entscheidet selbst. Du setzt nicht mehr alles auf eine Karte.",
+          "So kannst du auch breiter schenken als sonst. Ein Kurs neben einem Gegenstand, eine kleine Freude neben einem richtigen Vorhaben. Und was sie wählt, verrät dir etwas über sie.",
         ],
       },
       idees: {
         titre: "Ideen, nach Typ",
         intro:
-          "Vier Typen, und für jeden Ideen, die du auf einer Seite mischen kannst. Zwei bis vier Vorschläge genügen: Darüber hinaus wird das Wählen zur Arbeit.",
+          "Vier Typen, je vier Ideen, auf einer Seite zu mischen. Zwei bis vier Vorschläge, nicht mehr: Danach wird das Wählen anstrengend.",
         profils: [
           {
             nom: "Für alle, denen Erinnerungen mehr bedeuten als Dinge",
@@ -96,15 +96,15 @@ export const de: TextesGuides = {
         liste: [
           {
             q: "Wie viele Ideen sollte ich zum Geburtstag vorschlagen?",
-            r: "Drei oder vier, am besten unterschiedlicher Art — ein Erlebnis, ein Gegenstand, eine kleine Freude. Ab sechs wird aus der Wahl ein Zögern.",
+            r: "Drei oder vier, möglichst unterschiedlich: ein Kurs, ein Gegenstand, eine kleine Freude. Ab sechs wird gezögert statt gewählt.",
           },
           {
             q: "Kann ich die Seite im Voraus vorbereiten?",
-            r: "Ja. Du kannst ein Öffnungsdatum festlegen: Bis dahin bleibt die Karte hinter einem Countdown versiegelt. Du schickst den Link, wann du willst, und sie öffnet sich am Geburtstag.",
+            r: "Ja. Leg ein Öffnungsdatum fest, dann bleibt die Karte hinter einem Countdown versiegelt. Du schickst den Link, wann du willst; die Seite geht am Geburtstag auf.",
           },
           {
             q: "Sieht die Person die Preise der Geschenke?",
-            r: "Nein, nie. Sie sieht, was du vorschlägst, nicht was es kostet: Sie wählt, was ihr gefällt, ohne zu vergleichen.",
+            r: "Nie. Sie sieht deine Ideen, nicht deren Preise, und niemand vergleicht.",
           },
         ],
       },
@@ -116,21 +116,21 @@ export const de: TextesGuides = {
         "Originelle Geschenkideen zu Weihnachten nach Typ sortiert — Erlebnisse, Winterabende, wer schon alles hat — und eine einfache Art, wählen zu lassen.",
       titre: "Geschenkideen zu Weihnachten: vorschlagen und wählen lassen",
       chapo:
-        "An Weihnachten häufen sich die Geschenke, und die Ideen ähneln sich. Für jemanden, den du wirklich verwöhnen willst, hier originelle Ideen nach Typ sortiert — und ein Weg, nicht danebenzuliegen: ein paar Ideen vorschlagen und wählen lassen.",
-      accroche: "Originelle Ideen, und ein Geschenk, das nicht hinten im Schrank landet.",
+        "An Weihnachten bekommen alle viel, und keiner weiß mehr, was er schenken soll. Für jemanden, den du richtig verwöhnen willst, schlag drei oder vier Ideen vor und lass wählen. Die Ideen unten sind nach Typ sortiert.",
+      accroche: "Ideen, die nicht hinten im Schrank landen.",
       apercu: ["Ein Wochenende in den Bergen", "Eine Teeauswahl", "Ein Kochkurs"],
       pourquoi: {
         titre: "Warum an Weihnachten wählen lassen",
         paragraphes: [
-          "Weihnachten ballt die Geschenke eines ganzen Jahres an einem einzigen Abend. Zwischen den Wunschzetteln der Kinder und einer Kleinigkeit für alle bekommen Erwachsene oft schnell gefundene Geschenke: bestenfalls nützlich, schlimmstenfalls vergessen.",
-          "Ein paar Ideen statt eines einzigen Pakets vorzuschlagen, verändert das Schenken. Die Person entdeckt, was du dir ausgedacht hast, wählt, worauf sie wirklich Lust hat, und bekommt das Geschenk, das sie sich gewünscht hätte.",
-          "Praktisch ist es auch, wenn man aus der Ferne schenkt: Die Seite wird per Nachricht geteilt, die Wahl fällt vor den Feiertagen, und du hast Zeit, vor Heiligabend zu bestellen.",
+          "Weihnachten, das sind die Geschenke eines ganzen Jahres an einem Abend. Zwischen den Wunschzetteln der Kinder und einer Kleinigkeit für alle bekommen Erwachsene oft das, was schnell gefunden war.",
+          "Mit mehreren Ideen statt einem Paket sieht die Person, was du dir ausgedacht hast, nimmt, worauf sie Lust hat, und hat am Ende, was sie selbst ausgesucht hätte.",
+          "Praktisch auch, wenn man aus der Ferne schenkt. Du schickst die Seite per Nachricht, die Wahl kommt vor den Feiertagen, und du hast Zeit zu bestellen.",
         ],
       },
       idees: {
         titre: "Ideen, nach Typ",
         intro:
-          "Ideen, die du auf einer Seite mischen kannst. An Weihnachten wird oft das Erlebnis für die Zeit nach den Feiertagen gewählt: Es verlängert den Moment.",
+          "Ideen, die du auf einer Seite mischst. An Weihnachten gewinnt oft das Erlebnis für den Januar: Es verlängert die Feiertage.",
         profils: [
           {
             nom: "Für alle, die gemeinsame Erlebnisse lieben",
@@ -183,15 +183,15 @@ export const de: TextesGuides = {
         liste: [
           {
             q: "Kann ich mehreren Personen aus derselben Familie schenken?",
-            r: "Ja: Erstelle eine Seite pro Person. Jede bekommt ihren eigenen Link und wählt für sich; jede Wahl findest du über den privaten Link der jeweiligen Seite.",
+            r: "Ja, eine Seite pro Person. Jede bekommt ihren eigenen Link und wählt für sich; die Wahl findest du über den privaten Link jeder Seite.",
           },
           {
             q: "Und wenn die Person vor Weihnachten nicht wählt?",
-            r: "Du kannst sie daran erinnern: Die Seite bleibt offen. Ohne Wahl wird sie nach einem Jahr gelöscht.",
+            r: "Du kannst nachhaken, die Seite bleibt offen. Wählt niemand, wird sie nach einem Jahr gelöscht.",
           },
           {
             q: "Kann sich die Karte erst an Heiligabend öffnen?",
-            r: "Ja. Leg ein Öffnungsdatum fest: Bis dahin bleibt die Karte hinter einem Countdown versiegelt, auch wenn der Link früher verschickt wurde.",
+            r: "Ja. Leg ein Öffnungsdatum fest: Die Karte bleibt hinter einem Countdown versiegelt, auch wenn du den Link früher verschickt hast.",
           },
         ],
       },
@@ -203,21 +203,21 @@ export const de: TextesGuides = {
         "Geschenkideen zur Hochzeit nach Art des Paares, und eine Alternative zum Geldgeschenk: ein paar Ideen vorschlagen und das Brautpaar wählen lassen.",
       titre: "Geschenkideen zur Hochzeit: das Brautpaar wählen lassen",
       chapo:
-        "Bei einer Hochzeit schwankt man oft zwischen Hochzeitstisch, Geldgeschenk und persönlichem Geschenk. Hier ein anderer Weg: ein paar Ideen, die du für das Paar auswählst, auf einer Seite präsentiert — und das Brautpaar entscheidet. Mit Ideen nach Typ sortiert.",
-      accroche: "Zwischen Hochzeitstisch und Geldgeschenk: ein paar Ideen, aus denen das Paar wählt.",
+        "Bei einer Hochzeit schwankt man zwischen Hochzeitstisch, Geldumschlag und einem selbst ausgesuchten Geschenk. Es gibt einen anderen Weg: Du schlägst dem Paar auf einer Seite ein paar Ideen vor, und die beiden entscheiden. Die Ideen unten sind nach Art des Paares sortiert.",
+      accroche: "Zwischen Hochzeitstisch und Umschlag: ein paar Ideen, und das Paar wählt.",
       apercu: ["Ein Gourmet-Dinner", "Eine Weinprobe", "Eine Nacht in einer Pension"],
       pourquoi: {
         titre: "Warum zur Hochzeit wählen lassen",
         paragraphes: [
-          "Ein Hochzeitstisch sagt genau, was man schenken soll, und ein Umschlag mit Geld sagt nichts über dich. Dazwischen suchen viele Gäste ein Geschenk, das zugleich persönlich und für das Paar wirklich nützlich ist.",
-          "Ein paar Ideen vorzuschlagen, verbindet beides: Jeder Vorschlag kommt von dir, und das Brautpaar wählt den, der zu ihm passt. Es bekommt nichts, was es schon hat, und du weißt, dass dein Geschenk gebraucht wird.",
-          "Die Seite lässt sich vor oder nach dem Fest verschicken. Viele schenken sie lieber ein paar Wochen später, wenn das Paar Zeit hat, sie anzusehen und gemeinsam zu wählen.",
+          "Der Hochzeitstisch sagt genau, was man kaufen soll. Der Umschlag sagt nichts über dich. Viele Gäste suchen etwas dazwischen: ein persönliches Geschenk, das wirklich gebraucht wird.",
+          "Ein paar Ideen schaffen beides. Jeder Vorschlag kommt von dir, und das Brautpaar nimmt den, der zu ihm passt. Keine Doppelten, und dein Geschenk wird genutzt.",
+          "Du kannst die Seite vor oder nach der Feier schicken. Viele warten ein paar Wochen, bis das Paar durchgeatmet hat und sie sich zu zweit ansehen kann.",
         ],
       },
       idees: {
         titre: "Ideen, nach Art des Paares",
         intro:
-          "Ideen für zwei. Gemeinsame Erlebnisse werden vom Brautpaar oft gewählt: Sie verlängern das Fest.",
+          "Ideen für zwei. Oft nimmt das Brautpaar das gemeinsame Erlebnis: Es verlängert das Fest um ein paar Monate.",
         profils: [
           {
             nom: "Ein Paar, das gern ausgeht",
@@ -270,15 +270,15 @@ export const de: TextesGuides = {
         liste: [
           {
             q: "Ersetzt das einen Hochzeitstisch?",
-            r: "Nein, es ergänzt ihn. Ein Hochzeitstisch sagt, was sich das Paar wünscht; deine Seite schlägt deine eigenen Ideen vor, und das Brautpaar wählt die, die ihm gefällt. Nichts spricht dagegen, beides zu tun.",
+            r: "Nein, es ergänzt ihn. Der Hochzeitstisch sagt, was sich das Paar wünscht; deine Seite schlägt deine eigenen Ideen vor. Nichts spricht gegen beides.",
           },
           {
             q: "Kann das Brautpaar gemeinsam wählen?",
-            r: "Ja: Der Link öffnet sich auf jedem Gerät. Die beiden sehen sich die Seite zusammen an und bestätigen eine einzige Wahl.",
+            r: "Ja, der Link öffnet sich auf jedem Gerät. Die beiden sehen sich die Seite zusammen an und bestätigen eine Wahl.",
           },
           {
             q: "Können mehrere Gäste gemeinsam schenken?",
-            r: "Die Seite erstellt eine Person, aber nichts hindert mehrere daran, sich auf die Ideen zu einigen und den Kauf zu teilen, sobald die Wahl getroffen ist.",
+            r: "Die Seite erstellt eine Person, aber ihr könnt euch zu mehreren auf die Ideen einigen und den Kauf teilen, sobald gewählt ist.",
           },
         ],
       },
@@ -290,21 +290,21 @@ export const de: TextesGuides = {
         "Originelle und nützliche Geschenkideen zur Geburt, fürs Baby oder für die Eltern, und eine einfache Art, die Eltern wählen zu lassen, was fehlt.",
       titre: "Geschenke zur Geburt, originell und nützlich: die Eltern wählen lassen",
       chapo:
-        "Bei einer Geburt kommen Geschenke in Mengen und doppelt: drei Strampler in derselben Größe, zwei Kuscheltiere, und nichts von dem, was wirklich fehlt. Hier sind Ideen nach Typ sortiert — und ein Weg, genau richtig zu schenken: ein paar Ideen vorschlagen und die Eltern wählen lassen.",
+        "Wenn ein Baby kommt, trudeln die Geschenke ein, oft doppelt: drei Strampler in derselben Größe, zwei Kuscheltiere, und nichts von dem, was wirklich fehlt. Schlag ein paar Ideen vor und lass die Eltern die nehmen, die ihnen hilft. Die Ideen unten sind nach Typ sortiert.",
       accroche: "Statt noch eines Kuscheltiers: was den Eltern wirklich fehlt.",
       apercu: ["Gelieferte Mahlzeiten", "Ein Tragetuch", "Ein Fotoshooting"],
       pourquoi: {
         titre: "Warum zur Geburt wählen lassen",
         paragraphes: [
-          "In den ersten Monaten bekommen Eltern viel, und oft dasselbe. Was ihnen wirklich fehlt, wissen nur sie: eine bestimmte Ausstattung, Zeit, eine Mahlzeit, die sie nicht kochen müssen.",
-          "Ein paar Ideen vorzuschlagen, lässt ihnen die Wahl, ohne dass sie eine Liste schreiben müssen — eine Aufgabe mehr, in einer Zeit, in der sie keine Zeit haben. Sie sehen sich deine Vorschläge an, wenn es passt, und wählen mit einem Klick.",
-          "Es eilt nicht: Die Seite bleibt ein Jahr online. Viele Eltern wählen ein paar Wochen nach der Geburt, wenn sie endlich sehen, was ihnen helfen würde.",
+          "In den ersten Monaten bekommen Eltern viel, und oft dasselbe. Nur sie wissen, was fehlt: eine bestimmte Ausstattung, Zeit, ein Abendessen, das sie nicht kochen müssen.",
+          "Ein paar Ideen vorzuschlagen heißt, ihnen die Wahl zu lassen, ohne dass sie eine Liste schreiben müssen. Sie schauen, wann sie können, und brauchen zehn Sekunden.",
+          "Es eilt nicht: Die Seite bleibt ein Jahr online. Viele Eltern wählen ein paar Wochen später, wenn sie endlich sehen, was ihnen helfen würde.",
         ],
       },
       idees: {
         titre: "Ideen, nach Typ",
         intro:
-          "Ideen fürs Baby, und vor allem für die Eltern, die oft vergessen werden. Misch sie auf einer Seite.",
+          "Ideen fürs Baby, und vor allem für die Eltern, die immer vergessen werden. Auf einer Seite zu mischen.",
         profils: [
           {
             nom: "Zum Durchatmen",
@@ -357,15 +357,15 @@ export const de: TextesGuides = {
         liste: [
           {
             q: "Muss ich mit dem Verschicken bis zur Geburt warten?",
-            r: "Nein. Du kannst die Seite vorher vorbereiten und schicken, wann du willst; du kannst auch ein Öffnungsdatum festlegen, damit sie bis dahin versiegelt bleibt.",
+            r: "Nein. Du kannst sie vorher vorbereiten und schicken, wann du willst. Du kannst auch ein Öffnungsdatum festlegen, damit sie bis dahin versiegelt bleibt.",
           },
           {
             q: "Ist es üblich, den Eltern statt dem Baby etwas zu schenken?",
-            r: "Immer häufiger. Eine gelieferte Mahlzeit oder ein paar Stunden Hilfe sind oft die Geschenke, an die sich Eltern am besten erinnern. Schlag beides vor und lass sie wählen.",
+            r: "Immer öfter. Ein geliefertes Abendessen oder zwei Stunden Putzhilfe sind oft die Geschenke, an die sich Eltern erinnern. Schlag beides vor und lass sie wählen.",
           },
           {
             q: "Brauchen die Eltern ein Konto, um zu wählen?",
-            r: "Nein. Sie öffnen den Link, wählen und bestätigen, ohne Konto und ohne E-Mail-Adresse.",
+            r: "Nein. Sie öffnen den Link, wählen, bestätigen. Kein Konto, keine E-Mail-Adresse.",
           },
         ],
       },
@@ -377,20 +377,20 @@ export const de: TextesGuides = {
         "Originelle Geschenkideen zum Einzug und zur Einweihung, für Singles oder Paare, und eine einfache Art, wählen zu lassen, was noch fehlt.",
       titre: "Geschenkideen zum Einzug: was noch fehlt",
       chapo:
-        "Zu einem neuen Zuhause gehört eine Liste dessen, was fehlt — nur hat sie noch niemand geschrieben. Hier sind Ideen nach Typ sortiert — und ein Weg, etwas Nützliches zu schenken, ohne zu raten: ein paar Ideen vorschlagen und wählen lassen, was wirklich fehlt.",
-      accroche: "Fürs neue Zuhause, was wirklich fehlt — vor Ort ausgewählt.",
+        "Nach einem Umzug merkt man erst in den folgenden Wochen, was fehlt. Von außen lässt sich das nicht erraten. Also lieber ein paar Ideen vorschlagen und die Person die nehmen lassen, die sie brauchen wird. Hier sind welche, nach Typ sortiert.",
+      accroche: "Was im neuen Zuhause wirklich fehlt.",
       apercu: ["Eine Zimmerpflanze", "Ein gutes Küchenmesser", "Ein Bild für die Wand"],
       pourquoi: {
         titre: "Warum zum Einzug wählen lassen",
         paragraphes: [
-          "Nach einem Umzug weiß man selten, was fehlt, bevor man ein paar Wochen dort gewohnt hat. Die Gäste dagegen kommen mit einer Flasche, einer Pflanze oder einem Deko-Objekt, ausgesucht, ohne die Wohnung zu kennen.",
-          "Ein paar Ideen vorzuschlagen, lässt nach dem entscheiden, was man zu Hause sieht: der verfügbare Platz, der Stil der Wohnung, was schon da ist. Das Geschenk findet seinen Platz, statt ihn zu suchen.",
-          "Die Seite lässt sich nach der Einweihungsfeier schicken, wenn alles eingerichtet ist. Oft wird erst dann klar, was gebraucht wird.",
+          "Was fehlt, weiß man erst, wenn man ein paar Wochen dort gewohnt hat. Die Gäste kommen derweil mit einer Flasche, einer Pflanze oder einem Deko-Stück, ausgesucht, ohne die Wohnung gesehen zu haben.",
+          "Mit mehreren Ideen entscheidet die Person nach dem, was sie vor Augen hat: dem Platz, der noch da ist, dem Stil, dem, was schon da ist. Das Geschenk findet seinen Platz, statt ihn zu suchen.",
+          "Du kannst die Seite nach der Feier schicken, wenn die Kartons ausgepackt sind. Dann wird klar, was gebraucht wird.",
         ],
       },
       idees: {
         titre: "Ideen, nach Typ",
-        intro: "Ideen, um den Ort mit Leben zu füllen — vom Nützlichsten bis zum Persönlichsten.",
+        intro: "Ideen, um den Ort mit Leben zu füllen, vom Nützlichsten bis zum Persönlichsten.",
         profils: [
           {
             nom: "Für alle, die gern Gäste haben",
@@ -443,11 +443,11 @@ export const de: TextesGuides = {
         liste: [
           {
             q: "Muss ich das Geschenk zur Einweihungsfeier mitbringen?",
-            r: "Nicht unbedingt. Du kannst mit einer Karte kommen, auf der der QR-Code der Seite steht: Gewählt wird später, wenn klar ist, was fehlt.",
+            r: "Nicht unbedingt. Komm mit einer Karte und dem QR-Code der Seite: Gewählt wird später, wenn klar ist, was fehlt.",
           },
           {
             q: "Und für ein Paar, das zusammenzieht?",
-            r: "Der Link öffnet sich auf jedem Gerät: Das Paar sieht sich die Seite gemeinsam an und bestätigt eine einzige Wahl.",
+            r: "Der Link öffnet sich auf jedem Gerät. Das Paar sieht sich die Seite zusammen an und bestätigt eine Wahl.",
           },
           {
             q: "Kann ich eine Idee ohne Link zu einem Shop vorschlagen?",
@@ -463,20 +463,20 @@ export const de: TextesGuides = {
         "Originelle Geschenkideen zum Muttertag nach Typ sortiert — gemeinsame Zeit, Wohlfühlen, Hobbys — und eine einfache Art, sie wählen zu lassen.",
       titre: "Geschenkideen zum Muttertag: sie wählen lassen",
       chapo:
-        "Zum Muttertag möchte man Danke sagen, ohne jedes Jahr auf dieselben Aufmerksamkeiten zurückzugreifen. Hier sind Ideen nach Typ sortiert — und eine einfache Idee: ein paar Geschenke für sie aussuchen und sie entscheiden lassen.",
-      accroche: "Danke sagen, einmal anders — mit Ideen, aus denen sie wählt.",
+        "Zum Muttertag willst du Danke sagen, ohne den Strauß vom letzten Jahr zu wiederholen. Schlag drei oder vier Geschenke vor, die du für sie ausgesucht hast, und lass sie das nehmen, das ihr am besten gefällt. Die Ideen unten sind nach Typ sortiert.",
+      accroche: "Danke sagen, einmal anders, mit Ideen, aus denen sie wählt.",
       apercu: ["Ein Brunch zu zweit", "Ein Wellnesstag", "Ein Blumenbinde-Kurs"],
       pourquoi: {
         titre: "Warum sie zum Muttertag wählen lassen",
         paragraphes: [
-          "Viele Mütter antworten „nichts, ich freue mich, dass du da bist“, wenn man sie fragt, was sie sich wünschen. Die Antwort ist ehrlich, sagt aber nicht, was man schenken soll.",
-          "Ein paar Ideen vorzuschlagen, lässt ihr die Freude an der Überraschung und die Freiheit der Wahl: gemeinsame Zeit, etwas, das sie sich selbst nicht gekauft hätte, eine Aktivität, die sie schon lange aufschiebt. Nebenbei erfährst du, worauf sie wirklich Lust hat.",
-          "Das Datum des Muttertags ist von Land zu Land verschieden, und die Seite kann schon lange vorher fertig sein: Leg ein Öffnungsdatum fest, und die Karte bleibt bis zum Tag selbst versiegelt.",
+          "Frag eine Mutter, was sie sich wünscht, und sie sagt: „Nichts, ich freu mich, dass du da bist.“ Das ist ehrlich gemeint, und es hilft dir nicht weiter.",
+          "Mit ein paar Ideen vor sich behält sie die Überraschung und nimmt, worauf sie wirklich Lust hat: Zeit zu zweit, etwas, das sie sich nie selbst kaufen würde, etwas, das sie seit Monaten aufschiebt. Nebenbei erfährst du, was ihr gefällt.",
+          "Das Datum ist von Land zu Land verschieden, und die Seite kann Wochen vorher fertig sein. Leg ein Öffnungsdatum fest, dann bleibt sie bis zum Tag selbst versiegelt.",
         ],
       },
       idees: {
         titre: "Ideen, nach Typ",
-        intro: "Ideen, um Danke zu sagen — auf einer Seite zu mischen.",
+        intro: "Ideen, um Danke zu sagen, auf einer Seite zu mischen.",
         profils: [
           {
             nom: "Um Zeit zusammen zu verbringen",
@@ -529,15 +529,15 @@ export const de: TextesGuides = {
         liste: [
           {
             q: "Kann ich die Seite mehrere Tage vorher vorbereiten?",
-            r: "Ja. Leg ein Öffnungsdatum fest: Die Karte bleibt bis zum Muttertag hinter einem Countdown versiegelt, auch wenn der Link vorher verschickt wird.",
+            r: "Ja. Leg ein Öffnungsdatum fest: Die Karte bleibt bis zum Muttertag hinter einem Countdown versiegelt, auch wenn du den Link vorher schickst.",
           },
           {
             q: "Und wenn sie mit Bildschirmen nicht so vertraut ist?",
-            r: "Druck die Karte aus: ein gefaltetes Blatt mit dem QR-Code, für einen Umschlag. Mit einem Handy scannen genügt, und ihr könnt gemeinsam wählen.",
+            r: "Druck die Karte aus: ein gefaltetes Blatt mit dem QR-Code, in einem Umschlag. Sie scannt ihn mit dem Handy, und ihr könnt euch die Seite zusammen ansehen.",
           },
           {
             q: "Können mehrere Kinder gemeinsam schenken?",
-            r: "Die Seite erstellt eine Person, aber ihr könnt euch auf die Ideen einigen, gemeinsam unterschreiben und den Kauf teilen, sobald die Wahl getroffen ist.",
+            r: "Die Seite erstellt eine Person, aber ihr könnt die Ideen zusammen aussuchen, gemeinsam unterschreiben und den Kauf teilen, sobald das Geschenk feststeht.",
           },
         ],
       },

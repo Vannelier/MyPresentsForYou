@@ -29,21 +29,21 @@ export const es: TextesGuides = {
         "Ideas de regalo de cumpleaños ordenadas por perfil — experiencias, cosas bonitas, pequeños caprichos — y una forma sencilla de dejar elegir.",
       titre: "Ideas de regalo de cumpleaños: ¿y si dejas elegir?",
       chapo:
-        "El cumpleaños vuelve cada año, y la inspiración se agota antes. Aquí tienes ideas ordenadas por perfil, y una forma sencilla de evitar el regalo que no acierta: proponer varios, y dejar que la persona elija.",
-      accroche: "Ideas por perfil, y se acabó el regalo que no acierta.",
+        "El cumpleaños vuelve cada año, y en algún momento te quedas sin ideas. En lugar de jugártela con una sola, propones tres o cuatro y la persona elige la que prefiere. Las ideas de abajo están ordenadas por perfil.",
+      accroche: "Ideas por perfil, y se acabaron los regalos que no aciertan.",
       apercu: ["Un taller de cerámica", "Una entrada para un concierto", "Una tetera bonita"],
       pourquoi: {
         titre: "Por qué dejar elegir en un cumpleaños",
         paragraphes: [
-          "Cuanto más tiempo hace que conoces a alguien, más difícil es sorprenderle: los regalos evidentes ya se han hecho, y los gustos han cambiado desde entonces. Preguntar «¿qué te gustaría?» resuelve el asunto, pero quita todo lo que hace que un regalo lo sea.",
-          "Proponer tres o cuatro ideas mantiene la sorpresa — la persona descubre lo que has imaginado para ella — dejándole la última palabra. Recibe lo que de verdad le gusta, y tú ya no tienes que apostarlo todo a una sola idea.",
-          "También es una forma de regalar con más amplitud que de costumbre: una experiencia junto a un objeto, un pequeño capricho junto a un proyecto. La elección en sí dice algo, y tú lo descubres.",
+          "Después de diez años ya has regalado el libro, la bufanda y el vale para el restaurante. Y sus gustos han cambiado desde entonces. Queda la pregunta «¿qué te apetecería?», que resuelve el problema y mata la sorpresa de golpe.",
+          "Tres o cuatro ideas, y la sorpresa se mantiene igual: descubre lo que has imaginado, y decide ella. Ya no te lo juegas todo a una carta.",
+          "También te permite regalar más amplio que de costumbre. Un taller al lado de un objeto, un capricho al lado de un proyecto de verdad. Y lo que elige te cuenta algo de ella.",
         ],
       },
       idees: {
         titre: "Ideas, por perfil",
         intro:
-          "Cuatro perfiles, y para cada uno ideas que mezclar en una misma página. Bastan de dos a cuatro propuestas: más allá, elegir se convierte en un trabajo.",
+          "Cuatro perfiles, cuatro ideas cada uno, para mezclar en la misma página. De dos a cuatro propuestas, no más: a partir de ahí, elegir cansa.",
         profils: [
           {
             nom: "Para quien prefiere los recuerdos a los objetos",
@@ -96,15 +96,15 @@ export const es: TextesGuides = {
         liste: [
           {
             q: "¿Cuántas ideas proponer para un cumpleaños?",
-            r: "Tres o cuatro, idealmente de distinto tipo — una experiencia, un objeto, un pequeño capricho. Más de seis, y la elección se vuelve una duda.",
+            r: "Tres o cuatro, de tipos distintos si puedes: un taller, un objeto, un capricho. Más de seis, y se duda en lugar de elegir.",
           },
           {
             q: "¿Se puede preparar la página con antelación?",
-            r: "Sí. Puedes fijar una fecha de apertura: hasta entonces, la tarjeta queda sellada con una cuenta atrás. Envías el enlace cuando quieras, y se abre el día del cumpleaños.",
+            r: "Sí. Fija una fecha de apertura y la tarjeta queda sellada tras una cuenta atrás. Envías el enlace cuando quieras; la página se abre el día del cumpleaños.",
           },
           {
             q: "¿La persona ve el precio de los regalos?",
-            r: "No, nunca. Ve lo que propones, no lo que cuesta: elige lo que le gusta, sin comparar.",
+            r: "Nunca. Ve tus ideas, no sus precios, y nadie compara.",
           },
         ],
       },
@@ -116,21 +116,21 @@ export const es: TextesGuides = {
         "Ideas de regalo de Navidad originales, por perfil — experiencias, tardes de invierno, quien lo tiene todo — y una forma sencilla de dejar elegir.",
       titre: "Ideas de regalo de Navidad: proponer, y dejar elegir",
       chapo:
-        "En Navidad, los regalos se multiplican y las ideas se parecen. Para alguien a quien de verdad quieres mimar, aquí tienes ideas originales ordenadas por perfil — y una forma de no equivocarse: proponer algunas ideas, y dejar elegir.",
-      accroche: "Ideas originales, y un regalo que no acaba en el fondo de un armario.",
+        "En Navidad todo el mundo recibe mucho y nadie sabe ya qué regalar. Para alguien a quien quieres mimar de verdad, propón tres o cuatro ideas y deja que elija. Las ideas de abajo están ordenadas por perfil.",
+      accroche: "Ideas que no acaban en el fondo de un armario.",
       apercu: ["Un fin de semana en la montaña", "Un surtido de tés", "Una clase de cocina"],
       pourquoi: {
         titre: "Por qué dejar elegir en Navidad",
         paragraphes: [
-          "La Navidad concentra los regalos de todo el año en una sola noche. Entre las cartas de los niños y un detalle para cada uno, los adultos reciben a menudo regalos encontrados deprisa: útiles en el mejor de los casos, olvidados en el peor.",
-          "Proponer algunas ideas en lugar de un único paquete cambia la forma de regalar. La persona descubre lo que has imaginado, elige lo que de verdad le apetece, y recibe el regalo que habría querido.",
-          "También es práctico cuando se regala a distancia: la página se comparte por mensaje, la elección se hace antes de las fiestas, y tienes tiempo de pedirlo antes de Nochebuena.",
+          "La Navidad son todos los regalos del año en una noche. Entre las cartas de los niños y un detalle para cada uno, a los adultos les toca a menudo lo que se encontró a toda prisa.",
+          "Con varias ideas en vez de un solo paquete, la persona ve lo que has imaginado, coge lo que le apetece, y acaba con lo que habría elegido ella misma.",
+          "También es práctico cuando regalas a distancia. Envías la página por mensaje, la elección llega antes de las fiestas, y tienes tiempo de pedirlo.",
         ],
       },
       idees: {
         titre: "Ideas, por perfil",
         intro:
-          "Ideas que mezclar en una misma página. En Navidad, la experiencia para disfrutar después de las fiestas suele ser la elegida: alarga el momento.",
+          "Ideas para mezclar en la misma página. En Navidad suele ganar la experiencia para enero: alarga las fiestas.",
         profils: [
           {
             nom: "Para quien ama las experiencias compartidas",
@@ -183,15 +183,15 @@ export const es: TextesGuides = {
         liste: [
           {
             q: "¿Se puede regalar a varias personas de la misma familia?",
-            r: "Sí: crea una página por persona. Cada una recibe su enlace y elige por su lado; encuentras cada elección en el enlace privado de cada página.",
+            r: "Sí, una página por persona. Cada una recibe su enlace y elige por su lado; encuentras las elecciones en el enlace privado de cada página.",
           },
           {
             q: "¿Y si la persona no elige antes de Navidad?",
-            r: "Puedes recordárselo: la página sigue abierta. Si nadie elige, se elimina al cabo de un año.",
+            r: "Puedes recordárselo, la página sigue abierta. Si nadie elige, se borra al cabo de un año.",
           },
           {
             q: "¿Se puede abrir la tarjeta solo en Nochebuena?",
-            r: "Sí. Fija una fecha de apertura: hasta entonces, la tarjeta queda sellada con una cuenta atrás, aunque el enlace se haya enviado antes.",
+            r: "Sí. Fija una fecha de apertura: la tarjeta queda sellada tras una cuenta atrás, aunque hayas enviado el enlace antes.",
           },
         ],
       },
@@ -203,21 +203,21 @@ export const es: TextesGuides = {
         "Ideas de regalo de boda por tipo de pareja, y una alternativa al sobre con dinero: proponer algunas ideas, y dejar que los novios elijan.",
       titre: "Ideas de regalo de boda: deja elegir a los novios",
       chapo:
-        "Para una boda, se duda a menudo entre la lista de bodas, el sobre y el regalo personal. Aquí tienes otro camino: algunas ideas que eliges para la pareja, presentadas en una página, y los novios deciden. Con ideas ordenadas por perfil.",
-      accroche: "Entre la lista de bodas y el sobre, unas ideas que la pareja elige.",
+        "Para una boda se duda entre la lista, el sobre y el regalo elegido por uno mismo. Hay otro camino: propones unas cuantas ideas a la pareja, en una página, y deciden ellos. Las ideas de abajo están ordenadas por tipo de pareja.",
+      accroche: "Entre la lista y el sobre: unas ideas, y la pareja elige.",
       apercu: ["Una cena gastronómica", "Una cata de vinos", "Una noche en una casa rural"],
       pourquoi: {
         titre: "Por qué dejar elegir en una boda",
         paragraphes: [
-          "Una lista de bodas dice exactamente qué regalar, y un sobre no dice nada de ti. Entre ambos, muchos invitados buscan un regalo que sea a la vez personal y realmente útil para la pareja.",
-          "Proponer algunas ideas reúne las dos cosas: cada propuesta viene de ti, y los novios eligen la que se les parece. No reciben un objeto más que ya tienen, y tú sabes que tu regalo servirá.",
-          "La página se envía antes o después de la fiesta. Muchos prefieren regalarla unas semanas después, cuando la pareja tiene tiempo de mirarla, y de elegir juntos.",
+          "La lista de bodas dice exactamente qué comprar. El sobre, en cambio, no dice nada de ti. Muchos invitados buscan algo intermedio: un regalo personal que sirva de verdad.",
+          "Unas cuantas ideas hacen las dos cosas a la vez. Cada propuesta viene de ti, y los novios cogen la que se les parece. Sin repetidos, y tu regalo sirve.",
+          "Puedes enviar la página antes o después de la boda. Muchos esperan unas semanas, a que la pareja respire y la mire junta.",
         ],
       },
       idees: {
         titre: "Ideas, por tipo de pareja",
         intro:
-          "Ideas pensadas para dos. Las experiencias para vivir juntos suelen ser las que eligen los novios: alargan la fiesta.",
+          "Ideas para dos. A menudo los novios eligen la experiencia para vivir juntos: alarga la fiesta unos meses.",
         profils: [
           {
             nom: "Una pareja a la que le gusta salir",
@@ -270,15 +270,15 @@ export const es: TextesGuides = {
         liste: [
           {
             q: "¿Sustituye a una lista de bodas?",
-            r: "No, la completa. Una lista dice lo que espera la pareja; tu página propone tus propias ideas, y los novios eligen la que les gusta. Nada impide hacer ambas cosas.",
+            r: "No, la completa. La lista dice lo que espera la pareja; tu página propone tus propias ideas. Nada impide hacer las dos cosas.",
           },
           {
             q: "¿Pueden elegir los dos novios juntos?",
-            r: "Sí: el enlace se abre en cualquier dispositivo. Miran la página juntos y confirman una sola elección.",
+            r: "Sí, el enlace se abre en cualquier dispositivo. Miran la página juntos y confirman una sola elección.",
           },
           {
             q: "¿Se puede regalar entre varios invitados?",
-            r: "La página la crea una sola persona, pero nada impide ponerse de acuerdo entre varios sobre las ideas propuestas, y luego repartir la compra una vez hecha la elección.",
+            r: "La página la crea una sola persona, pero podéis poneros de acuerdo varios sobre las ideas y luego repartir la compra una vez hecha la elección.",
           },
         ],
       },
@@ -290,21 +290,21 @@ export const es: TextesGuides = {
         "Ideas de regalo originales y útiles para un recién nacido, para el bebé o para los padres, y una forma sencilla de dejar elegir lo que falta.",
       titre: "Regalo original y útil para un recién nacido: deja elegir a los padres",
       chapo:
-        "Con un nacimiento, los regalos llegan en cantidad y repetidos: tres pijamas de la misma talla, dos peluches, y ninguna de las cosas que de verdad faltan. Aquí tienes ideas ordenadas por perfil — y una forma de acertar: proponer algunas ideas, y dejar elegir a los padres.",
-      accroche: "En lugar de otro peluche, lo que de verdad necesitan los padres.",
+        "Cuando llega un bebé, los regalos llueven, a menudo repetidos: tres pijamas de la misma talla, dos peluches, y nada de lo que falta de verdad. Propón unas cuantas ideas y deja que los padres cojan la que les ayude. Las ideas de abajo están ordenadas por perfil.",
+      accroche: "En lugar de otro peluche, lo que de verdad les falta a los padres.",
       apercu: ["Comidas a domicilio", "Un fular portabebés", "Una sesión de fotos"],
       pourquoi: {
         titre: "Por qué dejar elegir en un nacimiento",
         paragraphes: [
-          "Los primeros meses, los padres reciben mucho, y a menudo lo mismo. Lo que de verdad les falta solo lo saben ellos: un material concreto, tiempo, una comida que no tengan que preparar.",
-          "Proponer algunas ideas les deja elegir sin pedirles que hagan una lista — una tarea más, en un momento en que no tienen tiempo. Descubren tus propuestas cuando pueden, y eligen con un gesto.",
-          "No hay prisa: la página sigue en línea un año. Muchos padres eligen unas semanas después del nacimiento, cuando por fin ven lo que les sería útil.",
+          "Los primeros meses, los padres reciben mucho, y a menudo lo mismo. Solo ellos saben lo que falta: un material concreto, tiempo, una cena que no tengan que preparar.",
+          "Proponer unas cuantas ideas es dejarles elegir sin pedirles que escriban una lista. Miran cuando pueden, y les lleva diez segundos.",
+          "No hay prisa: la página sigue en línea un año. Muchos padres eligen unas semanas después, cuando por fin ven lo que les vendría bien.",
         ],
       },
       idees: {
         titre: "Ideas, por perfil",
         intro:
-          "Ideas para el bebé, y sobre todo para los padres, de quienes a menudo nos olvidamos. Mézclalas en una misma página.",
+          "Ideas para el bebé, y sobre todo para los padres, de los que siempre nos olvidamos. Para mezclar en la misma página.",
         profils: [
           {
             nom: "Para respirar un poco",
@@ -357,15 +357,15 @@ export const es: TextesGuides = {
         liste: [
           {
             q: "¿Hay que esperar al nacimiento para enviar la página?",
-            r: "No. Puedes prepararla antes y enviarla cuando quieras; también puedes fijar una fecha de apertura, para que quede sellada hasta entonces.",
+            r: "No. Puedes prepararla antes y enviarla cuando quieras. También puedes fijar una fecha de apertura para que quede sellada hasta entonces.",
           },
           {
             q: "¿Está bien regalar a los padres en lugar de al bebé?",
-            r: "Cada vez se hace más. Una comida a domicilio o unas horas de ayuda suelen ser los regalos que los padres mejor recuerdan. Propón ambos, y déjales elegir.",
+            r: "Cada vez más. Una cena a domicilio o dos horas de limpieza son a menudo los regalos que los padres recuerdan. Propón las dos cosas y déjales elegir.",
           },
           {
             q: "¿Los padres tienen que crear una cuenta para elegir?",
-            r: "No. Abren el enlace, eligen y confirman, sin cuenta ni dirección de correo electrónico.",
+            r: "No. Abren el enlace, eligen, confirman. Sin cuenta, sin dirección de correo.",
           },
         ],
       },
@@ -377,15 +377,15 @@ export const es: TextesGuides = {
         "Ideas de regalo originales para quien estrena casa, solo o en pareja, y una forma sencilla de dejar elegir lo que todavía falta.",
       titre: "Ideas de regalo para una casa nueva: lo que todavía falta",
       chapo:
-        "Una casa nueva viene con una lista de lo que falta que nadie ha escrito todavía. Aquí tienes ideas ordenadas por perfil — y una forma de regalar algo útil sin adivinar: proponer algunas ideas, y dejar elegir lo que de verdad falta.",
-      accroche: "Para un nuevo hogar, lo que de verdad falta, elegido allí mismo.",
+        "Cuando te mudas, descubres lo que falta con las semanas. Desde fuera, imposible adivinarlo. Mejor proponer varias ideas y dejar que la persona coja la que le vaya a servir. Aquí tienes unas cuantas, ordenadas por perfil.",
+      accroche: "Lo que de verdad falta en la casa nueva.",
       apercu: ["Una planta de interior", "Un buen cuchillo de cocina", "Una obra para colgar"],
       pourquoi: {
         titre: "Por qué dejar elegir para una casa nueva",
         paragraphes: [
-          "Cuando uno se muda, rara vez sabe lo que falta antes de haber vivido allí unas semanas. Los invitados, en cambio, llegan con una botella, una planta o un objeto decorativo elegido sin conocer el lugar.",
-          "Proponer algunas ideas deja decidir según lo que se ve en casa: el espacio disponible, el estilo de la vivienda, lo que ya se tiene. El regalo encuentra su sitio, en lugar de buscarlo.",
-          "La página se puede enviar después de la fiesta, una vez terminada la instalación. Suele ser entonces cuando las necesidades se aclaran.",
+          "No sabes lo que falta hasta haber vivido allí unas semanas. Los invitados, mientras tanto, llegan con una botella, una planta o un objeto de decoración elegido sin haber visto el piso.",
+          "Con varias ideas, la persona decide según lo que tiene delante: el espacio que queda, el estilo, lo que ya tiene. El regalo encuentra su sitio en vez de buscarlo.",
+          "Puedes enviar la página después de la fiesta, con las cajas ya vacías. Es entonces cuando las necesidades se aclaran.",
         ],
       },
       idees: {
@@ -443,15 +443,15 @@ export const es: TextesGuides = {
         liste: [
           {
             q: "¿Hay que llevar el regalo el día de la fiesta?",
-            r: "No necesariamente. Puedes llegar con una tarjeta con el código QR de la página: la persona elige más tarde, viendo lo que le falta.",
+            r: "No necesariamente. Llega con una tarjeta y el código QR de la página: la persona elegirá más tarde, cuando vea lo que le falta.",
           },
           {
             q: "¿Y para una pareja que se va a vivir junta?",
-            r: "El enlace se abre en cualquier dispositivo: la pareja mira la página junta y confirma una sola elección.",
+            r: "El enlace se abre en cualquier dispositivo. La pareja mira la página junta y confirma una sola elección.",
           },
           {
             q: "¿Se puede proponer una idea sin enlace a una tienda?",
-            r: "Sí. Una ayuda para montar muebles o una planta que elegir juntos se describen muy bien a mano, con un título y una nota.",
+            r: "Sí. Una mano para montar los muebles o una planta para elegir juntos se describen muy bien a mano, con un título y una nota.",
           },
         ],
       },
@@ -463,20 +463,20 @@ export const es: TextesGuides = {
         "Ideas de regalo originales para el Día de la Madre, por perfil — momentos juntos, bienestar, aficiones — y una forma sencilla de dejarla elegir.",
       titre: "Ideas de regalo para el Día de la Madre: déjala elegir",
       chapo:
-        "Para el Día de la Madre, se busca dar las gracias sin recurrir cada año a los mismos detalles. Aquí tienes ideas ordenadas por perfil — y una idea sencilla: proponer algunos regalos elegidos para ella, y dejarla decidir.",
+        "Para el Día de la Madre quieres dar las gracias sin repetir el ramo del año pasado. Propón tres o cuatro regalos elegidos para ella, y deja que coja el que prefiera. Las ideas de abajo están ordenadas por perfil.",
       accroche: "Dar las gracias de otra manera, con ideas que elige ella.",
       apercu: ["Un brunch para dos", "Un día de spa", "Un taller de flores"],
       pourquoi: {
         titre: "Por qué dejarla elegir en el Día de la Madre",
         paragraphes: [
-          "Muchas madres responden «nada, me basta con que estés aquí» cuando se les pregunta qué les apetece. La respuesta es sincera, pero no dice qué regalar.",
-          "Proponer algunas ideas le deja el placer de la sorpresa y la libertad de elegir: un momento juntos, un objeto que dudaba en comprarse, una actividad que lleva tiempo aplazando. De paso, descubres lo que de verdad le apetece.",
-          "La fecha de la celebración cambia de un país a otro, y la página puede estar lista mucho antes: fija una fecha de apertura, y la tarjeta quedará sellada hasta el día señalado.",
+          "Pregúntale a una madre qué le haría ilusión y te dirá «nada, me basta con que estés aquí». Lo dice de verdad, y no te ayuda.",
+          "Con unas cuantas ideas delante, conserva la sorpresa y coge lo que de verdad le apetece: un rato juntos, algo que nunca se compraría, una actividad que aplaza desde hace meses. De paso descubres lo que le gusta.",
+          "La fecha cambia de un país a otro, y la página puede estar lista semanas antes. Fija una fecha de apertura y quedará sellada hasta el día señalado.",
         ],
       },
       idees: {
         titre: "Ideas, por perfil",
-        intro: "Ideas para dar las gracias — para mezclar en una misma página.",
+        intro: "Ideas para dar las gracias, para mezclar en la misma página.",
         profils: [
           {
             nom: "Para compartir un momento",
@@ -529,15 +529,15 @@ export const es: TextesGuides = {
         liste: [
           {
             q: "¿Se puede preparar la página varios días antes?",
-            r: "Sí. Fija una fecha de apertura: la tarjeta queda sellada con una cuenta atrás hasta el día de la celebración, aunque el enlace se envíe antes.",
+            r: "Sí. Fija una fecha de apertura: la tarjeta queda sellada tras una cuenta atrás hasta el día de la fiesta, aunque envíes el enlace antes.",
           },
           {
             q: "¿Y si no se siente cómoda con las pantallas?",
-            r: "Imprime la tarjeta: una hoja doblada con el código QR, para meter en un sobre. Basta con escanearlo con un teléfono, y podéis elegir juntos.",
+            r: "Imprime la tarjeta: una hoja doblada con el código QR, en un sobre. Lo escanea con el móvil, y podéis mirar la página juntos.",
           },
           {
             q: "¿Pueden regalar varios hijos juntos?",
-            r: "La página la crea una sola persona, pero podéis poneros de acuerdo sobre las ideas, firmar juntos, y luego repartir la compra una vez hecha la elección.",
+            r: "La página la crea una sola persona, pero podéis elegir las ideas juntos, firmar varios y luego repartir la compra una vez elegido el regalo.",
           },
         ],
       },

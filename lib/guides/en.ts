@@ -29,21 +29,21 @@ export const en: TextesGuides = {
         "Birthday gift ideas sorted by profile — experiences, beautiful things, small treats — and a simple way to let the person choose.",
       titre: "Birthday gift ideas: why not let them choose?",
       chapo:
-        "Birthdays come round every year, and inspiration runs out faster. Here are ideas sorted by profile, and a simple way to avoid the gift that misses the mark: suggest a few, and let the person choose.",
-      accroche: "Ideas by profile, and no more gifts that miss the mark.",
+        "Birthdays come round every year, and at some point you run dry. Instead of betting on one idea, you suggest three or four and they pick the one they like best. The ideas below are sorted by profile.",
+      accroche: "Ideas by profile, and no more gifts that fall flat.",
       apercu: ["A pottery workshop", "Concert tickets", "A beautiful teapot"],
       pourquoi: {
         titre: "Why let them choose for a birthday",
         paragraphes: [
-          "The longer you have known someone, the harder they are to surprise: the obvious gifts have already been given, and their tastes have changed since. Asking \"what would you like?\" settles it, but takes away everything that makes a gift a gift.",
-          "Suggesting three or four ideas keeps the surprise — they discover what you imagined for them — while leaving them the final say. They get what they really want, and you no longer have to bet everything on a single idea.",
-          "It is also a way to give more widely than usual: an experience next to an object, a small treat next to a bigger plan. The choice itself tells you something, and you learn it.",
+          "After ten years, you've already given the book, the scarf and the restaurant voucher. And their tastes have moved on since. That leaves \"what would you like?\", which solves the problem and kills the surprise in one go.",
+          "Three or four ideas, and the surprise still holds: they find out what you came up with, and they decide. You're no longer staking everything on one card.",
+          "It also lets you give more widely than usual. A workshop next to an object, a small treat next to a bigger plan. And what they pick tells you something about them.",
         ],
       },
       idees: {
         titre: "Ideas, by profile",
         intro:
-          "Four profiles, each with ideas you can mix on the same page. Two to four suggestions are enough: beyond that, choosing becomes a chore.",
+          "Four profiles, four ideas each, to mix on the same page. Two to four suggestions, no more: past that, choosing gets tiring.",
         profils: [
           {
             nom: "For someone who prefers memories to things",
@@ -96,15 +96,15 @@ export const en: TextesGuides = {
         liste: [
           {
             q: "How many ideas should I suggest for a birthday?",
-            r: "Three or four, ideally of different kinds — an experience, an object, a small treat. Beyond six, choosing turns into hesitating.",
+            r: "Three or four, of different kinds if you can: a workshop, an object, a small treat. Beyond six, people dither instead of choosing.",
           },
           {
             q: "Can I prepare the page in advance?",
-            r: "Yes. You can set an opening date: until then, the card stays sealed behind a countdown. Send the link whenever you like, and it opens on the birthday.",
+            r: "Yes. Set an opening date and the card stays sealed behind a countdown. Send the link whenever you like; the page opens on the birthday.",
           },
           {
             q: "Does the person see the price of the gifts?",
-            r: "No, never. They see what you suggest, not what it costs: they choose what they like, without comparing.",
+            r: "Never. They see your ideas, not their prices, and nobody compares.",
           },
         ],
       },
@@ -116,21 +116,21 @@ export const en: TextesGuides = {
         "Original Christmas gift ideas sorted by profile — experiences, winter evenings, people who have everything — and a simple way to let them choose.",
       titre: "Christmas gift ideas: suggest, and let them choose",
       chapo:
-        "At Christmas, gifts multiply and ideas start to look alike. For someone you really want to spoil, here are original ideas sorted by profile — and a way to get it right: suggest a few ideas, and let them choose.",
-      accroche: "Original ideas, and a gift that doesn't end up at the back of a cupboard.",
+        "At Christmas everyone gets a lot, and nobody knows what to give any more. For someone you really want to spoil, suggest three or four ideas and let them choose. The ideas below are sorted by profile.",
+      accroche: "Ideas that don't end up at the back of a cupboard.",
       apercu: ["A weekend in the mountains", "A tea gift box", "A cooking class"],
       pourquoi: {
         titre: "Why let them choose at Christmas",
         paragraphes: [
-          "Christmas packs a whole year of gifts into a single evening. Between the children's lists and a little something for everyone, adults often receive gifts found in a hurry: useful at best, forgotten at worst.",
-          "Suggesting a few ideas instead of a single parcel changes the way you give. They discover what you imagined, choose what they really want, and receive the gift they would have wished for.",
-          "It is also practical when you give from afar: the page is shared by message, the choice is made before the holidays, and you have time to order before Christmas Eve.",
+          "Christmas is a year's worth of presents in one evening. Between the children's lists and a little something for everyone, adults often end up with whatever was found in a hurry.",
+          "With several ideas instead of one parcel, they see what you came up with, take what they fancy, and end up with what they'd have picked themselves.",
+          "Handy when you're giving from far away, too. You send the page by message, the choice comes in before the holidays, and you have time to order.",
         ],
       },
       idees: {
         titre: "Ideas, by profile",
         intro:
-          "Ideas to mix on the same page. At Christmas, an experience to enjoy after the holidays is often the one people choose: it makes the moment last.",
+          "Ideas to mix on the same page. At Christmas, the thing to do in January often wins: it makes the holidays last.",
         profils: [
           {
             nom: "For someone who loves shared experiences",
@@ -183,15 +183,15 @@ export const en: TextesGuides = {
         liste: [
           {
             q: "Can I give to several people in the same family?",
-            r: "Yes: create one page per person. Each one gets their own link and chooses separately; you find each choice on each page's private link.",
+            r: "Yes, one page per person. Each gets their own link and chooses on their own; you find the choices on each page's private link.",
           },
           {
             q: "What if the person doesn't choose before Christmas?",
-            r: "You can remind them: the page stays open. If nobody chooses, it is deleted after a year.",
+            r: "You can nudge them, the page stays open. If nobody chooses, it's deleted after a year.",
           },
           {
             q: "Can the card open only on Christmas Eve?",
-            r: "Yes. Set an opening date: until then, the card stays sealed behind a countdown, even if the link was sent earlier.",
+            r: "Yes. Set an opening date: the card stays sealed behind a countdown, even if you sent the link earlier.",
           },
         ],
       },
@@ -203,21 +203,21 @@ export const en: TextesGuides = {
         "Wedding gift ideas sorted by type of couple, and an alternative to giving cash: suggest a few ideas, and let the newlyweds choose.",
       titre: "Wedding gift ideas: let the newlyweds choose",
       chapo:
-        "For a wedding, guests often hesitate between the registry, cash in a card and a personal gift. Here is another way: a few ideas you pick for the couple, presented on one page, and the newlyweds decide. With ideas sorted by profile.",
-      accroche: "Between the registry and cash, a few ideas the couple chooses from.",
+        "For a wedding, people waver between the registry, cash in a card and a gift they pick themselves. There's another way: you suggest a few ideas to the couple, on one page, and they decide. The ideas below are sorted by type of couple.",
+      accroche: "Between the registry and the envelope: a few ideas, and the couple picks.",
       apercu: ["A gourmet dinner", "A wine-tasting class", "A night at a B&B"],
       pourquoi: {
         titre: "Why let them choose for a wedding",
         paragraphes: [
-          "A wedding registry says exactly what to give, and cash says nothing about you. Between the two, many guests look for a gift that is both personal and truly useful to the couple.",
-          "Suggesting a few ideas brings both together: each suggestion comes from you, and the newlyweds choose the one that suits them. They don't get one more thing they already have, and you know your gift will be used.",
-          "The page can be sent before or after the celebration. Many people prefer to give it a few weeks later, when the couple has time to look, and to choose together.",
+          "A wedding registry says exactly what to buy. Cash in an envelope says nothing about you. Plenty of guests look for something in between: a personal gift that actually gets used.",
+          "A few ideas do both at once. Each one comes from you, and the newlyweds take the one that suits them. No duplicates, and your gift gets used.",
+          "You can send the page before or after the wedding. Many people wait a few weeks, until the couple has caught their breath and can look at it together.",
         ],
       },
       idees: {
         titre: "Ideas, by type of couple",
         intro:
-          "Ideas designed for two. Experiences to share are often the ones newlyweds choose: they make the celebration last.",
+          "Ideas for two. Newlyweds often go for the experience to share: it stretches the celebration out by a few months.",
         profils: [
           {
             nom: "A couple who loves going out",
@@ -270,15 +270,15 @@ export const en: TextesGuides = {
         liste: [
           {
             q: "Does this replace a wedding registry?",
-            r: "No, it complements one. A registry says what the couple expects; your page suggests your own ideas, and the newlyweds choose the one they like. Nothing stops you doing both.",
+            r: "No, it goes alongside it. The registry says what the couple expects; your page suggests your own ideas. Nothing stops you doing both.",
           },
           {
             q: "Can both newlyweds choose together?",
-            r: "Yes: the link opens on any device. They look at the page together and confirm a single choice.",
+            r: "Yes, the link opens on any device. They look at the page together and confirm one choice.",
           },
           {
             q: "Can several guests give together?",
-            r: "The page is created by one person, but several people can agree on the ideas to suggest, then share the cost once the choice is made.",
+            r: "One person puts the page together, but several of you can agree on the ideas, then split the cost once the choice is made.",
           },
         ],
       },
@@ -290,21 +290,21 @@ export const en: TextesGuides = {
         "Original and useful new baby gift ideas, for the baby or for the parents, and a simple way to let the parents choose what they really need.",
       titre: "New baby gift ideas: let the parents choose",
       chapo:
-        "When a baby arrives, gifts pour in, often in duplicate: three sleepsuits in the same size, two cuddly toys, and none of the things that are really missing. Here are ideas sorted by profile — and a way to give just right: suggest a few ideas, and let the parents choose.",
-      accroche: "Instead of one more cuddly toy, what the parents really need.",
+        "When a baby arrives, presents pour in, often twice over: three sleepsuits in the same size, two cuddly toys, and nothing that's actually missing. Suggest a few ideas and let the parents take the one that will help. The ideas below are sorted by profile.",
+      accroche: "Instead of one more cuddly toy, what the parents are really missing.",
       apercu: ["Meals delivered", "A baby wrap", "A photo shoot"],
       pourquoi: {
         titre: "Why let the parents choose",
         paragraphes: [
-          "In the first months, parents receive a lot, and often the same things. What they really need, only they know: a specific piece of kit, some time, a meal they don't have to cook.",
-          "Suggesting a few ideas lets them choose without asking them to write a list — one more task, at a time when they have none to spare. They look at your suggestions when they can, and choose in a moment.",
-          "There is no rush: the page stays online for a year. Many parents choose a few weeks after the birth, once they finally see what would help.",
+          "In the first months, parents get a lot, and often the same things. Only they know what's missing: a particular bit of kit, some time, a dinner they don't have to cook.",
+          "Suggesting a few ideas leaves them the choice without asking them to write a list. They look when they can, and it takes them ten seconds.",
+          "There's no rush: the page stays online for a year. Many parents choose a few weeks later, once they can finally see what would help.",
         ],
       },
       idees: {
         titre: "Ideas, by profile",
         intro:
-          "Ideas for the baby, and above all for the parents, who are often forgotten. Mix them on the same page.",
+          "Ideas for the baby, and above all for the parents, who always get forgotten. Mix them on the same page.",
         profils: [
           {
             nom: "To get a little breathing space",
@@ -357,15 +357,15 @@ export const en: TextesGuides = {
         liste: [
           {
             q: "Should I wait for the birth to send the page?",
-            r: "No. You can prepare it beforehand and send it whenever you like; you can also set an opening date, so it stays sealed until then.",
+            r: "No. You can prepare it beforehand and send it whenever you like. You can also set an opening date so it stays sealed until then.",
           },
           {
             q: "Is it OK to give to the parents rather than the baby?",
-            r: "More and more people do. A delivered meal or a few hours of help are often the gifts parents remember best. Suggest both, and let them choose.",
+            r: "More and more. A delivered dinner or two hours of cleaning are often the gifts parents remember. Suggest both and let them choose.",
           },
           {
             q: "Do the parents need an account to choose?",
-            r: "No. They open the link, choose and confirm, with no account and no email address.",
+            r: "No. They open the link, choose, confirm. No account, no email address.",
           },
         ],
       },
@@ -377,15 +377,15 @@ export const en: TextesGuides = {
         "Original housewarming gift ideas, for someone living alone or a couple, and a simple way to let them choose what is still missing.",
       titre: "Housewarming gift ideas: what is still missing",
       chapo:
-        "A new home comes with a list of what is missing that nobody has written yet. Here are ideas sorted by profile — and a way to give something useful without guessing: suggest a few ideas, and let them choose what is really missing.",
-      accroche: "For a new home, what is really missing, chosen on the spot.",
+        "When you move in, you find out what's missing over the following weeks. From outside, there's no way to guess. So you might as well suggest a few ideas and let them take the one they'll use. Here are some, sorted by profile.",
+      accroche: "What the new place is really missing.",
       apercu: ["A house plant", "A good kitchen knife", "Art for the wall"],
       pourquoi: {
         titre: "Why let them choose for a housewarming",
         paragraphes: [
-          "When people move in, they rarely know what is missing until they have lived there a few weeks. Guests, meanwhile, arrive with a bottle, a plant or a decorative object chosen without knowing the place.",
-          "Suggesting a few ideas lets them decide based on what they see at home: the space available, the style of the place, what they already have. The gift finds its place instead of looking for one.",
-          "The page can be sent after the party, once they have settled in. That is often when the needs become clear.",
+          "You don't know what's missing until you've lived somewhere for a few weeks. Guests, meanwhile, turn up with a bottle, a plant or a decorative object chosen without having seen the flat.",
+          "With several ideas, they decide based on what's in front of them: the space left, the style, what they already have. The gift finds its spot instead of looking for one.",
+          "You can send the page after the party, once the boxes are unpacked. That's when the needs become clear.",
         ],
       },
       idees: {
@@ -443,15 +443,15 @@ export const en: TextesGuides = {
         liste: [
           {
             q: "Do I need to bring the gift to the housewarming party?",
-            r: "Not necessarily. You can arrive with a card bearing the page's QR code: they choose later, once they see what is missing.",
+            r: "Not necessarily. Turn up with a card and the page's QR code: they'll choose later, once they see what's missing.",
           },
           {
             q: "What about a couple moving in together?",
-            r: "The link opens on any device: the couple looks at the page together and confirms a single choice.",
+            r: "The link opens on any device. The couple looks at the page together and confirms one choice.",
           },
           {
             q: "Can I suggest an idea without a shop link?",
-            r: "Yes. Help with assembling furniture or a plant to pick together are easy to describe by hand, with a title and a note.",
+            r: "Yes. A hand putting furniture together or a plant to pick out together is easy to describe by hand, with a title and a note.",
           },
         ],
       },
@@ -463,20 +463,20 @@ export const en: TextesGuides = {
         "Original Mother's Day gift ideas sorted by profile — time together, wellbeing, hobbies — and a simple way to let her choose.",
       titre: "Mother's Day gift ideas: let her choose",
       chapo:
-        "On Mother's Day, you want to say thank you without falling back on the same gestures every year. Here are ideas sorted by profile — and a simple idea: suggest a few gifts chosen for her, and let her decide.",
-      accroche: "Say thank you differently, with ideas she chooses from.",
+        "For Mother's Day, you want to say thank you without repeating last year's bouquet. Suggest three or four gifts chosen for her, and let her take the one she likes best. The ideas below are sorted by profile.",
+      accroche: "Say thank you differently, with ideas she picks from.",
       apercu: ["Brunch for two", "A spa day", "A flower-arranging class"],
       pourquoi: {
         titre: "Why let her choose for Mother's Day",
         paragraphes: [
-          "Many mothers answer \"nothing, I'm just happy you're here\" when asked what they would like. The answer is sincere, but it doesn't tell you what to give.",
-          "Suggesting a few ideas leaves her the pleasure of the surprise and the freedom to choose: time together, something she hesitated to buy for herself, an activity she has been putting off for ages. Along the way, you learn what she really wants.",
-          "The date of the celebration varies from country to country, and the page can be ready well in advance: set an opening date, and the card stays sealed until the day comes.",
+          "Ask a mother what she'd like and she'll say \"nothing, I'm just happy you're here\". She means it, and it doesn't help you.",
+          "With a few ideas in front of her, she keeps the surprise and takes what she really wants: time together, something she'd never buy herself, an activity she's been putting off for months. Along the way you learn what she likes.",
+          "The date changes from one country to another, and the page can be ready weeks ahead. Set an opening date and it stays sealed until the day comes.",
         ],
       },
       idees: {
         titre: "Ideas, by profile",
-        intro: "Ideas to say thank you — to mix on the same page.",
+        intro: "Ideas to say thank you, to mix on the same page.",
         profils: [
           {
             nom: "To share a moment",
@@ -529,15 +529,15 @@ export const en: TextesGuides = {
         liste: [
           {
             q: "Can I prepare the page several days in advance?",
-            r: "Yes. Set an opening date: the card stays sealed behind a countdown until the day itself, even if the link is sent earlier.",
+            r: "Yes. Set an opening date: the card stays sealed behind a countdown until Mother's Day, even if you send the link earlier.",
           },
           {
             q: "What if she isn't comfortable with screens?",
-            r: "Print the card: a folded sheet with the QR code, to slip into an envelope. She just scans it with a phone, and you can choose together.",
+            r: "Print the card: a folded sheet with the QR code, in an envelope. She scans it with her phone, and you can look at the page together.",
           },
           {
             q: "Can several children give together?",
-            r: "The page is created by one person, but you can agree on the ideas, sign together, then share the cost once the choice is made.",
+            r: "One person puts the page together, but you can pick the ideas together, sign as a group, then split the cost once the gift is chosen.",
           },
         ],
       },
