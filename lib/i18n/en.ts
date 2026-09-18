@@ -229,29 +229,14 @@ export const en = {
           "Asking \"what would you like?\" hands the question back and gives the game away. Here you've already done the looking. All that's left is to choose.",
       },
       {
-        titre: "A personalised page, not a link",
+        titre: "A real parcel to open",
         texte:
-          "You pick the colours, the pattern, the font, and the veil that gets lifted to reveal the page. It looks nothing like a form.",
+          "The page wears the colours you picked. They open it by lifting a veil, like unwrapping a present.",
       },
       {
         titre: "No prices shown",
         texte:
           "Prices show up nowhere. Nobody compares, nobody wonders how much you spent.",
-      },
-      {
-        titre: "The surprise stays whole",
-        texte:
-          "Nothing shows before it's opened, and you can keep the card sealed until the day itself.",
-      },
-      {
-        titre: "Staged from beginning to end",
-        texte:
-          "Their first name sits at the top of the page, and you write the words they'll read when it opens. You can even print the card with its QR code. The person you care about just has to choose.",
-      },
-      {
-        titre: "A note in return",
-        texte:
-          "When confirming, they can leave you a note. You read it on your private link, next to the chosen gift.",
       },
     ],
     objections: [

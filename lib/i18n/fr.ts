@@ -238,29 +238,14 @@ export const fr = {
           "Demander « qu'est-ce qui te ferait plaisir ? », c'est renvoyer la question et vendre la mèche. Là, tu as déjà cherché à sa place. Elle n'a plus qu'à choisir.",
       },
       {
-        titre: "Une page personnalisée, pas un lien",
+        titre: "Un vrai paquet à ouvrir",
         texte:
-          "Tu choisis les couleurs, le décor, la police, et le voile qu'on soulève pour découvrir la page. Ça ne ressemble pas à un formulaire.",
+          "La page porte les couleurs que tu as choisies. La personne l'ouvre en soulevant un voile, comme on déballe un paquet.",
       },
       {
         titre: "Aucun prix affiché",
         texte:
           "Les prix n'apparaissent nulle part. Personne ne compare, personne ne se demande combien tu as mis.",
-      },
-      {
-        titre: "La surprise reste entière",
-        texte:
-          "Rien ne se voit avant l'ouverture, et tu peux garder la carte scellée jusqu'au jour J.",
-      },
-      {
-        titre: "Une mise en scène du début à la fin",
-        texte:
-          "Son prénom s'affiche en haut de la page, et tu écris le mot qu'on lira en l'ouvrant. Tu peux même imprimer la carte avec son QR code. La personne qui compte pour toi n'a plus qu'à choisir.",
-      },
-      {
-        titre: "Un mot en retour",
-        texte:
-          "En confirmant, on peut te laisser un mot. Tu le lis sur ton lien privé, à côté du cadeau choisi.",
       },
     ],
     objections: [

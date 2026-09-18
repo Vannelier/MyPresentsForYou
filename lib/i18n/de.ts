@@ -232,29 +232,14 @@ export const de = {
           "„Was wünschst du dir?“ gibt die Frage zurück und verrät alles. Hier hast du schon gesucht. Bleibt nur noch das Wählen.",
       },
       {
-        titre: "Eine persönliche Seite, kein Link",
+        titre: "Ein echtes Päckchen zum Öffnen",
         texte:
-          "Du wählst die Farben, das Motiv, die Schrift und den Schleier, der beim Öffnen weggezogen wird. Nach Formular sieht das nicht aus.",
+          "Die Seite trägt die Farben, die du ausgesucht hast. Geöffnet wird sie, indem man einen Schleier lüftet, wie beim Auspacken eines Geschenks.",
       },
       {
         titre: "Keine Preise sichtbar",
         texte:
           "Preise tauchen nirgends auf. Niemand vergleicht, niemand fragt sich, was du ausgegeben hast.",
-      },
-      {
-        titre: "Die Überraschung bleibt ganz",
-        texte:
-          "Vorher sieht man nichts, und du kannst die Karte bis zum Tag selbst versiegelt halten.",
-      },
-      {
-        titre: "Inszeniert von Anfang bis Ende",
-        texte:
-          "Ihr Vorname steht oben auf der Seite, und du schreibst die Worte, die sie beim Öffnen liest. Du kannst die Karte samt QR-Code sogar ausdrucken. Der Mensch, der dir wichtig ist, muss nur noch wählen.",
-      },
-      {
-        titre: "Eine Nachricht zurück",
-        texte:
-          "Beim Bestätigen kann man dir eine Nachricht hinterlassen. Du liest sie über deinen privaten Link, neben dem gewählten Geschenk.",
       },
     ],
     objections: [

@@ -232,29 +232,14 @@ export const it = {
           "Chiedere «cosa ti farebbe piacere?» rimanda la domanda e rovina la sorpresa. Qui hai già cercato tu. Resta solo da scegliere.",
       },
       {
-        titre: "Una pagina personalizzata, non un link",
+        titre: "Un vero pacco da aprire",
         texte:
-          "Scegli i colori, la decorazione, il carattere e il velo che si solleva per scoprire la pagina. Non somiglia a un modulo.",
+          "La pagina ha i colori che hai scelto. L'altra persona la apre sollevando un velo, come si scarta un pacchetto.",
       },
       {
         titre: "Nessun prezzo in vista",
         texte:
           "I prezzi non compaiono da nessuna parte. Nessuno confronta, nessuno si chiede quanto hai speso.",
-      },
-      {
-        titre: "La sorpresa resta intatta",
-        texte:
-          "Niente si vede prima dell'apertura, e puoi tenere il biglietto sigillato fino al giorno giusto.",
-      },
-      {
-        titre: "Una messa in scena dall'inizio alla fine",
-        texte:
-          "Il suo nome compare in alto sulla pagina, e scrivi tu il messaggio che leggerà aprendola. Puoi anche stampare il biglietto con il codice QR. Alla persona a cui tieni resta solo da scegliere.",
-      },
-      {
-        titre: "Un messaggio in cambio",
-        texte:
-          "Confermando, si può lasciarti un messaggio. Lo leggi nel tuo link privato, accanto al regalo scelto.",
       },
     ],
     objections: [

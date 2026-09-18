@@ -385,12 +385,10 @@
   gap: 1.5rem 2rem;
 }
 
-@media (min-width: 34rem) {
-  .lp-craft__grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
+/*
+ * Une colonne, puis trois — sans palier a deux : avec trois entrees, deux
+ * colonnes laissaient la troisieme seule sur sa ligne.
+ */
 @media (min-width: 52rem) {
   .lp-craft__grid {
     grid-template-columns: repeat(3, 1fr);

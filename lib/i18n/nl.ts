@@ -230,29 +230,14 @@ export const nl = {
           "Vragen \"wat wil je graag?\" geeft de vraag terug en verklapt alles. Hier heb jij het zoeken al gedaan. Alleen kiezen blijft over.",
       },
       {
-        titre: "Een persoonlijke pagina, geen link",
+        titre: "Een echt pakje om open te maken",
         texte:
-          "Jij kiest de kleuren, het decor, het lettertype en de sluier die opzij gaat als de pagina opengaat. Het lijkt in niets op een formulier.",
+          "De pagina draagt de kleuren die jij koos. De ander opent hem door een sluier op te lichten, zoals je een cadeautje uitpakt.",
       },
       {
         titre: "Geen prijzen te zien",
         texte:
           "Prijzen komen er nergens in voor. Niemand vergelijkt, niemand vraagt zich af wat je hebt uitgegeven.",
-      },
-      {
-        titre: "De verrassing blijft heel",
-        texte:
-          "Vooraf is er niets te zien, en je kunt de kaart verzegeld houden tot de dag zelf.",
-      },
-      {
-        titre: "Een mise-en-scène van begin tot eind",
-        texte:
-          "De voornaam staat bovenaan de pagina, en jij schrijft de woorden die bij het openen te lezen zijn. Je kunt de kaart met QR-code zelfs printen. Degene om wie het jou gaat, hoeft alleen nog te kiezen.",
-      },
-      {
-        titre: "Een bericht terug",
-        texte:
-          "Bij het bevestigen kan er een bericht voor je achtergelaten worden. Dat lees je via je privélink, naast het gekozen cadeau.",
       },
     ],
     objections: [

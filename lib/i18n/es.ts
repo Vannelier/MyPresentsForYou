@@ -233,29 +233,14 @@ export const es = {
           "Preguntar «¿qué te apetecería?» devuelve la pregunta y descubre el pastel. Aquí ya has buscado tú. Solo queda elegir.",
       },
       {
-        titre: "Una página personalizada, no un enlace",
+        titre: "Un paquete de verdad que abrir",
         texte:
-          "Eliges los colores, la decoración, la tipografía y el velo que se levanta para descubrir la página. No se parece a un formulario.",
+          "La página lleva los colores que elegiste. La otra persona la abre levantando un velo, como quien desenvuelve un paquete.",
       },
       {
         titre: "Ningún precio a la vista",
         texte:
           "Los precios no aparecen en ninguna parte. Nadie compara, nadie se pregunta cuánto has gastado.",
-      },
-      {
-        titre: "La sorpresa sigue intacta",
-        texte:
-          "Nada se ve antes de abrirla, y puedes mantener la tarjeta sellada hasta el día señalado.",
-      },
-      {
-        titre: "Una puesta en escena de principio a fin",
-        texte:
-          "Su nombre aparece arriba en la página, y tú escribes las palabras que leerá al abrirla. Incluso puedes imprimir la tarjeta con su código QR. A la persona que te importa solo le queda elegir.",
-      },
-      {
-        titre: "Un mensaje de vuelta",
-        texte:
-          "Al confirmar, se te puede dejar un mensaje. Lo lees en tu enlace privado, junto al regalo elegido.",
       },
     ],
     objections: [
