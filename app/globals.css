@@ -2318,12 +2318,36 @@ select {
  */
 .site-tete {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
   max-width: 72rem;
   margin: 0 auto;
   padding: 0.75rem 1.25rem 0;
   position: relative;
   z-index: 20;
+}
+
+/*
+ * Dans les pages a `.landing`, qui ont deja leur marge laterale, l'en-tete
+ * rentrait de 20 px par rapport au contenu, et le titre le suivait a 1 px :
+ * mesure a 375 px, en-tete jusqu'a 66 px, titre des 67.
+ */
+.landing > .site-tete {
+  padding: 0;
+  margin-bottom: clamp(1.5rem, 5vw, 2.25rem);
+}
+
+.site-tete__marque {
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  text-decoration: none;
+}
+
+.site-tete__marque:hover {
+  color: var(--accent-dark);
 }
 
 .langues {
@@ -2352,6 +2376,25 @@ select {
 .langues__chevron {
   font-size: 0.65rem;
   color: var(--ink-faint);
+}
+
+/*
+ * Au telephone, le bouton ne garde que le drapeau : le nom de la langue reste
+ * dans la liste, et dans le bouton pour les lecteurs d'ecran.
+ */
+@media (max-width: 51.99rem) {
+  .langues__nom {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .langues__bouton {
+    padding: 0.35rem 0.55rem;
+  }
 }
 
 .langues__liste {

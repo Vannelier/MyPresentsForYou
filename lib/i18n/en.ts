@@ -55,7 +55,7 @@ export const en = {
       {
         q: "How do I give a gift and let the person choose?",
         r: [
-          "You compose a personalised page — an occasion, a pattern, a veil to lift — with a few gift ideas, then you send the link. The person opens the page, looks at the ideas, and confirms the one they like most. You find their choice on your private link, and you buy the gift yourself.",
+          "You create a personalised page — an occasion, a pattern, a veil to lift — with a few gift ideas, then you send the link. The person opens the page, looks at the ideas, and confirms the one they like most. You find their choice on your private link, and you buy the gift yourself.",
           "They get something they actually want, and you never had to ask. The surprise holds.",
         ],
       },
@@ -176,7 +176,7 @@ export const en = {
   accueil: {
     titreMeta: "Give a gift and let them choose — MyPresentsForYou",
     descriptionMeta:
-      "Put a few gift ideas on a page composed just for the person you care about, and send them the link to their own page.",
+      "Put a few gift ideas on a page made just for the person you care about, and send them the link to their own page.",
     motsCles: [
       "gift they can choose",
       "let someone choose their gift",
@@ -186,7 +186,7 @@ export const en = {
     ],
     donnees: {
       systeme: "Any web browser",
-      description: "Compose a personalised gift page with your own gift ideas, send the link, and let them choose what they want.",
+      description: "Create a personalised gift page with your own gift ideas, send the link, and let them choose what they want.",
       fonctions: [
         "Up to ten ideas per card",
         "No account needed",
@@ -194,7 +194,7 @@ export const en = {
         "QR code and printable card",
       ],
     },
-    titre: "Compose a personalised gift page, send it, and let them choose what they want.",
+    titre: "Create a personalised gift page, send it, and let them choose what they want.",
     sousTitre: "A gift that stands out, for any occasion: a personalised page with your gift ideas. You send the link, they choose, and all that's left is to give.",
     composer: "Create my gift page",
     voirExemple: "See an example",
@@ -207,7 +207,7 @@ export const en = {
     },
     etapes: [
       {
-        titre: "You compose their page",
+        titre: "You create their page",
         texte:
           "You pick the occasion, and the page takes its colours. Then you add your ideas: paste a product link and the title and photo usually turn up on their own. If not, a photo from your phone does the job.",
       },
@@ -265,7 +265,7 @@ export const en = {
   creation: {
     titreMeta: "Create a free gift page — MyPresentsForYou",
     descriptionMeta:
-      "Compose a personalised gift page in three steps: the occasion and its pattern, your gift ideas, the presentation. No account, no payment.",
+      "Create a personalised gift page in three steps: the occasion and its pattern, your gift ideas, the presentation. No account, no payment.",
     titre: "Create your gift page",
     chapo:
       "Three steps: the occasion, your ideas, the presentation. At any point, \"Preview\" shows you the page as they'll see it.",

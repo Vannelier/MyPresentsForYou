@@ -46,9 +46,6 @@ export default async function IdeesCadeaux({ params }: Params) {
       <EnTeteSite />
       <article className="prose guides">
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(fil) }} />
-        <Link className="back-link" href={cheminVers(langue, "accueil")}>
-          {d.commun.retourAccueil}
-        </Link>
         <h1>{textes.page.titre}</h1>
         <p className="prose__chapo">{textes.page.chapo}</p>
 

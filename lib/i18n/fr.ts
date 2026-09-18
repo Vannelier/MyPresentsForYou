@@ -19,7 +19,7 @@ export const fr = {
   site: {
     titreMeta: "MyPresentsForYou — la page-cadeau personnalisée",
     descriptionMeta: "Un cadeau qui sort du commun pour n'importe quelle occasion : une page personnalisée avec tes idées. Tu envoies le lien, la personne choisit, tu offres.",
-    titrePartage: "MyPresentsForYou, compose une carte cadeau animée.",
+    titrePartage: "MyPresentsForYou, crée une carte cadeau animée.",
   },
 
   pied: {
@@ -62,7 +62,7 @@ export const fr = {
       {
         q: "Comment offrir un cadeau en laissant la personne choisir ?",
         r: [
-          "Tu composes une page personnalisée — une occasion, un décor, un voile à soulever — avec quelques idées de cadeaux, puis tu envoies le lien. La personne ouvre la page, regarde les propositions, et confirme celle qui lui fait le plus envie. Tu retrouves son choix sur ton lien privé, et tu achètes le cadeau toi-même.",
+          "Tu crées une page personnalisée — une occasion, un décor, un voile à soulever — avec quelques idées de cadeaux, puis tu envoies le lien. La personne ouvre la page, regarde les propositions, et confirme celle qui lui fait le plus envie. Tu retrouves son choix sur ton lien privé, et tu achètes le cadeau toi-même.",
           "Elle reçoit quelque chose qui lui plaît vraiment, et tu n'as pas eu à le lui demander. La surprise tient.",
         ],
       },
@@ -183,7 +183,7 @@ export const fr = {
   accueil: {
     titreMeta: "Offrir en laissant choisir le cadeau, MyPresentsForYou",
     descriptionMeta:
-      "Réunis quelques idées de cadeaux sur une page composée spécialement pour la personne à qui tu tiens et envoie le lien vers sa page personnalisée.",
+      "Réunis quelques idées de cadeaux sur une page créée spécialement pour la personne à qui tu tiens et envoie le lien vers sa page personnalisée.",
     motsCles: [
       "offrir un cadeau au choix",
       "laisser choisir son cadeau",
@@ -194,7 +194,7 @@ export const fr = {
     donnees: {
       systeme: "Tout navigateur web",
       description:
-        "Compose une page-cadeau personnalisée avec tes idées de cadeaux, envoie le lien, et laisse la personne choisir ce qu'elle souhaite.",
+        "Crée une page-cadeau personnalisée avec tes idées de cadeaux, envoie le lien, et laisse la personne choisir ce qu'elle souhaite.",
       fonctions: [
         "Jusqu'à dix propositions par carte",
         "Aucun compte requis",
@@ -202,10 +202,10 @@ export const fr = {
         "QR code et carte à imprimer",
       ],
     },
-    titre: "Compose une page-cadeau personnalisée, envoie-la et laisse la personne choisir ce qu'elle souhaite.",
+    titre: "Crée une page-cadeau personnalisée, envoie-la et laisse la personne choisir ce qu'elle souhaite.",
     sousTitre:
       "Un cadeau qui sort du commun pour n'importe quelle occasion, une page personnalisée avec tes idées de cadeaux. Tu envoies le lien, la personne choisit et tu n'as plus qu'à offrir.",
-    composer: "Composer ma page-cadeau",
+    composer: "Créer ma page-cadeau",
     voirExemple: "Voir un exemple",
     note: "Gratuit · sans compte · dix minutes suffisent",
     telephone: {
@@ -216,7 +216,7 @@ export const fr = {
     },
     etapes: [
       {
-        titre: "Tu composes sa page",
+        titre: "Tu crées sa page",
         texte:
           "Tu choisis l'occasion, et la page prend ses couleurs. Ensuite tu ajoutes tes idées : colle le lien d'un produit, le titre et la photo arrivent tout seuls la plupart du temps. Sinon, une photo prise au téléphone fait l'affaire.",
       },
@@ -267,7 +267,7 @@ export const fr = {
     guidesTitre: "Des idées pour chaque occasion",
     guidesTexte: "Anniversaire, Noël, mariage, naissance… des idées classées par profil, si tu sèches.",
     guidesTout: "Toutes les idées cadeaux",
-    finTitre: "Et si tu composais la sienne ?",
+    finTitre: "Et si tu créais la sienne ?",
     finTexte: "Commence avec deux idées, tu en mettras dix si tu veux. Le reste se règle en route.",
     piedNote:
       "Une carte reste en ligne un an. Garde ton lien privé : c'est lui qui te dira ce qu'on a choisi.",
@@ -276,8 +276,8 @@ export const fr = {
   creation: {
     titreMeta: "Créer une page-cadeau gratuite — MyPresentsForYou",
     descriptionMeta:
-      "Compose une page-cadeau personnalisée en trois étapes : l'occasion et son décor, tes idées de cadeaux, la présentation. Sans compte, sans paiement.",
-    titre: "Compose ta page-cadeau",
+      "Crée une page-cadeau personnalisée en trois étapes : l'occasion et son décor, tes idées de cadeaux, la présentation. Sans compte, sans paiement.",
+    titre: "Crée ta page-cadeau",
     chapo:
       "Trois étapes : l'occasion, tes idées, la présentation. À tout moment, « Aperçu » te montre la page telle qu'on la verra.",
     pret: "Ta page est prête",
@@ -298,8 +298,8 @@ export const fr = {
     descriptionMeta:
       "Une vraie page-cadeau, à essayer : soulève le voile et choisis parmi quatre idées. Rien n'est envoyé.",
     bandeau: "Exemple — rien n'est envoyé",
-    composerLaMienne: "Composer la mienne",
-    composer: "Composer ma page-cadeau",
+    composerLaMienne: "Créer la mienne",
+    composer: "Créer ma page-cadeau",
     destinataire: "Camille",
     signature: "Sacha",
     cadeaux: [

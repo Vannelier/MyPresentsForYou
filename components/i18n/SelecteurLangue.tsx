@@ -54,7 +54,9 @@ export default function SelecteurLangue({ variante = "tete" }: { variante?: "tet
         onClick={() => setOuvert((o) => !o)}
       >
         <Drapeau langue={langue} />
-        <span lang={langue}>{NOMS_DES_LANGUES[langue]}</span>
+        <span className="langues__nom" lang={langue}>
+          {NOMS_DES_LANGUES[langue]}
+        </span>
         <span className="langues__chevron" aria-hidden="true">
           ▾
         </span>

@@ -38,9 +38,6 @@ export default function CreateFlow({ baseUrlLabel, pistes }: { baseUrlLabel: str
   return (
     <div className="shell shell--wide">
       <header className="hero">
-        <Link className="back-link" href={cheminVers(langue, "accueil")}>
-          {d.commun.retourAccueil}
-        </Link>
         <h1>{d.creation.titre}</h1>
         <p>{d.creation.chapo}</p>
       </header>

@@ -39,9 +39,6 @@ export default function TextPage({
     <main className="landing">
       <EnTeteSite />
       <article className="prose">
-        <Link className="back-link" href={cheminVers(langue, "accueil")}>
-          {d.commun.retourAccueil}
-        </Link>
 
         {traduite && (
           <p className="prose__note">

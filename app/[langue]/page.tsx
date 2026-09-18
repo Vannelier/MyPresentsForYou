@@ -65,7 +65,6 @@ export default async function LandingPage({ params }: Params) {
       {/* --- Accroche : la promesse, la preuve, l'action, en un seul écran. --- */}
       <section className="lp-hero">
         <div className="lp-hero__text">
-          <p className="eyebrow">{tout.commun.marque}</p>
           <h1>{d.titre}</h1>
           <p className="lp-sub">{d.sousTitre}</p>
           <div className="lp-cta">

@@ -18,7 +18,7 @@ export const fr: TextesGuides = {
   },
 
   libelles: {
-    composer: "Composer ma page-cadeau",
+    composer: "Créer ma page-cadeau",
     exemple: "Voir un exemple de page-cadeau",
     questions: "Toutes les questions fréquentes",
     autres: "Pour d'autres occasions",
@@ -91,7 +91,7 @@ export const fr: TextesGuides = {
         ],
       },
       etapes: {
-        titre: "Composer la page en trois étapes",
+        titre: "Créer la page en trois étapes",
         liste: [
           "Choisis l'occasion « Anniversaire » : la page prend ses couleurs, son décor et ses formules.",
           "Ajoute deux à dix idées ; colle le lien d'un produit pour en récupérer le titre et l'image, ou décris une expérience à la main.",
@@ -178,7 +178,7 @@ export const fr: TextesGuides = {
         ],
       },
       etapes: {
-        titre: "Composer la page en trois étapes",
+        titre: "Créer la page en trois étapes",
         liste: [
           "Choisis l'occasion « Noël » : la page prend ses couleurs d'hiver et son décor.",
           "Ajoute deux à dix idées ; colle le lien d'un produit pour en récupérer le titre et l'image, ou décris une expérience à la main.",
@@ -265,7 +265,7 @@ export const fr: TextesGuides = {
         ],
       },
       etapes: {
-        titre: "Composer la page en trois étapes",
+        titre: "Créer la page en trois étapes",
         liste: [
           "Choisis l'occasion « Mariage » : la page prend sa palette, son décor d'alliances et des formules adressées aux deux.",
           "Ajoute deux à dix idées pensées pour le couple ; une expérience se décrit très bien à la main, sans lien.",
@@ -285,7 +285,7 @@ export const fr: TextesGuides = {
           },
           {
             q: "Peut-on offrir à plusieurs invités ?",
-            r: "La page se compose à une seule personne, mais vous pouvez vous mettre d'accord à plusieurs sur les idées, puis partager l'achat une fois le choix fait.",
+            r: "Une seule personne crée la page, mais vous pouvez vous mettre d'accord à plusieurs sur les idées, puis partager l'achat une fois le choix fait.",
           },
         ],
       },
@@ -352,7 +352,7 @@ export const fr: TextesGuides = {
         ],
       },
       etapes: {
-        titre: "Composer la page en trois étapes",
+        titre: "Créer la page en trois étapes",
         liste: [
           "Choisis l'occasion « Naissance » : la page prend ses couleurs douces et son décor.",
           "Ajoute deux à dix idées ; pour un service ou un moment de repos, une description à la main suffit.",
@@ -438,7 +438,7 @@ export const fr: TextesGuides = {
         ],
       },
       etapes: {
-        titre: "Composer la page en trois étapes",
+        titre: "Créer la page en trois étapes",
         liste: [
           "Choisis l'occasion « Crémaillère » : la page prend ses couleurs et son décor.",
           "Ajoute deux à dix idées ; colle le lien d'un produit, ou décris un service à la main.",
@@ -524,7 +524,7 @@ export const fr: TextesGuides = {
         ],
       },
       etapes: {
-        titre: "Composer la page en trois étapes",
+        titre: "Créer la page en trois étapes",
         liste: [
           "Choisis l'occasion « Fête des mères » : la page prend sa palette et sa formule d'ouverture.",
           "Ajoute deux à dix idées ; un moment à partager se décrit très bien à la main.",
@@ -544,7 +544,7 @@ export const fr: TextesGuides = {
           },
           {
             q: "Plusieurs enfants peuvent-ils offrir ensemble ?",
-            r: "La page se compose à une seule personne, mais vous pouvez choisir les idées ensemble, signer à plusieurs, puis partager l'achat une fois le cadeau retenu.",
+            r: "Une seule personne crée la page, mais vous pouvez choisir les idées ensemble, signer à plusieurs, puis partager l'achat une fois le cadeau retenu.",
           },
         ],
       },

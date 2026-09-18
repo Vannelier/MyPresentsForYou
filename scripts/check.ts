@@ -2558,6 +2558,11 @@ test("le selecteur de langue est en tete du site, jamais sur une carte ni sur l'
     assert.match(lire(f), /<EnTeteSite \/>/, `${f} n'a plus de selecteur de langue`);
   }
   assert.match(lire("app/[langue]/exemple/page.tsx"), /<SelecteurLangue variante="ruban" \/>/);
+  // Le nom du site en tete est le seul lien vers l'accueil des pages de texte,
+  // de la creation et des idees : les « ← MyPresentsForYou » ont ete retires.
+  const tete = lire("components/EnTeteSite.tsx");
+  assert.match(tete, /className="site-tete__marque" href=\{cheminVers\(langue, "accueil"\)\}/, "l'en-tete ne ramene plus a l'accueil");
+  assert.match(tete, /<SelecteurLangue \/>/);
   const interdits: string[] = ["components/GiftView.tsx", "components/AdminView.tsx", "components/PrintableCard.tsx"];
   const parcourir = (dossier: string) => {
     for (const e of readdirSync(dossier, { withFileTypes: true })) {
