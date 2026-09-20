@@ -1083,8 +1083,10 @@ l'outil : l'accueil, le formulaire, `/questions`, et surtout les guides par occa
   crémaillère, fête des mères — les occasions les plus cherchées, la fête des pères écartée parce que
   ses recherches sont surtout des bricolages d'enfants. Titres et introductions suivent les
   suggestions de recherche de chaque langue (« idée cadeau anniversaire », « Geschenkideen zum
-  Einzug »…) ; quatre profils de pistes, sans marque ni lien marchand ; trois questions balisées
-  `FAQPage` et un fil d'Ariane `BreadcrumbList`. Le bouton ouvre l'éditeur l'occasion déjà choisie
+  Einzug »…) ; quatre profils de pistes, chacune liée à une recherche marchande dans la langue de la
+  page (`rechercheMarchand` → `amazon.<tld>/s`, un domaine par langue), en lien nu et non affilié —
+  c'est le contenu à liens sortants qu'un réseau d'affiliation attend d'un éditeur ; trois questions
+  balisées `FAQPage` et un fil d'Ariane `BreadcrumbList`. Le bouton ouvre l'éditeur l'occasion déjà choisie
   (`?occasion=`), jamais par-dessus un brouillon. Les guides sont liés depuis l'accueil et le pied de
   page ; leur texte vit dans `lib/guides/`, hors du dictionnaire que reçoit le navigateur. La
   démarche est dans `docs/superpowers/specs/2026-09-17-referencement-occasions-design.md`.
@@ -1359,10 +1361,13 @@ le référencement, et seulement ensuite la publicité du site. Le modèle s'y i
    date de la demande (voir « Le risque : le volume » plus bas) est un second facteur plausible, mais
    moins bien sourcé que celui-ci.
 
-   Correction possible sans attendre Skimlinks : un lien sortant simple, non affilié, vers un marchand
-   réel n'a besoin d'aucune approbation — Skimlinks les remballe une fois le compte actif, il ne
-   conditionne pas leur pose. Ce serait renverser la décision du point 4, pas juste attendre ; à
-   trancher avant de le faire, pas à faire en silence dans un correctif de documentation.
+   Correction appliquée le 20 septembre 2026, sans attendre Skimlinks : chaque idée des guides pointe
+   désormais vers une recherche marchande (`rechercheMarchand`, dans `lib/marchand.ts`), et une piste
+   adoptée dans l'éditeur arrive avec ce même lien. Des liens **nus, non affiliés** — un lien affilié
+   sur une page vue par le receveur poserait le cookie chez qui n'achète pas, ce que le modèle exclut ;
+   l'affiliation ne vit que sur le clic « Acheter » de l'offreur. C'était renverser la décision du
+   point 4, tranché avant de le faire (voir ce point). Le détail est en « Ce qui est personnalisable »
+   › « Des guides par occasion ».
 2. **Après le multilingue** : l'e-mail de notification, écrit d'emblée dans les six langues.
 3. **Une fois le site traduit et en ligne, et avec du contenu qui pointe vers des marchands** :
    l'inscription au réseau d'affiliation. Les réseaux examinent un site avant d'accepter son éditeur ;
@@ -1370,13 +1375,15 @@ le référencement, et seulement ensuite la publicité du site. Le modèle s'y i
    produits sans lien sortant, pas seulement l'absence de trafic. Skimlinks reste le choix par défaut
    si ce point est corrigé ; en cas de nouveau refus, des alternatives existent (Sovrn Commerce, Awin,
    CJ Affiliate) mais n'ont pas été évaluées — ce serait à faire à ce moment-là, pas avant.
-4. **Avec du trafic** : les suggestions. **Une première version existe**, sans lien marchand : dans
-   l'étape « Cadeaux » de l'éditeur, un encart replié « Besoin d'idées ? » propose les pistes du guide
-   de l'occasion choisie (celles d'anniversaire pour une occasion sans guide). Un clic place le titre
-   dans la première ligne vide ; le lien reste à l'offreur. Les pistes viennent des guides
-   (`pistesPourEditeur`), passées en propriété par les pages serveur : l'éditeur n'importe jamais
-   `lib/guides`. La suite — des liens vers des marchands affiliés — attend la liste des marchands
-   Skimlinks.
+4. **Avec du trafic** : les suggestions. **Une première version existe** : dans l'étape « Cadeaux »
+   de l'éditeur, un encart replié « Besoin d'idées ? » propose les pistes du guide de l'occasion
+   choisie (celles d'anniversaire pour une occasion sans guide). Un clic place le titre **et un lien de
+   recherche marchande** dans la première ligne vide ; le lien, une simple recherche dans la langue de
+   l'offreur, lui reste à préciser. Les pistes viennent des guides (`pistesPourEditeur`), passées en
+   propriété par les pages serveur : l'éditeur n'importe jamais `lib/guides`. Ce lien n'est pas affilié
+   ici — l'affiliation ne s'ajoute qu'au clic « Acheter », côté serveur. Une liste de marchands propre
+   à un réseau n'est **pas** nécessaire : le Link Wrapper trie partenaire et non-partenaire au clic, et
+   maintenir notre propre liste serait une donnée à périmer pour zéro gain.
 
 ## Décisions structurantes
 
