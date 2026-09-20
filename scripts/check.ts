@@ -33,7 +33,7 @@ import { hexToHsl, hslToHex, styleDeTeinte, teinteDuTheme } from "../lib/carteCo
 import { RESERVED_SLUGS, slugError, slugify, suggestVariant } from "../lib/slug";
 import { REPLY_WINDOW_MS, isExpired, isLocked, isSealed, replyWindowOpen } from "../lib/types";
 import { LIMITS } from "../lib/limits";
-import { adsensePublisherId, baseUrl, freePageTtlDays, secretDePurge, skimlinksId } from "../lib/env";
+import { adsensePublisherId, baseUrl, freePageTtlDays, hoteCanonique, secretDePurge, skimlinksId } from "../lib/env";
 import sitemap from "../app/sitemap";
 import { GET as llmsTxt } from "../app/llms.txt/route";
 import { alternatesDe, alternatesGuide } from "../lib/i18n/alternates";
@@ -57,7 +57,7 @@ import {
   langueOuDefaut,
   type Langue,
 } from "../lib/i18n/langues";
-import { router } from "../lib/i18n/routage";
+import { redirectionHote, router } from "../lib/i18n/routage";
 import { EVENEMENTS, lienSortant, synthese, urlAchat } from "../lib/compteurs";
 import {
   clesImages,
@@ -2633,6 +2633,43 @@ test("le routage : langues, anciennes adresses, cartes", () => {
   });
   assert.deepEqual(r("/fr/idees-cadeaux/inconnue"), { type: "reecriture", vers: "/fr/introuvable" });
   assert.deepEqual(r("/fr/autre/chose"), { type: "suite" });
+});
+
+test("une seule adresse indexable : l'apex file vers le www, le reste passe", () => {
+  /*
+   * Railway sert `www` et l'apex sans rediriger l'un vers l'autre — Google
+   * indexait les deux comme doublons. Seul l'hote alterne exact bascule ; un
+   * domaine Railway ou une sonde de sante ne doit surtout pas etre redirige.
+   */
+  const www = "www.mypresentsforyou.com";
+  assert.equal(redirectionHote("mypresentsforyou.com", www), www, "l'apex ne file pas vers le www");
+  assert.equal(redirectionHote("MYPRESENTSFORYOU.COM", www), www, "la casse n'est pas normalisee");
+  assert.equal(redirectionHote("mypresentsforyou.com:8080", www), www, "le port n'est pas ignore");
+  assert.equal(redirectionHote(www, www), null, "le www est deja canonique");
+  assert.equal(redirectionHote("mypresentsforyou-production.up.railway.app", www), null, "un domaine Railway est redirige — sonde de sante cassee");
+  assert.equal(redirectionHote("healthcheck.railway.internal", www), null, "un hote interne est redirige");
+  assert.equal(redirectionHote(null, www), null);
+  // Canonique sans www : c'est le www qui file vers l'apex.
+  assert.equal(redirectionHote("www.exemple.com", "exemple.com"), "exemple.com");
+  assert.equal(redirectionHote("exemple.com", "exemple.com"), null);
+
+  // En local, aucune redirection d'hote : `hoteCanonique` rend null sur localhost.
+  const avant = process.env.NEXT_PUBLIC_BASE_URL;
+  try {
+    process.env.NEXT_PUBLIC_BASE_URL = "https://www.mypresentsforyou.com";
+    assert.equal(hoteCanonique(), www);
+    delete process.env.NEXT_PUBLIC_BASE_URL;
+    delete process.env.VERCEL_URL;
+    assert.equal(hoteCanonique(), null, "localhost declenche une redirection d'hote");
+  } finally {
+    if (avant === undefined) delete process.env.NEXT_PUBLIC_BASE_URL;
+    else process.env.NEXT_PUBLIC_BASE_URL = avant;
+  }
+
+  // Le middleware fait la bascule d'hote avant le routage des langues.
+  const mw = lire("middleware.ts");
+  assert.match(mw, /redirectionHote\(req\.headers\.get\("host"\), canonique\)/, "le middleware ne redirige plus l'hote");
+  assert.ok(mw.indexOf("redirectionHote") < mw.indexOf("router("), "la bascule d'hote passe apres le routage");
 });
 
 test("chaque guide a une adresse dans chaque langue, unique et au format d'un segment", () => {

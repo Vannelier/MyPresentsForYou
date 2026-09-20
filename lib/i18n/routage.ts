@@ -29,6 +29,26 @@ const SLUG = /^[a-z0-9][a-z0-9-]{1,58}[a-z0-9]$/;
  */
 const PASSANTS = new Set(["api", "admin", "carte", "_next", "opengraph-image", "twitter-image", "icon", "apple-icon"]);
 
+/**
+ * L'hote vers lequel rediriger pour n'exposer qu'une seule adresse indexable :
+ * l'apex vers le www quand l'hote canonique porte le `www.`, l'inverse sinon.
+ * `null` quand rien ne change.
+ *
+ * Seul l'hote alterne exact est redirige. Tout le reste — un domaine `.railway.app`,
+ * une prevoyance, `localhost` — passe tel quel : rediriger au hasard casserait
+ * les sondes de sante de l'hebergeur, qui frappent un hote interne et attendent
+ * un 200, pas un 308. Railway, contrairement a Vercel, ne fait pas cette
+ * redirection lui-meme, et Google indexait alors `www` et l'apex comme doublons.
+ */
+export function redirectionHote(hote: string | null, canonique: string): string | null {
+  if (!hote) return null;
+  const h = hote.toLowerCase().split(":")[0];
+  const c = canonique.toLowerCase().split(":")[0];
+  if (!c || h === c) return null;
+  const alterne = c.startsWith("www.") ? c.slice(4) : `www.${c}`;
+  return h === alterne ? c : null;
+}
+
 export function router(
   chemin: string,
   acceptLanguage: string | null,
