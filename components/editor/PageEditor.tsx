@@ -1153,7 +1153,7 @@ export default function PageEditor(props: Props) {
             occasion={occasion}
             pris={items.map((it) => it.label.trim())}
             plein={items.length >= LIMITS.itemsMax && !items.some((it) => !it.label.trim() && !it.source_url.trim() && !it.image_url.trim() && !it.note.trim())}
-            onChoisir={(nom) => setItems((prev) => placerPiste(prev, nom, LIMITS.itemsMax, emptyRow) ?? prev)}
+            onChoisir={(nom, url) => setItems((prev) => placerPiste(prev, nom, url, LIMITS.itemsMax, emptyRow) ?? prev)}
           />
         </section>
       )}

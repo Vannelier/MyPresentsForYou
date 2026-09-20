@@ -3,6 +3,7 @@
 import { useDictionnaire } from "@/components/i18n/Dictionnaire";
 import { GUIDES, cheminGuide } from "@/lib/i18n/chemins";
 import { remplir } from "@/lib/i18n/remplir";
+import { rechercheMarchand } from "@/lib/marchand";
 import type { OccasionId } from "@/lib/occasions";
 import type { Pistes } from "@/lib/pistes";
 
@@ -14,8 +15,10 @@ import type { Pistes } from "@/lib/pistes";
  * visite de l'etape — et laisse croire que MyPresentsForYou choisit les cadeaux
  * a la place du donneur, ce qui renverserait le principe meme du site.
  *
- * Une piste n'ajoute qu'un titre : le lien, l'image et le mot restent a
- * l'offreur, qui achetera ou il veut.
+ * Une piste pose un titre et un lien de recherche marchande dans la langue de
+ * l'offreur ; l'image et le mot restent a lui, et le lien — une simple recherche,
+ * pas un produit impose — est le sien a preciser. Ce lien ne porte aucune
+ * affiliation ici : elle ne s'ajoute qu'au clic « Acheter », cote serveur.
  */
 export default function BesoinIdees({
   pistes,
@@ -29,7 +32,7 @@ export default function BesoinIdees({
   /** Les titres deja presents dans la liste, pour marquer les pistes ajoutees. */
   pris: string[];
   plein: boolean;
-  onChoisir: (nom: string) => void;
+  onChoisir: (nom: string, url: string) => void;
 }) {
   const { langue, d } = useDictionnaire();
   const t = d.editeur.idees;
@@ -65,7 +68,7 @@ export default function BesoinIdees({
                     className={`idees__piste${ajoutee ? " is-on" : ""}`}
                     aria-pressed={ajoutee}
                     disabled={ajoutee || plein}
-                    onClick={() => onChoisir(nom)}
+                    onClick={() => onChoisir(nom, rechercheMarchand(langue, nom))}
                   >
                     <span aria-hidden="true">{ajoutee ? "✓" : "+"}</span> {nom}
                   </button>

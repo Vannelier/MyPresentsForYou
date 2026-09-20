@@ -39,6 +39,7 @@ import { GET as llmsTxt } from "../app/llms.txt/route";
 import { alternatesDe, alternatesGuide } from "../lib/i18n/alternates";
 import { TEXTES_GUIDES, pistesPourEditeur } from "../lib/guides";
 import { placerPiste } from "../lib/pistes";
+import { rechercheMarchand } from "../lib/marchand";
 import {
   CHEMINS,
   GUIDES,
@@ -2984,17 +2985,19 @@ test("chaque evenement est compte la ou il se produit, sans jamais bloquer l'act
 test("une piste remplit la premiere ligne vide, sans doublon ni depassement", () => {
   const ligne = (label = "", source_url = "") => ({ label, image_url: "", source_url, note: "" });
   const neuve = () => ligne();
+  // La piste pose aussi son lien de recherche : chaque ligne placee le porte.
+  const LIEN = "https://m.example/s?k=x";
 
-  // Les deux lignes vides de depart : la premiere se remplit, rien ne s'ajoute.
-  assert.deepEqual(placerPiste([ligne(), ligne()], "Un plaid", 10, neuve), [ligne("Un plaid"), ligne()]);
+  // Les deux lignes vides de depart : la premiere prend le titre et le lien.
+  assert.deepEqual(placerPiste([ligne(), ligne()], "Un plaid", LIEN, 10, neuve), [ligne("Un plaid", LIEN), ligne()]);
   // Une ligne qui n'a qu'un lien n'est pas vide : elle n'est pas ecrasee.
   assert.deepEqual(
-    placerPiste([ligne("", "https://x.example"), ligne()], "Un plaid", 10, neuve),
-    [ligne("", "https://x.example"), ligne("Un plaid")],
+    placerPiste([ligne("", "https://x.example"), ligne()], "Un plaid", LIEN, 10, neuve),
+    [ligne("", "https://x.example"), ligne("Un plaid", LIEN)],
   );
-  assert.deepEqual(placerPiste([ligne("A")], "Un plaid", 10, neuve), [ligne("A"), ligne("Un plaid")]);
-  assert.equal(placerPiste([ligne("Un plaid"), ligne()], "Un plaid", 10, neuve), null, "doublon");
-  assert.equal(placerPiste([ligne("A"), ligne("B")], "Un plaid", 2, neuve), null, "liste pleine");
+  assert.deepEqual(placerPiste([ligne("A")], "Un plaid", LIEN, 10, neuve), [ligne("A"), ligne("Un plaid", LIEN)]);
+  assert.equal(placerPiste([ligne("Un plaid"), ligne()], "Un plaid", LIEN, 10, neuve), null, "doublon");
+  assert.equal(placerPiste([ligne("A"), ligne("B")], "Un plaid", LIEN, 2, neuve), null, "liste pleine");
 });
 
 test("les pistes de l'editeur sont celles des guides, dans chaque langue", () => {
@@ -3024,7 +3027,38 @@ test("les pistes de l'editeur sont celles des guides, dans chaque langue", () =>
   assert.doesNotMatch(encart, /<details[^>]*\bopen\b/);
   const editeur = lire("components/editor/PageEditor.tsx");
   const etape2 = editeur.slice(editeur.indexOf("{step === 2 && ("), editeur.indexOf("{step === 3 && ("));
-  assert.match(etape2, /<BesoinIdees[\s\S]*placerPiste\(prev, nom, LIMITS\.itemsMax, emptyRow\)/, "l'encart a quitte l'etape des cadeaux");
+  assert.match(etape2, /<BesoinIdees[\s\S]*placerPiste\(prev, nom, url, LIMITS\.itemsMax, emptyRow\)/, "l'encart a quitte l'etape des cadeaux");
+});
+
+test("les guides pointent vers des liens marchands nus, et l'editeur pre-remplit ce meme lien", () => {
+  /*
+   * Le refus Skimlinks du 20/09/2026 tenait a l'absence de liens sortants dans le
+   * contenu. Les idees des guides en portent donc, vers une recherche marchande.
+   */
+  const guide = lire("app/[langue]/idees-cadeaux/[occasion]/page.tsx");
+  assert.match(guide, /href=\{rechercheMarchand\(langue, idee\.nom\)\}/, "les idees des guides ne pointent plus vers un marchand");
+  /*
+   * Mais nu, et c'est le vrai piege : un lien affilie sur une page vue par le
+   * receveur poserait le cookie chez qui n'achete pas, et trahirait « aucun lien
+   * affilie hors du chemin d'achat ». L'affiliation ne vit que sur « Acheter ».
+   */
+  assert.doesNotMatch(guide, /skimresources|lienSortant|skimlinksId/, "un lien de guide passe par l'affiliation");
+  assert.doesNotMatch(lire("lib/marchand.ts"), /skimresources/, "le lien marchand passe par le wrapper d'affiliation");
+
+  // Une recherche encodee, par langue : sans encodage, un « & » couperait la requete.
+  for (const langue of LANGUES) {
+    const url = new URL(rechercheMarchand(langue, "écharpe & thé"));
+    assert.equal(url.protocol, "https:", langue);
+    assert.match(url.hostname, /^www\.amazon\./, `${langue} : hors Amazon`);
+    assert.equal(url.searchParams.get("k"), "écharpe & thé", langue);
+  }
+
+  // L'editeur pose ce meme lien quand une piste est adoptee : le titre seul ne suffit plus.
+  assert.match(
+    lire("components/editor/BesoinIdees.tsx"),
+    /onChoisir\(nom, rechercheMarchand\(langue, nom\)\)/,
+    "l'encart n'ajoute plus le lien de recherche",
+  );
 });
 
 // --- llms.txt ----------------------------------------------------------------

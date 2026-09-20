@@ -709,8 +709,8 @@ export const nl = {
     ajouter: "+ Cadeau toevoegen",
     idees: {
       titre: "Ideeën nodig?",
-      aide: "Een paar ideeën, per profiel. Eén klik zet het op je lijst; de link voeg je daarna toe.",
-      aideOccasion: "{occasion}: een paar ideeën, per profiel. Eén klik zet het op je lijst; de link voeg je daarna toe.",
+      aide: "Een paar ideeën, per profiel. Eén klik voegt de titel en een zoeklink toe; die verfijn je zelf.",
+      aideOccasion: "{occasion}: een paar ideeën, per profiel. Eén klik voegt de titel en een zoeklink toe; die verfijn je zelf.",
       plein: "De lijst is vol.",
       guide: "Lees de gids: {occasion} ↗",
     },

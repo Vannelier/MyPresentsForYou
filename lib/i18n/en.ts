@@ -706,8 +706,8 @@ export const en = {
     ajouter: "+ Add a gift",
     idees: {
       titre: "Need ideas?",
-      aide: "A few ideas, sorted by profile. One click adds it to your list; the link you add afterwards.",
-      aideOccasion: "{occasion}: a few ideas, sorted by profile. One click adds it to your list; the link you add afterwards.",
+      aide: "A few ideas, sorted by profile. One click adds the title and a search link; refine it yourself.",
+      aideOccasion: "{occasion}: a few ideas, sorted by profile. One click adds the title and a search link; refine it yourself.",
       plein: "The list is full.",
       guide: "Read the guide: {occasion} ↗",
     },

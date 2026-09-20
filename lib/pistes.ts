@@ -15,16 +15,17 @@ type Ligne = { label: string; image_url: string; source_url: string; note: strin
 
 /**
  * Place une piste dans la liste des cadeaux : dans la premiere ligne encore
- * vide, sinon dans une nouvelle ligne, sinon nulle part (liste pleine).
+ * vide, sinon dans une nouvelle ligne, sinon nulle part (liste pleine). Elle
+ * pose le titre et un lien de recherche marchande (`url`), que l'offreur precise.
  *
  * La ligne vide d'abord : l'editeur en ouvre deux, et ajouter a la suite
  * laissait deux trous en tete de liste, que l'offreur devait supprimer a la main.
  * Renvoie `null` quand rien n'a change, pour que l'appelant ne re-rende pas.
  */
-export function placerPiste<T extends Ligne>(lignes: T[], nom: string, max: number, nouvelle: () => T): T[] | null {
+export function placerPiste<T extends Ligne>(lignes: T[], nom: string, url: string, max: number, nouvelle: () => T): T[] | null {
   if (lignes.some((l) => l.label.trim() === nom)) return null;
   const vide = lignes.findIndex((l) => !l.label.trim() && !l.image_url.trim() && !l.source_url.trim() && !l.note.trim());
-  if (vide >= 0) return lignes.map((l, i) => (i === vide ? { ...l, label: nom } : l));
+  if (vide >= 0) return lignes.map((l, i) => (i === vide ? { ...l, label: nom, source_url: url } : l));
   if (lignes.length >= max) return null;
-  return [...lignes, { ...nouvelle(), label: nom }];
+  return [...lignes, { ...nouvelle(), label: nom, source_url: url }];
 }
