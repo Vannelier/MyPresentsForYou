@@ -6,6 +6,22 @@ export function baseUrl(): string {
 }
 
 /**
+ * L'hote canonique — celui de `baseUrl()` — ou `null` en local. Le middleware
+ * s'en sert pour n'exposer qu'une seule adresse : Railway, contrairement a
+ * Vercel, ne redirige pas l'apex vers le www tout seul, et Google indexait alors
+ * les deux comme des doublons. `null` en local coupe la redirection en
+ * developpement, ou l'hote est `localhost`.
+ */
+export function hoteCanonique(): string | null {
+  try {
+    const hote = new URL(baseUrl()).host;
+    return hote && !hote.startsWith("localhost") ? hote : null;
+  } catch {
+    return null;
+  }
+}
+
+/**
  * Un an. A trente jours, une carte avait disparu bien avant que l'occasion ne
  * revienne — un anniversaire, Noel — alors que c'est a ce moment-la qu'on
  * voudrait la retrouver. Exportee pour la carte a imprimer, dont les mots gardes
