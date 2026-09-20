@@ -1386,9 +1386,31 @@ label.btn.is-disabled {
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
 
+/*
+ * Mesure sur l'ecran de fin : place en premier et pulsant, cette boite restait
+ * presque indiscernable de « Lien a envoyer » juste en dessous — meme carte,
+ * meme bordure grise a l'oeil, un filet dore a 5 % d'opacite invisible sur un
+ * fond deja chaud. Le repos passe donc de 0,05/0,4 a 0,11/0,7, et un liseré a
+ * gauche (le motif deja utilise par `.reply-quote`) donne un repere qui ne
+ * depend pas de l'animation, pour qui a coupe les mouvements ou regarde une
+ * capture d'ecran figee.
+ */
 .link-box--admin {
-  border-color: rgba(176, 132, 40, 0.4);
-  background: rgba(176, 132, 40, 0.05);
+  border-color: rgba(176, 132, 40, 0.7);
+  border-left-width: 4px;
+  background: rgba(176, 132, 40, 0.11);
+}
+
+/*
+ * Le pendant : sur ce meme ecran, « Lien a envoyer » perd son encadre. Les
+ * deux boites cote a cote se disputaient l'oeil a egalite ; seule celle du
+ * dessus doit rester une carte — c'est la seule des deux qu'on ne peut pas
+ * retrouver plus tard.
+ */
+.link-box--plain {
+  border-color: transparent;
+  background: transparent;
+  box-shadow: none;
 }
 
 /*
@@ -1408,14 +1430,16 @@ label.btn.is-disabled {
 }
 
 @keyframes link-pulse {
+  /* Le creux du pouls rejoint le repos de `.link-box--admin` (0,7) au lieu de
+     redescendre sous lui : le pouls doublait un flottement deja trop faible. */
   0%,
   100% {
-    border-color: rgba(176, 132, 40, 0.35);
+    border-color: rgba(176, 132, 40, 0.7);
     box-shadow: 0 0 0 0 rgba(176, 132, 40, 0);
   }
   50% {
-    border-color: rgba(176, 132, 40, 0.85);
-    box-shadow: 0 0 0 5px rgba(176, 132, 40, 0.13);
+    border-color: rgba(176, 132, 40, 1);
+    box-shadow: 0 0 0 5px rgba(176, 132, 40, 0.18);
   }
 }
 
@@ -1427,8 +1451,8 @@ label.btn.is-disabled {
 @media (prefers-reduced-motion: reduce) {
   .link-box--pulse {
     animation: none;
-    border-color: rgba(176, 132, 40, 0.85);
-    box-shadow: 0 0 0 5px rgba(176, 132, 40, 0.13);
+    border-color: rgba(176, 132, 40, 1);
+    box-shadow: 0 0 0 5px rgba(176, 132, 40, 0.18);
   }
 }
 

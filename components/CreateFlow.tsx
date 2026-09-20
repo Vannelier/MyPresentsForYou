@@ -86,7 +86,7 @@ function Created({ result }: { result: CreateResult }) {
           <CopyLine value={result.adminUrl} />
         </div>
 
-        <div className="link-box">
+        <div className="link-box link-box--plain">
           <span className="link-box__label">{t.lienEnvoi}</span>
           <span className="link-box__help">{t.lienEnvoiAide}</span>
           <CopyLine value={result.publicUrl} />
