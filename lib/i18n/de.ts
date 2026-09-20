@@ -711,8 +711,8 @@ export const de = {
     ajouter: "+ Geschenk hinzufügen",
     idees: {
       titre: "Brauchst du Ideen?",
-      aide: "Ein paar Ideen, nach Typ sortiert. Ein Klick setzt sie auf deine Liste; den Link ergänzt du danach.",
-      aideOccasion: "{occasion}: ein paar Ideen, nach Typ sortiert. Ein Klick setzt sie auf deine Liste; den Link ergänzt du danach.",
+      aide: "Ein paar Ideen, nach Typ sortiert. Ein Klick fügt den Titel und einen Suchlink hinzu; den passt du noch an.",
+      aideOccasion: "{occasion}: ein paar Ideen, nach Typ sortiert. Ein Klick fügt den Titel und einen Suchlink hinzu; den passt du noch an.",
       plein: "Die Liste ist voll.",
       guide: "Zum Ratgeber: {occasion} ↗",
     },

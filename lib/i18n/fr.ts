@@ -731,8 +731,8 @@ export const fr = {
     ajouter: "+ Ajouter un cadeau",
     idees: {
       titre: "Besoin d'idées ?",
-      aide: "Quelques idées, classées par profil. Un clic l'ajoute à ta liste ; le lien, tu le mets ensuite.",
-      aideOccasion: "{occasion} : quelques idées, classées par profil. Un clic l'ajoute à ta liste ; le lien, tu le mets ensuite.",
+      aide: "Quelques idées, classées par profil. Un clic ajoute le titre et un lien de recherche ; à toi de le préciser.",
+      aideOccasion: "{occasion} : quelques idées, classées par profil. Un clic ajoute le titre et un lien de recherche ; à toi de le préciser.",
       plein: "La liste est pleine.",
       guide: "Lire le guide : {occasion} ↗",
     },

@@ -1083,8 +1083,10 @@ l'outil : l'accueil, le formulaire, `/questions`, et surtout les guides par occa
   crémaillère, fête des mères — les occasions les plus cherchées, la fête des pères écartée parce que
   ses recherches sont surtout des bricolages d'enfants. Titres et introductions suivent les
   suggestions de recherche de chaque langue (« idée cadeau anniversaire », « Geschenkideen zum
-  Einzug »…) ; quatre profils de pistes, sans marque ni lien marchand ; trois questions balisées
-  `FAQPage` et un fil d'Ariane `BreadcrumbList`. Le bouton ouvre l'éditeur l'occasion déjà choisie
+  Einzug »…) ; quatre profils de pistes, chacune liée à une recherche marchande dans la langue de la
+  page (`rechercheMarchand` → `amazon.<tld>/s`, un domaine par langue), en lien nu et non affilié —
+  c'est le contenu à liens sortants qu'un réseau d'affiliation attend d'un éditeur ; trois questions
+  balisées `FAQPage` et un fil d'Ariane `BreadcrumbList`. Le bouton ouvre l'éditeur l'occasion déjà choisie
   (`?occasion=`), jamais par-dessus un brouillon. Les guides sont liés depuis l'accueil et le pied de
   page ; leur texte vit dans `lib/guides/`, hors du dictionnaire que reçoit le navigateur. La
   démarche est dans `docs/superpowers/specs/2026-09-17-referencement-occasions-design.md`.
@@ -1328,25 +1330,60 @@ le référencement, et seulement ensuite la publicité du site. Le modèle s'y i
    rapports qui décident de la suite : la part des cartes choisies, et les clics par choix. La
    politique de confidentialité mentionne ces trois totaux.
 
-   **L'affiliation est prête à brancher.** Avec `SKIMLINKS_ID` posé, la redirection envoie vers
-   `https://go.skimresources.com/?id=…&url=…&xcust=bouton_acheter` — le Link Wrapper, sans le script
-   Skimlinks, qui se chargerait sur chaque page et y poserait des cookies. Un marchand que Skimlinks
-   ne connaît pas est servi sans commission, mais servi. La mention « Lien affilié » s'affiche sous
-   le bouton dès que la variable est posée. La FAQ, les conditions et la politique de confidentialité
-   disent que le bouton « peut » passer par un réseau d'affiliation, qui peut poser ses propres
-   cookies une fois le site quitté : vrai avant comme après le branchement. Compte Skimlinks ouvert
-   le 17 septembre 2026, en attente d'approbation ; ne poser la variable qu'une fois le domaine
-   approuvé.
+   **Le branchement existe dans le code, mais Skimlinks a refusé le compte.** Avec `SKIMLINKS_ID`
+   posé, la redirection enverrait vers `https://go.skimresources.com/?id=…&url=…&xcust=bouton_acheter`
+   — le Link Wrapper, sans le script Skimlinks, qui se chargerait sur chaque page et y poserait des
+   cookies. Un marchand que Skimlinks ne connaît pas est servi sans commission, mais servi. La mention
+   « Lien affilié » s'afficherait sous le bouton dès que la variable serait posée. La FAQ, les
+   conditions et la politique de confidentialité disent que le bouton « peut » passer par un réseau
+   d'affiliation, qui peut poser ses propres cookies une fois le site quitté : vrai avant comme après
+   un branchement éventuel, donc rien à changer dans ces textes tant que ce point reste ouvert.
+
+   Compte ouvert le 17 septembre 2026, refusé le 20 septembre 2026. Le refus ne cite aucun motif
+   précis — un message type disant que les marchands représentés exigent des critères de marque que
+   le site ne remplirait pas actuellement. Skimlinks ne publie pas la liste de ces critères par
+   candidature, mais son
+   [propre critère d'éligibilité](https://support.skimlinks.com/hc/en-us/articles/223835528-How-do-I-know-if-my-site-app-or-social-media-channel-is-suitable-for-Skimlinks)
+   dit sans ambiguïté ce qu'il cherche : un site de contenu — « editorial sites, shopping platforms,
+   and blogs » — avec des articles originaux centrés sur des produits, marchands ou services, et
+   « content with outbound links and product references is even better ». Aucun seuil de trafic
+   formel n'y est posé (une autre page de leur aide cite quand même le trafic insuffisant comme motif
+   de refus fréquent pour un site neuf, sans le confirmer comme règle écrite).
+
+   Rapporté au site : les six guides d'idées cadeaux (`/idees-cadeaux/[occasion]`, six langues, mis à
+   jour le 17 septembre — le jour même de la demande) sont le seul contenu éditorial du domaine, et ils
+   ne comportent aujourd'hui **aucun lien sortant** — les idées de cadeaux sont nommées, jamais liées à
+   un marchand (voir `app/[langue]/idees-cadeaux/[occasion]/page.tsx`, `profil.idees`). C'est un choix
+   du projet, pas un oubli : le README documentait déjà ce report, « la suite — des liens vers des
+   marchands affiliés — attend la liste des marchands Skimlinks » (voir point 4 plus bas). Ce report
+   crée l'écart précis que Skimlinks dit préférer voir comblé, et le reste du domaine (l'éditeur, la
+   page d'administration) est un outil transactionnel, pas du contenu éditorial. Le trafic nul à la
+   date de la demande (voir « Le risque : le volume » plus bas) est un second facteur plausible, mais
+   moins bien sourcé que celui-ci.
+
+   Correction appliquée le 20 septembre 2026, sans attendre Skimlinks : chaque idée des guides pointe
+   désormais vers une recherche marchande (`rechercheMarchand`, dans `lib/marchand.ts`), et une piste
+   adoptée dans l'éditeur arrive avec ce même lien. Des liens **nus, non affiliés** — un lien affilié
+   sur une page vue par le receveur poserait le cookie chez qui n'achète pas, ce que le modèle exclut ;
+   l'affiliation ne vit que sur le clic « Acheter » de l'offreur. C'était renverser la décision du
+   point 4, tranché avant de le faire (voir ce point). Le détail est en « Ce qui est personnalisable »
+   › « Des guides par occasion ».
 2. **Après le multilingue** : l'e-mail de notification, écrit d'emblée dans les six langues.
-3. **Une fois le site traduit et en ligne** : l'inscription au réseau d'affiliation. Les réseaux
-   examinent un site avant d'accepter son éditeur ; un site vide et monolingue passerait mal.
-4. **Avec du trafic** : les suggestions. **Une première version existe**, sans lien marchand : dans
-   l'étape « Cadeaux » de l'éditeur, un encart replié « Besoin d'idées ? » propose les pistes du guide
-   de l'occasion choisie (celles d'anniversaire pour une occasion sans guide). Un clic place le titre
-   dans la première ligne vide ; le lien reste à l'offreur. Les pistes viennent des guides
-   (`pistesPourEditeur`), passées en propriété par les pages serveur : l'éditeur n'importe jamais
-   `lib/guides`. La suite — des liens vers des marchands affiliés — attend la liste des marchands
-   Skimlinks.
+3. **Une fois le site traduit et en ligne, et avec du contenu qui pointe vers des marchands** :
+   l'inscription au réseau d'affiliation. Les réseaux examinent un site avant d'accepter son éditeur ;
+   le refus de Skimlinks du 20 septembre 2026 (point 1) en donne le motif documenté — du contenu de
+   produits sans lien sortant, pas seulement l'absence de trafic. Skimlinks reste le choix par défaut
+   si ce point est corrigé ; en cas de nouveau refus, des alternatives existent (Sovrn Commerce, Awin,
+   CJ Affiliate) mais n'ont pas été évaluées — ce serait à faire à ce moment-là, pas avant.
+4. **Avec du trafic** : les suggestions. **Une première version existe** : dans l'étape « Cadeaux »
+   de l'éditeur, un encart replié « Besoin d'idées ? » propose les pistes du guide de l'occasion
+   choisie (celles d'anniversaire pour une occasion sans guide). Un clic place le titre **et un lien de
+   recherche marchande** dans la première ligne vide ; le lien, une simple recherche dans la langue de
+   l'offreur, lui reste à préciser. Les pistes viennent des guides (`pistesPourEditeur`), passées en
+   propriété par les pages serveur : l'éditeur n'importe jamais `lib/guides`. Ce lien n'est pas affilié
+   ici — l'affiliation ne s'ajoute qu'au clic « Acheter », côté serveur. Une liste de marchands propre
+   à un réseau n'est **pas** nécessaire : le Link Wrapper trie partenaire et non-partenaire au clic, et
+   maintenir notre propre liste serait une donnée à périmer pour zéro gain.
 
 ## Décisions structurantes
 

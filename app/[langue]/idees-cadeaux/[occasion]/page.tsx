@@ -6,6 +6,7 @@ import SiteFooter from "@/components/SiteFooter";
 import ApercuOccasion from "@/components/guides/ApercuOccasion";
 import { baseUrl } from "@/lib/env";
 import { textesGuides } from "@/lib/guides";
+import { rechercheMarchand } from "@/lib/marchand";
 import { dictionnaire } from "@/lib/i18n";
 import { alternatesGuide } from "@/lib/i18n/alternates";
 import { GUIDES, cheminGuide, cheminVers, type Guide } from "@/lib/i18n/chemins";
@@ -115,7 +116,21 @@ export default async function GuideOccasion({ params }: Params) {
               <ul>
                 {profil.idees.map((idee) => (
                   <li key={idee.nom}>
-                    <strong>{idee.nom}</strong> — {idee.pourquoi}
+                    {/*
+                      Un lien de recherche marchande, nu et non affilie : c'est le
+                      contenu a liens sortants qu'un reseau d'affiliation attend d'un
+                      editeur (le refus Skimlinks du 20/09/2026 tenait a son absence).
+                      Nu, parce que la page est vue par le receveur : un tag affilie y
+                      poserait le cookie chez qui n'achete pas — l'affiliation ne vit
+                      que sur le clic « Acheter » de l'offreur. `nofollow` parce que ce
+                      sont des liens commerciaux en masse, pas des choix editoriaux.
+                    */}
+                    <strong>
+                      <a href={rechercheMarchand(langue, idee.nom)} target="_blank" rel="nofollow noopener">
+                        {idee.nom}
+                      </a>
+                    </strong>{" "}
+                    — {idee.pourquoi}
                   </li>
                 ))}
               </ul>

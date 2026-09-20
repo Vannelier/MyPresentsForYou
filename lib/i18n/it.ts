@@ -717,8 +717,8 @@ export const it = {
     ajouter: "+ Aggiungi un regalo",
     idees: {
       titre: "Ti servono idee?",
-      aide: "Qualche idea, divisa per profilo. Un clic la aggiunge alla tua lista; il link lo metti dopo.",
-      aideOccasion: "{occasion}: qualche idea, divisa per profilo. Un clic la aggiunge alla tua lista; il link lo metti dopo.",
+      aide: "Qualche idea, divisa per profilo. Un clic aggiunge il titolo e un link di ricerca; poi lo precisi tu.",
+      aideOccasion: "{occasion}: qualche idea, divisa per profilo. Un clic aggiunge il titolo e un link di ricerca; poi lo precisi tu.",
       plein: "La lista è piena.",
       guide: "Leggi la guida: {occasion} ↗",
     },
