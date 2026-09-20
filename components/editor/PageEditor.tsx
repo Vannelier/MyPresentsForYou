@@ -978,6 +978,23 @@ export default function PageEditor(props: Props) {
             )}
           </p>
 
+          {/*
+            Avant les lignes, pas apres. Repliee, elle ne coute qu'une ligne de
+            texte — mais posee sous « Ajouter un cadeau » elle tombait a 1385 px
+            du haut avec seulement les deux lignes vides de depart (mesure a
+            375x812), et a 4754 px une fois les dix lignes remplies : hors
+            d'atteinte au moment precis ou un donneur qui cale en aurait besoin.
+            Elle reste repliee par defaut — l'urgence est de la rendre trouvable,
+            pas de la deplier a la place du donneur.
+          */}
+          <BesoinIdees
+            pistes={props.pistes}
+            occasion={occasion}
+            pris={items.map((it) => it.label.trim())}
+            plein={items.length >= LIMITS.itemsMax && !items.some((it) => !it.label.trim() && !it.source_url.trim() && !it.image_url.trim() && !it.note.trim())}
+            onChoisir={(nom, url) => setItems((prev) => placerPiste(prev, nom, url, LIMITS.itemsMax, emptyRow) ?? prev)}
+          />
+
           <ol className="rows">
             {items.map((row, index) => (
               <li className="row" key={row.key} onPaste={(e) => handlePaste(row.key, e)}>
@@ -1147,14 +1164,6 @@ export default function PageEditor(props: Props) {
           >
             {ed.ajouter}
           </button>
-
-          <BesoinIdees
-            pistes={props.pistes}
-            occasion={occasion}
-            pris={items.map((it) => it.label.trim())}
-            plein={items.length >= LIMITS.itemsMax && !items.some((it) => !it.label.trim() && !it.source_url.trim() && !it.image_url.trim() && !it.note.trim())}
-            onChoisir={(nom, url) => setItems((prev) => placerPiste(prev, nom, url, LIMITS.itemsMax, emptyRow) ?? prev)}
-          />
         </section>
       )}
 
