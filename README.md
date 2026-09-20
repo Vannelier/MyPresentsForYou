@@ -1328,18 +1328,33 @@ le référencement, et seulement ensuite la publicité du site. Le modèle s'y i
    rapports qui décident de la suite : la part des cartes choisies, et les clics par choix. La
    politique de confidentialité mentionne ces trois totaux.
 
-   **L'affiliation est prête à brancher.** Avec `SKIMLINKS_ID` posé, la redirection envoie vers
-   `https://go.skimresources.com/?id=…&url=…&xcust=bouton_acheter` — le Link Wrapper, sans le script
-   Skimlinks, qui se chargerait sur chaque page et y poserait des cookies. Un marchand que Skimlinks
-   ne connaît pas est servi sans commission, mais servi. La mention « Lien affilié » s'affiche sous
-   le bouton dès que la variable est posée. La FAQ, les conditions et la politique de confidentialité
-   disent que le bouton « peut » passer par un réseau d'affiliation, qui peut poser ses propres
-   cookies une fois le site quitté : vrai avant comme après le branchement. Compte Skimlinks ouvert
-   le 17 septembre 2026, en attente d'approbation ; ne poser la variable qu'une fois le domaine
-   approuvé.
+   **Le branchement existe dans le code, mais Skimlinks a refusé le compte.** Avec `SKIMLINKS_ID`
+   posé, la redirection enverrait vers `https://go.skimresources.com/?id=…&url=…&xcust=bouton_acheter`
+   — le Link Wrapper, sans le script Skimlinks, qui se chargerait sur chaque page et y poserait des
+   cookies. Un marchand que Skimlinks ne connaît pas est servi sans commission, mais servi. La mention
+   « Lien affilié » s'afficherait sous le bouton dès que la variable serait posée. La FAQ, les
+   conditions et la politique de confidentialité disent que le bouton « peut » passer par un réseau
+   d'affiliation, qui peut poser ses propres cookies une fois le site quitté : vrai avant comme après
+   un branchement éventuel, donc rien à changer dans ces textes tant que ce point reste ouvert.
+
+   Compte ouvert le 17 septembre 2026, refusé le 20 septembre 2026. Le refus ne cite aucun motif
+   précis — un message type disant que les marchands représentés exigent des critères de marque que
+   le site ne remplirait pas actuellement. Skimlinks ne publie pas la liste de ces critères par
+   candidature, mais ses [critères connus de refus](https://support.skimlinks.com/hc/en-us/articles/223835548-Why-was-my-Publisher-application-denied)
+   pointent vers un candidat évident et vérifiable ici : un trafic organique insuffisant, les sites
+   neufs sans audience établie n'étant pas approuvés avant d'en avoir une. Au 17 septembre, date de la
+   demande, aucune carte n'avait encore été créée (voir « Le risque : le volume » plus bas) — c'est une
+   spéculation, faute de motif communiqué, mais une spéculation qui colle aux faits et au point 3
+   ci-dessous, écrit avant le refus et qui disait déjà de ne s'inscrire qu'une fois le trafic réel.
+   Le compte a été ouvert avant que cet ordre soit respecté. Ne pas retenter avant que
+   `npm run compteurs` montre un trafic réel ; l'écart à corriger n'est pas le réseau, c'est l'attente.
 2. **Après le multilingue** : l'e-mail de notification, écrit d'emblée dans les six langues.
-3. **Une fois le site traduit et en ligne** : l'inscription au réseau d'affiliation. Les réseaux
-   examinent un site avant d'accepter son éditeur ; un site vide et monolingue passerait mal.
+3. **Une fois le site traduit et en ligne, et avec du trafic mesuré** : l'inscription au réseau
+   d'affiliation. Les réseaux examinent un site avant d'accepter son éditeur ; un site traduit mais
+   sans audience passe mal — le refus de Skimlinks du 20 septembre 2026 (point 1) le confirme. Skimlinks
+   reste le choix par défaut si ce trafic apparaît un jour ; en cas de nouveau refus, des alternatives
+   existent (Sovrn Commerce, Awin, CJ Affiliate) mais n'ont pas été évaluées — ce serait à faire à ce
+   moment-là, pas avant.
 4. **Avec du trafic** : les suggestions. **Une première version existe**, sans lien marchand : dans
    l'étape « Cadeaux » de l'éditeur, un encart replié « Besoin d'idées ? » propose les pistes du guide
    de l'occasion choisie (celles d'anniversaire pour une occasion sans guide). Un clic place le titre
