@@ -1340,21 +1340,36 @@ le référencement, et seulement ensuite la publicité du site. Le modèle s'y i
    Compte ouvert le 17 septembre 2026, refusé le 20 septembre 2026. Le refus ne cite aucun motif
    précis — un message type disant que les marchands représentés exigent des critères de marque que
    le site ne remplirait pas actuellement. Skimlinks ne publie pas la liste de ces critères par
-   candidature, mais ses [critères connus de refus](https://support.skimlinks.com/hc/en-us/articles/223835548-Why-was-my-Publisher-application-denied)
-   pointent vers un candidat évident et vérifiable ici : un trafic organique insuffisant, les sites
-   neufs sans audience établie n'étant pas approuvés avant d'en avoir une. Au 17 septembre, date de la
-   demande, aucune carte n'avait encore été créée (voir « Le risque : le volume » plus bas) — c'est une
-   spéculation, faute de motif communiqué, mais une spéculation qui colle aux faits et au point 3
-   ci-dessous, écrit avant le refus et qui disait déjà de ne s'inscrire qu'une fois le trafic réel.
-   Le compte a été ouvert avant que cet ordre soit respecté. Ne pas retenter avant que
-   `npm run compteurs` montre un trafic réel ; l'écart à corriger n'est pas le réseau, c'est l'attente.
+   candidature, mais son
+   [propre critère d'éligibilité](https://support.skimlinks.com/hc/en-us/articles/223835528-How-do-I-know-if-my-site-app-or-social-media-channel-is-suitable-for-Skimlinks)
+   dit sans ambiguïté ce qu'il cherche : un site de contenu — « editorial sites, shopping platforms,
+   and blogs » — avec des articles originaux centrés sur des produits, marchands ou services, et
+   « content with outbound links and product references is even better ». Aucun seuil de trafic
+   formel n'y est posé (une autre page de leur aide cite quand même le trafic insuffisant comme motif
+   de refus fréquent pour un site neuf, sans le confirmer comme règle écrite).
+
+   Rapporté au site : les six guides d'idées cadeaux (`/idees-cadeaux/[occasion]`, six langues, mis à
+   jour le 17 septembre — le jour même de la demande) sont le seul contenu éditorial du domaine, et ils
+   ne comportent aujourd'hui **aucun lien sortant** — les idées de cadeaux sont nommées, jamais liées à
+   un marchand (voir `app/[langue]/idees-cadeaux/[occasion]/page.tsx`, `profil.idees`). C'est un choix
+   du projet, pas un oubli : le README documentait déjà ce report, « la suite — des liens vers des
+   marchands affiliés — attend la liste des marchands Skimlinks » (voir point 4 plus bas). Ce report
+   crée l'écart précis que Skimlinks dit préférer voir comblé, et le reste du domaine (l'éditeur, la
+   page d'administration) est un outil transactionnel, pas du contenu éditorial. Le trafic nul à la
+   date de la demande (voir « Le risque : le volume » plus bas) est un second facteur plausible, mais
+   moins bien sourcé que celui-ci.
+
+   Correction possible sans attendre Skimlinks : un lien sortant simple, non affilié, vers un marchand
+   réel n'a besoin d'aucune approbation — Skimlinks les remballe une fois le compte actif, il ne
+   conditionne pas leur pose. Ce serait renverser la décision du point 4, pas juste attendre ; à
+   trancher avant de le faire, pas à faire en silence dans un correctif de documentation.
 2. **Après le multilingue** : l'e-mail de notification, écrit d'emblée dans les six langues.
-3. **Une fois le site traduit et en ligne, et avec du trafic mesuré** : l'inscription au réseau
-   d'affiliation. Les réseaux examinent un site avant d'accepter son éditeur ; un site traduit mais
-   sans audience passe mal — le refus de Skimlinks du 20 septembre 2026 (point 1) le confirme. Skimlinks
-   reste le choix par défaut si ce trafic apparaît un jour ; en cas de nouveau refus, des alternatives
-   existent (Sovrn Commerce, Awin, CJ Affiliate) mais n'ont pas été évaluées — ce serait à faire à ce
-   moment-là, pas avant.
+3. **Une fois le site traduit et en ligne, et avec du contenu qui pointe vers des marchands** :
+   l'inscription au réseau d'affiliation. Les réseaux examinent un site avant d'accepter son éditeur ;
+   le refus de Skimlinks du 20 septembre 2026 (point 1) en donne le motif documenté — du contenu de
+   produits sans lien sortant, pas seulement l'absence de trafic. Skimlinks reste le choix par défaut
+   si ce point est corrigé ; en cas de nouveau refus, des alternatives existent (Sovrn Commerce, Awin,
+   CJ Affiliate) mais n'ont pas été évaluées — ce serait à faire à ce moment-là, pas avant.
 4. **Avec du trafic** : les suggestions. **Une première version existe**, sans lien marchand : dans
    l'étape « Cadeaux » de l'éditeur, un encart replié « Besoin d'idées ? » propose les pistes du guide
    de l'occasion choisie (celles d'anniversaire pour une occasion sans guide). Un clic place le titre
