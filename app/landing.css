@@ -66,23 +66,15 @@
  * favoris deduits. On resserre davantage et la maquette se fait plus compacte,
  * plutot que de laisser les cartes passer sous la ligne de flottaison.
  */
-@media (min-width: 52rem) and (max-height: 56rem) {
+@media (min-width: 52rem) and (max-height: 58rem) {
   .landing {
-    padding-top: 2rem;
+    padding-top: 1.5rem;
   }
 
   .landing > section + section,
   .landing > footer {
-    margin-top: 2rem;
-    padding-top: 2rem;
-  }
-
-  .lp-phone__thumb {
-    height: 34px;
-  }
-
-  .lp-phone__screen {
-    padding: 1rem 0.8rem 0.85rem;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
   }
 }
 
@@ -102,10 +94,6 @@
   .landing > footer {
     margin-top: 1.5rem;
     padding-top: 1.5rem;
-  }
-
-  .lp-phone__thumb {
-    height: 28px;
   }
 }
 
@@ -152,6 +140,43 @@
   margin-top: 0.35rem;
 }
 
+/*
+ * Le titre reste calibre pour le telephone, ou `8.5vw` sature vite : au-dela de
+ * 752 px de large, la formule plafonne deja a 4rem (64 px). Sur ordinateur, ce
+ * plafond fait le vrai obstacle a la regle du haut de fichier — trois etapes
+ * lisibles sans defiler : mesure a 1366x768, le titre a lui seul mesurait
+ * 358 px (trois lignes a 64 px de corps), pour une colonne de texte haute de
+ * 612 px et une premiere carte d'etape finissant a 1085 px, bien sous les
+ * 768 px utiles. Aucun des trois paliers de resserrement plus bas — qui
+ * jouent sur les marges entre sections — n'attaque cette cause-la.
+ */
+@media (min-width: 52rem) {
+  .lp-hero h1 {
+    font-size: clamp(2.2rem, 3.2vw, 2.9rem);
+  }
+}
+
+/*
+ * Fenetre basse : le meme resserrement qu'ailleurs sur la page, mais applique
+ * ici et non dans le bloc « Fenetre basse » plus haut dans le fichier — deux
+ * regles de meme specificite sur `.lp-hero h1` se departagent par l'ordre du
+ * fichier, pas par l'imbrication des media queries, et la regle ecrite plus
+ * bas l'emporte quelle que soit sa position dans sa propre @media.
+ *
+ * Mesure a 1366x768 apres le premier resserrement : le titre restait a
+ * 196 px et le bas de la premiere carte d'etape a 923 px, encore 155 px sous
+ * la fenetre utile.
+ */
+@media (min-width: 52rem) and (max-height: 58rem) {
+  .lp-hero {
+    padding-bottom: 0;
+  }
+
+  .lp-hero h1 {
+    font-size: clamp(2rem, 2.8vw, 2.5rem);
+  }
+}
+
 .lp-sub {
   margin: 1.1rem auto 0;
   max-width: 32rem;
@@ -166,12 +191,25 @@
   }
 }
 
+@media (min-width: 52rem) and (max-height: 58rem) {
+  .lp-sub {
+    margin-top: 0.6rem;
+    font-size: 0.95rem;
+  }
+}
+
 .lp-cta {
   margin-top: 1.9rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0.85rem;
+}
+
+@media (min-width: 52rem) and (max-height: 58rem) {
+  .lp-cta {
+    margin-top: 0.8rem;
+  }
 }
 
 /*
@@ -211,6 +249,17 @@
 
   .lp-cta .btn {
     white-space: nowrap;
+  }
+}
+
+/*
+ * Fenetre basse : la note passe sous les boutons faute de place sur une
+ * rangee (`flex-wrap: wrap` ci-dessus) — l'ecart entre les deux rangees vaut
+ * ici moins que l'ecart entre deux boutons, plutot que de compter double.
+ */
+@media (min-width: 52rem) and (max-height: 58rem) {
+  .lp-cta {
+    gap: 0.5rem;
   }
 }
 
@@ -294,6 +343,44 @@
   font-family: var(--font-display, Georgia, serif);
   font-size: 0.7rem;
   line-height: 1.2;
+}
+
+/*
+ * Fenetre basse : les memes surcharges existaient deja plus haut dans le
+ * fichier, dans le bloc « Fenetre basse », mais sans jamais s'appliquer — a
+ * specificite egale sur `.lp-phone__thumb` et consorts, une regle posterieure
+ * dans le fichier l'emporte quelle que soit sa @media, et les regles de base
+ * ci-dessus venaient apres. Verifie au navigateur : `getComputedStyle` y
+ * rendait 46 px, jamais les 34 puis 28 vises. Deplacees ici, apres leurs
+ * bases, elles s'appliquent enfin.
+ *
+ * Mesure a 1366x768 apres le resserrement du titre : la maquette (404 px)
+ * devenait la colonne la plus haute de l'accroche, devant le texte (361 px),
+ * et restait donc le dernier obstacle avant que la premiere carte d'etape ne
+ * tienne sous la fenetre.
+ */
+@media (min-width: 52rem) and (max-height: 58rem) {
+  .lp-phone__screen {
+    padding: 0.85rem 0.75rem 0.65rem;
+  }
+
+  .lp-phone__cards {
+    margin: 0.55rem 0;
+  }
+
+  .lp-phone__thumb {
+    height: 30px;
+  }
+
+  .lp-phone__label {
+    padding: 0.3rem 0.5rem 0.35rem;
+  }
+}
+
+@media (min-width: 52rem) and (max-height: 46rem) {
+  .lp-phone__thumb {
+    height: 24px;
+  }
 }
 
 .lp-phone__check {
