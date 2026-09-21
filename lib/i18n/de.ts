@@ -201,6 +201,7 @@ export const de = {
       "Ein Geschenk, das auffällt, zu jedem Anlass: eine persönliche Seite mit deinen Geschenkideen. Du schickst den Link, die Person wählt, und dir bleibt nur noch das Schenken.",
     composer: "Meine Geschenkseite erstellen",
     voirExemple: "Beispiel ansehen",
+    voirMaCarte: "Meine Geschenkseite ansehen",
     note: "Kostenlos · ohne Konto · zehn Minuten genügen",
     telephone: {
       surtitre: "Alles Gute zum Geburtstag",
