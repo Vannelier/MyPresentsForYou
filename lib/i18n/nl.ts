@@ -712,7 +712,6 @@ export const nl = {
     idees: {
       titre: "Ideeën nodig?",
       aide: "Een paar ideeën, passend bij het profiel van de ander.",
-      aideOccasion: "{occasion}: een paar ideeën, passend bij het profiel van de ander.",
       plein: "De lijst is vol.",
       guide: "Lees de gids: {occasion} ↗",
     },

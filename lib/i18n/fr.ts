@@ -734,7 +734,6 @@ export const fr = {
     idees: {
       titre: "Besoin d'idées ?",
       aide: "Quelques idées en fonction du profil de la personne.",
-      aideOccasion: "{occasion} : quelques idées en fonction du profil de la personne.",
       plein: "La liste est pleine.",
       guide: "Lire le guide : {occasion} ↗",
     },

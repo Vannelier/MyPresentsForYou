@@ -720,7 +720,6 @@ export const it = {
     idees: {
       titre: "Ti servono idee?",
       aide: "Qualche idea, in base al profilo della persona.",
-      aideOccasion: "{occasion}: qualche idea, in base al profilo della persona.",
       plein: "La lista è piena.",
       guide: "Leggi la guida: {occasion} ↗",
     },
