@@ -35,7 +35,7 @@ import {
 } from "@/components/editor/draft";
 import BesoinIdees from "@/components/editor/BesoinIdees";
 import { useDictionnaire } from "@/components/i18n/Dictionnaire";
-import { placerPiste, type Pistes } from "@/lib/pistes";
+import { placerPiste, retirerPiste, type Pistes } from "@/lib/pistes";
 import type { Dictionnaire } from "@/lib/i18n";
 import { traduire } from "@/lib/i18n/erreurs";
 import { EN_TETE_LANGUE, LOCALES } from "@/lib/i18n/langues";
@@ -920,7 +920,7 @@ export default function PageEditor(props: Props) {
             n'efface le message que s'il valait toujours le defaut precedent.
 
             Une etape a elle, et non un cadre en tete des cadeaux : seize
-            occasions en quatre rubriques, c'est le plus gros bloc de l'editeur,
+            occasions en trois rubriques, c'est le plus gros bloc de l'editeur,
             et le poser au-dessus de la liste repoussait celle-ci a plus de
             1 200 px du haut. Isolee, elle tient dans un ecran et ne gene rien.
           */}
@@ -993,6 +993,7 @@ export default function PageEditor(props: Props) {
             pris={items.map((it) => it.label.trim())}
             plein={items.length >= LIMITS.itemsMax && !items.some((it) => !it.label.trim() && !it.source_url.trim() && !it.image_url.trim() && !it.note.trim())}
             onChoisir={(nom, url) => setItems((prev) => placerPiste(prev, nom, url, LIMITS.itemsMax, emptyRow) ?? prev)}
+            onRetirer={(nom) => setItems((prev) => retirerPiste(prev, nom) ?? prev)}
           />
 
           <ol className="rows">
@@ -1070,9 +1071,6 @@ export default function PageEditor(props: Props) {
                 </div>
 
                 <div className="row__gift">
-                  <span className="row__zone-label row__zone-label--gift">
-                    {ed.ceQueVerra}
-                  </span>
                   <div className="row__gift-grid">
                     <div className="row__thumb-wrap">
                       {/*
@@ -1138,13 +1136,13 @@ export default function PageEditor(props: Props) {
                     </div>
 
                     <div className="row__note">
-                      <Field label={ed.note} help={ed.noteAide}>
+                      <Field label={ed.note}>
                         <input
                           type="text"
                           value={row.note}
                           aria-label={remplir(ed.noteCadeau, { n: index + 1 })}
                           maxLength={LIMITS.itemNote}
-                          placeholder={ed.exempleNote}
+                          placeholder={ed.noteFacultatif}
                           onChange={(e) => patchItem(row.key, { note: e.target.value })}
                         />
                       </Field>
@@ -1174,7 +1172,7 @@ export default function PageEditor(props: Props) {
           <aside className="compose__side">
             <div className="mini">
               <div className="mini__head">
-                <span>{ed.apercuDirect}</span>
+                <span>{ed.apercu}</span>
                 <div className="mini__actions">
                   <button
                     type="button"
@@ -1218,9 +1216,8 @@ export default function PageEditor(props: Props) {
               onClickCapture={() => setEcranApercu("intro")}
             >
               <h2>{ed.intro}</h2>
-              <p className="help">{ed.introAide}</p>
 
-              <Field label={ed.prenom} help={ed.prenomAide}>
+              <Field label={ed.prenom}>
                 <input
                   type="text"
                   value={recipient}
@@ -1232,7 +1229,7 @@ export default function PageEditor(props: Props) {
                 <Counter value={recipient} max={LIMITS.recipient} />
               </Field>
 
-              <Field label={ed.motOuverture} help={ed.motOuvertureAide}>
+              <Field label={ed.motOuverture}>
                 <input
                   type="text"
                   value={intro}
@@ -1244,7 +1241,7 @@ export default function PageEditor(props: Props) {
                 <Counter value={intro} max={LIMITS.intro} />
               </Field>
 
-              <Field label={ed.messagePrincipal} help={ed.messagePrincipalAide}>
+              <Field label={ed.messagePrincipal}>
                 <textarea
                   value={welcome}
                   aria-label={ed.messagePrincipal}
@@ -1256,7 +1253,7 @@ export default function PageEditor(props: Props) {
                 <Counter value={welcome} max={LIMITS.message} />
               </Field>
 
-              <Field label={ed.texteBouton} help={ed.texteBoutonAide}>
+              <Field label={ed.texteBouton}>
                 <input
                   type="text"
                   value={openLabel}
@@ -1334,9 +1331,8 @@ export default function PageEditor(props: Props) {
               onClickCapture={() => setEcranApercu("cadeaux")}
             >
               <h2>{ed.cadeaux}</h2>
-              <p className="help">{ed.cadeauxEcranAide}</p>
 
-              <Field label={ed.titre} help={ed.titreEcranAide}>
+              <Field label={ed.titre}>
                 <input
                   type="text"
                   value={itemsTitle}
@@ -1348,7 +1344,7 @@ export default function PageEditor(props: Props) {
                 <Counter value={itemsTitle} max={LIMITS.itemsTitle} />
               </Field>
 
-              <Field label={ed.contenu} help={ed.contenuAide}>
+              <Field label={ed.contenu}>
                 <textarea
                   value={itemsMessage}
                   aria-label={ed.contenuAria}
@@ -1360,7 +1356,7 @@ export default function PageEditor(props: Props) {
                 <Counter value={itemsMessage} max={LIMITS.itemsMessage} />
               </Field>
 
-              <Field label={ed.signature} help={ed.signatureAide}>
+              <Field label={ed.signature}>
                 <input
                   type="text"
                   value={signature}
@@ -1398,9 +1394,8 @@ export default function PageEditor(props: Props) {
               onClickCapture={() => setEcranApercu("choix")}
             >
               <h2>{ed.choix}</h2>
-              <p className="help">{ed.choixAide}</p>
 
-              <Field label={ed.messageFin} help={ed.messageFinAide}>
+              <Field label={ed.messageFin}>
                 <textarea
                   value={thanks}
                   aria-label={ed.messageFin}
@@ -1494,7 +1489,7 @@ export default function PageEditor(props: Props) {
                 </div>
               </Field>
 
-              <Field label={ed.effet} help={ed.effetAide}>
+              <Field label={ed.effet}>
                 <div className="effects" role="radiogroup" aria-label={ed.effet}>
                   {EFFECTS.map((e) => (
                     <button

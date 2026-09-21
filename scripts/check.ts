@@ -1013,9 +1013,22 @@ test("les rubriques couvrent toutes les occasions, sans doublon", () => {
   assert.deepEqual([...ranges].sort(), OCCASIONS.map((o) => o.id).sort());
 });
 
-test("la rubrique sans titre ne contient que l'occasion neutre", () => {
-  const sansTitre = OCCASION_GROUPS.find((g) => g.label === null);
-  assert.deepEqual(sansTitre?.items.map((o) => o.id), [DEFAULT_OCCASION_ID]);
+test("« Autour d'un theme » regroupe l'occasion neutre, les deux mots a dire et les animaux, en derniere position", () => {
+  /*
+   * Fusion de trois rubriques : l'occasion neutre affichee sans titre en tete,
+   * « Un mot » (felicitations, merci) et « Autour d'un theme » (animaux, seule
+   * jusque-la) ne repondaient deja ni a une date du calendrier ni a une etape
+   * de vie — la meme rubrique de repli, en trois morceaux.
+   */
+  assert.equal(OCCASION_GROUPS.at(-1)?.label, "theme", "la rubrique de repli doit fermer la liste");
+  assert.deepEqual(
+    OCCASION_GROUPS.find((g) => g.label === "theme")?.items.map((o) => o.id),
+    [DEFAULT_OCCASION_ID, "felicitations", "merci", "animaux"],
+  );
+  assert.deepEqual(
+    OCCASION_GROUPS.map((g) => g.label),
+    ["calendrier", "etapes", "theme"],
+  );
 });
 
 test("aucune rubrique n'est vide", () => {
@@ -2958,7 +2971,10 @@ test("l'affiliation passe par le Link Wrapper, et seulement quand un identifiant
   assert.match(achat, /location: lienSortant\(cible, skimlinksId\(\)\)/, "la redirection n'ajoute plus l'affiliation");
   // La mention accompagne le bouton des que l'affiliation est active, jamais sans elle.
   assert.match(lire("app/admin/[token]/page.tsx"), /affilie: skimlinksId\(\) !== null/);
-  assert.match(lire("components/AdminView.tsx"), /chosen\.source_url && page\.affilie && <p className="help">\{t\.lienAffilie\}<\/p>/);
+  assert.match(
+    lire("components/AdminView.tsx"),
+    /chosen\.source_url && page\.affilie && <p className="help"[^>]*>\{t\.lienAffilie\}<\/p>/,
+  );
   // Le script de Skimlinks poserait des cookies sur chaque page : il n'a rien a faire dans le code.
   const parcourir = (d: string) => {
     for (const e of readdirSync(d, { withFileTypes: true })) {

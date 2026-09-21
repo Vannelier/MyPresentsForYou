@@ -1,14 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import CopyLine from "@/components/CopyLine";
 import CardPreview from "@/components/CardPreview";
 import PageEditor, { type CreateResult, type EditorInitial } from "@/components/editor/PageEditor";
 import MesCartesLocales from "@/components/editor/MesCartesLocales";
 import { memoriserCarte } from "@/components/editor/cartesLocales";
 import { useDictionnaire } from "@/components/i18n/Dictionnaire";
-import { cheminVers } from "@/lib/i18n/chemins";
+import type { Dictionnaire } from "@/lib/i18n";
 import type { Pistes } from "@/lib/pistes";
 import { DEFAULT_THEME } from "@/lib/types";
 
@@ -33,7 +32,7 @@ const EMPTY: EditorInitial = {
 
 export default function CreateFlow({ baseUrlLabel, pistes }: { baseUrlLabel: string; pistes: Pistes }) {
   const [created, setCreated] = useState<CreateResult | null>(null);
-  const { langue, d } = useDictionnaire();
+  const { d } = useDictionnaire();
 
   if (created) return <Created result={created} />;
 
@@ -41,7 +40,6 @@ export default function CreateFlow({ baseUrlLabel, pistes }: { baseUrlLabel: str
     <div className="shell shell--wide">
       <header className="hero">
         <h1>{d.creation.titre}</h1>
-        <p>{d.creation.chapo}</p>
       </header>
 
       {/* Absente tant qu'aucune carte n'a ete creee sur cet appareil. */}
@@ -66,12 +64,21 @@ export default function CreateFlow({ baseUrlLabel, pistes }: { baseUrlLabel: str
 function Created({ result }: { result: CreateResult }) {
   const { d } = useDictionnaire();
   const t = d.creation;
+  /*
+   * Ouverte d'emblee : c'est l'instant precis ou le lien de recuperation
+   * existe pour la derniere fois avant de defiler sous la carte et les
+   * boutons. Un encart colore dans la page, meme en tete, restait sautable
+   * d'un pouce trop rapide ; la modale force le passage par lui avant de
+   * voir le reste de l'ecran.
+   */
+  const [modalOuverte, setModalOuverte] = useState(true);
   return (
     <div className="shell shell--flush">
+      {modalOuverte && (
+        <RecuperationModal adminUrl={result.adminUrl} t={t} onFermer={() => setModalOuverte(false)} />
+      )}
+
       <div className="state fade-in" style={{ textAlign: "left" }}>
-        <div className="state__seal" aria-hidden="true">
-          ✓
-        </div>
         <h1 style={{ textAlign: "center" }}>{t.pret}</h1>
 
         {/*
@@ -85,48 +92,29 @@ function Created({ result }: { result: CreateResult }) {
         <p className="state__note">{t.rienNestFige}</p>
 
         {/*
-          Le lien de recuperation passe devant, et pulse.
-
-          C'est le seul des deux qu'on ne peut pas retrouver : le lien public
-          part dans une conversation, celui-ci n'existe que sur cet ecran. Il
-          etait en troisieme position, sous un QR code qui prend toute la
-          largeur — c'est-a-dire souvent hors de l'ecran au telephone, la ou on
-          ferme l'onglet en croyant avoir fini.
+          Le lien de recuperation passe devant, et pulse — la modale vient de
+          fermer ou n'a jamais empeche de faire defiler la page en dessous
+          d'elle, et c'est ici qu'on revient le chercher en cas de doute.
         */}
         <div className="link-box link-box--admin link-box--pulse">
           <span className="link-box__label">{t.lienRecuperation}</span>
           <span className="link-box__help">
             <strong>{t.lienRecuperationFort}</strong>
-            {t.lienRecuperationSuite}
           </span>
           <CopyLine value={result.adminUrl} />
           <span className="link-box__help">{t.cartesMemorisee}</span>
         </div>
 
-        <div className="link-box link-box--plain">
+        {/*
+          Un cadre, d'une autre couleur que celui du lien de recuperation :
+          les deux doivent rester deux cadres, mais pas se confondre. Celui-ci
+          reprend l'accent terracotta du site, l'autre le dore reserve a ce
+          qui ne se retrouve pas ailleurs.
+        */}
+        <div className="link-box link-box--envoi">
           <span className="link-box__label">{t.lienEnvoi}</span>
-          <span className="link-box__help">{t.lienEnvoiAide}</span>
           <CopyLine value={result.publicUrl} />
         </div>
-
-        {/*
-          Un apercu de la carte, et le chemin vers l'atelier.
-
-          L'atelier complet vivait ici, deplie : carrousel, champs de texte,
-          feuille pleine largeur. C'etait la bonne intention — montrer des cet
-          ecran qu'une carte existe — mais au mauvais format : sur un ecran de
-          fin ou l'on vient chercher deux liens, il occupait plus de place que
-          les liens eux-memes et repoussait les deux boutons hors de vue.
-        */}
-        <CardPreview
-          url={result.publicUrl}
-          to={result.carte.to}
-          intro={result.carte.intro}
-          title={result.carte.title}
-          signature={result.carte.signature}
-          theme={result.carte.theme}
-          printHref={`${result.adminUrl}/imprimer`}
-        />
 
         {result.warnings?.length > 0 && (
           <div style={{ marginTop: "1rem" }}>
@@ -137,6 +125,24 @@ function Created({ result }: { result: CreateResult }) {
             ))}
           </div>
         )}
+
+        {/*
+          Repliee par defaut : l'impression est une envie, pas une etape de la
+          creation. Deplier montrait d'emblee une feuille A4 en reduction avant
+          meme les deux liens qu'on vient chercher sur cet ecran.
+        */}
+        <details className="impression-plateau">
+          <summary className="impression-plateau__titre">{t.impressionOuvrir}</summary>
+          <CardPreview
+            url={result.publicUrl}
+            to={result.carte.to}
+            intro={result.carte.intro}
+            title={result.carte.title}
+            signature={result.carte.signature}
+            theme={result.carte.theme}
+            printHref={`${result.adminUrl}/imprimer`}
+          />
+        </details>
 
         {/*
           « Reprendre la modification » plutot que « Ouvrir l'administration ».
@@ -153,6 +159,36 @@ function Created({ result }: { result: CreateResult }) {
             {t.voirPublique}
           </a>
         </div>
+      </div>
+    </div>
+  );
+}
+
+/**
+ * Le premier geste sur cet ecran, avant tout le reste : sauvegarder le lien
+ * de recuperation. Pas de fermeture au clic hors de la boite ni a `Echap` —
+ * volontairement, ce n'est pas une fenetre qu'on ferme par reflexe, c'est le
+ * seul instant ou ce lien est garanti d'etre encore sous les yeux.
+ */
+function RecuperationModal({
+  adminUrl,
+  t,
+  onFermer,
+}: {
+  adminUrl: string;
+  t: Dictionnaire["creation"];
+  onFermer: () => void;
+}) {
+  return (
+    <div className="modal-lien" role="dialog" aria-modal="true" aria-label={t.lienRecuperation}>
+      <div className="modal-lien__panneau">
+        <p className="modal-lien__titre">{t.lienRecuperation}</p>
+        <p className="modal-lien__texte">{t.modalTexte}</p>
+        <CopyLine value={adminUrl} />
+        <p className="modal-lien__texte">{t.cartesMemorisee}</p>
+        <button type="button" className="btn modal-lien__bouton" onClick={onFermer}>
+          {t.modalBouton}
+        </button>
       </div>
     </div>
   );

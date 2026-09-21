@@ -112,7 +112,13 @@ export default function AdminView({ page, token, pistes }: { page: AdminSnapshot
         <section className="panel">
           <h2>{t.cadeauChoisi}</h2>
           <p className="help">{t.cadeauChoisiAide}</p>
-          <div style={{ maxWidth: "20rem" }}>
+          {/*
+            Centres, les trois : le cadeau, le bouton et la mention. C'est le
+            seul geste qui reste a faire sur cette page une fois le choix fait,
+            et il tient seul au milieu — pas cale contre le bord gauche comme
+            le reste d'un panneau qu'on lit de haut en bas.
+          */}
+          <div style={{ maxWidth: "20rem", margin: "0 auto" }}>
             <GiftCard item={chosen} selected disabled />
           </div>
           {page.reply_message.trim() && (
@@ -127,7 +133,7 @@ export default function AdminView({ page, token, pistes }: { page: AdminSnapshot
             navigateur enverrait l'adresse de cette page, jeton compris.
           */}
           {chosen.source_url && (
-            <p style={{ marginTop: "1rem" }}>
+            <p style={{ marginTop: "1rem", textAlign: "center" }}>
               <a
                 className="btn btn--auto"
                 href={`/api/admin/${encodeURIComponent(token)}/acheter`}
@@ -140,7 +146,7 @@ export default function AdminView({ page, token, pistes }: { page: AdminSnapshot
           )}
           {/* Obligatoire, et visible avant le clic : jamais en petits caracteres
               caches ailleurs sur la page. */}
-          {chosen.source_url && page.affilie && <p className="help">{t.lienAffilie}</p>}
+          {chosen.source_url && page.affilie && <p className="help" style={{ textAlign: "center" }}>{t.lienAffilie}</p>}
         </section>
       )}
 

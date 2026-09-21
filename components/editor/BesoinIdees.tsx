@@ -8,7 +8,8 @@ import type { OccasionId } from "@/lib/occasions";
 import type { Pistes } from "@/lib/pistes";
 
 /**
- * « Besoin d'idees ? » : les pistes du guide de l'occasion, a ajouter d'un clic.
+ * « Besoin d'idees ? » : les pistes du guide de l'occasion, a ajouter d'un clic
+ * — et a retirer du meme clic, la piste etant un bouton a bascule.
  *
  * Replie par defaut : c'est une aide pour qui cale, pas une etape. Deplie, il
  * aurait pousse les lignes de cadeaux sous la ligne de flottaison a chaque
@@ -26,6 +27,7 @@ export default function BesoinIdees({
   pris,
   plein,
   onChoisir,
+  onRetirer,
 }: {
   pistes: Pistes;
   occasion: OccasionId;
@@ -33,6 +35,7 @@ export default function BesoinIdees({
   pris: string[];
   plein: boolean;
   onChoisir: (nom: string, url: string) => void;
+  onRetirer: (nom: string) => void;
 }) {
   const { langue, d } = useDictionnaire();
   const t = d.editeur.idees;
@@ -67,8 +70,13 @@ export default function BesoinIdees({
                     type="button"
                     className={`idees__piste${ajoutee ? " is-on" : ""}`}
                     aria-pressed={ajoutee}
-                    disabled={ajoutee || plein}
-                    onClick={() => onChoisir(nom, rechercheMarchand(langue, nom))}
+                    // Une piste deja posee reste cliquable : c'est elle qu'on
+                    // decoche. Seule une piste pas encore posee se bloque une
+                    // fois la liste pleine.
+                    disabled={!ajoutee && plein}
+                    onClick={() =>
+                      ajoutee ? onRetirer(nom) : onChoisir(nom, rechercheMarchand(langue, nom))
+                    }
                   >
                     <span aria-hidden="true">{ajoutee ? "✓" : "+"}</span> {nom}
                   </button>

@@ -41,8 +41,8 @@ export type OccasionId =
   | "pot-de-depart"
   | "animaux";
 
-/** Rubrique du sélecteur, par identifiant. `null` = affichée en tête, sans titre. */
-export type OccasionGroup = "calendrier" | "etapes" | "mot" | "theme";
+/** Rubrique du sélecteur, par identifiant. */
+export type OccasionGroup = "calendrier" | "etapes" | "theme";
 
 /*
  * Les mots d'une occasion — son nom, sa ligne d'intro, ses suggestions — vivent
@@ -51,7 +51,7 @@ export type OccasionGroup = "calendrier" | "etapes" | "mot" | "theme";
  */
 export type Occasion = {
   id: OccasionId;
-  group: OccasionGroup | null;
+  group: OccasionGroup;
   /** Pictogramme du sélecteur, jamais affiché sur la page-cadeau. */
   icon: string;
   palette: PaletteId;
@@ -63,7 +63,7 @@ export type Occasion = {
 export const OCCASIONS: Occasion[] = [
   {
     id: "aucune",
-    group: null,
+    group: "theme",
     icon: "◇",
     palette: "terracotta",
     motif: "none",
@@ -108,7 +108,7 @@ export const OCCASIONS: Occasion[] = [
   },
   {
     id: "felicitations",
-    group: "mot",
+    group: "theme",
     icon: "✵",
     palette: "encre",
     motif: "guirlande",
@@ -116,7 +116,7 @@ export const OCCASIONS: Occasion[] = [
   },
   {
     id: "merci",
-    group: "mot",
+    group: "theme",
     icon: "❖",
     palette: "olive",
     motif: "none",
@@ -188,7 +188,9 @@ export const OCCASIONS: Occasion[] = [
   },
   /*
    * Une occasion qui n'en est pas une : elle ne repond ni a une date ni a une
-   * etape, seulement a ce qui vit dans la maison. D'ou sa rubrique a elle.
+   * etape, seulement a ce qui vit dans la maison. Elle rejoint donc « Autour
+   * d'un theme », avec l'occasion neutre et les deux mots a dire — aucune de
+   * ces quatre-la ne repond a une date du calendrier ou a une etape de vie.
    *
    * La palette noisette existe pour celle-ci : ni terracotta, qui est un brun
    * rouge, ni ivoire, qui est un dore, ne donnent le marron d'un pelage.
@@ -208,19 +210,19 @@ export const DEFAULT_OCCASION_ID: OccasionId = "aucune";
 /**
  * Les occasions rangées par rubrique, dans l'ordre d'affichage. Passé une
  * dizaine d'entrées, une grille à plat devient illisible.
+ *
+ * « Autour d'un thème » vient en dernier : c'est la rubrique de repli, celle
+ * qui ne répond ni à une date du calendrier ni à une étape de vie — l'occasion
+ * neutre, les deux mots à dire et les animaux. Elle regroupait avant l'occasion
+ * neutre affichée sans titre en tête, et une rubrique « Un mot » à part : les
+ * quatre relevaient déjà de la même logique de repli.
  */
-export const OCCASION_GROUPS: { label: OccasionGroup | null; items: Occasion[] }[] = [
-  { label: null, items: OCCASIONS.filter((o) => o.group === null) },
-  ...([
-    "calendrier",
-    "etapes",
-    "mot",
-    "theme",
-  ] as OccasionGroup[]).map((label) => ({
-    label,
-    items: OCCASIONS.filter((o) => o.group === label),
-  })),
-];
+export const OCCASION_GROUPS: { label: OccasionGroup; items: Occasion[] }[] = (
+  ["calendrier", "etapes", "theme"] as OccasionGroup[]
+).map((label) => ({
+  label,
+  items: OCCASIONS.filter((o) => o.group === label),
+}));
 
 export function occasionById(id: string | undefined | null): Occasion {
   return OCCASIONS.find((o) => o.id === id) ?? OCCASIONS[0];

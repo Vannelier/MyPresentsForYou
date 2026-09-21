@@ -29,3 +29,16 @@ export function placerPiste<T extends Ligne>(lignes: T[], nom: string, url: stri
   if (lignes.length >= max) return null;
   return [...lignes, { ...nouvelle(), label: nom, source_url: url }];
 }
+
+/**
+ * L'inverse de `placerPiste` : decoche une piste ajoutee, en effacant sur sa
+ * ligne exactement ce que la pose y avait ecrit (titre, lien de recherche).
+ * L'image et la note, elles, restent — l'offreur a pu les completer depuis, et
+ * decocher une suggestion n'est pas un « vider cette ligne ». La ligne, vide ou
+ * non, n'est jamais supprimee : seul le bouton × de la ligne le fait.
+ */
+export function retirerPiste<T extends Ligne>(lignes: T[], nom: string): T[] | null {
+  const i = lignes.findIndex((l) => l.label.trim() === nom);
+  if (i < 0) return null;
+  return lignes.map((l, j) => (j === i ? { ...l, label: "", source_url: "" } : l));
+}
