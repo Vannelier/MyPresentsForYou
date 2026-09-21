@@ -3120,6 +3120,17 @@ test("les cartes memorisees se lisent au montage, jamais dans un initialiseur", 
   const mod = lire("components/editor/cartesLocales.ts");
   assert.match(mod, /try \{[\s\S]*?localStorage\.getItem/, "la lecture n'est plus protegee");
   assert.match(mod, /try \{[\s\S]*?localStorage\.setItem/, "l'ecriture n'est plus protegee");
+
+  /*
+   * Le bouton de l'accueil bascule « Voir un exemple » vers la carte locale. Meme
+   * piege : le premier rendu (serveur) doit montrer l'exemple, la lecture se fait
+   * au montage. Sans quoi l'accueil, statique, divergerait a l'hydratation.
+   */
+  const bouton = lire("components/AccueilCarteOuExemple.tsx");
+  assert.match(bouton, /useState<string \| null>\(null\)/, "le bouton d'accueil ne part plus de l'exemple au rendu serveur");
+  assert.match(bouton, /useEffect\([\s\S]*?lireCartesLocales\(\)/, "le bouton d'accueil ne lit plus au montage");
+  assert.doesNotMatch(bouton, /useState[^;]*lireCartesLocales/, "le bouton d'accueil lit dans un initialiseur");
+  assert.match(lire("app/[langue]/page.tsx"), /<AccueilCarteOuExemple/, "l'accueil n'offre plus la bascule carte-ou-exemple");
 });
 
 // --- llms.txt ----------------------------------------------------------------

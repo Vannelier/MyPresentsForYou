@@ -198,6 +198,7 @@ export const en = {
     sousTitre: "A gift that stands out, for any occasion: a personalised page with your gift ideas. You send the link, they choose, and all that's left is to give.",
     composer: "Create my gift page",
     voirExemple: "See an example",
+    voirMaCarte: "See my gift page",
     note: "Free · no account · ten minutes is enough",
     telephone: {
       surtitre: "Happy birthday",
