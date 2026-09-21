@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import EnTeteSite from "@/components/EnTeteSite";
 import SiteFooter from "@/components/SiteFooter";
+import AccueilCarteOuExemple from "@/components/AccueilCarteOuExemple";
 import { dictionnaire } from "@/lib/i18n";
 import { alternatesDe } from "@/lib/i18n/alternates";
 import { GUIDES, cheminGuide, cheminVers } from "@/lib/i18n/chemins";
@@ -71,9 +72,12 @@ export default async function LandingPage({ params }: Params) {
             <Link className="btn btn--auto" href={creer}>
               {d.composer}
             </Link>
-            <Link className="btn btn--ghost btn--auto" href={cheminVers(langue, "exemple")}>
-              {d.voirExemple}
-            </Link>
+            <AccueilCarteOuExemple
+              className="btn btn--ghost btn--auto"
+              hrefExemple={cheminVers(langue, "exemple")}
+              labelExemple={d.voirExemple}
+              labelCarte={d.voirMaCarte}
+            />
             <span className="lp-cta__note">{d.note}</span>
           </div>
         </div>

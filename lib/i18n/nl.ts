@@ -199,6 +199,7 @@ export const nl = {
       "Een cadeau dat opvalt, voor elke gelegenheid: een persoonlijke pagina met jouw cadeau-ideeën. Je stuurt de link, de ander kiest en jij hoeft alleen nog te geven.",
     composer: "Mijn cadeaupagina maken",
     voirExemple: "Een voorbeeld bekijken",
+    voirMaCarte: "Mijn cadeaupagina bekijken",
     note: "Gratis · zonder account · tien minuten is genoeg",
     telephone: {
       surtitre: "Gelukkige verjaardag",

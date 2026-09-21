@@ -201,6 +201,7 @@ export const it = {
       "Un regalo fuori dal comune per qualsiasi occasione, una pagina personalizzata con le tue idee regalo. Invii il link, l'altra persona sceglie e a te resta solo da regalare.",
     composer: "Crea la mia pagina regalo",
     voirExemple: "Vedi un esempio",
+    voirMaCarte: "Vedi la mia pagina regalo",
     note: "Gratis · senza account · dieci minuti bastano",
     telephone: {
       surtitre: "Buon compleanno",

@@ -207,6 +207,7 @@ export const fr = {
       "Un cadeau qui sort du commun pour n'importe quelle occasion, une page personnalisée avec tes idées de cadeaux. Tu envoies le lien, la personne choisit et tu n'as plus qu'à offrir.",
     composer: "Créer ma page-cadeau",
     voirExemple: "Voir un exemple",
+    voirMaCarte: "Voir ma page-cadeau",
     note: "Gratuit · sans compte · dix minutes suffisent",
     telephone: {
       surtitre: "Joyeux anniversaire",
