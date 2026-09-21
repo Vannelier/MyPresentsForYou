@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import CopyLine from "@/components/CopyLine";
 import CardPreview from "@/components/CardPreview";
 import PageEditor, { type CreateResult, type EditorInitial } from "@/components/editor/PageEditor";
@@ -72,6 +72,17 @@ function Created({ result }: { result: CreateResult }) {
    * voir le reste de l'ecran.
    */
   const [modalOuverte, setModalOuverte] = useState(true);
+  /*
+   * La page venait de creer, souvent depuis le bas d'un long formulaire — le
+   * bouton « Creer la page » y vit. Sans remise a zero, le navigateur garde ce
+   * defilement : la modale, fixe, restait visible, mais une fois fermee le
+   * lien de recuperation restait hors ecran, au-dessus. `useLayoutEffect` et
+   * non `useEffect` : la remise a zero doit precéder la premiere peinture de
+   * cet ecran, pas la suivre d'une frame visible.
+   */
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <div className="shell shell--flush">
       {modalOuverte && (
