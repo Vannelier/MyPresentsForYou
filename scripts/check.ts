@@ -2958,7 +2958,10 @@ test("l'affiliation passe par le Link Wrapper, et seulement quand un identifiant
   assert.match(achat, /location: lienSortant\(cible, skimlinksId\(\)\)/, "la redirection n'ajoute plus l'affiliation");
   // La mention accompagne le bouton des que l'affiliation est active, jamais sans elle.
   assert.match(lire("app/admin/[token]/page.tsx"), /affilie: skimlinksId\(\) !== null/);
-  assert.match(lire("components/AdminView.tsx"), /chosen\.source_url && page\.affilie && <p className="help">\{t\.lienAffilie\}<\/p>/);
+  assert.match(
+    lire("components/AdminView.tsx"),
+    /chosen\.source_url && page\.affilie && <p className="help"[^>]*>\{t\.lienAffilie\}<\/p>/,
+  );
   // Le script de Skimlinks poserait des cookies sur chaque page : il n'a rien a faire dans le code.
   const parcourir = (d: string) => {
     for (const e of readdirSync(d, { withFileTypes: true })) {
