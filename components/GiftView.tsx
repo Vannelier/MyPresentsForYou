@@ -592,6 +592,9 @@ export default function GiftView({
             Le choix est fait : la mention peut mener au site sans rien faire
             perdre. Dans l'apercu de l'editeur, elle ouvre un nouvel onglet — le
             meme onglet ferait quitter le formulaire en cours d'edition.
+
+            Absente de l'ecran des cadeaux, plus haut dans ce fichier : avant le
+            choix, la page est celle du donneur, pas une vitrine pour le site.
           */}
           <MadeWith lien={commeUneVraiePage ? "meme-onglet" : "nouvel-onglet"} />
           {mode === "preview" && (
@@ -686,12 +689,6 @@ export default function GiftView({
         )}
 
         {page.signature.trim() && <p className="signature">{page.signature}</p>}
-
-        {/*
-          Jamais un lien ici : le choix n'est pas fait, et un toucher egare au
-          bas de la liste ferait quitter la page avant d'avoir choisi.
-        */}
-        <MadeWith />
       </div>
 
       <div className={`confirm-bar${barIn ? "" : " confirm-bar--waiting"}`}>

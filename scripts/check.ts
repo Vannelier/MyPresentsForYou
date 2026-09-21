@@ -222,16 +222,18 @@ test("la page d'exemple reste en mode apercu", () => {
   );
 });
 
-test("la mention n'est un lien qu'une fois le choix passe", () => {
+test("la mention MyPresentsForYou n'apparait qu'une fois le choix passe", () => {
   /*
-   * Sur l'ecran des cadeaux, un toucher egare au bas de la liste ferait quitter
-   * la page avant d'avoir choisi. Sur l'ecran de confirmation, le lien doit
-   * exister dans tous les modes : une premiere version le reservait a la page
-   * reelle, et c'est dans l'apercu qu'on l'a cherche — sans le trouver.
+   * Avant le choix, la page est celle du donneur, pas une vitrine pour le
+   * site : aucune mention n'y figure, lien ou pas. Apres, le choix est fait et
+   * la mention peut mener au site sans rien faire perdre — elle doit exister
+   * dans tous les modes, y compris l'apercu de l'editeur : une premiere
+   * version reservait le lien a la page reelle, et c'est dans l'apercu qu'on
+   * l'a cherche sans le trouver.
    *
    * On lit les deux ecrans de GiftView comme du texte, separes par le `return`
-   * de l'ecran des cadeaux : un remaniement qui deplacerait le lien n'echouerait
-   * nulle part ailleurs.
+   * de l'ecran des cadeaux : un remaniement qui deplacerait la mention
+   * n'echouerait nulle part ailleurs.
    */
   const vue = lire("components/GiftView.tsx");
   const debut = vue.indexOf("if (settled) {");
@@ -241,8 +243,7 @@ test("la mention n'est un lien qu'une fois le choix passe", () => {
   const confirmation = vue.slice(debut, milieu);
   const cadeaux = vue.slice(milieu, fin);
 
-  assert.match(cadeaux, /<MadeWith \/>/);
-  assert.doesNotMatch(cadeaux, /<a\b|<Link\b|href=|<MadeWith lien/, "un lien sur l'ecran des cadeaux");
+  assert.doesNotMatch(cadeaux, /<MadeWith/, "la mention est revenue sur l'ecran des cadeaux");
   assert.match(
     confirmation,
     /<MadeWith lien=\{commeUneVraiePage \? "meme-onglet" : "nouvel-onglet"\} \/>/,
@@ -2085,6 +2086,27 @@ async function checkImages() {
 
     const admin = lire(new URL("../components/AdminView.tsx", import.meta.url));
     assert.ok(admin.includes('id="modifier"'), "l'ancre #modifier a disparu de l'administration");
+  });
+
+  test("l'ecran de creation remonte en haut de page", () => {
+    /*
+     * « Creer la page » vit en bas d'un long formulaire. Sans remise a zero du
+     * defilement, le navigateur le garde : le lien de recuperation, en tete de
+     * l'ecran « Ta page est prete », restait hors champ une fois la modale
+     * fermee — visible seulement en remontant a la main.
+     *
+     * `useLayoutEffect`, pas `useEffect` : la remise a zero doit preceder la
+     * premiere peinture de l'ecran, pas la suivre d'une frame visible.
+     */
+    const flux = lire(new URL("../components/CreateFlow.tsx", import.meta.url));
+    const debut = flux.indexOf("function Created(");
+    assert.notEqual(debut, -1, "composant Created introuvable");
+    const corps = flux.slice(debut, flux.indexOf("\nfunction ", debut + 1));
+    assert.match(
+      corps,
+      /useLayoutEffect\(\(\) => \{\s*window\.scrollTo\(0, 0\);\s*\}, \[\]\);/,
+      "l'ecran de creation ne remonte plus en haut de page",
+    );
   });
 
   test("l'ancien nom du site ne traine plus dans les sources", () => {
