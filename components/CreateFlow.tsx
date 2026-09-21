@@ -5,6 +5,8 @@ import Link from "next/link";
 import CopyLine from "@/components/CopyLine";
 import CardPreview from "@/components/CardPreview";
 import PageEditor, { type CreateResult, type EditorInitial } from "@/components/editor/PageEditor";
+import MesCartesLocales from "@/components/editor/MesCartesLocales";
+import { memoriserCarte } from "@/components/editor/cartesLocales";
 import { useDictionnaire } from "@/components/i18n/Dictionnaire";
 import { cheminVers } from "@/lib/i18n/chemins";
 import type { Pistes } from "@/lib/pistes";
@@ -42,7 +44,21 @@ export default function CreateFlow({ baseUrlLabel, pistes }: { baseUrlLabel: str
         <p>{d.creation.chapo}</p>
       </header>
 
-      <PageEditor mode="create" initial={EMPTY} baseUrlLabel={baseUrlLabel} onCreated={setCreated} pistes={pistes} />
+      {/* Absente tant qu'aucune carte n'a ete creee sur cet appareil. */}
+      <MesCartesLocales />
+
+      <PageEditor
+        mode="create"
+        initial={EMPTY}
+        baseUrlLabel={baseUrlLabel}
+        onCreated={(r) => {
+          // Le lien admin n'existe que sur l'ecran suivant : on le garde en local
+          // des sa creation, pour le retrouver depuis le meme navigateur.
+          memoriserCarte({ adminUrl: r.adminUrl, publicUrl: r.publicUrl, nom: r.carte.to });
+          setCreated(r);
+        }}
+        pistes={pistes}
+      />
     </div>
   );
 }
@@ -84,6 +100,7 @@ function Created({ result }: { result: CreateResult }) {
             {t.lienRecuperationSuite}
           </span>
           <CopyLine value={result.adminUrl} />
+          <span className="link-box__help">{t.cartesMemorisee}</span>
         </div>
 
         <div className="link-box link-box--plain">

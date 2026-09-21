@@ -283,6 +283,12 @@ export const de = {
     lienEnvoiAide: "Das bekommt die andere Person.",
     reprendre: "Weiter bearbeiten",
     voirPublique: "Öffentliche Seite ansehen",
+    cartesMemorisee:
+      "Dieser Link wird auch auf diesem Gerät gespeichert: Du findest ihn auf der Erstellungsseite wieder, im selben Browser.",
+    cartesLocalesTitre: "Eine auf diesem Gerät erstellte Karte wiederfinden",
+    cartesLocalesAide:
+      "Diese Links bleiben nur in diesem Browser, werden nie an unsere Server gesendet. Damit findest du die Verwaltung einer hier erstellten Karte wieder.",
+    cartesLocalesOublier: "Entfernen",
   },
 
   exemple: {

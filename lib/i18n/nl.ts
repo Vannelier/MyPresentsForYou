@@ -281,6 +281,12 @@ export const nl = {
     lienEnvoiAide: "Dit krijgt de ander.",
     reprendre: "Verder bewerken",
     voirPublique: "De openbare pagina bekijken",
+    cartesMemorisee:
+      "Deze link wordt ook op dit apparaat bewaard: je vindt hem terug op de aanmaakpagina, in dezelfde browser.",
+    cartesLocalesTitre: "Een op dit apparaat gemaakte kaart terugvinden",
+    cartesLocalesAide:
+      "Deze links blijven alleen in deze browser, worden nooit naar onze servers gestuurd. Ze laten je het beheer van een hier gemaakte kaart terugvinden.",
+    cartesLocalesOublier: "Vergeten",
   },
 
   exemple: {

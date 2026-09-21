@@ -26,7 +26,7 @@ const confidentialite: ContenuLegal = {
         Quando clicchi su «Acquista questo regalo», lasci MyPresentsForYou: il link può passare da una <strong>rete di affiliazione</strong> prima di arrivare al negozio. Questa rete e il negozio possono allora impostare i propri cookie, secondo le proprie regole. Nulla viene impostato su MyPresentsForYou, e la persona che riceve il biglietto non è mai coinvolta.
       </p>
 
-      <h2>Una sola cosa resta sul tuo dispositivo</h2>
+      <h2>Cosa resta sul tuo dispositivo</h2>
       <p>
         Mentre componi un biglietto, il modulo salva il lavoro in corso nella{" "}
         <strong>memoria locale del tuo browser</strong>. È ciò che ti permette di andare a cercare
@@ -42,6 +42,14 @@ const confidentialite: ContenuLegal = {
       <p>
         I caratteri tipografici sono serviti dal nostro dominio, non da Google Fonts: visualizzare una
         pagina MyPresentsForYou non invia alcuna richiesta a terzi, e quindi nemmeno il tuo indirizzo IP.
+      </p>
+
+      <p>
+        Una volta creato un biglietto, il suo <strong>link di amministrazione</strong> viene conservato
+        allo stesso modo, nella memoria locale del browser, per ritrovarlo dallo stesso dispositivo se
+        l&apos;hai smarrito — nessun account né e-mail lo permetterebbe altrimenti. Questo elenco non lascia
+        mai il tuo dispositivo e non viene inviato ad alcun server; puoi rimuovere un biglietto in qualsiasi
+        momento, e svuotare i dati del sito lo cancella del tutto.
       </p>
 
       <h2>Cosa viene salvato quando crei un biglietto</h2>

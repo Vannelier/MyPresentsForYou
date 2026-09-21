@@ -25,7 +25,7 @@ const confidentialite: ContenuLegal = {
         Als je op &quot;Dit cadeau kopen&quot; klikt, verlaat je MyPresentsForYou: de link kan via een <strong>affiliatenetwerk</strong> lopen voordat hij bij de winkel aankomt. Dat netwerk en de winkel kunnen dan hun eigen cookies plaatsen, volgens hun eigen regels. Op MyPresentsForYou wordt niets geplaatst, en degene die de kaart ontvangt, is er nooit bij betrokken.
       </p>
 
-      <h2>Er blijft maar één ding op je toestel</h2>
+      <h2>Wat er op je toestel blijft</h2>
       <p>
         Terwijl je een kaart maakt, bewaart het formulier je werk in de{" "}
         <strong>lokale opslag van je browser</strong>. Zo kun je bij een winkel het adres van een product
@@ -41,6 +41,14 @@ const confidentialite: ContenuLegal = {
       <p>
         De lettertypes komen van ons eigen domein, niet van Google Fonts: een MyPresentsForYou-pagina tonen
         stuurt geen enkel verzoek naar derden, en dus ook niet je IP-adres.
+      </p>
+
+      <p>
+        Zodra een kaart is gemaakt, wordt de <strong>beheerlink</strong> op dezelfde manier bewaard, in de
+        lokale opslag van je browser, zodat je hem vanaf hetzelfde apparaat kunt terugvinden als je hem kwijt
+        bent — geen account of e-mail zou dat anders mogelijk maken. Deze lijst verlaat je apparaat nooit en
+        wordt naar geen enkele server gestuurd; je kunt een kaart op elk moment verwijderen, en het wissen van
+        de sitegegevens verwijdert ze volledig.
       </p>
 
       <h2>Wat er opgeslagen wordt als je een kaart maakt</h2>
