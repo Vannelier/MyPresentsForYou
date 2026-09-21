@@ -25,7 +25,7 @@ const confidentialite: ContenuLegal = {
         Wenn du auf „Dieses Geschenk kaufen“ klickst, verlässt du MyPresentsForYou: Der Link kann über ein <strong>Affiliate-Netzwerk</strong> laufen, bevor er beim Shop ankommt. Dieses Netzwerk und der Shop können dann eigene Cookies setzen, nach ihren eigenen Regeln. Auf MyPresentsForYou wird nichts gesetzt, und die Person, die die Karte erhält, ist nie betroffen.
       </p>
 
-      <h2>Nur eines bleibt auf deinem Gerät</h2>
+      <h2>Was auf deinem Gerät bleibt</h2>
       <p>
         Während du eine Karte gestaltest, speichert das Formular deinen Zwischenstand im{" "}
         <strong>lokalen Speicher deines Browsers</strong>. So kannst du bei einem Händler die Adresse eines
@@ -41,6 +41,14 @@ const confidentialite: ContenuLegal = {
       <p>
         Die Schriften werden von unserer eigenen Domain ausgeliefert, nicht von Google Fonts: Das Anzeigen
         einer MyPresentsForYou-Seite schickt keine Anfrage an Dritte und damit auch nicht deine IP-Adresse.
+      </p>
+
+      <p>
+        Sobald eine Karte erstellt ist, wird ihr <strong>Verwaltungslink</strong> auf dieselbe Weise im
+        lokalen Speicher deines Browsers behalten, damit du ihn vom selben Gerät wiederfindest, falls du ihn
+        verlegt hast — kein Konto und keine E-Mail würden das sonst erlauben. Diese Liste verlässt dein Gerät
+        nie und wird an keinen Server gesendet; du kannst eine Karte jederzeit entfernen, und das Löschen der
+        Websitedaten entfernt sie vollständig.
       </p>
 
       <h2>Was gespeichert wird, wenn du eine Karte erstellst</h2>

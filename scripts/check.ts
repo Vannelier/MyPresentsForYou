@@ -3098,6 +3098,30 @@ test("les guides pointent vers des liens marchands nus, et l'editeur pre-remplit
   );
 });
 
+test("les cartes memorisees se lisent au montage, jamais dans un initialiseur", () => {
+  /*
+   * localStorage n'existe pas au rendu serveur : le lire dans un initialiseur de
+   * useState ferait diverger l'hydratation (voir « Ce qui se casse facilement »).
+   * La liste se lit donc dans un useEffect. Le garde-fou casse si un remaniement
+   * la remet dans l'initialiseur, ou si la creation cesse de memoriser.
+   */
+  const vue = lire("components/editor/MesCartesLocales.tsx");
+  assert.match(vue, /useEffect\(\(\) => \{\s*setCartes\(lireCartesLocales\(\)\)/, "la liste n'est plus lue au montage");
+  assert.doesNotMatch(vue, /useState[^;]*lireCartesLocales/, "la liste est lue dans un initialiseur de useState");
+
+  // Sans la memorisation a la creation, la liste resterait toujours vide.
+  assert.match(
+    lire("components/CreateFlow.tsx"),
+    /memoriserCarte\(\{[^}]*adminUrl: r\.adminUrl/,
+    "la creation ne memorise plus le lien admin",
+  );
+
+  // localStorage enveloppe dans des try, comme le brouillon : une lecture peut lever.
+  const mod = lire("components/editor/cartesLocales.ts");
+  assert.match(mod, /try \{[\s\S]*?localStorage\.getItem/, "la lecture n'est plus protegee");
+  assert.match(mod, /try \{[\s\S]*?localStorage\.setItem/, "l'ecriture n'est plus protegee");
+});
+
 // --- llms.txt ----------------------------------------------------------------
 
 async function checkLlms() {

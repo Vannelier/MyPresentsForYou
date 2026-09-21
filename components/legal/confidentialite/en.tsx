@@ -25,7 +25,7 @@ const confidentialite: ContenuLegal = {
         When you click &quot;Buy this gift&quot;, you leave MyPresentsForYou: the link may go through an <strong>affiliate network</strong> before reaching the shop. That network and the shop may then set their own cookies, under their own rules. Nothing is set on MyPresentsForYou, and the person receiving the card is never involved.
       </p>
 
-      <h2>Only one thing is kept on your device</h2>
+      <h2>What is kept on your device</h2>
       <p>
         While you put a card together, the form saves your work in progress in your{" "}
         <strong>browser’s local storage</strong>. That is what lets you go and look up a product’s address
@@ -41,6 +41,13 @@ const confidentialite: ContenuLegal = {
       <p>
         Fonts are served from our own domain, not from Google Fonts: displaying a MyPresentsForYou page
         sends no request to a third party, and therefore not your IP address.
+      </p>
+
+      <p>
+        Once a card is created, its <strong>admin link</strong> is kept the same way, in your
+        browser&apos;s local storage, so you can find it again from the same device if you mislaid it — no
+        account or email would let you otherwise. This list never leaves your device and is sent to no
+        server; you can remove a card at any time, and clearing site data erases it entirely.
       </p>
 
       <h2>What is stored when you create a card</h2>

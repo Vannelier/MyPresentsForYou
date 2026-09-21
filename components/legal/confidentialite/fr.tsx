@@ -26,7 +26,7 @@ const confidentialite: ContenuLegal = {
         Quand tu cliques sur « Acheter ce cadeau », tu quittes MyPresentsForYou : le lien peut passer par un <strong>réseau d&apos;affiliation</strong> avant d&apos;arriver chez le marchand. Ce réseau et le marchand peuvent alors déposer leurs propres cookies, selon leurs propres règles. Rien n&apos;est déposé sur MyPresentsForYou, et la personne qui reçoit la carte n&apos;est jamais concernée.
       </p>
 
-      <h2>Une seule chose est gardée sur ton appareil</h2>
+      <h2>Ce qui est gardé sur ton appareil</h2>
       <p>
         Pendant que tu composes une carte, le formulaire enregistre ton travail en cours dans le{" "}
         <strong>stockage local de ton navigateur</strong>. C&apos;est ce qui te permet de partir
@@ -44,6 +44,14 @@ const confidentialite: ContenuLegal = {
       <p>
         Les polices de caractères sont servies depuis notre propre domaine, pas depuis Google Fonts :
         afficher une page MyPresentsForYou n&apos;envoie aucune requête à un tiers, et donc pas ton adresse IP.
+      </p>
+
+      <p>
+        Une fois une carte créée, son <strong>lien d&apos;administration</strong> est gardé de la même
+        façon, dans le stockage local de ton navigateur, pour que tu puisses le retrouver depuis le même
+        appareil si tu l&apos;as égaré — aucun compte ni e-mail ne le permettrait autrement. Cette liste
+        ne quitte jamais ton appareil et n&apos;est envoyée à aucun serveur ; tu peux en retirer une carte
+        à tout moment, et vider les données de site l&apos;efface entièrement.
       </p>
 
       <h2>Ce qui est enregistré quand tu crées une carte</h2>

@@ -291,6 +291,12 @@ export const fr = {
     lienEnvoiAide: "C'est ce que reçoit la personne.",
     reprendre: "Reprendre la modification",
     voirPublique: "Voir la page publique",
+    cartesMemorisee:
+      "Ce lien est aussi gardé sur cet appareil : tu le retrouveras sur la page de création, dans le même navigateur.",
+    cartesLocalesTitre: "Retrouver une carte créée sur cet appareil",
+    cartesLocalesAide:
+      "Ces liens sont gardés uniquement dans ce navigateur, jamais envoyés à nos serveurs. Ils te permettent de retrouver l'administration d'une carte que tu as créée ici.",
+    cartesLocalesOublier: "Oublier",
   },
 
   exemple: {

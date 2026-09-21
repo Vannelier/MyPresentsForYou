@@ -1545,3 +1545,59 @@ label.btn.is-disabled {
   margin-top: 0.9rem;
   font-size: 0.85rem;
 }
+
+/*
+ * « Retrouver une carte creee sur cet appareil » : meme registre que l'encart
+ * d'idees (repliable, discret), mais une liste verticale — chaque carte porte son
+ * nom, son lien admin a copier, et un bouton pour l'oublier.
+ */
+.cartes-locales {
+  margin: 0 0 1.5rem;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--card);
+}
+
+.cartes-locales__titre {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--accent-dark);
+  width: fit-content;
+}
+
+.cartes-locales[open] .cartes-locales__titre {
+  margin-bottom: 0.4rem;
+}
+
+.cartes-locales__liste {
+  margin: 0.6rem 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.cartes-locales__item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid var(--line);
+}
+
+.cartes-locales__item:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.cartes-locales__nom {
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+/* Aligne le bouton « oublier » a gauche, pour ne pas s'etaler sur toute la largeur. */
+.cartes-locales__oublier {
+  align-self: flex-start;
+}

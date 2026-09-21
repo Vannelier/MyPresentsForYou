@@ -286,6 +286,12 @@ export const es = {
     lienEnvoiAide: "Es lo que recibe la otra persona.",
     reprendre: "Seguir editando",
     voirPublique: "Ver la página pública",
+    cartesMemorisee:
+      "Este enlace también se guarda en este dispositivo: lo encontrarás en la página de creación, en el mismo navegador.",
+    cartesLocalesTitre: "Encuentra una tarjeta creada en este dispositivo",
+    cartesLocalesAide:
+      "Estos enlaces se guardan solo en este navegador, nunca se envían a nuestros servidores. Te permiten volver a la administración de una tarjeta que creaste aquí.",
+    cartesLocalesOublier: "Olvidar",
   },
 
   exemple: {

@@ -26,7 +26,7 @@ const confidentialite: ContenuLegal = {
         Cuando haces clic en «Comprar este regalo», sales de MyPresentsForYou: el enlace puede pasar por una <strong>red de afiliación</strong> antes de llegar a la tienda. Esa red y la tienda pueden entonces instalar sus propias cookies, según sus propias normas. No se instala nada en MyPresentsForYou, y la persona que recibe la tarjeta nunca se ve afectada.
       </p>
 
-      <h2>Solo se guarda una cosa en tu dispositivo</h2>
+      <h2>Qué se guarda en tu dispositivo</h2>
       <p>
         Mientras compones una tarjeta, el formulario guarda tu trabajo en curso en el{" "}
         <strong>almacenamiento local de tu navegador</strong>. Es lo que te permite ir a buscar la
@@ -43,6 +43,14 @@ const confidentialite: ContenuLegal = {
         Las fuentes tipográficas se sirven desde nuestro propio dominio, no desde Google Fonts: mostrar una
         página de MyPresentsForYou no envía ninguna solicitud a terceros, y por tanto tampoco tu dirección
         IP.
+      </p>
+
+      <p>
+        Una vez creada una tarjeta, su <strong>enlace de administración</strong> se guarda de la misma
+        manera, en el almacenamiento local de tu navegador, para que puedas recuperarlo desde el mismo
+        dispositivo si lo perdiste — ninguna cuenta ni correo lo permitiría de otro modo. Esta lista nunca
+        sale de tu dispositivo y no se envía a ningún servidor; puedes quitar una tarjeta en cualquier
+        momento, y borrar los datos del sitio la elimina por completo.
       </p>
 
       <h2>Qué se guarda cuando creas una tarjeta</h2>
