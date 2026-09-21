@@ -50,7 +50,7 @@ export default function BesoinIdees({
     <details className="idees">
       <summary className="idees__titre">{t.titre}</summary>
       <p className="help">
-        {propres ? remplir(t.aideOccasion, { occasion: d.occasions[occasion].nom }) : t.aide}
+        {t.aide}
         {plein && (
           <>
             {" "}

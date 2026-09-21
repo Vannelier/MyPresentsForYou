@@ -710,7 +710,6 @@ export const en = {
     idees: {
       titre: "Need ideas?",
       aide: "A few ideas, based on their profile.",
-      aideOccasion: "{occasion}: a few ideas, based on their profile.",
       plein: "The list is full.",
       guide: "Read the guide: {occasion} ↗",
     },

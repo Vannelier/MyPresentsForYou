@@ -714,7 +714,6 @@ export const de = {
     idees: {
       titre: "Brauchst du Ideen?",
       aide: "Ein paar Ideen, passend zur beschenkten Person.",
-      aideOccasion: "{occasion}: ein paar Ideen, passend zur beschenkten Person.",
       plein: "Die Liste ist voll.",
       guide: "Zum Ratgeber: {occasion} ↗",
     },
