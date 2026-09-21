@@ -228,7 +228,7 @@ reçoit — **Intro**, **Cadeaux**, **Choix** — suivis du thème et du lien.
 
 | réglage | cadre | effet |
 |---|---|---|
-| **Occasion** | *étape 1* | Preset complet : palette, décor, effet et formulations de départ d'un coup. Seize occasions, rangées en quatre rubriques. Toute l'étape à elle seule. |
+| **Occasion** | *étape 1* | Preset complet : palette, décor, effet et formulations de départ d'un coup. Seize occasions, rangées en trois rubriques. Toute l'étape à elle seule. |
 | **Prénom** | Intro | « Pour Camille », tout en haut du voile. |
 | **Mot d'ouverture** | Intro | La ligne au-dessus du titre. Vide = celle de l'occasion. |
 | **Message principal** | Intro | Le grand titre du voile, et le titre de l'aperçu de lien. |
@@ -287,7 +287,7 @@ qui arrive après coup écrase ce qu'on vient d'écrire, et la règle ci-dessus 
 reste utile — on peut changer d'occasion en cours de route — mais elle n'est plus le rempart
 qu'elle était.
 
-**Une étape à elle, et non un cadre en tête des cadeaux.** Seize occasions en quatre rubriques,
+**Une étape à elle, et non un cadre en tête des cadeaux.** Seize occasions en trois rubriques,
 c'est le plus gros bloc de l'éditeur : posé au-dessus de la liste, il repoussait le titre « Les
 cadeaux » à 1 211 px du haut sur un 1440, 1 337 px sur un 390. Un repli en résumé une fois le choix
 fait ramenait ces mesures à 481 px et 418 px, mais c'était une rustine pour tenir dans une étape
@@ -814,9 +814,11 @@ de la page, sans quoi la carte ne s'ouvrirait jamais.
 
 ## L'aperçu de la carte
 
-La vue admin et l'écran de fin de création montrent **la feuille telle qu'elle sortira** — le dos
-avec son QR à gauche, la couverture à droite, marques de pli comprises — et dessous deux gestes :
-**Carte à imprimer** et **Télécharger le QR code** (`components/CardPreview.tsx`).
+La vue admin montre directement **la feuille telle qu'elle sortira** — le dos avec son QR à gauche,
+la couverture à droite, marques de pli comprises — et dessous deux gestes : **Carte à imprimer** et
+**Télécharger le QR code** (`components/CardPreview.tsx`). Sur l'écran de fin de création, le même
+aperçu vit derrière un volet replié, « Envie d'une carte-cadeau à imprimer ? » : l'impression est une
+envie, pas une étape de la création, et cet écran sert d'abord à récupérer les deux liens.
 
 Il y avait à cette place un damier noir et blanc pleine largeur. Il ne disait rien de ce qu'on va
 tenir dans la main : ni le prénom, ni le thème, ni même qu'il existe une carte derrière — et le
@@ -1180,7 +1182,7 @@ pour qu'un montage posé à côté se voie tout de suite :
 
 Création et édition passent par le même composant, en trois étapes :
 
-1. **L'occasion** — seize presets en quatre rubriques. Rien à valider : voir « L'occasion ».
+1. **L'occasion** — seize presets en trois rubriques. Rien à valider : voir « L'occasion ».
 2. **Les cadeaux** — de 1 à 10 propositions, avec extraction depuis une URL ou saisie manuelle. Le
    minimum est bien **un** : voir « Le cadeau unique ».
 3. **La présentation** — un cadre par écran que traverse la personne qui reçoit (**Intro**,

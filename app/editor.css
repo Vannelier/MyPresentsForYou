@@ -1090,11 +1090,6 @@ label.btn.is-disabled {
   padding-top: 0.75rem;
 }
 
-.row__zone-label--gift {
-  color: var(--ink-soft);
-  margin-bottom: 0.6rem;
-}
-
 .row__gift-grid {
   display: grid;
   grid-template-columns: 5.5rem minmax(0, 1fr);
@@ -1402,15 +1397,15 @@ label.btn.is-disabled {
 }
 
 /*
- * Le pendant : sur ce meme ecran, « Lien a envoyer » perd son encadre. Les
- * deux boites cote a cote se disputaient l'oeil a egalite ; seule celle du
- * dessus doit rester une carte — c'est la seule des deux qu'on ne peut pas
- * retrouver plus tard.
+ * Le pendant : sur ce meme ecran, « Lien a envoyer » garde son encadre mais
+ * change de couleur — l'accent terracotta du site, celui des boutons
+ * principaux, plutot que le dore reserve au lien qu'on ne retrouve nulle part
+ * ailleurs. Deux cadres, mais qui ne se confondent pas au premier coup d'oeil.
  */
-.link-box--plain {
-  border-color: transparent;
-  background: transparent;
-  box-shadow: none;
+.link-box--envoi {
+  border-color: rgba(176, 83, 60, 0.5);
+  border-left-width: 4px;
+  background: rgba(176, 83, 60, 0.07);
 }
 
 /*
@@ -1600,4 +1595,86 @@ label.btn.is-disabled {
 /* Aligne le bouton « oublier » a gauche, pour ne pas s'etaler sur toute la largeur. */
 .cartes-locales__oublier {
   align-self: flex-start;
+}
+
+/* --- Carte a imprimer, repliee sur l'ecran de fin --------------------------- */
+
+/*
+ * Meme registre que « Besoin d'idees ? » et « Retrouver une carte » : repliee
+ * par defaut. L'impression est une envie, pas une etape de la creation — la
+ * deplier d'office montrait une feuille A4 en reduction avant meme les deux
+ * liens qu'on vient chercher sur cet ecran.
+ */
+.impression-plateau {
+  margin-top: 1.25rem;
+}
+
+.impression-plateau__titre {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--accent-dark);
+  width: fit-content;
+}
+
+.impression-plateau[open] .impression-plateau__titre {
+  margin-bottom: 0.9rem;
+}
+
+/* --- Modale du lien de recuperation ----------------------------------------- */
+
+/*
+ * Ouverte d'office a l'arrivee sur l'ecran de fin, avant tout le reste : c'est
+ * l'instant ou le lien de recuperation est garanti d'etre encore sous les
+ * yeux, avant qu'un defilement ou un coup d'oeil a la carte ne l'emporte.
+ *
+ * Pas de fermeture au clic hors du panneau ni a `Echap`, a la difference de
+ * `.zoom` : ce n'est pas une image qu'on regarde puis qu'on range, c'est un
+ * lien qu'on ne peut pas se permettre de perdre par reflexe.
+ */
+.modal-lien {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: grid;
+  place-items: center;
+  padding: 1.2rem;
+  background: rgba(24, 19, 15, 0.6);
+  animation: fade 0.2s var(--ease) both;
+}
+
+/*
+ * `width: min(26rem, 100%)` mesurait 100 % contre la piste implicite de la
+ * grille du parent, elle-meme dimensionnee sur le contenu (`auto`, sans
+ * unite `fr`) plutot que sur la fenetre : le pourcentage se refermait donc
+ * sur un contenu deja trop large — l'adresse du lien dans son `<code>`
+ * `white-space: nowrap` — au lieu de la contraindre. Verifie au navigateur :
+ * le panneau debordait a droite de la fenetre a 420 px. `100vw` shorte-circuite
+ * ce bouclage, la piste de grille n'entrant plus en jeu.
+ */
+.modal-lien__panneau {
+  width: 26rem;
+  max-width: calc(100vw - 2.4rem);
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-md);
+  text-align: left;
+}
+
+.modal-lien__titre {
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.modal-lien__texte {
+  color: var(--ink-soft);
+  font-size: 0.88rem;
+  line-height: 1.5;
+  margin: 0.6rem 0;
+}
+
+.modal-lien__bouton {
+  margin-top: 0.9rem;
+  width: 100%;
 }
