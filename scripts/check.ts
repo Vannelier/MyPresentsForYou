@@ -41,11 +41,14 @@ import { TEXTES_GUIDES, pistesPourEditeur } from "../lib/guides";
 import { placerPiste } from "../lib/pistes";
 import { rechercheMarchand } from "../lib/marchand";
 import {
+  CATEGORIES,
   CHEMINS,
   GUIDES,
   PAGES,
   PAGES_LEGALES,
+  SEGMENTS_CATEGORIES,
   SEGMENTS_GUIDES,
+  SUJETS,
   cheminGuide,
   cheminVers,
   equivalents,
@@ -2452,7 +2455,7 @@ test("le sitemap et les hreflang ne citent que des adresses servies", () => {
    */
   const base = baseUrl();
   const plan = sitemap();
-  assert.equal(plan.length, LANGUES_ACTIVES.length * (8 + GUIDES.length));
+  assert.equal(plan.length, LANGUES_ACTIVES.length * (8 + SUJETS.length));
   for (const entree of plan) {
     assert.ok(entree.url.startsWith(`${base}/`), entree.url);
     assert.ok(servie(entree.url), `sitemap : ${entree.url} n'est pas servie`);
@@ -2476,7 +2479,7 @@ test("le sitemap et les hreflang ne citent que des adresses servies", () => {
         if (hreflang !== "x-default") assert.ok(servie(String(url)), `${page} : ${url}`);
       }
     }
-    for (const guide of GUIDES) {
+    for (const guide of SUJETS) {
       const a = alternatesGuide(langue, guide);
       assert.equal(a?.canonical, cheminGuide(langue, guide), `${langue}/${guide}`);
       for (const url of Object.values(a?.languages ?? {})) assert.ok(servie(String(url)), `${guide} : ${url}`);
@@ -2513,8 +2516,11 @@ test("chaque guide traduit garde la forme du francais, sans pan laisse en franca
     }
     assert.ok(identiques / reference.size < 0.02, `${langue} : ${identiques} textes identiques au francais`);
   }
-  for (const guide of GUIDES) {
-    const g = TEXTES_GUIDES.fr.guides[guide];
+  const contenus = [
+    ...GUIDES.map((g) => [g, TEXTES_GUIDES.fr.guides[g]] as const),
+    ...CATEGORIES.map((c) => [c, TEXTES_GUIDES.fr.categories[c]] as const),
+  ];
+  for (const [guide, g] of contenus) {
     assert.equal(g.idees.profils.length, 4, `${guide} : quatre profils`);
     for (const profil of g.idees.profils) assert.equal(profil.idees.length, 4, `${guide} : ${profil.nom}`);
     assert.equal(g.etapes.liste.length, 3, `${guide} : trois etapes`);
@@ -2540,6 +2546,7 @@ test("titres et descriptions tiennent dans ce que Google affiche, dans chaque la
       ["contact", d.contact.titreMeta, d.contact.descriptionMeta],
       ["idees", t.page.titreMeta, t.page.descriptionMeta],
       ...GUIDES.map((g): [string, string, string] => [g, t.guides[g].titreMeta, t.guides[g].descriptionMeta]),
+      ...CATEGORIES.map((c): [string, string, string] => [c, t.categories[c].titreMeta, t.categories[c].descriptionMeta]),
     ];
     for (const [page, titre, description] of metas) {
       assert.ok(titre.length <= 60, `${langue}/${page} : titre de ${titre.length} signes`);
@@ -2564,6 +2571,16 @@ test("les guides : balisage tire des questions affichees, occasion transmise a l
 
   // Un guide que rien ne lie depuis une page indexee n'existe pour aucun moteur.
   assert.match(lire("app/[langue]/page.tsx"), /GUIDES\.map[\s\S]*cheminGuide\(langue, guide\)/);
+  assert.match(lire("app/[langue]/page.tsx"), /CATEGORIES\.map[\s\S]*cheminGuide\(langue, categorie\)/);
+  assert.match(lire("app/[langue]/idees-cadeaux/page.tsx"), /CATEGORIES\.map[\s\S]*cheminGuide\(langue, categorie\)/);
+
+  /*
+   * Une categorie n'est pas une occasion : `?occasion=parfum` serait ignore par
+   * l'editeur (isOccasionId), mais un identifiant de categorie qui deviendrait
+   * un jour une occasion ouvrirait l'editeur sur elle sans qu'on l'ait voulu.
+   * Le lien avec occasion est reserve aux guides d'occasion.
+   */
+  assert.match(page, /const composer = categorie \? cheminVers\(langue, "creer"\) : `\$\{cheminVers\(langue, "creer"\)\}\?occasion=\$\{guide\}`/);
   assert.match(lire("components/SiteFooter.tsx"), /"idees"/);
 
   // Six langues de guides dans le paquet du navigateur : aucun composant client ne les importe.
@@ -2708,17 +2725,37 @@ test("une seule adresse indexable : l'apex file vers le www, le reste passe", ()
 });
 
 test("chaque guide a une adresse dans chaque langue, unique et au format d'un segment", () => {
+  /*
+   * Occasions et categories partagent le meme dossier et le meme mot de
+   * rubrique : un segment commun aux deux familles servirait l'une a la place
+   * de l'autre sans erreur (le premier trouve gagne). L'unicite se verifie donc
+   * sur l'ensemble, pas famille par famille.
+   */
+  const segments: Record<string, Record<Langue, string>> = { ...SEGMENTS_GUIDES, ...SEGMENTS_CATEGORIES };
   for (const langue of LANGUES) {
     const vus = new Set<string>();
-    for (const guide of GUIDES) {
-      const segment = SEGMENTS_GUIDES[guide][langue];
+    for (const guide of SUJETS) {
+      const segment = segments[guide][langue];
       assert.match(segment, /^[a-z0-9]+(-[a-z0-9]+)*$/, `${langue}/${guide} : ${segment}`);
       assert.ok(!vus.has(segment), `${langue} : « ${segment} » designe deux guides`);
       vus.add(segment);
     }
   }
   for (const guide of GUIDES) assert.ok(OCCASIONS.some((o) => o.id === guide), `occasion inconnue : ${guide}`);
+  for (const c of CATEGORIES) assert.ok(!OCCASIONS.some((o) => (o.id as string) === c), `categorie homonyme d'une occasion : ${c}`);
+  assert.equal(new Set(SUJETS).size, SUJETS.length, "un identifiant sert a deux guides");
   assert.equal(cheminGuide("de", "anniversaire"), "/de/geschenkideen/geburtstag");
+  assert.equal(cheminGuide("en", "parfum"), "/en/gift-ideas/perfume");
+  // Le mot d'une autre langue redirige, pour une categorie comme pour une occasion.
+  assert.deepEqual(router("/de/geschenkideen/perfume", null, LANGUES_ACTIVES), {
+    type: "redirection",
+    vers: "/de/geschenkideen/parfum",
+    permanente: true,
+  });
+  assert.deepEqual(router("/nl/cadeau-ideeen/boeken", null, LANGUES_ACTIVES), {
+    type: "reecriture",
+    vers: "/nl/idees-cadeaux/livre",
+  });
 });
 
 test("le selecteur de langue retrouve la meme page dans chaque langue", () => {
@@ -2739,7 +2776,7 @@ test("le selecteur de langue retrouve la meme page dans chaque langue", () => {
   assert.equal(equivalents("/fr/idees-cadeaux/inconnue"), null);
   for (const langue of LANGUES) {
     for (const page of PAGES) assert.equal(equivalents(cheminVers(langue, page))?.[langue], cheminVers(langue, page));
-    for (const guide of GUIDES) {
+    for (const guide of SUJETS) {
       assert.equal(equivalents(cheminGuide(langue, guide))?.[langue], cheminGuide(langue, guide));
     }
   }
@@ -3185,7 +3222,7 @@ async function checkLlms() {
         const attendu = `${baseUrl()}${cheminVers(langue, page)}`;
         assert.ok(liens.includes(attendu), `${langue} : ${page} absente de llms.txt`);
       }
-      for (const url of [cheminVers(langue, "idees"), ...GUIDES.map((g) => cheminGuide(langue, g))]) {
+      for (const url of [cheminVers(langue, "idees"), ...SUJETS.map((g) => cheminGuide(langue, g))]) {
         assert.ok(liens.includes(`${baseUrl()}${url}`), `${langue} : ${url} absente de llms.txt`);
       }
     }

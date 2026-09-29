@@ -20,6 +20,7 @@ export const de: TextesGuides = {
     miseAJour: "Zuletzt aktualisiert:",
     voirAussi: "Siehe auch:",
     lire: "Zum Ratgeber",
+    autresCategories: "Weitere Geschenke, bei denen man zögert",
   },
 
   guides: {
@@ -538,6 +539,542 @@ export const de: TextesGuides = {
           {
             q: "Können mehrere Kinder gemeinsam schenken?",
             r: "Die Seite erstellt eine Person, aber ihr könnt die Ideen zusammen aussuchen, gemeinsam unterschreiben und den Kauf teilen, sobald das Geschenk feststeht.",
+          },
+        ],
+      },
+    },
+  },
+
+  sectionCategories: {
+    titre: "Schenken ohne Fehlgriff, nach Art des Geschenks",
+    chapo:
+      "Parfum, Schmuck, Bücher, Kleidung, Wein, Deko: die Geschenke, bei denen man am meisten zögert. Für jedes Ideen nach Stil – und ein Weg, nicht für den anderen zu entscheiden.",
+  },
+
+  categories: {
+    parfum: {
+      nom: "Parfum",
+      titreMeta: "Welches Parfum schenken? Wählen lassen — MyPresentsForYou",
+      descriptionMeta:
+        "Du schwankst zwischen mehreren Düften? Stell sie alle auf eine Seite und lass die Person ihren eigenen wählen. Ideen nach Duftfamilie.",
+      titre: "Welches Parfum schenken? Nicht entscheiden, vorschlagen",
+      chapo:
+        "Parfum ist das riskanteste Geschenk überhaupt: Was an dir gut riecht, gefällt dem anderen vielleicht nicht, und ein geöffneter Flakon geht nicht zurück. Statt auf einen Duft zu setzen, schlag zwei oder drei vor und lass die Person den wählen, der zu ihr passt.",
+      accroche: "Den Duft wählt, wer ihn trägt.",
+      apercu: ["Ein holziger Duft", "Ein frisches Zitrus-Eau", "Ein Set mit Miniaturen"],
+      pourquoi: {
+        titre: "Warum man Parfum für andere schlecht auswählt",
+        paragraphes: [
+          "Ein Parfum riecht auf jeder Haut anders, und was du gern trägst, sagt nichts darüber, was der andere gern trägt. Selbst gut informiert verschenkt man am Ende oft den eigenen Geschmack.",
+          "Die Frage „Welches Parfum möchtest du?“ löst das Problem und nimmt dem Geschenk den Zauber. Zwei oder drei Duftfamilien vorzuschlagen erhält die Überraschung: Die Person entdeckt deine Ideen, und ihre Nase entscheidet.",
+          "Hat sie schon einen Lieblingsduft, setz ihn neben zwei neue auf die Liste. Wählt sie ihn wieder, weißt du wenigstens, dass du verschenkst, was sie liebt.",
+        ],
+      },
+      idees: {
+        titre: "Ideen, nach Duftfamilie",
+        intro:
+          "Eine Idee pro Familie genügt: Drei holzige Düfte vorzuschlagen heißt, für sie zu wählen. Misch die Familien, oder stell ein Entdeckungsset neben einen Flakon.",
+        profils: [
+          {
+            nom: "Frisch und leicht",
+            idees: [
+              { nom: "Ein Eau de Toilette mit Zitrusnoten", pourquoi: "Bergamotte, Zitrone, Grapefruit: leicht, tagsüber gut zu tragen." },
+              { nom: "Ein Eau de Cologne", pourquoi: "Das dezenteste, für alle, die aufdringliche Düfte nicht mögen." },
+              { nom: "Ein aquatischer Duft", pourquoi: "Frisch, ohne süß zu sein, für den Sommer." },
+              { nom: "Ein Duft mit grünem Tee", pourquoi: "Sanft und klar, selten ein Fehlgriff." },
+            ],
+          },
+          {
+            nom: "Blumig und pudrig",
+            idees: [
+              { nom: "Ein blumiger Duft", pourquoi: "Rose, Jasmin, Maiglöckchen: der große Klassiker." },
+              { nom: "Ein Duft mit Iris", pourquoi: "Pudrig, elegant, überraschender als Rose." },
+              { nom: "Ein Duft mit Orangenblüte", pourquoi: "Strahlend, mit etwas Sauberem und Beruhigendem." },
+              { nom: "Ein Körperspray mit Duft", pourquoi: "Leichter als Parfum, um eine Familie unverbindlich zu testen." },
+            ],
+          },
+          {
+            nom: "Holzig und warm",
+            idees: [
+              { nom: "Ein holziger Duft", pourquoi: "Zeder, Sandelholz: trocken, elegant, für jede Jahreszeit." },
+              { nom: "Ein Amber-Duft", pourquoi: "Vanille, Harze, Gewürze: warm und umhüllend, für den Winter." },
+              { nom: "Ein Vetiver-Duft", pourquoi: "Erdig und frisch zugleich, leicht zu mögen." },
+              { nom: "Ein Duft mit Ledernoten", pourquoi: "Markanter, für alle, die gern auffallen." },
+            ],
+          },
+          {
+            nom: "Um gar nichts falsch zu machen",
+            idees: [
+              { nom: "Ein Set mit Parfum-Miniaturen", pourquoi: "Mehrere Düfte im kleinen Format, um in Ruhe den eigenen zu finden." },
+              { nom: "Ein Workshop zum Parfum-Kreieren", pourquoi: "Man mischt den eigenen Duft mit einem Parfümeur: kein Fehlgriff möglich." },
+              { nom: "Eine Duftkerze", pourquoi: "Der Duft im Zuhause statt auf der Haut." },
+              { nom: "Ein Raumduft-Diffusor", pourquoi: "Für alle, die kein Parfum tragen, aber ein duftendes Zuhause lieben." },
+            ],
+          },
+        ],
+      },
+      etapes: {
+        titre: "Mehrere Düfte vorschlagen, in drei Schritten",
+        liste: [
+          "Öffne den Editor und wähle den Anlass: Geburtstag, Weihnachten oder „Ohne Anlass“.",
+          "Füge zwei bis vier Düfte aus verschiedenen Familien hinzu; füge den Link eines Produkts ein, um Titel und Bild zu übernehmen.",
+          "Schick den Link. Die Person wählt, du siehst es über deinen privaten Link und kaufst den richtigen Flakon.",
+        ],
+      },
+      questions: {
+        titre: "Fragen zu Parfum als Geschenk",
+        liste: [
+          {
+            q: "Muss ich den Duft kennen, den die Person schon trägt?",
+            r: "Es hilft, ist aber nicht nötig. Fällt er dir ein, setz ihn neben zwei neue auf die Liste: Die Person wählt zwischen dem Bewährten und dem Neuen.",
+          },
+          {
+            q: "Ist ein Set mit Miniaturen eine gute Idee?",
+            r: "Es ist der sicherste Vorschlag und passt gut neben einen Flakon: Ist die Person selbst unsicher, nimmt sie das Set und findet ihren Duft in Ruhe.",
+          },
+          {
+            q: "Kann ich ein Parfum neben einem ganz anderen Geschenk vorschlagen?",
+            r: "Ja. Ein Parfum, ein Konzertticket, ein Buch: Die Ideen dürfen ganz verschieden sein. Die Person sieht deine Ideen, nie ihren Preis.",
+          },
+        ],
+      },
+    },
+
+    bijou: {
+      nom: "Schmuck",
+      titreMeta: "Welchen Schmuck schenken? Wählen lassen — MyPresentsForYou",
+      descriptionMeta:
+        "Gold oder Silber, dezent oder auffällig: Du schwankst zwischen mehreren Schmuckstücken? Stell sie auf eine Seite und lass die Person wählen.",
+      titre: "Welchen Schmuck schenken? Drei vorschlagen, wählen lassen",
+      chapo:
+        "Schmuck trägt man jeden Tag – oder nie. Gold oder Silber, dezent oder auffällig, der Ring in der falschen Größe: Es gibt viele Arten, danebenzuliegen. Schlag zwei oder drei Stücke in verschiedenen Stilen vor: Die Person wählt das, was sie tragen möchte.",
+      accroche: "Gold oder Silber, dezent oder auffällig: Die Person entscheidet.",
+      apercu: ["Eine feine Goldkette", "Silberne Creolen", "Ein Armreif"],
+      pourquoi: {
+        titre: "Warum Schmuck so schwer auszuwählen ist",
+        paragraphes: [
+          "Schmuck sagt etwas über den Stil dessen, der ihn trägt. Was dir im Schaufenster gefällt, kann in der Schachtel bleiben: zu glänzend, zu schlicht, das falsche Metall, die falsche Länge.",
+          "Dazu kommen die praktischen Fallen: die unbekannte Ringgröße, keine Ohrlöcher, Haut, die auf bestimmte Metalle reagiert. Das alles auf einmal zu erraten ist eine Wette.",
+          "Mit zwei oder drei Vorschlägen bleibt die Überraschung – die Person entdeckt, was du dir für sie ausgedacht hast – und sie hat das letzte Wort. Was sie wählt, wird sie tragen.",
+        ],
+      },
+      idees: {
+        titre: "Ideen, nach Stil",
+        intro:
+          "Variiere die Stile statt der Modelle: Drei fast gleiche Ketten sind keine echte Wahl. Und lass den Ring weg, wenn du die Größe nicht kennst.",
+        profils: [
+          {
+            nom: "Dezent, für jeden Tag",
+            idees: [
+              { nom: "Eine feine Goldkette", pourquoi: "Allein oder kombiniert getragen, und man legt sie nicht mehr ab." },
+              { nom: "Ohrstecker", pourquoi: "Das Schmuckstück, das man vergisst, weil es so selbstverständlich ist." },
+              { nom: "Ein Kordelarmband", pourquoi: "Schlicht und verstellbar: keine Größenfrage." },
+              { nom: "Ein Buchstabenanhänger", pourquoi: "Klein, persönlich, selten ein Fehlgriff." },
+            ],
+          },
+          {
+            nom: "Auffällig",
+            idees: [
+              { nom: "Goldene Creolen", pourquoi: "Ein Klassiker, der gesehen wird." },
+              { nom: "Eine Statement-Kette", pourquoi: "Für alle, bei denen der Schmuck das Outfit macht." },
+              { nom: "Hängeohrringe", pourquoi: "Bewegung und Licht rund ums Gesicht." },
+              { nom: "Ein Cocktailring", pourquoi: "Ein farbiger Stein, für festliche Abende." },
+            ],
+          },
+          {
+            nom: "Mit Geschichte",
+            idees: [
+              { nom: "Vintage-Schmuck", pourquoi: "Ein altes, einzigartiges Stück, das schon gelebt hat." },
+              { nom: "Ein Medaillon für Fotos", pourquoi: "Eine Erinnerung, die man nah bei sich trägt." },
+              { nom: "Gravierter Schmuck", pourquoi: "Ein Datum, ein Name, ein paar Worte auf der Innenseite." },
+              { nom: "Handgemachter Designerschmuck", pourquoi: "Von Hand gefertigt, in kleiner Auflage." },
+            ],
+          },
+          {
+            nom: "Ohne Größenrisiko",
+            idees: [
+              { nom: "Eine Armbanduhr", pourquoi: "Ein verstellbares Armband, und ein Gegenstand, auf den man täglich schaut." },
+              { nom: "Eine Brosche", pourquoi: "Steckt an Mantel, Tasche oder Hut." },
+              { nom: "Ein offener Armreif", pourquoi: "Passt sich dem Handgelenk an, ohne zu messen." },
+              { nom: "Ein Schmuckkästchen", pourquoi: "Für den Schmuck, den sie schon hat, wenn du nichts hinzufügen möchtest." },
+            ],
+          },
+        ],
+      },
+      etapes: {
+        titre: "Mehrere Schmuckstücke vorschlagen, in drei Schritten",
+        liste: [
+          "Öffne den Editor und wähle den Anlass, oder „Ohne Anlass“, wenn der Schmuck auf kein Datum wartet.",
+          "Füge zwei bis vier Stücke in verschiedenen Stilen hinzu; füge den Link eines Produkts ein, um Titel und Foto zu übernehmen.",
+          "Schick den Link, oder druck den QR-Code auf eine Karte, die in einem leeren Schmucketui liegt. Die Wahl siehst du über deinen privaten Link.",
+        ],
+      },
+      questions: {
+        titre: "Fragen zu Schmuck als Geschenk",
+        liste: [
+          {
+            q: "Und wenn ich die Ringgröße nicht kenne?",
+            r: "Schlag lieber eine Kette, ein verstellbares Armband oder Ohrringe vor. Wird ein Ring gewählt, passen die meisten Juweliere ihn nach dem Kauf an.",
+          },
+          {
+            q: "Gold oder Silber: Wie finde ich das heraus?",
+            r: "Schau, was die Person schon trägt: Uhr, Brille, Ohrringe. Im Zweifel setz ein Stück aus jedem Metall auf die Liste: Genau das soll die Seite entscheiden.",
+          },
+          {
+            q: "Sieht die Person den Preis des Schmucks?",
+            r: "Nie. Sie sieht die Stücke, nicht ihren Preis: Sie wählt, was ihr gefällt, weder das teuerste noch das günstigste.",
+          },
+        ],
+      },
+    },
+
+    livre: {
+      nom: "Bücher",
+      titreMeta: "Welches Buch schenken? Wählen lassen — MyPresentsForYou",
+      descriptionMeta:
+        "Roman, Sachbuch, Bildband oder Comic: Du schwankst zwischen mehreren Büchern? Stell sie auf eine Seite und lass die Person wählen, was sie lesen wird.",
+      titre: "Welches Buch schenken? Mehrere Titel, eine Wahl",
+      chapo:
+        "Ein Buch zu schenken heißt, auf einen Geschmack und ein Bücherregal zu wetten, das man nicht kennt. Der Roman, über den alle reden, liegt vielleicht schon auf dem Nachttisch. Schlag zwei oder drei Titel aus verschiedenen Genres vor und lass die Person den nehmen, auf den sie Lust hat.",
+      accroche: "Keine schon gelesenen Bücher mehr, keine ungeöffneten Romane.",
+      apercu: ["Ein neuer Roman", "Ein Fotobildband", "Ein Comic"],
+      pourquoi: {
+        titre: "Warum ein Buch riskanter ist, als es aussieht",
+        paragraphes: [
+          "Ein Buch scheint leicht zu verschenken: handlich, erschwinglich, immer willkommen. In der Praxis gibt es drei Arten, danebenzuliegen: schon gelesen, nicht der Geschmack, oder der falsche Moment – ein Wälzer von achthundert Seiten für jemanden, der in der U-Bahn liest.",
+          "Mehrere Titel lösen alle drei Probleme. Die Person legt das beiseite, was sie schon kennt, nimmt das, was sie anspricht, und du erfährst nebenbei, worauf sie gerade Lust hat.",
+          "Misch die Genres: ein Roman, ein Sachbuch, ein Bildband. Auch wer einem Genre treu ist, wählt gern zwischen drei noch unbekannten Autoren.",
+        ],
+      },
+      idees: {
+        titre: "Ideen, nach Art des Lesens",
+        intro:
+          "Nenn konkrete Titel, wenn du kannst: „Ein Roman“ lässt sich nicht wählen, „dieser Roman von dieser Autorin“ schon. Die Ideen unten helfen, die Genres zu variieren.",
+        profils: [
+          {
+            nom: "Wer Romane liest",
+            idees: [
+              { nom: "Ein preisgekrönter neuer Roman", pourquoi: "Die Neuerscheinungen, über die man spricht, für alle, die sie verfolgen." },
+              { nom: "Ein Klassiker in schöner Ausgabe", pourquoi: "Gebunden, illustriert: das Buch, das man behält." },
+              { nom: "Ein Krimi", pourquoi: "Für Abende, an denen man das Buch nicht mehr weglegt." },
+              { nom: "Eine Graphic Novel", pourquoi: "Eine echte Geschichte, in Bildern erzählt." },
+            ],
+          },
+          {
+            nom: "Wer gern dazulernt",
+            idees: [
+              { nom: "Ein populärwissenschaftliches Buch", pourquoi: "Um die Welt zu verstehen, ohne ein Lehrbuch aufzuschlagen." },
+              { nom: "Ein erzählendes Geschichtsbuch", pourquoi: "Eine Epoche, erzählt wie ein Roman." },
+              { nom: "Ein verständliches Philosophiebuch", pourquoi: "Kurz, klar, und Stoff für Gespräche danach." },
+              { nom: "Eine Biografie", pourquoi: "Ein erzähltes Leben, oft überraschender als Fiktion." },
+            ],
+          },
+          {
+            nom: "Wer lieber blättert",
+            idees: [
+              { nom: "Ein Fotobildband", pourquoi: "Wird in Häppchen angeschaut und bleibt auf dem Couchtisch." },
+              { nom: "Ein Kochbuch", pourquoi: "Für alle, die gern Gäste haben, mit Rezepten zum Nachkochen." },
+              { nom: "Ein illustrierter Atlas", pourquoi: "Karten und Geschichten, um vom Reisen zu träumen." },
+              { nom: "Ein Comic", pourquoi: "Ein abgeschlossener Band, an einem Abend gelesen." },
+            ],
+          },
+          {
+            nom: "Rund ums Lesen",
+            idees: [
+              { nom: "Ein Bücher-Abo", pourquoi: "Jeden Monat ein Überraschungsbuch, für die Person ausgewählt." },
+              { nom: "Ein E-Reader", pourquoi: "Für alle, die viel lesen und wenig Platz haben." },
+              { nom: "Ein Hörbuch-Abo", pourquoi: "Zum Lesen beim Gehen, Fahren oder Kochen." },
+              { nom: "Eine Leselampe", pourquoi: "Um abends zu lesen, ohne jemanden zu stören." },
+            ],
+          },
+        ],
+      },
+      etapes: {
+        titre: "Mehrere Bücher vorschlagen, in drei Schritten",
+        liste: [
+          "Öffne den Editor und wähle den Anlass, oder „Ohne Anlass“.",
+          "Füge zwei bis vier konkrete Titel hinzu; füge den Link des Buchs bei deiner Buchhandlung ein, um das Cover zu übernehmen.",
+          "Schick den Link. Die Person wählt, du siehst es über deinen privaten Link und holst das richtige Buch.",
+        ],
+      },
+      questions: {
+        titre: "Fragen zu Büchern als Geschenk",
+        liste: [
+          {
+            q: "Und wenn die Person eines der Bücher schon gelesen hat?",
+            r: "Dann wählt sie ein anderes: Genau dafür schlägt man mehrere Titel vor. Und du weißt jetzt, dass du es ihr nicht mehr schenken musst.",
+          },
+          {
+            q: "Wie viele Bücher sollte ich vorschlagen?",
+            r: "Drei sind gut: genug für eine echte Wahl, nicht so viele, dass man lange zögert. Variiere die Genres statt der Autoren eines Genres.",
+          },
+          {
+            q: "Kann ich ein gebrauchtes Buch vorschlagen?",
+            r: "Ja. Eine alte Ausgabe oder ein Fund aus dem Antiquariat kann ein wunderbares Geschenk sein. Füge den Link des Angebots ein, oder beschreib es von Hand mit einem Foto.",
+          },
+        ],
+      },
+    },
+
+    vetement: {
+      nom: "Kleidung",
+      titreMeta: "Kleidung schenken ohne Fehlgriff — MyPresentsForYou",
+      descriptionMeta:
+        "Größe, Farbe, Schnitt: Kleidung zu schenken sind drei Wetten. Schlag mehrere Stücke auf einer Seite vor und lass die Person ihres wählen.",
+      titre: "Kleidung schenken, ohne beim Stil danebenzuliegen",
+      chapo:
+        "Kleidung ist das Geschenk, das am häufigsten umgetauscht wird. Zu groß, falsche Farbe, nicht ihr Stil: Es endet als Umtauschbeleg. Schlag zwei oder drei Stücke vor und lass die Person das wählen, das sie wirklich tragen wird.",
+      accroche: "Größe und Stil kennt, wer sie trägt.",
+      apercu: ["Ein Merinopullover", "Ein Kaschmirschal", "Eine Rippstrickmütze"],
+      pourquoi: {
+        titre: "Warum man Kleidung für andere schlecht auswählt",
+        paragraphes: [
+          "Die genaue Größe eines Menschen kennt man selten, und sie ändert sich von Marke zu Marke. Selbst die richtige Größe reicht nicht: Schnitt, Material und Farbe entscheiden, ob ein Stück getragen wird oder im Schrank bleibt.",
+          "Mehrere Stücke vorzuschlagen lässt dich beim Stil richtig liegen und der Person das überlassen, was du nicht erraten konntest. Ist die Wahl getroffen, kannst du nach der Größe fragen: Die Überraschung ist schon vorbei.",
+          "Fang mit Stücken an, die verzeihen: Accessoires, weite Strickteile, Einheitsgrößen. Hosen und taillierte Hemden hebst du für Menschen auf, deren Maße du kennst.",
+        ],
+      },
+      idees: {
+        titre: "Ideen, vom sichersten zum mutigsten",
+        intro:
+          "Beginne mit einem Stück ohne Größe, füge etwas Weites hinzu und heb eine mutigere Idee für den Schluss auf: Die Person sieht sofort, was zu ihr passt.",
+        profils: [
+          {
+            nom: "Keine Größenfrage",
+            idees: [
+              { nom: "Ein Kaschmirschal", pourquoi: "Weich, warm, und passt allen." },
+              { nom: "Eine Wollmütze", pourquoi: "Einheitsgröße, und ein Geschenk für den ganzen Winter." },
+              { nom: "Ein Seidentuch", pourquoi: "Am Hals, im Haar oder an der Tasche getragen." },
+              { nom: "Wollsocken", pourquoi: "Ein kleiner Alltagsluxus, den sich niemand selbst kauft." },
+            ],
+          },
+          {
+            nom: "Bequem und weit",
+            idees: [
+              { nom: "Ein Pullover aus Merinowolle", pourquoi: "Weiter Strick verzeiht eine ungefähre Größe." },
+              { nom: "Eine lange Strickjacke", pourquoi: "Offen getragen, der Schnitt erledigt den Rest." },
+              { nom: "Ein Sweatshirt aus Bio-Baumwolle", pourquoi: "Das Teil, zu dem man jedes Wochenende greift." },
+              { nom: "Ein Flanellpyjama", pourquoi: "Winterkomfort, den man sich nicht selbst kauft." },
+            ],
+          },
+          {
+            nom: "Ein Stück, das bleibt",
+            idees: [
+              { nom: "Ein Wollmantel", pourquoi: "Das meistgetragene Stück des Winters." },
+              { nom: "Eine Jeansjacke", pourquoi: "Ein Basic, das nie aus der Mode kommt." },
+              { nom: "Ein Leinenhemd", pourquoi: "Leicht, für Sommer und Reisen." },
+              { nom: "Ein Regenmantel", pourquoi: "Die nützliche Anschaffung, die man immer aufschiebt." },
+            ],
+          },
+          {
+            nom: "Rund um Kleidung",
+            idees: [
+              { nom: "Hausschuhe aus Wolle", pourquoi: "Eine ungefähre Größe reicht, Komfort garantiert." },
+              { nom: "Ein Strickset", pourquoi: "Um den eigenen Schal selbst zu stricken." },
+              { nom: "Ein Nähkurs", pourquoi: "Um Kleidung selbst zu nähen oder zu ändern." },
+              { nom: "Eine Kleiderbürste", pourquoi: "Damit Mäntel und Pullover wie neu bleiben." },
+            ],
+          },
+        ],
+      },
+      etapes: {
+        titre: "Mehrere Stücke vorschlagen, in drei Schritten",
+        liste: [
+          "Öffne den Editor und wähle den Anlass, oder „Ohne Anlass“.",
+          "Füge zwei bis vier Stücke in verschiedenen Stilen hinzu; füge den Link eines Produkts ein, um das Foto zu übernehmen.",
+          "Schick den Link. Sobald du die Wahl über deinen privaten Link siehst, bleibt nur, die richtige Größe zu bestellen.",
+        ],
+      },
+      questions: {
+        titre: "Fragen zu Kleidung als Geschenk",
+        liste: [
+          {
+            q: "Wie erfahre ich die Größe, ohne die Überraschung zu verderben?",
+            r: "Du brauchst sie vorher nicht: Die Person wählt zuerst das Stück, dann fragst du nach der Größe oder schaust auf das Etikett von etwas, das sie oft trägt. Die Überraschung war die Seite.",
+          },
+          {
+            q: "Soll ich dasselbe Stück in mehreren Farben vorschlagen?",
+            r: "Kannst du: derselbe Pullover in drei Farben ist eine echte Wahl, vor allem wenn du beim Farbton unsicher bist. Drei verschiedene Stücke verraten dir aber mehr über den Geschmack.",
+          },
+          {
+            q: "Und wenn das gewählte Stück nicht passt?",
+            r: "Bestell bei einem Händler mit Umtauschrecht und heb den Beleg auf. Das Risiko ist kleiner als sonst: Die Person hat selbst gewählt, was sie tragen möchte.",
+          },
+        ],
+      },
+    },
+
+    vin: {
+      nom: "Wein",
+      titreMeta: "Welchen Wein schenken? Wählen lassen — MyPresentsForYou",
+      descriptionMeta:
+        "Rot, weiß, Sekt oder Probierset: Du weißt nicht, welchen Wein du schenken sollst? Schlag mehrere Flaschen auf einer Seite vor und lass wählen.",
+      titre: "Welchen Wein schenken? Mehrere Flaschen, eine Wahl",
+      chapo:
+        "Wein an jemanden zu verschenken, der sich auskennt, schüchtert ein; an jemanden, der kaum trinkt, verpufft er. Zwischen Rot, Weiß und Prickelndem: Schlag zwei oder drei Flaschen vor und lass die Person die wählen, die sie öffnen möchte.",
+      accroche: "Rot, weiß oder prickelnd: Es entkorkt, wer wählt.",
+      apercu: ["Ein Rotwein zum Lagern", "Ein Winzerchampagner", "Ein Weinprobierset"],
+      pourquoi: {
+        titre: "Warum Wein ein heikles Geschenk ist",
+        paragraphes: [
+          "Wein ist eine Frage von Geschmack und Gewohnheit. Kenner haben ihre Regionen, ihre Rebsorten, manchmal einen vollen Keller; Gelegenheitstrinker mögen eine unkomplizierte Flasche lieber als einen Lagerwein. Ohne zu fragen schwer zu treffen.",
+          "Zwei oder drei Flaschen in verschiedenen Stilen vorzuschlagen vermeidet den Fehlgriff, und die Wahl wird zu einem eigenen Moment: Man vergleicht, erinnert sich an eine Reise, stellt sich das Essen vor.",
+          "Für jemanden, der wenig oder gar nicht trinkt, setz eine alkoholfreie Idee auf die Liste: Die Person wählt, ohne sich entschuldigen zu müssen.",
+        ],
+      },
+      idees: {
+        titre: "Ideen, nach Stil",
+        intro:
+          "Variiere Farben und Anlässe: eine Flasche zum baldigen Trinken, eine zum Lagern, ein Erlebnis. Kein Preis wird angezeigt: Jeder wählt nach Lust.",
+        profils: [
+          {
+            nom: "Bald zu öffnen",
+            idees: [
+              { nom: "Ein fruchtiger Rotwein", pourquoi: "Gamay, Spätburgunder: leicht, für ein Essen mit Freunden." },
+              { nom: "Ein trockener Weißwein", pourquoi: "Zum Aperitif oder zu Fisch." },
+              { nom: "Ein Rosé für die Küche", pourquoi: "Ernsthafter als ein Sommerrosé, für den Tisch." },
+              { nom: "Ein Naturwein", pourquoi: "Für alle, die lebendige, etwas überraschende Weine mögen." },
+            ],
+          },
+          {
+            nom: "Für große Anlässe",
+            idees: [
+              { nom: "Ein Winzerchampagner", pourquoi: "Perlen von kleinen Erzeugern, persönlicher." },
+              { nom: "Ein Winzersekt", pourquoi: "Nach derselben Methode, aus anderen Regionen." },
+              { nom: "Ein Wein zum Lagern", pourquoi: "Um ihn ein paar Jahre im Keller zu vergessen." },
+              { nom: "Ein Süßwein", pourquoi: "Edelsüß oder aufgespritet: zum Dessert oder Käse." },
+            ],
+          },
+          {
+            nom: "Zum Entdecken",
+            idees: [
+              { nom: "Ein Weinprobierset", pourquoi: "Mehrere kleine Fläschchen, zum Vergleichen." },
+              { nom: "Ein Wein-Abo", pourquoi: "Jeden Monat eine Auswahl, mit Verkostungsnotizen." },
+              { nom: "Ein Weinseminar", pourquoi: "In ein paar Stunden verkosten lernen." },
+              { nom: "Ein Besuch auf einem Weingut", pourquoi: "Ein Tag in den Reben, Verkostung inklusive." },
+            ],
+          },
+          {
+            nom: "Rund um Wein, oder alkoholfrei",
+            idees: [
+              { nom: "Eine Dekantierkaraffe", pourquoi: "Um junge Weine zu belüften und sorgfältig zu servieren." },
+              { nom: "Weingläser", pourquoi: "Ein gutes Glas verändert die Verkostung wirklich." },
+              { nom: "Ein alkoholfreier Wein", pourquoi: "Für alle, die nicht trinken, ohne auf das Ritual zu verzichten." },
+              { nom: "Ein Kellnermesser", pourquoi: "Das Werkzeug fürs Leben." },
+            ],
+          },
+        ],
+      },
+      etapes: {
+        titre: "Mehrere Weine vorschlagen, in drei Schritten",
+        liste: [
+          "Öffne den Editor und wähle den Anlass: Geburtstag, Einzug oder „Ohne Anlass“.",
+          "Füge zwei bis vier Flaschen in verschiedenen Stilen hinzu; füge den Link der Weinhandlung ein, um das Etikett zu übernehmen.",
+          "Schick den Link. Die gewählte Flasche siehst du über deinen privaten Link, und du schenkst sie – oder ihr öffnet sie zusammen.",
+        ],
+      },
+      questions: {
+        titre: "Fragen zu Wein als Geschenk",
+        liste: [
+          {
+            q: "Wie schenke ich Wein an jemanden, der sich auskennt?",
+            r: "Versuch nicht, auf fremdem Terrain mitzuhalten: Schlag eine weniger bekannte Region vor, einen kleinen Erzeuger, einen Besuch auf dem Weingut. Die Person wählt, was sie neugierig macht.",
+          },
+          {
+            q: "Und wenn die Person keinen Alkohol trinkt?",
+            r: "Setz eine alkoholfreie Idee auf die Liste, oder ersetze den Wein durch das, was dazugehört: schöne Gläser, ein Seminar, einen Feinkostkorb.",
+          },
+          {
+            q: "Wie überreiche ich die gewählte Flasche?",
+            r: "Druck die Karte mit ihrem QR-Code und häng sie an den Flaschenhals: Die Person findet die Seite wieder, und die Wahl, die sie getroffen hat.",
+          },
+        ],
+      },
+    },
+
+    deco: {
+      nom: "Deko",
+      titreMeta: "Deko schenken ohne Fehlgriff — MyPresentsForYou",
+      descriptionMeta:
+        "Vase, Lampe, Kunstdruck oder Plaid: Deko ist Geschmackssache. Schlag mehrere Stücke auf einer Seite vor und lass die Person ihres wählen.",
+      titre: "Deko schenken, ohne den eigenen Geschmack aufzudrängen",
+      chapo:
+        "Ein Dekostück lebt im Zuhause eines anderen Menschen, jeden Tag, vor seinen Augen. Passt der Stil nicht, landet es im Schrank – oder bleibt aus Höflichkeit stehen. Schlag zwei oder drei Stücke vor und lass die Person das wählen, das seinen Platz finden wird.",
+      accroche: "Zu Hause wählt man selbst, was man täglich sieht.",
+      apercu: ["Eine Keramikvase", "Eine Tischlampe", "Ein gerahmter Kunstdruck"],
+      pourquoi: {
+        titre: "Warum man Deko für andere schlecht auswählt",
+        paragraphes: [
+          "Deko ist das sichtbarste Geschenk überhaupt: Es bleibt der Person und ihren Gästen vor Augen. Es ist auch das persönlichste. Farben, Materialien, Stil: Was im Laden gefällt, kann in einem Wohnzimmer, das man kaum kennt, fehl am Platz wirken.",
+          "Mehrere Stücke vorzuschlagen heißt, auf eine Stimmung zu zielen statt auf ein bestimmtes Objekt. Die Person nimmt das, was zu dem passt, was sie schon hat, und du musst die Farbe des Sofas nicht erraten.",
+          "So macht man es auch beim Einzug richtig: Das Paar schaut sich die Seite gemeinsam an und wählt, was ins neue Zuhause kommt.",
+        ],
+      },
+      idees: {
+        titre: "Ideen, nach Stimmung",
+        intro:
+          "Misch Stimmungen und Größen: ein kleines Objekt, ein nützliches, ein markanteres Stück. Die Person sieht sofort, was zu ihr passt.",
+        profils: [
+          {
+            nom: "Natürlich und warm",
+            idees: [
+              { nom: "Eine Keramikvase", pourquoi: "Handgemacht, mit Blumen oder für sich allein." },
+              { nom: "Ein Wollplaid", pourquoi: "Auf dem Sofa, den ganzen Winter in Gebrauch." },
+              { nom: "Ein geflochtener Korb", pourquoi: "Zum Verstauen, oder als Übertopf für eine Pflanze." },
+              { nom: "Eine pflegeleichte Zimmerpflanze", pourquoi: "Mit Topf, und wenig Aufwand." },
+            ],
+          },
+          {
+            nom: "Schlicht",
+            idees: [
+              { nom: "Eine Tischlampe", pourquoi: "Licht verändert einen Raum mehr als ein Möbelstück." },
+              { nom: "Ein runder Spiegel", pourquoi: "Macht einen Flur größer und heller." },
+              { nom: "Eine Wanduhr", pourquoi: "Ein schlichtes Objekt, das immer eine Wand findet." },
+              { nom: "Kerzenhalter aus Messing", pourquoi: "Für den Tisch, an Abenden mit Gästen." },
+            ],
+          },
+          {
+            nom: "Farbig und markant",
+            idees: [
+              { nom: "Ein gerahmter Kunstdruck", pourquoi: "Illustration, Fotografie: Kunst an der Wand, ohne ein Vermögen." },
+              { nom: "Ein besticktes Kissen", pourquoi: "Ein Farbtupfer, der sich leicht austauschen lässt." },
+              { nom: "Ein Berberteppich", pourquoi: "Wärmt einen Raum auf einen Schlag." },
+              { nom: "Eine Künstlerlithografie", pourquoi: "Ein nummeriertes Werk, um eine Sammlung zu beginnen." },
+            ],
+          },
+          {
+            nom: "Vor allem nützlich",
+            idees: [
+              { nom: "Eine Duftkerze", pourquoi: "Das kleine Geschenk, das wirklich angezündet wird." },
+              { nom: "Ein Diffusor für ätherische Öle", pourquoi: "Für den Duft des Zuhauses." },
+              { nom: "Ein Wandregal", pourquoi: "Für Bücher, Pflanzen und Erinnerungsstücke." },
+              { nom: "Eine Ablageschale", pourquoi: "Für Flur, Schreibtisch oder Nachttisch." },
+            ],
+          },
+        ],
+      },
+      etapes: {
+        titre: "Mehrere Stücke vorschlagen, in drei Schritten",
+        liste: [
+          "Öffne den Editor und wähle den Anlass: Einzug, Geburtstag oder „Ohne Anlass“.",
+          "Füge zwei bis vier Stücke in verschiedenen Stimmungen hinzu; füge den Link eines Produkts ein, um das Foto zu übernehmen.",
+          "Schick den Link. Die Wahl siehst du über deinen privaten Link, und du schenkst das Stück, das seinen Platz finden wird.",
+        ],
+      },
+      questions: {
+        titre: "Fragen zu Deko als Geschenk",
+        liste: [
+          {
+            q: "Wie wähle ich, ohne das Zuhause der Person zu kennen?",
+            r: "Du musst es nicht kennen: Schlag verschiedene Stimmungen vor, die Person weiß, was zu ihr passt. Ihre Wahl verrät dir etwas fürs nächste Mal.",
+          },
+          {
+            q: "Ist ein Kunstwerk zu persönlich?",
+            r: "Allein vielleicht. Zwischen zwei anderen Vorschlägen nicht: Spricht es sie nicht an, nimmt die Person etwas anderes, ohne es sagen zu müssen.",
+          },
+          {
+            q: "Kann ich einem Paar, das zusammenzieht, Deko schenken?",
+            r: "Ja, das ist sogar der ideale Anlass: eine einzige Seite, das Paar schaut sie gemeinsam an und wählt, was ins neue Zuhause kommt. Der Ratgeber zum Einzug hat weitere Ideen.",
           },
         ],
       },

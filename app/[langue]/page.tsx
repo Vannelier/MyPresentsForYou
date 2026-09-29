@@ -3,9 +3,10 @@ import Link from "next/link";
 import EnTeteSite from "@/components/EnTeteSite";
 import SiteFooter from "@/components/SiteFooter";
 import AccueilCarteOuExemple from "@/components/AccueilCarteOuExemple";
+import { textesGuides } from "@/lib/guides";
 import { dictionnaire } from "@/lib/i18n";
 import { alternatesDe } from "@/lib/i18n/alternates";
-import { GUIDES, cheminGuide, cheminVers } from "@/lib/i18n/chemins";
+import { CATEGORIES, GUIDES, cheminGuide, cheminVers } from "@/lib/i18n/chemins";
 import { langueOuDefaut, type Langue } from "@/lib/i18n/langues";
 
 type Params = { params: Promise<{ langue: string }> };
@@ -54,6 +55,7 @@ export default async function LandingPage({ params }: Params) {
   const langue = langueOuDefaut((await params).langue);
   const tout = dictionnaire(langue);
   const d = tout.accueil;
+  const guides = textesGuides(langue);
   const creer = cheminVers(langue, "creer");
 
   return (
@@ -160,6 +162,14 @@ export default async function LandingPage({ params }: Params) {
           {GUIDES.map((guide) => (
             <li key={guide}>
               <Link href={cheminGuide(langue, guide)}>{tout.occasions[guide].nom}</Link>
+            </li>
+          ))}
+        </ul>
+        <p>{d.guidesHesiter}</p>
+        <ul className="lp-guides__liste">
+          {CATEGORIES.map((categorie) => (
+            <li key={categorie}>
+              <Link href={cheminGuide(langue, categorie)}>{guides.categories[categorie].nom}</Link>
             </li>
           ))}
         </ul>

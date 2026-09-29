@@ -261,6 +261,7 @@ export const it = {
     guidesTitre: "Idee per ogni occasione",
     guidesTexte: "Compleanno, Natale, matrimonio, nascita… idee divise per profilo, se sei a corto.",
     guidesTout: "Tutte le idee regalo",
+    guidesHesiter: "Indeciso tra più idee dello stesso tipo?",
     finTitre: "E se creassi la sua?",
     finTexte: "Comincia con due idee, arriverai a dieci se vuoi. Il resto si sistema strada facendo.",
     piedNote:

@@ -185,7 +185,7 @@ la liste dise ce qui est pris.
 
 `/robots.txt` laisse explorer les pages-cadeau — c'est en les lisant qu'un robot voit leur
 `noindex` — mais interdit `/admin/` : un jeton d'administration n'a rien à faire dans un index.
-`/sitemap.xml` déclare les pages du site et les six guides dans chaque langue active, avec leurs `hreflang` — l'accueil
+`/sitemap.xml` déclare les pages du site et les douze guides (six occasions, six catégories) dans chaque langue active, avec leurs `hreflang` — l'accueil
 sous `/fr`, et non `/`, qui redirige —, jamais les cartes.
 
 `/llms.txt` résume le site pour les assistants conversationnels, au format de llmstxt.org : ce que
@@ -1092,6 +1092,23 @@ l'outil : l'accueil, le formulaire, `/questions`, et surtout les guides par occa
   (`?occasion=`), jamais par-dessus un brouillon. Les guides sont liés depuis l'accueil et le pied de
   page ; leur texte vit dans `lib/guides/`, hors du dictionnaire que reçoit le navigateur. La
   démarche est dans `docs/superpowers/specs/2026-09-17-referencement-occasions-design.md`.
+- **Des guides par catégorie** (`/fr/idees-cadeaux/parfum`, `/en/gift-ideas/perfume`…) : parfum,
+  bijou, livre, vêtement, vin, déco. Ils visent une autre recherche que les occasions : « idée
+  cadeau anniversaire » vient de qui n'a pas d'idée, « quel parfum offrir » de qui en a plusieurs et
+  n'ose pas trancher — exactement la situation que l'outil règle. Les six catégories sont choisies
+  pour le risque de se tromper qu'elles portent (une odeur, une taille, un livre déjà lu), pas pour
+  leur volume : sur « quel livre offrir » ou « quel bijou offrir », des sites installés depuis des
+  années tiennent la première page (Culturez-vous, Cadeau-utile, les bijoutiers Némès, Histoire
+  d'Or, Cléor, relevés le 29 septembre 2026), et un domaine neuf n'a de chance que sur l'angle que
+  personne ne prend : ne pas choisir. Même plan et même gabarit que les guides d'occasion
+  (`app/[langue]/idees-cadeaux/[occasion]`, un seul segment dynamique possible par niveau), avec
+  deux différences : le bouton ouvre l'éditeur **sans** occasion — on hésite sur un parfum pour un
+  anniversaire comme pour Noël — et l'aperçu prend l'occasion neutre (« Un cadeau pour toi ») sur
+  une palette propre à la catégorie (`PALETTES_CATEGORIES`). Leurs profils rangent les idées par
+  goût (famille olfactive, style de bijou) plutôt que par personne. Liés depuis l'accueil et la page
+  des idées cadeaux. Les suggestions de recherche n'ont pas pu être relevées pour ce lot (accès
+  bloqué depuis l'environnement de travail) : c'est à vérifier dans Search Console une fois les
+  pages indexées, et à corriger d'après les requêtes réelles.
 - **Un sélecteur de langue à drapeaux**, en tête des pages du site — jamais sur une carte : il mène
   à la même page dans l'autre langue, et ses liens restent dans le HTML pour les moteurs.
 
