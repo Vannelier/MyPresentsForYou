@@ -1,4 +1,4 @@
-import type { Guide } from "@/lib/i18n/chemins";
+import type { Categorie, Guide } from "@/lib/i18n/chemins";
 
 /*
  * Le texte des guides par occasion, dans une langue.
@@ -29,6 +29,14 @@ export type ContenuGuide = {
   questions: { titre: string; liste: { q: string; r: string }[] };
 };
 
+/*
+ * Un guide par categorie suit le meme plan qu'un guide d'occasion, avec son nom
+ * en plus : une occasion tire le sien du dictionnaire, une categorie n'y figure
+ * pas — elle n'existe que dans ces pages. Ses profils rangent les idees par gout
+ * (famille olfactive, style de bijou) plutot que par personne.
+ */
+export type ContenuCategorie = ContenuGuide & { nom: string };
+
 export type TextesGuides = {
   /** La page qui reunit les guides. */
   page: { titreMeta: string; descriptionMeta: string; titre: string; chapo: string };
@@ -42,6 +50,11 @@ export type TextesGuides = {
     miseAJour: string;
     voirAussi: string;
     lire: string;
+    /** Sous un guide de categorie, en tete des liens vers les autres. */
+    autresCategories: string;
   };
   guides: Record<Guide, ContenuGuide>;
+  /** La section des categories, dans la page qui reunit les guides. */
+  sectionCategories: { titre: string; chapo: string };
+  categories: Record<Categorie, ContenuCategorie>;
 };

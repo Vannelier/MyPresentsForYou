@@ -261,6 +261,7 @@ export const de = {
     guidesTitre: "Ideen für jeden Anlass",
     guidesTexte: "Geburtstag, Weihnachten, Hochzeit, Geburt … Ideen nach Typ sortiert, wenn dir nichts einfällt.",
     guidesTout: "Alle Geschenkideen",
+    guidesHesiter: "Schwanken zwischen mehreren Ideen derselben Art?",
     finTitre: "Wie wäre es mit ihrer eigenen Seite?",
     finTexte: "Fang mit zwei Ideen an, mach zehn daraus, wenn du magst. Das Übrige ergibt sich unterwegs.",
     piedNote: "Eine Karte bleibt ein Jahr online. Behalte deinen privaten Link: Er sagt dir, was gewählt wurde.",

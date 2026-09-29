@@ -1,7 +1,7 @@
 import { baseUrl } from "@/lib/env";
 import { textesGuides } from "@/lib/guides";
 import { dictionnaire } from "@/lib/i18n";
-import { GUIDES, cheminGuide, cheminVers, type Page } from "@/lib/i18n/chemins";
+import { CATEGORIES, GUIDES, cheminGuide, cheminVers, type Page } from "@/lib/i18n/chemins";
 import { LANGUES_ACTIVES, NOMS_DES_LANGUES, type Langue } from "@/lib/i18n/langues";
 import { LIMITS } from "@/lib/limits";
 
@@ -49,6 +49,10 @@ export function GET() {
       ...GUIDES.map(
         (guide) =>
           `  - [${sansMarque(guides.guides[guide].titreMeta)}](${base}${cheminGuide(langue, guide)}): ${guides.guides[guide].descriptionMeta}`,
+      ),
+      ...CATEGORIES.map(
+        (categorie) =>
+          `  - [${sansMarque(guides.categories[categorie].titreMeta)}](${base}${cheminGuide(langue, categorie)}): ${guides.categories[categorie].descriptionMeta}`,
       ),
     ].join("\n");
   });

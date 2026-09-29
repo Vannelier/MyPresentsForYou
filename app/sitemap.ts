@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { baseUrl } from "@/lib/env";
 import { variantes } from "@/lib/i18n/alternates";
-import { GUIDES, cheminGuide, cheminVers, type Page } from "@/lib/i18n/chemins";
+import { SUJETS, cheminGuide, cheminVers, type Page } from "@/lib/i18n/chemins";
 import { LANGUES_ACTIVES } from "@/lib/i18n/langues";
 
 /**
@@ -17,8 +17,9 @@ import { LANGUES_ACTIVES } from "@/lib/i18n/langues";
  * autres. L'accueil y est sous `/fr`, et non `/` : la racine redirige selon le
  * navigateur, et une adresse qui redirige n'a rien a faire dans un sitemap.
  *
- * Les guides par occasion suivent, une entree par guide et par langue : ce sont
- * les pages ecrites pour etre trouvees, elles passent devant le contact.
+ * Les guides suivent, par occasion puis par categorie, une entree par guide et
+ * par langue : ce sont les pages ecrites pour etre trouvees, elles passent
+ * devant le contact.
  */
 const PAGES_PUBLIQUES: [page: Page, priorite: number][] = [
   ["accueil", 1],
@@ -40,7 +41,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority,
       alternates: { languages: variantes(page, base) },
     })),
-    ...GUIDES.map((guide) => ({
+    ...SUJETS.map((guide) => ({
       url: `${base}${cheminGuide(langue, guide)}`,
       changeFrequency: "monthly" as const,
       priority: 0.7,

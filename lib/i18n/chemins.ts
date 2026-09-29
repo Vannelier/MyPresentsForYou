@@ -137,18 +137,57 @@ export const SEGMENTS_GUIDES: Record<Guide, Record<Langue, string>> = {
   },
 };
 
-/** L'adresse publique d'un guide : `/en/gift-ideas/birthday`. */
-export function cheminGuide(langue: Langue, guide: Guide): string {
-  return `${cheminVers(langue, "idees")}/${SEGMENTS_GUIDES[guide][langue]}`;
+/*
+ * Les guides par categorie, sous la meme page des idees : `/fr/idees-cadeaux/parfum`.
+ *
+ * Ils visent une autre recherche que les occasions. « Idee cadeau anniversaire »
+ * vient de qui n'a pas d'idee ; « quel parfum offrir » vient de qui en a
+ * plusieurs et n'ose pas trancher — exactement la situation que l'outil regle.
+ * Six categories retenues pour le risque de se tromper qu'elles portent (une
+ * odeur, une taille, un livre deja lu), pas pour leur volume de recherche : sur
+ * « quel livre offrir », des sites installes depuis des annees tiennent la
+ * premiere page, et un domaine neuf n'a de chance que sur l'angle que personne
+ * ne prend — ne pas choisir.
+ *
+ * Aucune n'est une occasion : leur bouton ouvre l'editeur sans en imposer une,
+ * et leurs identifiants ne doivent croiser ni ceux des occasions ni les segments
+ * des guides, puisque les deux familles partagent le dossier
+ * `app/[langue]/idees-cadeaux/[occasion]`.
+ */
+export const CATEGORIES = ["parfum", "bijou", "livre", "vetement", "vin", "deco"] as const;
+export type Categorie = (typeof CATEGORIES)[number];
+
+export const SEGMENTS_CATEGORIES: Record<Categorie, Record<Langue, string>> = {
+  parfum: { fr: "parfum", en: "perfume", it: "profumo", es: "perfume", de: "parfum", nl: "parfum" },
+  bijou: { fr: "bijou", en: "jewellery", it: "gioielli", es: "joyas", de: "schmuck", nl: "sieraden" },
+  livre: { fr: "livre", en: "books", it: "libri", es: "libros", de: "buecher", nl: "boeken" },
+  vetement: { fr: "vetement", en: "clothes", it: "abbigliamento", es: "ropa", de: "kleidung", nl: "kleding" },
+  vin: { fr: "vin", en: "wine", it: "vino", es: "vino", de: "wein", nl: "wijn" },
+  deco: { fr: "deco", en: "home-decor", it: "arredamento", es: "decoracion", de: "deko", nl: "woondecoratie" },
+};
+
+/** Tout ce qui a une page sous les idees cadeaux : les occasions, puis les categories. */
+export const SUJETS = [...GUIDES, ...CATEGORIES] as const;
+export type Sujet = Guide | Categorie;
+
+const SEGMENTS_SUJETS: Record<Sujet, Record<Langue, string>> = { ...SEGMENTS_GUIDES, ...SEGMENTS_CATEGORIES };
+
+export function estCategorie(sujet: string): sujet is Categorie {
+  return (CATEGORIES as readonly string[]).includes(sujet);
+}
+
+/** L'adresse publique d'un guide : `/en/gift-ideas/birthday`, `/en/gift-ideas/perfume`. */
+export function cheminGuide(langue: Langue, sujet: Sujet): string {
+  return `${cheminVers(langue, "idees")}/${SEGMENTS_SUJETS[sujet][langue]}`;
 }
 
 /** Le guide que designe un segment dans une langue, ou `null`. */
-export function guideDuSegment(langue: Langue, segment: string): Guide | null {
-  return GUIDES.find((g) => SEGMENTS_GUIDES[g][langue] === segment) ?? null;
+export function guideDuSegment(langue: Langue, segment: string): Sujet | null {
+  return SUJETS.find((g) => SEGMENTS_SUJETS[g][langue] === segment) ?? null;
 }
 
 /** Le guide que designe un segment dans n'importe quelle langue, ou `null`. */
-export function guideDansUneLangue(segment: string): Guide | null {
+export function guideDansUneLangue(segment: string): Sujet | null {
   for (const langue of LANGUES) {
     const guide = guideDuSegment(langue, segment);
     if (guide) return guide;

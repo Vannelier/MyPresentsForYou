@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { cheminGuide, cheminVers, type Guide, type Page } from "./chemins";
+import { cheminGuide, cheminVers, type Page, type Sujet } from "./chemins";
 import { LANGUES_ACTIVES, type Langue } from "./langues";
 
 /*
@@ -24,10 +24,10 @@ export function alternatesDe(langue: Langue, page: Page): Metadata["alternates"]
 }
 
 /**
- * La meme chose pour un guide d'occasion. Pas de `x-default` : la racine ne
+ * La meme chose pour un guide, d'occasion ou de categorie. Pas de `x-default` : la racine ne
  * redirige que vers l'accueil, jamais vers un guide.
  */
-export function alternatesGuide(langue: Langue, guide: Guide): Metadata["alternates"] {
+export function alternatesGuide(langue: Langue, guide: Sujet): Metadata["alternates"] {
   return {
     canonical: cheminGuide(langue, guide),
     languages: Object.fromEntries(LANGUES_ACTIVES.map((l) => [l, cheminGuide(l, guide)])),

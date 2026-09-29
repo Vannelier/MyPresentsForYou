@@ -20,6 +20,7 @@ export const nl: TextesGuides = {
     miseAJour: "Laatst bijgewerkt:",
     voirAussi: "Zie ook:",
     lire: "Lees de gids",
+    autresCategories: "Andere cadeaus waarbij je twijfelt",
   },
 
   guides: {
@@ -538,6 +539,542 @@ export const nl: TextesGuides = {
           {
             q: "Kunnen meerdere kinderen samen geven?",
             r: "Eén persoon maakt de pagina, maar jullie kunnen samen de ideeën kiezen, met z'n allen tekenen en de aankoop delen zodra het cadeau gekozen is.",
+          },
+        ],
+      },
+    },
+  },
+
+  sectionCategories: {
+    titre: "Cadeaus zonder misser, per soort cadeau",
+    chapo:
+      "Parfum, sieraden, boeken, kleding, wijn, woondecoratie: de cadeaus waarbij je het meest twijfelt. Voor elk ideeën per stijl, en een manier om niet voor de ander te beslissen.",
+  },
+
+  categories: {
+    parfum: {
+      nom: "Parfum",
+      titreMeta: "Welk parfum geven? Laat kiezen — MyPresentsForYou",
+      descriptionMeta:
+        "Twijfel je tussen meerdere parfums? Zet ze allemaal op één pagina en laat de persoon het eigen parfum kiezen. Ideeën per geurfamilie.",
+      titre: "Welk parfum geven? Niet kiezen, voorstellen",
+      chapo:
+        "Parfum is het riskantste cadeau dat er is: wat bij jou lekker ruikt, valt bij de ander misschien tegen, en een geopend flesje gaat niet terug. Zet niet alles op één geur, maar stel er twee of drie voor en laat de persoon kiezen wat bij hem of haar past.",
+      accroche: "De geur kiest wie hem draagt.",
+      apercu: ["Een houtige geur", "Een frisse citrusgeur", "Een set miniaturen"],
+      pourquoi: {
+        titre: "Waarom je parfum slecht kiest voor een ander",
+        paragraphes: [
+          "Parfum ruikt op elke huid anders, en wat jij graag draagt zegt niets over wat de ander graag draagt. Zelfs goed geïnformeerd geef je vaak je eigen smaak cadeau.",
+          "Vragen \"welk parfum wil je?\" lost het probleem op en haalt het cadeau weg. Twee of drie geurfamilies voorstellen houdt de verrassing: de persoon ontdekt je ideeën, en de neus beslist.",
+          "Heeft de persoon al een vaste geur, zet die dan naast twee nieuwe op de lijst. Wordt hij opnieuw gekozen, dan weet je in elk geval dat je geeft wat geliefd is.",
+        ],
+      },
+      idees: {
+        titre: "Ideeën, per geurfamilie",
+        intro:
+          "Eén idee per familie is genoeg: drie houtige geuren voorstellen is in de plaats van de ander kiezen. Meng de families, of zet een ontdekkingsset naast een flesje.",
+        profils: [
+          {
+            nom: "Fris en licht",
+            idees: [
+              { nom: "Een eau de toilette met citrus", pourquoi: "Bergamot, citroen, grapefruit: licht, makkelijk overdag te dragen." },
+              { nom: "Een eau de cologne", pourquoi: "De meest ingetogen, voor wie niet van opdringerige geuren houdt." },
+              { nom: "Een aquatische geur", pourquoi: "Fris zonder zoet te zijn, voor de zomer." },
+              { nom: "Een geur met groene thee", pourquoi: "Zacht en helder, zelden een misser." },
+            ],
+          },
+          {
+            nom: "Bloemig en poederig",
+            idees: [
+              { nom: "Een bloemige geur", pourquoi: "Roos, jasmijn, lelietje-van-dalen: de grote klassieker." },
+              { nom: "Een geur met iris", pourquoi: "Poederig, elegant, verrassender dan roos." },
+              { nom: "Een geur met oranjebloesem", pourquoi: "Stralend, met iets schoons en geruststellends." },
+              { nom: "Een geurende bodymist", pourquoi: "Lichter dan parfum, om een familie vrijblijvend te proberen." },
+            ],
+          },
+          {
+            nom: "Houtig en warm",
+            idees: [
+              { nom: "Een houtige geur", pourquoi: "Ceder, sandelhout: droog, elegant, voor elk seizoen." },
+              { nom: "Een ambergeur", pourquoi: "Vanille, harsen, specerijen: warm en omhullend, voor de winter." },
+              { nom: "Een geur met vetiver", pourquoi: "Aards en fris tegelijk, makkelijk om van te houden." },
+              { nom: "Een geur met leernoten", pourquoi: "Uitgesprokener, voor wie graag opvalt." },
+            ],
+          },
+          {
+            nom: "Om helemaal niet mis te grijpen",
+            idees: [
+              { nom: "Een set parfumminiaturen", pourquoi: "Meerdere geuren in klein formaat, om rustig de eigen geur te vinden." },
+              { nom: "Een workshop parfum maken", pourquoi: "Je stelt je eigen geur samen met een parfumeur: missen kan niet." },
+              { nom: "Een geurkaars", pourquoi: "De geur in huis in plaats van op de huid." },
+              { nom: "Een geurverspreider voor in huis", pourquoi: "Voor wie geen parfum draagt, maar houdt van een huis dat lekker ruikt." },
+            ],
+          },
+        ],
+      },
+      etapes: {
+        titre: "Meerdere parfums voorstellen in drie stappen",
+        liste: [
+          "Open de editor en kies de gelegenheid: verjaardag, Kerstmis of \"Zonder gelegenheid\".",
+          "Voeg twee tot vier parfums uit verschillende families toe; plak de link van een product om de titel en afbeelding over te nemen.",
+          "Stuur de link. De persoon kiest, jij ziet het via je privélink en koopt het juiste flesje.",
+        ],
+      },
+      questions: {
+        titre: "Vragen over parfum als cadeau",
+        liste: [
+          {
+            q: "Moet ik het parfum kennen dat de persoon al draagt?",
+            r: "Het helpt, maar het is niet nodig. Weet je het nog, zet het dan naast twee nieuwe op de lijst: de persoon kiest tussen het vertrouwde en het nieuwe.",
+          },
+          {
+            q: "Is een set miniaturen een goed idee?",
+            r: "Het is het veiligste voorstel, en het past goed naast een flesje: twijfelt de persoon zelf, dan kiest die de set en vindt rustig de eigen geur.",
+          },
+          {
+            q: "Kan ik een parfum voorstellen naast een heel ander cadeau?",
+            r: "Ja. Een parfum, een concertticket, een boek: de ideeën mogen heel verschillend zijn. De persoon ziet je ideeën, nooit hun prijs.",
+          },
+        ],
+      },
+    },
+
+    bijou: {
+      nom: "Sieraden",
+      titreMeta: "Welk sieraad geven? Laat kiezen — MyPresentsForYou",
+      descriptionMeta:
+        "Goud of zilver, ingetogen of opvallend: twijfel je tussen meerdere sieraden? Zet ze op één pagina en laat de persoon kiezen wat die gaat dragen.",
+      titre: "Welk sieraad geven? Stel er drie voor, laat kiezen",
+      chapo:
+        "Een sieraad draag je elke dag, of nooit. Goud of zilver, ingetogen of opvallend, een ring in de verkeerde maat: er zijn genoeg manieren om mis te grijpen. Stel twee of drie sieraden in verschillende stijlen voor: de persoon kiest het sieraad dat hij of zij wil dragen.",
+      accroche: "Goud of zilver, ingetogen of opvallend: de persoon beslist.",
+      apercu: ["Een fijne gouden ketting", "Zilveren creolen", "Een bangle"],
+      pourquoi: {
+        titre: "Waarom een sieraad zo moeilijk te kiezen is",
+        paragraphes: [
+          "Een sieraad zegt iets over de stijl van wie het draagt. Wat jij mooi vindt in de etalage kan in het doosje blijven: te glanzend, te sober, het verkeerde metaal, de verkeerde lengte.",
+          "Dan zijn er de praktische valkuilen: de ringmaat die je niet kent, oren zonder gaatjes, een huid die op bepaalde metalen reageert. Dat allemaal tegelijk raden is een gok.",
+          "Met twee of drie voorstellen blijft de verrassing — de persoon ontdekt wat jij bedacht hebt — en heeft die het laatste woord. Wat gekozen wordt, wordt ook gedragen.",
+        ],
+      },
+      idees: {
+        titre: "Ideeën, per stijl",
+        intro:
+          "Varieer de stijlen, niet de modellen: drie bijna gelijke kettingen zijn geen echte keuze. En sla de ring over als je de maat niet kent.",
+        profils: [
+          {
+            nom: "Ingetogen, voor elke dag",
+            idees: [
+              { nom: "Een fijne gouden ketting", pourquoi: "Alleen of gecombineerd gedragen, en gaat nooit meer af." },
+              { nom: "Oorknopjes", pourquoi: "Het sieraad dat je vergeet dat je draagt." },
+              { nom: "Een koordarmband", pourquoi: "Eenvoudig en verstelbaar: geen maatvraag." },
+              { nom: "Een hanger met initiaal", pourquoi: "Klein, persoonlijk, zelden een misser." },
+            ],
+          },
+          {
+            nom: "Opvallend",
+            idees: [
+              { nom: "Gouden creolen", pourquoi: "Een klassieker die gezien wordt." },
+              { nom: "Een statementketting", pourquoi: "Voor wie een sieraad de outfit laat maken." },
+              { nom: "Hangoorbellen", pourquoi: "Beweging en licht rond het gezicht." },
+              { nom: "Een cocktailring", pourquoi: "Een gekleurde steen, voor feestelijke avonden." },
+            ],
+          },
+          {
+            nom: "Met een verhaal",
+            idees: [
+              { nom: "Een vintage sieraad", pourquoi: "Een oud, uniek stuk dat al geleefd heeft." },
+              { nom: "Een medaillon voor een foto", pourquoi: "Een herinnering die je dicht bij je draagt." },
+              { nom: "Een gegraveerd sieraad", pourquoi: "Een datum, een naam, een paar woorden aan de binnenkant." },
+              { nom: "Een handgemaakt designsieraad", pourquoi: "Met de hand gemaakt, in kleine oplage." },
+            ],
+          },
+          {
+            nom: "Zonder maatrisico",
+            idees: [
+              { nom: "Een horloge", pourquoi: "Een verstelbaar bandje, en iets waar je elke dag naar kijkt." },
+              { nom: "Een broche", pourquoi: "Op een jas, een tas of een hoed te spelden." },
+              { nom: "Een open bangle", pourquoi: "Past zich aan de pols aan, zonder meten." },
+              { nom: "Een sieradendoos", pourquoi: "Voor de sieraden die er al zijn, als je liever niets toevoegt." },
+            ],
+          },
+        ],
+      },
+      etapes: {
+        titre: "Meerdere sieraden voorstellen in drie stappen",
+        liste: [
+          "Open de editor en kies de gelegenheid, of \"Zonder gelegenheid\" als het sieraad op geen datum wacht.",
+          "Voeg twee tot vier sieraden in verschillende stijlen toe; plak de link van een product om de titel en foto over te nemen.",
+          "Stuur de link, of print de QR-code op een kaartje in een leeg sieradendoosje. De keuze zie je via je privélink.",
+        ],
+      },
+      questions: {
+        titre: "Vragen over sieraden als cadeau",
+        liste: [
+          {
+            q: "En als ik de ringmaat niet ken?",
+            r: "Stel dan liever een ketting, een verstelbare armband of oorbellen voor. Wordt er een ring gekozen, dan passen de meeste juweliers die na aankoop op maat aan.",
+          },
+          {
+            q: "Goud of zilver: hoe weet ik dat?",
+            r: "Kijk wat de persoon al draagt: horloge, bril, oorbellen. Twijfel je, zet dan een sieraad in elk metaal op de lijst: precies dat laat de pagina beslissen.",
+          },
+          {
+            q: "Ziet de persoon de prijs van de sieraden?",
+            r: "Nooit. De persoon ziet de sieraden, niet hun prijs: er wordt gekozen wat bevalt, niet het duurste of het goedkoopste.",
+          },
+        ],
+      },
+    },
+
+    livre: {
+      nom: "Boeken",
+      titreMeta: "Welk boek geven? Laat kiezen — MyPresentsForYou",
+      descriptionMeta:
+        "Roman, non-fictie, fotoboek of strip: twijfel je tussen meerdere boeken? Zet ze op één pagina en laat de persoon kiezen wat die gaat lezen.",
+      titre: "Welk boek geven? Meerdere titels, één keuze",
+      chapo:
+        "Een boek geven is gokken op een smaak en een boekenkast die je niet kent. De roman waar iedereen het over heeft, ligt misschien al op het nachtkastje. Stel twee of drie titels uit verschillende genres voor, en laat de persoon nemen waar die zin in heeft.",
+      accroche: "Geen boeken meer die al gelezen zijn, of romans die dicht blijven.",
+      apercu: ["Een nieuwe roman", "Een fotoboek", "Een stripboek"],
+      pourquoi: {
+        titre: "Waarom een boek riskanter is dan het lijkt",
+        paragraphes: [
+          "Een boek lijkt makkelijk te geven: licht, betaalbaar, altijd welkom. In de praktijk kun je op drie manieren missen: het is al gelezen, het is niet naar de smaak, of het komt op het verkeerde moment — een kanjer van achthonderd pagina's voor iemand die in de trein leest.",
+          "Meerdere titels voorstellen lost alle drie op. De persoon legt weg wat al gelezen is, neemt wat aanspreekt, en jij ontdekt meteen waar die nu zin in heeft.",
+          "Meng de genres: een roman, een non-fictieboek, een fotoboek. Ook wie trouw is aan één genre, kiest graag tussen drie nog onbekende auteurs.",
+        ],
+      },
+      idees: {
+        titre: "Ideeën, per soort lezen",
+        intro:
+          "Noem precieze titels als het kan: \"een roman\" kies je niet, \"die roman van die schrijver\" wel. De ideeën hieronder helpen om de genres te variëren.",
+        profils: [
+          {
+            nom: "Wie romans leest",
+            idees: [
+              { nom: "Een bekroonde nieuwe roman", pourquoi: "De nieuwe boeken waar over gepraat wordt, voor wie ze volgt." },
+              { nom: "Een klassieker in mooie uitgave", pourquoi: "Gebonden, geïllustreerd: het boek dat je bewaart." },
+              { nom: "Een thriller", pourquoi: "Voor avonden waarop het boek niet meer weggelegd wordt." },
+              { nom: "Een graphic novel", pourquoi: "Een echt verhaal, verteld in beelden." },
+            ],
+          },
+          {
+            nom: "Wie graag bijleert",
+            idees: [
+              { nom: "Een populairwetenschappelijk boek", pourquoi: "Om de wereld te begrijpen zonder een studieboek." },
+              { nom: "Een verhalend geschiedenisboek", pourquoi: "Een tijdperk verteld als een roman." },
+              { nom: "Een toegankelijk filosofieboek", pourquoi: "Kort, helder, en stof om na te praten." },
+              { nom: "Een biografie", pourquoi: "Een verteld leven, vaak verrassender dan fictie." },
+            ],
+          },
+          {
+            nom: "Wie liever bladert",
+            idees: [
+              { nom: "Een fotoboek", pourquoi: "Wordt in stukjes bekeken en blijft op de salontafel liggen." },
+              { nom: "Een kookboek", pourquoi: "Voor wie graag gasten ontvangt, met recepten om opnieuw te maken." },
+              { nom: "Een geïllustreerde atlas", pourquoi: "Kaarten en verhalen, om van reizen te dromen." },
+              { nom: "Een stripboek", pourquoi: "Een compleet album, in één avond uit." },
+            ],
+          },
+          {
+            nom: "Rond het lezen",
+            idees: [
+              { nom: "Een boekenabonnement", pourquoi: "Elke maand een verrassingsboek, uitgekozen voor de persoon." },
+              { nom: "Een e-reader", pourquoi: "Voor wie veel leest en weinig plek heeft." },
+              { nom: "Een luisterboekabonnement", pourquoi: "Om te lezen tijdens het wandelen, rijden of koken." },
+              { nom: "Een leeslamp", pourquoi: "Om 's avonds te lezen zonder iemand te storen." },
+            ],
+          },
+        ],
+      },
+      etapes: {
+        titre: "Meerdere boeken voorstellen in drie stappen",
+        liste: [
+          "Open de editor en kies de gelegenheid, of \"Zonder gelegenheid\".",
+          "Voeg twee tot vier precieze titels toe; plak de link van het boek bij je boekhandel om de cover over te nemen.",
+          "Stuur de link. De persoon kiest, jij ziet het via je privélink en haalt het juiste boek.",
+        ],
+      },
+      questions: {
+        titre: "Vragen over boeken als cadeau",
+        liste: [
+          {
+            q: "En als de persoon een van de boeken al gelezen heeft?",
+            r: "Dan wordt er een ander gekozen: precies daarom stel je meerdere titels voor. En je weet nu dat je dat boek niet meer hoeft te geven.",
+          },
+          {
+            q: "Hoeveel boeken stel ik voor?",
+            r: "Drie is goed: genoeg voor een echte keuze, niet zoveel dat het lang twijfelen wordt. Varieer de genres in plaats van schrijvers uit hetzelfde genre.",
+          },
+          {
+            q: "Kan ik een tweedehands boek voorstellen?",
+            r: "Ja. Een oude uitgave of een tweedehands vondst kan een prachtig cadeau zijn. Plak de link van de advertentie, of beschrijf het met de hand, met een foto.",
+          },
+        ],
+      },
+    },
+
+    vetement: {
+      nom: "Kleding",
+      titreMeta: "Kleding geven zonder misser — MyPresentsForYou",
+      descriptionMeta:
+        "Maat, kleur, pasvorm: kleding geven is drie keer gokken. Stel meerdere items voor op één pagina, en laat de persoon het eigen stuk kiezen.",
+      titre: "Kleding geven zonder mis te grijpen in stijl",
+      chapo:
+        "Kleding is het cadeau dat het vaakst wordt geruild. Te groot, verkeerde kleur, niet de eigen stijl: het eindigt als ruilbon. Stel twee of drie items voor en laat de persoon kiezen wat echt gedragen zal worden.",
+      accroche: "Maat en stijl kent wie ze draagt.",
+      apercu: ["Een trui van merinowol", "Een kasjmier sjaal", "Een geribde muts"],
+      pourquoi: {
+        titre: "Waarom je kleding slecht kiest voor anderen",
+        paragraphes: [
+          "De exacte maat van iemand ken je zelden, en die verschilt per merk. Zelfs de juiste maat is niet genoeg: snit, stof en kleur bepalen of een stuk gedragen wordt of achter in de kast blijft.",
+          "Meerdere items voorstellen laat je de stijl goed raken, en de persoon beslissen over wat je niet kon raden. Is de keuze gemaakt, dan kun je gewoon naar de maat vragen: de verrassing is al voorbij.",
+          "Begin met stukken die vergevingsgezind zijn: accessoires, ruime breisels, one size. Bewaar broeken en getailleerde overhemden voor wie je maten kent.",
+        ],
+      },
+      idees: {
+        titre: "Ideeën, van het veiligste tot het gewaagdste",
+        intro:
+          "Begin met een stuk zonder maat, voeg iets ruims toe en bewaar een gewaagder idee voor het laatst: de persoon ziet meteen wat past.",
+        profils: [
+          {
+            nom: "Geen maatvraag",
+            idees: [
+              { nom: "Een kasjmier sjaal", pourquoi: "Zacht, warm, en past iedereen." },
+              { nom: "Een wollen muts", pourquoi: "One size, en een cadeau voor de hele winter." },
+              { nom: "Een zijden sjaaltje", pourquoi: "Om de hals, in het haar of aan een tas." },
+              { nom: "Wollen sokken", pourquoi: "Een kleine dagelijkse luxe die niemand zelf koopt." },
+            ],
+          },
+          {
+            nom: "Comfortabel en ruim",
+            idees: [
+              { nom: "Een trui van merinowol", pourquoi: "Een ruim breisel vergeeft een geschatte maat." },
+              { nom: "Een lang vest", pourquoi: "Open gedragen, de snit doet de rest." },
+              { nom: "Een sweater van biokatoen", pourquoi: "Het stuk dat elk weekend weer aangaat." },
+              { nom: "Een flanellen pyjama", pourquoi: "Wintercomfort dat je niet voor jezelf koopt." },
+            ],
+          },
+          {
+            nom: "Een stuk dat blijft",
+            idees: [
+              { nom: "Een wollen jas", pourquoi: "Het meest gedragen stuk van de winter." },
+              { nom: "Een spijkerjack", pourquoi: "Een basic die nooit uit de mode raakt." },
+              { nom: "Een linnen overhemd", pourquoi: "Licht, voor de zomer en op reis." },
+              { nom: "Een regenjas", pourquoi: "De nuttige aankoop die altijd wordt uitgesteld." },
+            ],
+          },
+          {
+            nom: "Rond kleding",
+            idees: [
+              { nom: "Wollen pantoffels", pourquoi: "Een geschatte maat is genoeg, comfort gegarandeerd." },
+              { nom: "Een breipakket", pourquoi: "Om zelf een sjaal te breien." },
+              { nom: "Een naaicursus", pourquoi: "Om kleding zelf te leren naaien of vermaken." },
+              { nom: "Een kledingborstel", pourquoi: "Om jassen en truien als nieuw te houden." },
+            ],
+          },
+        ],
+      },
+      etapes: {
+        titre: "Meerdere items voorstellen in drie stappen",
+        liste: [
+          "Open de editor en kies de gelegenheid, of \"Zonder gelegenheid\".",
+          "Voeg twee tot vier items in verschillende stijlen toe; plak de link van een product om de foto over te nemen.",
+          "Stuur de link. Zodra je de keuze via je privélink ziet, hoef je alleen nog de juiste maat te bestellen.",
+        ],
+      },
+      questions: {
+        titre: "Vragen over kleding als cadeau",
+        liste: [
+          {
+            q: "Hoe kom ik achter de maat zonder de verrassing te bederven?",
+            r: "Je hebt die vooraf niet nodig: de persoon kiest eerst het stuk, daarna vraag je de maat of kijk je op het label van iets wat vaak gedragen wordt. De pagina was de verrassing.",
+          },
+          {
+            q: "Stel ik hetzelfde item in meerdere kleuren voor?",
+            r: "Dat kan: dezelfde trui in drie kleuren is een echte keuze, zeker als je twijfelt over de tint. Maar drie verschillende stukken vertellen je meer over de smaak.",
+          },
+          {
+            q: "En als het gekozen stuk niet past?",
+            r: "Bestel bij een winkel die ruilen toestaat, en bewaar het bonnetje. Het risico is kleiner dan anders: de persoon heeft zelf gekozen wat die wilde dragen.",
+          },
+        ],
+      },
+    },
+
+    vin: {
+      nom: "Wijn",
+      titreMeta: "Welke wijn geven? Laat kiezen — MyPresentsForYou",
+      descriptionMeta:
+        "Rood, wit, bubbels of een proefset: weet je niet welke wijn je moet geven? Stel meerdere flessen voor op één pagina en laat de persoon kiezen.",
+      titre: "Welke wijn geven? Meerdere flessen, één keuze",
+      chapo:
+        "Wijn geven aan iemand die er verstand van heeft, is intimiderend; aan iemand die weinig drinkt, valt het plat. Tussen rood, wit en bubbels: stel twee of drie flessen voor en laat de persoon kiezen welke die wil openen.",
+      accroche: "Rood, wit of bubbels: wie kiest, ontkurkt.",
+      apercu: ["Een rode bewaarwijn", "Een champagne van een wijnboer", "Een wijnproefset"],
+      pourquoi: {
+        titre: "Waarom wijn een lastig cadeau is",
+        paragraphes: [
+          "Wijn is een kwestie van smaak en gewoonte. Liefhebbers hebben hun streken, hun druiven, soms al een volle kelder; wie af en toe drinkt, heeft liever een makkelijke fles dan een bewaarwijn. Moeilijk raak te schieten zonder te vragen.",
+          "Twee of drie flessen in verschillende stijlen voorstellen voorkomt de misser, en de keuze wordt een moment op zich: vergelijken, terugdenken aan een reis, de maaltijd voor je zien.",
+          "Voor wie weinig of niet drinkt: zet een alcoholvrij idee op de lijst. Dan kan de persoon kiezen zonder zich te hoeven verontschuldigen.",
+        ],
+      },
+      idees: {
+        titre: "Ideeën, per stijl",
+        intro:
+          "Varieer kleuren en momenten: een fles om snel te drinken, een om te bewaren, een belevenis. Er staat geen prijs bij: iedereen kiest naar zin.",
+        profils: [
+          {
+            nom: "Om snel te openen",
+            idees: [
+              { nom: "Een fruitige rode wijn", pourquoi: "Gamay, pinot noir: licht, voor een etentje met vrienden." },
+              { nom: "Een droge witte wijn", pourquoi: "Bij het aperitief of bij vis." },
+              { nom: "Een gastronomische rosé", pourquoi: "Serieuzer dan een zomerrosé, voor aan tafel." },
+              { nom: "Een natuurwijn", pourquoi: "Voor wie van levendige, wat verrassende wijnen houdt." },
+            ],
+          },
+          {
+            nom: "Voor grote gelegenheden",
+            idees: [
+              { nom: "Een champagne van een wijnboer", pourquoi: "Bubbels van kleine producenten, persoonlijker." },
+              { nom: "Een crémant", pourquoi: "Bubbels volgens dezelfde methode, uit andere streken." },
+              { nom: "Een bewaarwijn", pourquoi: "Om een paar jaar te vergeten in de kelder." },
+              { nom: "Een dessertwijn", pourquoi: "Zoet of versterkt: bij het dessert of de kaas." },
+            ],
+          },
+          {
+            nom: "Om te ontdekken",
+            idees: [
+              { nom: "Een wijnproefset", pourquoi: "Meerdere flesjes, om te vergelijken." },
+              { nom: "Een wijnabonnement", pourquoi: "Elke maand een selectie, met proefnotities." },
+              { nom: "Een wijnproefcursus", pourquoi: "In een paar uur leren proeven." },
+              { nom: "Een bezoek aan een wijndomein", pourquoi: "Een dag tussen de wijnranken, proeverij inbegrepen." },
+            ],
+          },
+          {
+            nom: "Rond wijn, of alcoholvrij",
+            idees: [
+              { nom: "Een decanteerkaraf", pourquoi: "Om jonge wijnen te laten ademen en met zorg te schenken." },
+              { nom: "Wijnglazen", pourquoi: "Een goed glas verandert het proeven echt." },
+              { nom: "Een alcoholvrije wijn", pourquoi: "Voor wie niet drinkt, zonder het ritueel op te geven." },
+              { nom: "Een sommeliersmes", pourquoi: "Het gereedschap voor het leven." },
+            ],
+          },
+        ],
+      },
+      etapes: {
+        titre: "Meerdere wijnen voorstellen in drie stappen",
+        liste: [
+          "Open de editor en kies de gelegenheid: verjaardag, housewarming of \"Zonder gelegenheid\".",
+          "Voeg twee tot vier flessen in verschillende stijlen toe; plak de link van de wijnhandel om het etiket over te nemen.",
+          "Stuur de link. De gekozen fles zie je via je privélink, en je geeft hem — of jullie openen hem samen.",
+        ],
+      },
+      questions: {
+        titre: "Vragen over wijn als cadeau",
+        liste: [
+          {
+            q: "Hoe geef ik wijn aan iemand die er verstand van heeft?",
+            r: "Probeer niet te wedijveren op andermans terrein: stel een minder bekende streek voor, een kleine producent, een bezoek aan een domein. De persoon kiest wat nieuwsgierig maakt.",
+          },
+          {
+            q: "En als de persoon geen alcohol drinkt?",
+            r: "Zet een alcoholvrij idee op de lijst, of vervang de wijn door wat erbij hoort: mooie glazen, een cursus, een delicatessenmand.",
+          },
+          {
+            q: "Hoe geef ik de gekozen fles?",
+            r: "Print de kaart met de QR-code en hang die om de hals van de fles: de persoon vindt de pagina terug, en de keuze die gemaakt werd.",
+          },
+        ],
+      },
+    },
+
+    deco: {
+      nom: "Woondecoratie",
+      titreMeta: "Woondecoratie geven zonder misser — MyPresentsForYou",
+      descriptionMeta:
+        "Vaas, lamp, poster of plaid: woondecoratie is een kwestie van smaak. Stel meerdere items voor op één pagina en laat de persoon kiezen.",
+      titre: "Woondecoratie geven zonder je smaak op te dringen",
+      chapo:
+        "Een decoratiestuk gaat bij iemand anders wonen, elke dag, in het zicht. Past de stijl niet, dan belandt het in een kast — of blijft het staan uit beleefdheid. Stel twee of drie items voor en laat de persoon kiezen wat een plek zal vinden.",
+      accroche: "Thuis kies je zelf waar je elke dag naar kijkt.",
+      apercu: ["Een keramieken vaas", "Een tafellamp", "Een ingelijste print"],
+      pourquoi: {
+        titre: "Waarom je woondecoratie slecht kiest voor anderen",
+        paragraphes: [
+          "Woondecoratie is het zichtbaarste cadeau dat er is: het blijft in het zicht van de persoon en van diens gasten. Het is ook het persoonlijkste. Kleuren, materialen, stijl: wat in de winkel mooi is, kan vloeken in een woonkamer die je nauwelijks kent.",
+          "Meerdere items voorstellen laat je mikken op een sfeer in plaats van op één voorwerp. De persoon neemt wat past bij wat er al staat, en jij hoeft de kleur van de bank niet te raden.",
+          "Zo doe je het ook goed bij een housewarming: het stel bekijkt de pagina samen en kiest wat er in het nieuwe huis komt.",
+        ],
+      },
+      idees: {
+        titre: "Ideeën, per sfeer",
+        intro:
+          "Meng sferen en formaten: een klein voorwerp, een nuttig, een uitgesprokener stuk. De persoon ziet meteen wat past.",
+        profils: [
+          {
+            nom: "Natuurlijk en warm",
+            idees: [
+              { nom: "Een keramieken vaas", pourquoi: "Handgemaakt, met bloemen of op zichzelf." },
+              { nom: "Een wollen plaid", pourquoi: "Op de bank, en de hele winter in gebruik." },
+              { nom: "Een gevlochten mand", pourquoi: "Om op te bergen, of om een plant in te zetten." },
+              { nom: "Een makkelijke kamerplant", pourquoi: "Met pot, en weinig onderhoud." },
+            ],
+          },
+          {
+            nom: "Strak",
+            idees: [
+              { nom: "Een tafellamp", pourquoi: "Licht verandert een kamer meer dan een meubel." },
+              { nom: "Een ronde spiegel", pourquoi: "Maakt een hal groter en lichter." },
+              { nom: "Een wandklok", pourquoi: "Een eenvoudig voorwerp dat altijd een muur vindt." },
+              { nom: "Messing kandelaars", pourquoi: "Voor op tafel, op avonden met gasten." },
+            ],
+          },
+          {
+            nom: "Kleurrijk en uitgesproken",
+            idees: [
+              { nom: "Een ingelijste print", pourquoi: "Illustratie, fotografie: kunst aan de muur zonder fortuin." },
+              { nom: "Een geborduurd kussen", pourquoi: "Een kleuraccent dat makkelijk te wisselen is." },
+              { nom: "Een berbertapijt", pourquoi: "Verwarmt een kamer in één keer." },
+              { nom: "Een kunstenaarslitho", pourquoi: "Een genummerd werk, om een verzameling te beginnen." },
+            ],
+          },
+          {
+            nom: "Vooral nuttig",
+            idees: [
+              { nom: "Een geurkaars", pourquoi: "Het kleine cadeau dat echt wordt aangestoken." },
+              { nom: "Een diffuser voor etherische olie", pourquoi: "Voor de geur van het huis." },
+              { nom: "Een wandplank", pourquoi: "Voor boeken, planten en souvenirs." },
+              { nom: "Een opbergschaaltje", pourquoi: "Voor de hal, het bureau of het nachtkastje." },
+            ],
+          },
+        ],
+      },
+      etapes: {
+        titre: "Meerdere items voorstellen in drie stappen",
+        liste: [
+          "Open de editor en kies de gelegenheid: housewarming, verjaardag of \"Zonder gelegenheid\".",
+          "Voeg twee tot vier items in verschillende sferen toe; plak de link van een product om de foto over te nemen.",
+          "Stuur de link. De keuze zie je via je privélink, en je geeft het stuk dat een plek zal vinden.",
+        ],
+      },
+      questions: {
+        titre: "Vragen over woondecoratie als cadeau",
+        liste: [
+          {
+            q: "Hoe kies ik zonder het interieur van de persoon te kennen?",
+            r: "Dat hoef je niet te kennen: stel verschillende sferen voor, de persoon weet wat er thuis past. De keuze vertelt je iets voor de volgende keer.",
+          },
+          {
+            q: "Is een kunstwerk te persoonlijk?",
+            r: "Op zichzelf misschien. Tussen twee andere voorstellen niet: spreekt het niet aan, dan kiest de persoon iets anders, zonder het te hoeven zeggen.",
+          },
+          {
+            q: "Kan ik woondecoratie geven aan een stel dat gaat samenwonen?",
+            r: "Ja, dat is zelfs de ideale gelegenheid: één pagina, het stel bekijkt die samen en kiest wat er in het nieuwe huis komt. De housewarminggids geeft meer ideeën.",
           },
         ],
       },

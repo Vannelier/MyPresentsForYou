@@ -259,6 +259,7 @@ export const nl = {
     guidesTitre: "Ideeën voor elke gelegenheid",
     guidesTexte: "Verjaardag, kerst, huwelijk, geboorte… ideeën per profiel, als je vastloopt.",
     guidesTout: "Alle cadeau-ideeën",
+    guidesHesiter: "Twijfel je tussen meerdere ideeën van dezelfde soort?",
     finTitre: "Maak je die van de ander?",
     finTexte: "Begin met twee ideeën, maak er tien van als je wilt. De rest regel je onderweg.",
     piedNote: "Een kaart blijft een jaar online. Bewaar je privélink: die vertelt je wat er gekozen is.",

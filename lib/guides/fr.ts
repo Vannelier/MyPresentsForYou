@@ -27,6 +27,7 @@ export const fr: TextesGuides = {
     miseAJour: "Dernière mise à jour :",
     voirAussi: "Voir aussi :",
     lire: "Lire le guide",
+    autresCategories: "D'autres cadeaux où l'on hésite",
   },
 
   guides: {
@@ -545,6 +546,542 @@ export const fr: TextesGuides = {
           {
             q: "Plusieurs enfants peuvent-ils offrir ensemble ?",
             r: "Une seule personne crée la page, mais vous pouvez choisir les idées ensemble, signer à plusieurs, puis partager l'achat une fois le cadeau retenu.",
+          },
+        ],
+      },
+    },
+  },
+
+  sectionCategories: {
+    titre: "Offrir sans se tromper, par type de cadeau",
+    chapo:
+      "Parfum, bijou, livre, vêtement, vin, déco : les cadeaux sur lesquels on hésite le plus. Pour chacun, des pistes par style, et une façon de ne pas trancher à la place de l'autre.",
+  },
+
+  categories: {
+    parfum: {
+      nom: "Parfum",
+      titreMeta: "Quel parfum offrir ? Laisser choisir — MyPresentsForYou",
+      descriptionMeta:
+        "Tu hésites entre plusieurs parfums ? Propose-les sur une page et laisse la personne choisir le sien. Des pistes par famille olfactive.",
+      titre: "Quel parfum offrir ? Ne choisis pas, propose",
+      chapo:
+        "Un parfum est le cadeau le plus risqué qui soit : ce qui sent bon sur toi peut déplaire sur l'autre, et un flacon ouvert ne se rend pas. Plutôt que de parier sur un seul, propose deux ou trois pistes et laisse la personne choisir celle qui lui ressemble.",
+      accroche: "L'odeur, c'est la personne qui la choisit.",
+      apercu: ["Un parfum boisé", "Une eau fraîche aux agrumes", "Un coffret de miniatures"],
+      pourquoi: {
+        titre: "Pourquoi un parfum se choisit mal pour quelqu'un d'autre",
+        paragraphes: [
+          "Un parfum ne sent pas pareil sur chaque peau, et ce qu'on aime porter ne dit rien de ce que l'autre aime porter. Même bien renseigné, on finit souvent par offrir son propre goût.",
+          "Demander « quel parfum tu veux ? » règle le problème et enlève le cadeau. Proposer deux ou trois familles olfactives garde la surprise : la personne découvre tes idées, et c'est son nez qui décide.",
+          "Si elle a déjà un parfum fétiche, mets-le dans la liste à côté de deux découvertes. Si elle le reprend, tu sauras au moins que tu offres ce qu'elle aime.",
+        ],
+      },
+      idees: {
+        titre: "Des pistes, par famille olfactive",
+        intro:
+          "Une idée par famille suffit : proposer trois boisés revient à choisir à sa place. Mélange les familles, ou glisse un coffret de découverte à côté d'un flacon.",
+        profils: [
+          {
+            nom: "Frais et léger",
+            idees: [
+              { nom: "Une eau de toilette aux agrumes", pourquoi: "Bergamote, citron, pamplemousse : léger, facile à porter le jour." },
+              { nom: "Une eau de Cologne", pourquoi: "La plus discrète, pour qui n'aime pas les parfums qui s'imposent." },
+              { nom: "Un parfum aux notes marines", pourquoi: "Frais sans être sucré, pour l'été." },
+              { nom: "Un parfum au thé vert", pourquoi: "Doux et net, rarement un faux pas." },
+            ],
+          },
+          {
+            nom: "Floral et poudré",
+            idees: [
+              { nom: "Un parfum floral", pourquoi: "Rose, jasmin, muguet : le grand classique." },
+              { nom: "Un parfum à l'iris", pourquoi: "Poudré, élégant, plus inattendu que la rose." },
+              { nom: "Un parfum à la fleur d'oranger", pourquoi: "Lumineux, avec quelque chose de propre et de rassurant." },
+              { nom: "Une brume parfumée", pourquoi: "Plus légère qu'un parfum, pour essayer une famille sans s'engager." },
+            ],
+          },
+          {
+            nom: "Boisé et chaleureux",
+            idees: [
+              { nom: "Un parfum boisé", pourquoi: "Cèdre, santal : sec, élégant, se porte en toute saison." },
+              { nom: "Un parfum ambré", pourquoi: "Vanille, résines, épices : chaud et enveloppant, pour l'hiver." },
+              { nom: "Un parfum au vétiver", pourquoi: "Terreux et frais à la fois, facile à aimer." },
+              { nom: "Un parfum aux notes de cuir", pourquoi: "Plus marqué, pour qui aime qu'on le remarque." },
+            ],
+          },
+          {
+            nom: "Pour ne pas se tromper du tout",
+            idees: [
+              { nom: "Un coffret de miniatures de parfum", pourquoi: "Plusieurs parfums en petit format, pour trouver le sien sans se presser." },
+              { nom: "Un atelier de création de parfum", pourquoi: "On compose le sien avec un parfumeur : impossible de viser à côté." },
+              { nom: "Une bougie parfumée", pourquoi: "L'odeur dans la maison plutôt que sur la peau." },
+              { nom: "Un diffuseur de parfum d'intérieur", pourquoi: "Pour qui ne se parfume pas, mais aime les maisons qui sentent bon." },
+            ],
+          },
+        ],
+      },
+      etapes: {
+        titre: "Proposer plusieurs parfums en trois étapes",
+        liste: [
+          "Ouvre l'éditeur et choisis l'occasion : anniversaire, Noël, ou « Sans occasion ».",
+          "Ajoute deux à quatre parfums de familles différentes ; colle le lien d'un produit pour en récupérer le titre et l'image.",
+          "Envoie le lien. La personne choisit, tu le découvres sur ton lien privé, et tu achètes le bon flacon.",
+        ],
+      },
+      questions: {
+        titre: "Questions sur le parfum en cadeau",
+        liste: [
+          {
+            q: "Faut-il connaître le parfum que la personne porte déjà ?",
+            r: "Ça aide, sans être nécessaire. S'il te revient, mets-le dans la liste à côté de deux découvertes : la personne choisira entre la valeur sûre et la nouveauté.",
+          },
+          {
+            q: "Un coffret de miniatures, c'est une bonne idée ?",
+            r: "C'est la proposition la plus sûre, et elle a sa place à côté d'un flacon : si la personne hésite elle-même, elle prendra le coffret et trouvera son parfum tranquillement.",
+          },
+          {
+            q: "Peut-on proposer un parfum à côté d'un tout autre cadeau ?",
+            r: "Oui. Un parfum, une place de concert, un livre : les idées peuvent être de natures différentes. La personne voit tes idées, jamais leur prix.",
+          },
+        ],
+      },
+    },
+
+    bijou: {
+      nom: "Bijou",
+      titreMeta: "Quel bijou offrir ? Laisser choisir — MyPresentsForYou",
+      descriptionMeta:
+        "Or ou argent, discret ou affirmé : tu hésites entre plusieurs bijoux ? Propose-les sur une page et laisse la personne choisir celui qu'elle portera.",
+      titre: "Quel bijou offrir ? Propose-en trois, laisse choisir",
+      chapo:
+        "Un bijou se porte tous les jours, ou jamais. Entre l'or et l'argent, le discret et le voyant, la bague à la mauvaise taille, les façons de se tromper ne manquent pas. Propose deux ou trois bijoux de styles différents : la personne choisit celui qu'elle aura envie de porter.",
+      accroche: "Or ou argent, discret ou affirmé : c'est la personne qui tranche.",
+      apercu: ["Une chaîne fine en or", "Des créoles en argent", "Un bracelet jonc"],
+      pourquoi: {
+        titre: "Pourquoi un bijou est si difficile à choisir",
+        paragraphes: [
+          "Un bijou dit quelque chose du style de qui le porte. Ce qui te plaît en vitrine peut rester dans une boîte : trop brillant, trop discret, pas le bon métal, pas la bonne longueur.",
+          "Il y a aussi les pièges pratiques : la taille de bague qu'on ne connaît pas, les oreilles non percées, la peau qui réagit à certains métaux. Deviner tout ça d'un coup relève du pari.",
+          "En proposant deux ou trois bijoux, tu gardes la surprise — la personne découvre ce que tu as imaginé pour elle — et tu lui laisses le dernier mot. Celui qu'elle retient, elle le portera.",
+        ],
+      },
+      idees: {
+        titre: "Des pistes, par style",
+        intro:
+          "Varie les styles plutôt que les modèles : trois colliers presque pareils ne laissent pas vraiment le choix. Et évite la bague si tu ne connais pas la taille.",
+        profils: [
+          {
+            nom: "Discret, pour tous les jours",
+            idees: [
+              { nom: "Une chaîne fine en or", pourquoi: "Se porte seule ou avec d'autres, et ne se quitte plus." },
+              { nom: "Des puces d'oreilles", pourquoi: "Le bijou qu'on oublie qu'on porte." },
+              { nom: "Un bracelet cordon", pourquoi: "Simple et réglable : aucune question de taille." },
+              { nom: "Un pendentif initiale", pourquoi: "Petit, personnel, rarement un faux pas." },
+            ],
+          },
+          {
+            nom: "Affirmé",
+            idees: [
+              { nom: "Des créoles dorées", pourquoi: "Un classique qui se voit." },
+              { nom: "Un collier plastron", pourquoi: "Pour qui aime qu'un bijou fasse la tenue." },
+              { nom: "Des boucles d'oreilles pendantes", pourquoi: "Du mouvement et de la lumière autour du visage." },
+              { nom: "Une bague cocktail", pourquoi: "Une pierre de couleur, pour les soirs de fête." },
+            ],
+          },
+          {
+            nom: "Avec une histoire",
+            idees: [
+              { nom: "Un bijou vintage", pourquoi: "Une pièce ancienne, unique, qui a déjà vécu." },
+              { nom: "Un médaillon photo", pourquoi: "Un souvenir qu'on garde contre soi." },
+              { nom: "Un bijou gravé", pourquoi: "Une date, un prénom, quelques mots à l'intérieur." },
+              { nom: "Un bijou de créateur", pourquoi: "Fait à la main, en petite série." },
+            ],
+          },
+          {
+            nom: "Sans risque de taille",
+            idees: [
+              { nom: "Une montre", pourquoi: "Un bracelet réglable, et un objet qu'on regarde chaque jour." },
+              { nom: "Une broche", pourquoi: "Se pique sur un manteau, un sac, un chapeau." },
+              { nom: "Un bracelet jonc ouvert", pourquoi: "S'ajuste au poignet sans mesurer." },
+              { nom: "Une boîte à bijoux", pourquoi: "Pour ranger ceux qu'on a déjà, si on hésite à en ajouter." },
+            ],
+          },
+        ],
+      },
+      etapes: {
+        titre: "Proposer plusieurs bijoux en trois étapes",
+        liste: [
+          "Ouvre l'éditeur et choisis l'occasion, ou « Sans occasion » si le bijou n'attend pas de date.",
+          "Ajoute deux à quatre bijoux de styles différents ; colle le lien d'un produit pour en récupérer le titre et la photo.",
+          "Envoie le lien, ou imprime le QR code sur une carte glissée dans un écrin vide. Tu découvres le choix sur ton lien privé.",
+        ],
+      },
+      questions: {
+        titre: "Questions sur les bijoux en cadeau",
+        liste: [
+          {
+            q: "Et si je ne connais pas sa taille de bague ?",
+            r: "Propose plutôt un collier, un bracelet réglable ou des boucles d'oreilles. Si une bague est choisie, la plupart des bijoutiers la mettent à la bonne taille après l'achat.",
+          },
+          {
+            q: "Or ou argent : comment savoir ?",
+            r: "Regarde ce que la personne porte déjà : montre, lunettes, boucles d'oreilles. Dans le doute, mets un bijou de chaque métal dans la liste : c'est justement ce que la page sert à trancher.",
+          },
+          {
+            q: "La personne voit-elle le prix des bijoux ?",
+            r: "Jamais. Elle voit les bijoux, pas leur prix : elle choisit celui qui lui plaît, ni le plus cher ni le moins cher.",
+          },
+        ],
+      },
+    },
+
+    livre: {
+      nom: "Livre",
+      titreMeta: "Quel livre offrir ? Laisser choisir — MyPresentsForYou",
+      descriptionMeta:
+        "Roman, essai, beau livre ou BD : tu hésites entre plusieurs livres ? Propose-les sur une page et laisse la personne choisir celui qu'elle lira.",
+      titre: "Quel livre offrir ? Plusieurs titres, un seul choix",
+      chapo:
+        "Offrir un livre, c'est parier sur des goûts et sur une bibliothèque qu'on ne connaît pas. Le roman dont tout le monde parle est peut-être déjà sur sa table de chevet. Propose deux ou trois titres de genres différents, et laisse la personne prendre celui qui lui fait envie.",
+      accroche: "Plus de livre déjà lu, ni de roman qui reste fermé.",
+      apercu: ["Un roman de la rentrée", "Un beau livre de photographie", "Une bande dessinée"],
+      pourquoi: {
+        titre: "Pourquoi un livre est un cadeau plus risqué qu'il n'y paraît",
+        paragraphes: [
+          "Un livre semble facile à offrir : léger, abordable, toujours bien reçu. En pratique, il y a trois façons de rater : il est déjà lu, il n'est pas dans ses goûts, ou il tombe au mauvais moment — un pavé de huit cents pages pour qui lit dans le métro.",
+          "Proposer plusieurs titres règle les trois. La personne écarte celui qu'elle a déjà, prend celui qui lui parle, et tu découvres au passage ce qu'elle a envie de lire en ce moment.",
+          "Mélange les genres : un roman, un essai, un beau livre. Même fidèle à un seul genre, on aime choisir entre trois auteurs encore inconnus.",
+        ],
+      },
+      idees: {
+        titre: "Des pistes, par type de lecture",
+        intro:
+          "Donne des titres précis quand tu peux : « un roman » ne se choisit pas, « tel roman de tel auteur » oui. Les pistes ci-dessous servent à varier les genres.",
+        profils: [
+          {
+            nom: "Qui lit des romans",
+            idees: [
+              { nom: "Un roman de la rentrée littéraire", pourquoi: "Les nouveautés dont on parle, pour qui suit l'actualité des livres." },
+              { nom: "Un classique en belle édition", pourquoi: "Relié, illustré : le livre qu'on garde." },
+              { nom: "Un polar", pourquoi: "Pour les soirées où l'on ne pose plus le livre." },
+              { nom: "Un roman graphique", pourquoi: "Une vraie histoire, racontée en images." },
+            ],
+          },
+          {
+            nom: "Qui aime apprendre",
+            idees: [
+              { nom: "Un livre de vulgarisation scientifique", pourquoi: "Pour comprendre le monde sans ouvrir de manuel." },
+              { nom: "Un récit historique", pourquoi: "Une époque racontée comme un roman." },
+              { nom: "Un livre de philosophie accessible", pourquoi: "Court, clair, et de quoi discuter après." },
+              { nom: "Une biographie", pourquoi: "Une vie racontée, souvent plus surprenante qu'une fiction." },
+            ],
+          },
+          {
+            nom: "Qui préfère feuilleter",
+            idees: [
+              { nom: "Un beau livre de photographie", pourquoi: "Se regarde par morceaux, et reste sur la table basse." },
+              { nom: "Un livre de cuisine", pourquoi: "Pour qui aime recevoir, avec des recettes qu'on refait." },
+              { nom: "Un atlas illustré", pourquoi: "Des cartes et des histoires, pour rêver de voyages." },
+              { nom: "Une bande dessinée", pourquoi: "Un album complet, lu en une soirée." },
+            ],
+          },
+          {
+            nom: "Autour de la lecture",
+            idees: [
+              { nom: "Un abonnement à une box de livres", pourquoi: "Un livre surprise par mois, choisi pour la personne." },
+              { nom: "Une liseuse", pourquoi: "Pour qui lit beaucoup et manque de place." },
+              { nom: "Un abonnement à des livres audio", pourquoi: "Pour lire en marchant, en conduisant, en cuisinant." },
+              { nom: "Une lampe de lecture", pourquoi: "Pour lire le soir sans déranger personne." },
+            ],
+          },
+        ],
+      },
+      etapes: {
+        titre: "Proposer plusieurs livres en trois étapes",
+        liste: [
+          "Ouvre l'éditeur et choisis l'occasion, ou « Sans occasion ».",
+          "Ajoute deux à quatre titres précis ; colle le lien du livre chez ton libraire pour en récupérer la couverture.",
+          "Envoie le lien. La personne choisit, tu le vois sur ton lien privé, et tu vas chercher le bon livre.",
+        ],
+      },
+      questions: {
+        titre: "Questions sur les livres en cadeau",
+        liste: [
+          {
+            q: "Et si la personne a déjà lu un des livres ?",
+            r: "Elle en choisit un autre : c'est tout l'intérêt de proposer plusieurs titres. Et tu sais désormais qu'il ne faut plus le lui offrir.",
+          },
+          {
+            q: "Combien de livres proposer ?",
+            r: "Trois, c'est bien : assez pour avoir le choix, pas assez pour hésiter longtemps. Varie les genres plutôt que les auteurs d'un même genre.",
+          },
+          {
+            q: "Peut-on proposer un livre d'occasion ?",
+            r: "Oui. Une édition ancienne ou un livre de seconde main peut être un très beau cadeau. Colle le lien de l'annonce, ou décris-le à la main avec une photo.",
+          },
+        ],
+      },
+    },
+
+    vetement: {
+      nom: "Vêtement",
+      titreMeta: "Offrir un vêtement sans se tromper — MyPresentsForYou",
+      descriptionMeta:
+        "La taille, la couleur, la coupe : offrir un vêtement, c'est trois paris. Propose plusieurs pièces sur une page, et laisse la personne choisir la sienne.",
+      titre: "Offrir un vêtement sans se tromper de style",
+      chapo:
+        "Un vêtement, c'est le cadeau qu'on échange le plus. Trop grand, pas la bonne couleur, pas son style : il finit en ticket d'échange. Propose deux ou trois pièces, et laisse la personne choisir celle qu'elle portera vraiment.",
+      accroche: "La taille et le style, c'est la personne qui les connaît.",
+      apercu: ["Un pull en mérinos", "Une écharpe en cachemire", "Un bonnet côtelé"],
+      pourquoi: {
+        titre: "Pourquoi un vêtement se choisit mal pour les autres",
+        paragraphes: [
+          "On connaît rarement la taille exacte de quelqu'un, et elle change d'une marque à l'autre. Même la bonne taille ne suffit pas : la coupe, la matière et la couleur font qu'on porte une pièce ou qu'on la laisse au fond de l'armoire.",
+          "Proposer plusieurs pièces te permet de viser juste sur le style, et de laisser la personne trancher ce que tu ne pouvais pas deviner. Une fois le choix fait, rien ne t'empêche de demander la taille : la surprise est passée.",
+          "Commence par les pièces qui pardonnent : accessoires, mailles amples, tailles uniques. Garde le pantalon et la chemise ajustée pour les personnes dont tu connais les mesures.",
+        ],
+      },
+      idees: {
+        titre: "Des pistes, de la plus sûre à la plus audacieuse",
+        intro:
+          "Commence par une pièce sans taille, ajoute une maille ample, garde une idée plus marquée pour la fin : la personne verra tout de suite ce qui lui ressemble.",
+        profils: [
+          {
+            nom: "Sans question de taille",
+            idees: [
+              { nom: "Une écharpe en cachemire", pourquoi: "Douce, chaude, et à la taille de tout le monde." },
+              { nom: "Un bonnet en laine", pourquoi: "Taille unique, et un cadeau qui sert tout l'hiver." },
+              { nom: "Un foulard en soie", pourquoi: "Se porte au cou, dans les cheveux, sur un sac." },
+              { nom: "Des chaussettes en laine", pourquoi: "Un petit luxe du quotidien, qu'on ne s'offre pas." },
+            ],
+          },
+          {
+            nom: "Confortable et ample",
+            idees: [
+              { nom: "Un pull en laine mérinos", pourquoi: "Une maille ample pardonne une taille approximative." },
+              { nom: "Un gilet long", pourquoi: "Se porte ouvert, et la coupe fait le reste." },
+              { nom: "Un sweat en coton bio", pourquoi: "Le vêtement qu'on remet tous les week-ends." },
+              { nom: "Un pyjama en flanelle", pourquoi: "Le confort d'hiver qu'on ne s'achète pas soi-même." },
+            ],
+          },
+          {
+            nom: "Une pièce qui dure",
+            idees: [
+              { nom: "Un manteau en laine", pourquoi: "La pièce la plus portée de l'hiver." },
+              { nom: "Une veste en jean", pourquoi: "Un basique qui ne se démode pas." },
+              { nom: "Une chemise en lin", pourquoi: "Légère, pour l'été et les voyages." },
+              { nom: "Un imperméable", pourquoi: "L'achat utile qu'on remet toujours à plus tard." },
+            ],
+          },
+          {
+            nom: "Autour du vêtement",
+            idees: [
+              { nom: "Des chaussons en laine", pourquoi: "Une taille approchée suffit, le confort est garanti." },
+              { nom: "Un kit de tricot", pourquoi: "Pour tricoter soi-même son écharpe." },
+              { nom: "Un cours de couture", pourquoi: "Pour apprendre à coudre ou à retoucher ses vêtements." },
+              { nom: "Une brosse à vêtements", pourquoi: "De quoi garder ses manteaux et ses pulls comme neufs." },
+            ],
+          },
+        ],
+      },
+      etapes: {
+        titre: "Proposer plusieurs vêtements en trois étapes",
+        liste: [
+          "Ouvre l'éditeur et choisis l'occasion, ou « Sans occasion ».",
+          "Ajoute deux à quatre pièces de styles différents ; colle le lien d'un produit pour en récupérer la photo.",
+          "Envoie le lien. Une fois le choix connu sur ton lien privé, il ne reste qu'à commander la bonne taille.",
+        ],
+      },
+      questions: {
+        titre: "Questions sur les vêtements en cadeau",
+        liste: [
+          {
+            q: "Comment connaître la taille sans gâcher la surprise ?",
+            r: "Tu n'as pas besoin de la connaître avant : la personne choisit d'abord la pièce, puis tu demandes la taille, ou tu regardes l'étiquette d'un vêtement qu'elle porte souvent. La surprise, c'était la page.",
+          },
+          {
+            q: "Faut-il proposer le même vêtement en plusieurs couleurs ?",
+            r: "Tu peux : le même pull en trois couleurs est un vrai choix, surtout si tu hésites sur la teinte. Mais trois pièces différentes t'en apprendront plus sur ses goûts.",
+          },
+          {
+            q: "Et si la pièce choisie ne va pas ?",
+            r: "Commande chez un marchand qui accepte les échanges, et garde le ticket. Le risque est plus faible que d'habitude : la personne a choisi elle-même ce qu'elle voulait porter.",
+          },
+        ],
+      },
+    },
+
+    vin: {
+      nom: "Vin",
+      titreMeta: "Quel vin offrir ? Laisser choisir — MyPresentsForYou",
+      descriptionMeta:
+        "Rouge, blanc, bulles ou coffret : tu ne sais pas quel vin offrir ? Propose plusieurs bouteilles sur une page et laisse la personne choisir la sienne.",
+      titre: "Quel vin offrir ? Plusieurs bouteilles, un seul choix",
+      chapo:
+        "Offrir du vin à quelqu'un qui s'y connaît intimide ; en offrir à quelqu'un qui en boit peu tombe à plat. Entre le rouge, le blanc et les bulles, propose deux ou trois bouteilles et laisse la personne choisir celle qu'elle a envie d'ouvrir.",
+      accroche: "Rouge, blanc ou bulles : c'est la personne qui débouche.",
+      apercu: ["Un rouge de garde", "Un champagne de vigneron", "Un coffret de dégustation"],
+      pourquoi: {
+        titre: "Pourquoi le vin est un cadeau délicat",
+        paragraphes: [
+          "Le vin est une affaire de goûts et d'habitudes. Un amateur a ses régions, ses cépages, parfois une cave déjà pleine ; un buveur occasionnel préfère une bouteille facile à un vin de garde. Difficile de viser juste sans demander.",
+          "Proposer deux ou trois bouteilles de styles différents évite le faux pas, et le choix devient un moment en soi : on compare, on se souvient d'un voyage, on imagine le repas.",
+          "Pour quelqu'un qui boit peu ou pas, glisse une idée sans alcool dans la liste : la personne choisira sans avoir à s'en excuser.",
+        ],
+      },
+      idees: {
+        titre: "Des pistes, par style",
+        intro:
+          "Varie les couleurs et les usages : une bouteille à boire bientôt, une à garder, une expérience. Aucun prix n'est affiché : chacun choisit selon son envie.",
+        profils: [
+          {
+            nom: "À ouvrir bientôt",
+            idees: [
+              { nom: "Un vin rouge fruité", pourquoi: "Gamay, pinot noir : léger, pour un dîner entre amis." },
+              { nom: "Un vin blanc sec", pourquoi: "Pour l'apéritif ou le poisson." },
+              { nom: "Un rosé de gastronomie", pourquoi: "Plus sérieux qu'un rosé d'été, pour passer à table." },
+              { nom: "Un vin nature", pourquoi: "Pour qui aime les vins vivants et un peu surprenants." },
+            ],
+          },
+          {
+            nom: "Pour les grandes occasions",
+            idees: [
+              { nom: "Un champagne de vigneron", pourquoi: "Des bulles de petits producteurs, plus personnelles." },
+              { nom: "Un crémant", pourquoi: "Des bulles de la même méthode, venues d'autres régions." },
+              { nom: "Un vin de garde", pourquoi: "À oublier quelques années à la cave." },
+              { nom: "Un vin doux", pourquoi: "Liquoreux ou muté : pour le dessert ou le fromage." },
+            ],
+          },
+          {
+            nom: "Pour découvrir",
+            idees: [
+              { nom: "Un coffret de dégustation de vins", pourquoi: "Plusieurs petits flacons, pour comparer." },
+              { nom: "Un abonnement à une box de vins", pourquoi: "Une sélection chaque mois, fiches à l'appui." },
+              { nom: "Un atelier d'œnologie", pourquoi: "Apprendre à déguster, en quelques heures." },
+              { nom: "Une visite de domaine viticole", pourquoi: "Une journée dans les vignes, dégustation comprise." },
+            ],
+          },
+          {
+            nom: "Autour du vin, ou sans alcool",
+            idees: [
+              { nom: "Une carafe à décanter", pourquoi: "Pour aérer les vins jeunes et servir avec soin." },
+              { nom: "Des verres à vin", pourquoi: "Un bon verre change vraiment la dégustation." },
+              { nom: "Un vin sans alcool", pourquoi: "Pour qui ne boit pas, sans renoncer au rituel." },
+              { nom: "Un tire-bouchon de sommelier", pourquoi: "L'outil qui dure une vie." },
+            ],
+          },
+        ],
+      },
+      etapes: {
+        titre: "Proposer plusieurs vins en trois étapes",
+        liste: [
+          "Ouvre l'éditeur et choisis l'occasion : anniversaire, crémaillère, ou « Sans occasion ».",
+          "Ajoute deux à quatre bouteilles de styles différents ; colle le lien du caviste pour en récupérer l'étiquette.",
+          "Envoie le lien. Tu découvres la bouteille choisie sur ton lien privé, et tu l'offres — ou vous l'ouvrez ensemble.",
+        ],
+      },
+      questions: {
+        titre: "Questions sur le vin en cadeau",
+        liste: [
+          {
+            q: "Comment offrir du vin à quelqu'un qui s'y connaît ?",
+            r: "Ne cherche pas à rivaliser sur son terrain : propose une région moins connue, un petit producteur, une visite de domaine. La personne choisira ce qui l'intrigue.",
+          },
+          {
+            q: "Et si la personne ne boit pas d'alcool ?",
+            r: "Mets une idée sans alcool dans la liste, ou remplace le vin par ce qui l'entoure : de beaux verres, un atelier, un panier d'épicerie fine.",
+          },
+          {
+            q: "Comment présenter la bouteille choisie ?",
+            r: "Imprime la carte avec son QR code et accroche-la au goulot : la personne retrouve la page, et le choix qu'elle a fait.",
+          },
+        ],
+      },
+    },
+
+    deco: {
+      nom: "Déco",
+      titreMeta: "Offrir un objet déco sans se tromper — MyPresentsForYou",
+      descriptionMeta:
+        "Vase, lampe, affiche ou plaid : la déco est une affaire de goût. Propose plusieurs objets sur une page et laisse la personne choisir le sien.",
+      titre: "Offrir un objet de déco sans imposer son goût",
+      chapo:
+        "Un objet de décoration va vivre chez quelqu'un d'autre, tous les jours, sous ses yeux. Si le style ne colle pas, il finit dans un placard — ou reste en place par politesse. Propose deux ou trois objets, et laisse la personne choisir celui qui trouvera sa place.",
+      accroche: "Chez soi, on choisit ce qu'on regarde tous les jours.",
+      apercu: ["Un vase en céramique", "Une lampe à poser", "Une affiche encadrée"],
+      pourquoi: {
+        titre: "Pourquoi la déco se choisit mal à la place des autres",
+        paragraphes: [
+          "La décoration est le cadeau le plus visible qui soit : il reste sous les yeux de la personne, et de ses invités. C'est aussi le plus personnel. Couleurs, matières, style : ce qui plaît en boutique peut détonner dans un salon qu'on connaît mal.",
+          "Proposer plusieurs objets permet de viser une ambiance plutôt qu'un objet précis. La personne prend celui qui ira avec ce qu'elle a déjà, et tu n'as pas à deviner la couleur du canapé.",
+          "C'est aussi la bonne façon de faire pour une crémaillère : le couple regarde la page ensemble et choisit ce qui entrera dans la nouvelle maison.",
+        ],
+      },
+      idees: {
+        titre: "Des pistes, par ambiance",
+        intro:
+          "Mélange les ambiances et les tailles : un petit objet, un objet utile, une pièce plus marquante. La personne verra tout de suite ce qui lui ressemble.",
+        profils: [
+          {
+            nom: "Naturel et chaleureux",
+            idees: [
+              { nom: "Un vase en céramique", pourquoi: "Fait main, avec des fleurs ou tout seul." },
+              { nom: "Un plaid en laine", pourquoi: "Sur le canapé, et on s'en sert tout l'hiver." },
+              { nom: "Un panier tressé", pourquoi: "Pour ranger, ou pour habiller une plante." },
+              { nom: "Une plante d'intérieur facile", pourquoi: "Avec son cache-pot, et peu d'entretien." },
+            ],
+          },
+          {
+            nom: "Épuré",
+            idees: [
+              { nom: "Une lampe à poser", pourquoi: "La lumière change une pièce plus qu'un meuble." },
+              { nom: "Un miroir rond", pourquoi: "Agrandit une entrée, éclaire un couloir." },
+              { nom: "Une horloge murale", pourquoi: "Un objet simple qui trouve toujours son mur." },
+              { nom: "Des bougeoirs en laiton", pourquoi: "Pour la table, les soirs de dîner." },
+            ],
+          },
+          {
+            nom: "Coloré et affirmé",
+            idees: [
+              { nom: "Une affiche encadrée", pourquoi: "Illustration, photographie : de l'art au mur sans se ruiner." },
+              { nom: "Un coussin brodé", pourquoi: "Une touche de couleur qui se change facilement." },
+              { nom: "Un tapis berbère", pourquoi: "Réchauffe une pièce d'un coup." },
+              { nom: "Une lithographie d'artiste", pourquoi: "Une œuvre numérotée, pour commencer une collection." },
+            ],
+          },
+          {
+            nom: "Utile avant tout",
+            idees: [
+              { nom: "Une bougie parfumée", pourquoi: "Le petit cadeau qu'on allume vraiment." },
+              { nom: "Un diffuseur d'huiles essentielles", pourquoi: "Pour l'odeur de la maison." },
+              { nom: "Une étagère murale", pourquoi: "Pour les livres, les plantes, les souvenirs." },
+              { nom: "Un vide-poche", pourquoi: "Pour l'entrée, le bureau ou la table de nuit." },
+            ],
+          },
+        ],
+      },
+      etapes: {
+        titre: "Proposer plusieurs objets en trois étapes",
+        liste: [
+          "Ouvre l'éditeur et choisis l'occasion : crémaillère, anniversaire, ou « Sans occasion ».",
+          "Ajoute deux à quatre objets d'ambiances différentes ; colle le lien d'un produit pour en récupérer la photo.",
+          "Envoie le lien. Tu découvres le choix sur ton lien privé, et tu offres l'objet qui trouvera sa place.",
+        ],
+      },
+      questions: {
+        titre: "Questions sur la déco en cadeau",
+        liste: [
+          {
+            q: "Comment choisir sans connaître l'intérieur de la personne ?",
+            r: "Tu n'as pas besoin de le connaître : propose des ambiances différentes, c'est la personne qui sait ce qui ira chez elle. Son choix te renseigne pour la prochaine fois.",
+          },
+          {
+            q: "Une œuvre d'art, c'est trop personnel ?",
+            r: "Seule, peut-être. Au milieu de deux autres propositions, non : si elle ne lui parle pas, la personne prendra autre chose, sans avoir à le dire.",
+          },
+          {
+            q: "Peut-on offrir de la déco à un couple qui emménage ?",
+            r: "Oui, c'est même l'occasion idéale : une seule page, le couple la regarde ensemble et choisit l'objet qui entrera dans la nouvelle maison. Le guide de la crémaillère donne d'autres pistes.",
           },
         ],
       },

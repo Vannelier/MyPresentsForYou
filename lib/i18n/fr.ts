@@ -268,6 +268,7 @@ export const fr = {
     guidesTitre: "Des idées pour chaque occasion",
     guidesTexte: "Anniversaire, Noël, mariage, naissance… des idées classées par profil, si tu sèches.",
     guidesTout: "Toutes les idées cadeaux",
+    guidesHesiter: "Tu hésites entre plusieurs idées du même genre ?",
     finTitre: "Et si tu créais la sienne ?",
     finTexte: "Commence avec deux idées, tu en mettras dix si tu veux. Le reste se règle en route.",
     piedNote:

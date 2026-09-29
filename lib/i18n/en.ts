@@ -258,6 +258,7 @@ export const en = {
     guidesTitre: "Ideas for every occasion",
     guidesTexte: "Birthday, Christmas, wedding, new baby… ideas sorted by profile, for when you're stuck.",
     guidesTout: "All gift ideas",
+    guidesHesiter: "Torn between several ideas of the same kind?",
     finTitre: "Why not make theirs?",
     finTexte: "Start with two ideas, go up to ten if you want. The rest sorts itself out along the way.",
     piedNote: "A card stays online for a year. Keep your private link: it's what tells you what was chosen.",

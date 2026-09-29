@@ -20,6 +20,7 @@ export const en: TextesGuides = {
     miseAJour: "Last updated:",
     voirAussi: "See also:",
     lire: "Read the guide",
+    autresCategories: "Other gifts people agonise over",
   },
 
   guides: {
@@ -538,6 +539,542 @@ export const en: TextesGuides = {
           {
             q: "Can several children give together?",
             r: "One person puts the page together, but you can pick the ideas together, sign as a group, then split the cost once the gift is chosen.",
+          },
+        ],
+      },
+    },
+  },
+
+  sectionCategories: {
+    titre: "Choosing the right gift, by type",
+    chapo:
+      "Perfume, jewellery, books, clothes, wine, home decor: the gifts people hesitate over most. For each one, ideas by style, and a way to stop deciding for someone else.",
+  },
+
+  categories: {
+    parfum: {
+      nom: "Perfume",
+      titreMeta: "Which perfume to give? Let them choose — MyPresentsForYou",
+      descriptionMeta:
+        "Torn between several perfumes? Put them all on one page and let the person pick their own. Ideas sorted by scent family.",
+      titre: "Which perfume to give? Don't choose, suggest",
+      chapo:
+        "Perfume is about the riskiest gift there is: what smells lovely on you may not suit them, and an opened bottle can't go back. Rather than bet on one, suggest two or three and let the person pick the one that feels like them.",
+      accroche: "The scent is theirs to choose.",
+      apercu: ["A woody perfume", "A fresh citrus cologne", "A miniature perfume set"],
+      pourquoi: {
+        titre: "Why perfume is so hard to choose for someone else",
+        paragraphes: [
+          "Perfume smells different on every skin, and what you like wearing says nothing about what they like wearing. Even with good intel, people often end up giving their own taste.",
+          "Asking \"which perfume do you want?\" solves the problem and kills the gift. Suggesting two or three scent families keeps the surprise: they discover your ideas, and their nose decides.",
+          "If they already have a signature scent, put it on the list next to two new ones. If they pick it again, at least you know you're giving what they love.",
+        ],
+      },
+      idees: {
+        titre: "Ideas, by scent family",
+        intro:
+          "One idea per family is enough: suggesting three woody scents is choosing for them. Mix the families, or put a discovery set next to a full bottle.",
+        profils: [
+          {
+            nom: "Fresh and light",
+            idees: [
+              { nom: "A citrus eau de toilette", pourquoi: "Bergamot, lemon, grapefruit: light and easy to wear by day." },
+              { nom: "An eau de cologne", pourquoi: "The most discreet, for people who dislike scents that shout." },
+              { nom: "An aquatic perfume", pourquoi: "Fresh without being sweet, for summer." },
+              { nom: "A green tea perfume", pourquoi: "Soft and clean, rarely a misstep." },
+            ],
+          },
+          {
+            nom: "Floral and powdery",
+            idees: [
+              { nom: "A floral perfume", pourquoi: "Rose, jasmine, lily of the valley: the great classic." },
+              { nom: "An iris perfume", pourquoi: "Powdery, elegant, less expected than rose." },
+              { nom: "An orange blossom perfume", pourquoi: "Bright, with something clean and reassuring about it." },
+              { nom: "A scented body mist", pourquoi: "Lighter than perfume, to try a family without committing." },
+            ],
+          },
+          {
+            nom: "Woody and warm",
+            idees: [
+              { nom: "A woody perfume", pourquoi: "Cedar, sandalwood: dry, elegant, for any season." },
+              { nom: "An amber perfume", pourquoi: "Vanilla, resins, spices: warm and enveloping, for winter." },
+              { nom: "A vetiver perfume", pourquoi: "Earthy and fresh at once, easy to love." },
+              { nom: "A leather perfume", pourquoi: "Bolder, for people who like to be noticed." },
+            ],
+          },
+          {
+            nom: "To play it completely safe",
+            idees: [
+              { nom: "A perfume miniature set", pourquoi: "Several scents in small sizes, to find theirs without rushing." },
+              { nom: "A perfume-making workshop", pourquoi: "They blend their own with a perfumer: impossible to miss." },
+              { nom: "A scented candle", pourquoi: "Scent for the home rather than the skin." },
+              { nom: "A reed diffuser", pourquoi: "For people who don't wear perfume but love a home that smells good." },
+            ],
+          },
+        ],
+      },
+      etapes: {
+        titre: "Suggest several perfumes in three steps",
+        liste: [
+          "Open the editor and pick the occasion: birthday, Christmas, or \"No occasion\".",
+          "Add two to four perfumes from different families; paste a product link to fetch its title and image.",
+          "Send the link. They choose, you see it on your private link, and you buy the right bottle.",
+        ],
+      },
+      questions: {
+        titre: "Questions about perfume as a gift",
+        liste: [
+          {
+            q: "Do I need to know the perfume they already wear?",
+            r: "It helps, but it isn't necessary. If you remember it, put it on the list next to two new ones: they'll choose between the safe bet and something new.",
+          },
+          {
+            q: "Is a miniature set a good idea?",
+            r: "It's the safest suggestion, and it belongs next to a full bottle: if they're unsure themselves, they'll take the set and find their scent at their own pace.",
+          },
+          {
+            q: "Can I suggest perfume alongside a completely different gift?",
+            r: "Yes. A perfume, a concert ticket, a book: ideas can be of different kinds. They see your ideas, never their prices.",
+          },
+        ],
+      },
+    },
+
+    bijou: {
+      nom: "Jewellery",
+      titreMeta: "Which jewellery to give? Let them choose — MyPresentsForYou",
+      descriptionMeta:
+        "Gold or silver, subtle or bold: torn between several pieces of jewellery? Put them on one page and let the person pick the one they'll wear.",
+      titre: "Which jewellery to give? Suggest three, let them choose",
+      chapo:
+        "Jewellery gets worn every day, or never. Gold or silver, subtle or statement, a ring in the wrong size: there are plenty of ways to get it wrong. Suggest two or three pieces in different styles, and the person picks the one they'll want to wear.",
+      accroche: "Gold or silver, subtle or bold: they decide.",
+      apercu: ["A fine gold chain", "Silver hoop earrings", "A bangle"],
+      pourquoi: {
+        titre: "Why jewellery is so hard to choose",
+        paragraphes: [
+          "Jewellery says something about the style of whoever wears it. What you like in the shop window can stay in its box: too shiny, too plain, wrong metal, wrong length.",
+          "Then come the practical traps: a ring size you don't know, ears that aren't pierced, skin that reacts to certain metals. Guessing all of that at once is a gamble.",
+          "By suggesting two or three pieces, you keep the surprise — they discover what you imagined for them — and leave them the final word. The one they pick is the one they'll wear.",
+        ],
+      },
+      idees: {
+        titre: "Ideas, by style",
+        intro:
+          "Vary the styles rather than the models: three near-identical necklaces aren't really a choice. And skip rings if you don't know the size.",
+        profils: [
+          {
+            nom: "Subtle, for every day",
+            idees: [
+              { nom: "A fine gold chain", pourquoi: "Worn alone or layered, and never taken off." },
+              { nom: "Stud earrings", pourquoi: "The piece you forget you're wearing." },
+              { nom: "A cord bracelet", pourquoi: "Simple and adjustable: no size question." },
+              { nom: "An initial pendant", pourquoi: "Small, personal, rarely a misstep." },
+            ],
+          },
+          {
+            nom: "Bold",
+            idees: [
+              { nom: "Gold hoop earrings", pourquoi: "A classic that gets noticed." },
+              { nom: "A statement necklace", pourquoi: "For people who let a piece make the outfit." },
+              { nom: "Drop earrings", pourquoi: "Movement and light around the face." },
+              { nom: "A cocktail ring", pourquoi: "A coloured stone, for evenings out." },
+            ],
+          },
+          {
+            nom: "With a story",
+            idees: [
+              { nom: "A vintage piece of jewellery", pourquoi: "An old, one-of-a-kind piece that has already lived." },
+              { nom: "A photo locket", pourquoi: "A memory kept close." },
+              { nom: "Engraved jewellery", pourquoi: "A date, a name, a few words inside." },
+              { nom: "Handmade designer jewellery", pourquoi: "Made by hand, in small runs." },
+            ],
+          },
+          {
+            nom: "No size to guess",
+            idees: [
+              { nom: "A watch", pourquoi: "An adjustable strap, and something they look at every day." },
+              { nom: "A brooch", pourquoi: "Pins onto a coat, a bag, a hat." },
+              { nom: "An open cuff bangle", pourquoi: "Fits the wrist without measuring." },
+              { nom: "A jewellery box", pourquoi: "To keep what they already own, if you'd rather not add to it." },
+            ],
+          },
+        ],
+      },
+      etapes: {
+        titre: "Suggest several pieces in three steps",
+        liste: [
+          "Open the editor and pick the occasion, or \"No occasion\" if the jewellery doesn't need a date.",
+          "Add two to four pieces in different styles; paste a product link to fetch its title and photo.",
+          "Send the link, or print the QR code on a card slipped into an empty jewellery box. You find the choice on your private link.",
+        ],
+      },
+      questions: {
+        titre: "Questions about jewellery as a gift",
+        liste: [
+          {
+            q: "What if I don't know their ring size?",
+            r: "Suggest a necklace, an adjustable bracelet or earrings instead. If a ring is chosen, most jewellers will resize it after purchase.",
+          },
+          {
+            q: "Gold or silver: how can I tell?",
+            r: "Look at what they already wear: watch, glasses, earrings. When in doubt, put one piece in each metal on the list — deciding that is exactly what the page is for.",
+          },
+          {
+            q: "Do they see the price of the jewellery?",
+            r: "Never. They see the pieces, not the prices: they choose the one they like, not the most or least expensive.",
+          },
+        ],
+      },
+    },
+
+    livre: {
+      nom: "Books",
+      titreMeta: "Which book to give? Let them choose — MyPresentsForYou",
+      descriptionMeta:
+        "Novel, non-fiction, coffee-table book or comic: torn between several books? Put them on one page and let the person pick the one they'll read.",
+      titre: "Which book to give? Several titles, one choice",
+      chapo:
+        "Giving a book means betting on someone's taste and a bookshelf you've never seen. The novel everyone is talking about may already be on their bedside table. Suggest two or three titles in different genres, and let them take the one they fancy.",
+      accroche: "No more books already read, or novels left unopened.",
+      apercu: ["A new novel", "A photography book", "A graphic novel"],
+      pourquoi: {
+        titre: "Why a book is riskier than it looks",
+        paragraphes: [
+          "A book seems easy to give: light, affordable, always welcome. In practice there are three ways to miss: they've read it, it isn't their thing, or it comes at the wrong time — an eight-hundred-page brick for someone who reads on the bus.",
+          "Suggesting several titles solves all three. They set aside the one they've already read, take the one that speaks to them, and you learn what they feel like reading right now.",
+          "Mix the genres: a novel, a non-fiction book, a coffee-table book. Even loyal readers of one genre enjoy choosing between three authors they haven't met yet.",
+        ],
+      },
+      idees: {
+        titre: "Ideas, by kind of reading",
+        intro:
+          "Give precise titles when you can: \"a novel\" can't be chosen, \"this novel by this author\" can. The ideas below are there to help you vary genres.",
+        profils: [
+          {
+            nom: "Novel readers",
+            idees: [
+              { nom: "A prize-shortlisted novel", pourquoi: "The books everyone's discussing, for people who follow new releases." },
+              { nom: "A classic in a beautiful edition", pourquoi: "Clothbound, illustrated: the copy you keep." },
+              { nom: "A crime novel", pourquoi: "For evenings when the book never gets put down." },
+              { nom: "A graphic novel", pourquoi: "A real story, told in pictures." },
+            ],
+          },
+          {
+            nom: "People who love learning",
+            idees: [
+              { nom: "A popular science book", pourquoi: "To understand the world without a textbook." },
+              { nom: "A narrative history book", pourquoi: "An era told like a novel." },
+              { nom: "An accessible philosophy book", pourquoi: "Short, clear, and something to talk about afterwards." },
+              { nom: "A biography", pourquoi: "A life story, often stranger than fiction." },
+            ],
+          },
+          {
+            nom: "People who'd rather browse",
+            idees: [
+              { nom: "A photography book", pourquoi: "Looked at in pieces, and kept on the coffee table." },
+              { nom: "A cookbook", pourquoi: "For people who love hosting, with recipes you make again." },
+              { nom: "An illustrated atlas", pourquoi: "Maps and stories, for dreaming of travel." },
+              { nom: "A comic book", pourquoi: "A complete story, read in one evening." },
+            ],
+          },
+          {
+            nom: "Around reading",
+            idees: [
+              { nom: "A book subscription box", pourquoi: "A surprise book each month, picked for them." },
+              { nom: "An e-reader", pourquoi: "For people who read a lot and lack shelf space." },
+              { nom: "An audiobook subscription", pourquoi: "To read while walking, driving or cooking." },
+              { nom: "A reading lamp", pourquoi: "To read at night without disturbing anyone." },
+            ],
+          },
+        ],
+      },
+      etapes: {
+        titre: "Suggest several books in three steps",
+        liste: [
+          "Open the editor and pick the occasion, or \"No occasion\".",
+          "Add two to four precise titles; paste the book's link from your bookshop to fetch its cover.",
+          "Send the link. They choose, you see it on your private link, and you go and get the right book.",
+        ],
+      },
+      questions: {
+        titre: "Questions about books as a gift",
+        liste: [
+          {
+            q: "What if they've already read one of the books?",
+            r: "They pick another one: that's the whole point of suggesting several. And now you know not to give it to them.",
+          },
+          {
+            q: "How many books should I suggest?",
+            r: "Three is good: enough for a real choice, not so many that they dither. Vary the genres rather than listing authors from the same one.",
+          },
+          {
+            q: "Can I suggest a second-hand book?",
+            r: "Yes. An old edition or a second-hand find can make a lovely gift. Paste the listing's link, or describe it by hand with a photo.",
+          },
+        ],
+      },
+    },
+
+    vetement: {
+      nom: "Clothes",
+      titreMeta: "Giving clothes without getting it wrong — MyPresentsForYou",
+      descriptionMeta:
+        "Size, colour, fit: giving clothes means three guesses. Suggest several pieces on one page, and let the person pick the one they'll actually wear.",
+      titre: "Giving clothes without getting the style wrong",
+      chapo:
+        "Clothes are the gift most often exchanged. Too big, wrong colour, not their style: it ends up as a gift receipt. Suggest two or three pieces, and let the person pick the one they'll actually wear.",
+      accroche: "Their size and style: they know best.",
+      apercu: ["A merino jumper", "A cashmere scarf", "A ribbed beanie"],
+      pourquoi: {
+        titre: "Why clothes are hard to choose for others",
+        paragraphes: [
+          "You rarely know someone's exact size, and it changes from brand to brand. Even the right size isn't enough: cut, fabric and colour decide whether a piece gets worn or stays at the back of the wardrobe.",
+          "Suggesting several pieces lets you get the style right, and leaves them to settle what you couldn't guess. Once they've chosen, nothing stops you asking their size: the surprise has already happened.",
+          "Start with forgiving pieces: accessories, loose knits, one-size items. Keep trousers and fitted shirts for people whose measurements you know.",
+        ],
+      },
+      idees: {
+        titre: "Ideas, from safest to boldest",
+        intro:
+          "Start with a piece with no size, add a loose knit, and keep a bolder idea for last: they'll see straight away what feels like them.",
+        profils: [
+          {
+            nom: "No size question",
+            idees: [
+              { nom: "A cashmere scarf", pourquoi: "Soft, warm, and it fits everyone." },
+              { nom: "A wool beanie", pourquoi: "One size, and a gift that's used all winter." },
+              { nom: "A silk scarf", pourquoi: "Worn at the neck, in the hair, on a bag." },
+              { nom: "Wool socks", pourquoi: "A small everyday luxury nobody buys for themselves." },
+            ],
+          },
+          {
+            nom: "Comfortable and loose",
+            idees: [
+              { nom: "A merino wool jumper", pourquoi: "A loose knit forgives an approximate size." },
+              { nom: "A long cardigan", pourquoi: "Worn open, and the cut does the rest." },
+              { nom: "An organic cotton sweatshirt", pourquoi: "The piece you reach for every weekend." },
+              { nom: "Flannel pyjamas", pourquoi: "Winter comfort people never buy themselves." },
+            ],
+          },
+          {
+            nom: "A piece that lasts",
+            idees: [
+              { nom: "A wool coat", pourquoi: "The most-worn piece of the winter." },
+              { nom: "A denim jacket", pourquoi: "A basic that never dates." },
+              { nom: "A linen shirt", pourquoi: "Light, for summer and travel." },
+              { nom: "A raincoat", pourquoi: "The useful purchase that always gets put off." },
+            ],
+          },
+          {
+            nom: "Around clothes",
+            idees: [
+              { nom: "Wool slippers", pourquoi: "A rough size is enough, comfort guaranteed." },
+              { nom: "A knitting kit", pourquoi: "To knit their own scarf." },
+              { nom: "A sewing class", pourquoi: "To learn to sew or alter their own clothes." },
+              { nom: "A clothes brush", pourquoi: "To keep coats and jumpers looking new." },
+            ],
+          },
+        ],
+      },
+      etapes: {
+        titre: "Suggest several pieces in three steps",
+        liste: [
+          "Open the editor and pick the occasion, or \"No occasion\".",
+          "Add two to four pieces in different styles; paste a product link to fetch its photo.",
+          "Send the link. Once you see the choice on your private link, all that's left is ordering the right size.",
+        ],
+      },
+      questions: {
+        titre: "Questions about clothes as a gift",
+        liste: [
+          {
+            q: "How do I find their size without spoiling the surprise?",
+            r: "You don't need it beforehand: they choose the piece first, then you ask their size, or check the label of something they wear often. The page was the surprise.",
+          },
+          {
+            q: "Should I suggest the same item in several colours?",
+            r: "You can: the same jumper in three colours is a real choice, especially if you're unsure about the shade. But three different pieces will tell you more about their taste.",
+          },
+          {
+            q: "What if the chosen piece doesn't fit?",
+            r: "Order from a shop that accepts exchanges, and keep the receipt. The risk is lower than usual: they chose what they wanted to wear.",
+          },
+        ],
+      },
+    },
+
+    vin: {
+      nom: "Wine",
+      titreMeta: "Which wine to give? Let them choose — MyPresentsForYou",
+      descriptionMeta:
+        "Red, white, fizz or a tasting set: not sure which wine to give? Suggest several bottles on one page and let the person pick theirs.",
+      titre: "Which wine to give? Several bottles, one choice",
+      chapo:
+        "Giving wine to someone who knows it well is intimidating; giving it to someone who barely drinks falls flat. Between red, white and fizz, suggest two or three bottles and let the person pick the one they want to open.",
+      accroche: "Red, white or fizz: they pull the cork.",
+      apercu: ["A red for cellaring", "A grower champagne", "A wine tasting set"],
+      pourquoi: {
+        titre: "Why wine is a tricky gift",
+        paragraphes: [
+          "Wine is a matter of taste and habit. Enthusiasts have their regions, their grapes, sometimes a full cellar; occasional drinkers prefer an easy bottle to one for laying down. Hard to get right without asking.",
+          "Suggesting two or three bottles in different styles avoids the misstep, and the choice becomes a moment of its own: comparing, remembering a trip, imagining the meal.",
+          "For someone who drinks little or nothing, slip an alcohol-free idea onto the list: they can choose without having to apologise.",
+        ],
+      },
+      idees: {
+        titre: "Ideas, by style",
+        intro:
+          "Vary colours and uses: a bottle to drink soon, one to keep, an experience. No price is shown: everyone chooses what they fancy.",
+        profils: [
+          {
+            nom: "To open soon",
+            idees: [
+              { nom: "A fruity red wine", pourquoi: "Gamay, pinot noir: light, for dinner with friends." },
+              { nom: "A dry white wine", pourquoi: "For aperitifs or fish." },
+              { nom: "A food-friendly rosé", pourquoi: "More serious than a summer rosé, made for the table." },
+              { nom: "A natural wine", pourquoi: "For people who like lively, slightly surprising wines." },
+            ],
+          },
+          {
+            nom: "For big occasions",
+            idees: [
+              { nom: "A grower champagne", pourquoi: "Bubbles from small producers, more personal." },
+              { nom: "A crémant", pourquoi: "Made the same way, from other regions." },
+              { nom: "A wine for cellaring", pourquoi: "To forget in the cellar for a few years." },
+              { nom: "A dessert wine", pourquoi: "Sweet or fortified: for pudding or cheese." },
+            ],
+          },
+          {
+            nom: "To discover",
+            idees: [
+              { nom: "A wine tasting set", pourquoi: "Several small bottles, to compare." },
+              { nom: "A wine subscription box", pourquoi: "A selection every month, with tasting notes." },
+              { nom: "A wine tasting class", pourquoi: "Learn to taste in a few hours." },
+              { nom: "A vineyard tour", pourquoi: "A day among the vines, tasting included." },
+            ],
+          },
+          {
+            nom: "Around wine, or alcohol-free",
+            idees: [
+              { nom: "A wine decanter", pourquoi: "To open up young wines and serve them with care." },
+              { nom: "Wine glasses", pourquoi: "A good glass really changes the tasting." },
+              { nom: "An alcohol-free wine", pourquoi: "For people who don't drink, without giving up the ritual." },
+              { nom: "A waiter's friend corkscrew", pourquoi: "The tool that lasts a lifetime." },
+            ],
+          },
+        ],
+      },
+      etapes: {
+        titre: "Suggest several wines in three steps",
+        liste: [
+          "Open the editor and pick the occasion: birthday, housewarming, or \"No occasion\".",
+          "Add two to four bottles in different styles; paste the wine merchant's link to fetch the label.",
+          "Send the link. You see the chosen bottle on your private link, and you give it — or open it together.",
+        ],
+      },
+      questions: {
+        titre: "Questions about wine as a gift",
+        liste: [
+          {
+            q: "How do I give wine to someone who knows a lot about it?",
+            r: "Don't try to compete on their ground: suggest a lesser-known region, a small producer, a vineyard visit. They'll choose whatever intrigues them.",
+          },
+          {
+            q: "What if they don't drink alcohol?",
+            r: "Put an alcohol-free idea on the list, or swap the wine for what goes with it: nice glasses, a class, a deli hamper.",
+          },
+          {
+            q: "How should I present the chosen bottle?",
+            r: "Print the card with its QR code and hang it from the neck of the bottle: they find the page again, and the choice they made.",
+          },
+        ],
+      },
+    },
+
+    deco: {
+      nom: "Home decor",
+      titreMeta: "Home decor gifts, without guessing — MyPresentsForYou",
+      descriptionMeta:
+        "Vase, lamp, print or throw: home decor is a matter of taste. Suggest several pieces on one page and let the person pick the one for their home.",
+      titre: "Giving home decor without imposing your taste",
+      chapo:
+        "A decorative piece will live in someone else's home, every day, in plain sight. If the style doesn't fit, it ends up in a cupboard — or stays out of politeness. Suggest two or three pieces, and let the person pick the one that will find its place.",
+      accroche: "At home, people choose what they look at every day.",
+      apercu: ["A ceramic vase", "A table lamp", "A framed print"],
+      pourquoi: {
+        titre: "Why decor is hard to choose for others",
+        paragraphes: [
+          "Home decor is the most visible gift there is: it stays in front of the person, and their guests. It's also the most personal. Colours, materials, style: what looks good in a shop can clash in a living room you barely know.",
+          "Suggesting several pieces lets you aim at a mood rather than a specific object. They take the one that goes with what they already have, and you don't have to guess the colour of the sofa.",
+          "It's also the right approach for a housewarming: the couple look at the page together and choose what comes into their new home.",
+        ],
+      },
+      idees: {
+        titre: "Ideas, by mood",
+        intro:
+          "Mix moods and sizes: a small object, a useful one, a bolder piece. They'll see straight away what feels like them.",
+        profils: [
+          {
+            nom: "Natural and warm",
+            idees: [
+              { nom: "A ceramic vase", pourquoi: "Handmade, with flowers or on its own." },
+              { nom: "A wool throw", pourquoi: "On the sofa, and used all winter." },
+              { nom: "A woven basket", pourquoi: "For storage, or to dress up a plant." },
+              { nom: "An easy-care houseplant", pourquoi: "With its pot, and little upkeep." },
+            ],
+          },
+          {
+            nom: "Minimal",
+            idees: [
+              { nom: "A table lamp", pourquoi: "Light changes a room more than furniture." },
+              { nom: "A round mirror", pourquoi: "Makes a hallway feel bigger and brighter." },
+              { nom: "A wall clock", pourquoi: "A simple object that always finds a wall." },
+              { nom: "Brass candle holders", pourquoi: "For the table, on dinner-party evenings." },
+            ],
+          },
+          {
+            nom: "Colourful and bold",
+            idees: [
+              { nom: "A framed art print", pourquoi: "Illustration, photography: art on the wall without breaking the bank." },
+              { nom: "An embroidered cushion", pourquoi: "A touch of colour that's easy to change." },
+              { nom: "A Berber rug", pourquoi: "Warms up a room in one go." },
+              { nom: "An artist's lithograph", pourquoi: "A numbered work, to start a collection." },
+            ],
+          },
+          {
+            nom: "Useful first",
+            idees: [
+              { nom: "A scented candle", pourquoi: "The small gift that actually gets lit." },
+              { nom: "An essential oil diffuser", pourquoi: "For the smell of the home." },
+              { nom: "A wall shelf", pourquoi: "For books, plants and keepsakes." },
+              { nom: "A catch-all tray", pourquoi: "For the hallway, the desk or the bedside table." },
+            ],
+          },
+        ],
+      },
+      etapes: {
+        titre: "Suggest several pieces in three steps",
+        liste: [
+          "Open the editor and pick the occasion: housewarming, birthday, or \"No occasion\".",
+          "Add two to four pieces in different moods; paste a product link to fetch its photo.",
+          "Send the link. You see the choice on your private link, and give the piece that will find its place.",
+        ],
+      },
+      questions: {
+        titre: "Questions about home decor as a gift",
+        liste: [
+          {
+            q: "How do I choose without knowing their home?",
+            r: "You don't need to know it: suggest different moods, and they know what will go at home. Their choice tells you something for next time.",
+          },
+          {
+            q: "Is a piece of art too personal?",
+            r: "On its own, maybe. Among two other suggestions, no: if it doesn't speak to them, they'll pick something else, without having to say so.",
+          },
+          {
+            q: "Can I give decor to a couple moving in together?",
+            r: "Yes, it's the ideal occasion: one page, the couple look at it together and choose what comes into their new home. The housewarming guide has more ideas.",
           },
         ],
       },

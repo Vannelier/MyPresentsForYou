@@ -4,10 +4,10 @@ import EnTeteSite from "@/components/EnTeteSite";
 import GiftMotif from "@/components/GiftMotif";
 import SiteFooter from "@/components/SiteFooter";
 import { baseUrl } from "@/lib/env";
-import { textesGuides } from "@/lib/guides";
+import { PALETTES_CATEGORIES, textesGuides } from "@/lib/guides";
 import { dictionnaire } from "@/lib/i18n";
 import { alternatesDe } from "@/lib/i18n/alternates";
-import { GUIDES, cheminGuide, cheminVers } from "@/lib/i18n/chemins";
+import { CATEGORIES, GUIDES, cheminGuide, cheminVers } from "@/lib/i18n/chemins";
 import { langueOuDefaut } from "@/lib/i18n/langues";
 import { occasionById } from "@/lib/occasions";
 import { paletteStyle } from "@/lib/palettes";
@@ -25,6 +25,9 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
  * dans le fil d'Ariane et un point d'entree depuis le pied de page de tout le
  * site : sans lien depuis une page indexee, un guide n'existerait pour aucun
  * moteur, meme declare dans le sitemap.
+ *
+ * Les categories suivent les occasions, sous leur propre titre : elles
+ * repondent a une autre question — non plus « quoi offrir », mais « lequel ».
  */
 export default async function IdeesCadeaux({ params }: Params) {
   const langue = langueOuDefaut((await params).langue);
@@ -63,6 +66,20 @@ export default async function IdeesCadeaux({ params }: Params) {
               </li>
             );
           })}
+        </ul>
+
+        <h2>{textes.sectionCategories.titre}</h2>
+        <p>{textes.sectionCategories.chapo}</p>
+        <ul className="guides-grille">
+          {CATEGORIES.map((categorie) => (
+            <li key={categorie} style={paletteStyle({ id: PALETTES_CATEGORIES[categorie] })}>
+              <Link href={cheminGuide(langue, categorie)}>
+                <span className="guides-carte__nom">{textes.categories[categorie].nom}</span>
+                <span className="guides-carte__texte">{textes.categories[categorie].accroche}</span>
+                <span className="guides-carte__lire">{textes.libelles.lire} →</span>
+              </Link>
+            </li>
+          ))}
         </ul>
       </article>
       <SiteFooter langue={langue} />
