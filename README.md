@@ -1182,6 +1182,21 @@ charge. Mesuré en local après 400 pages servies : 245 Mo avant, 152 Mo après.
 Un autre hébergeur peut reprendre la même commande ; `npm start` marche toujours,
 il coûte simplement plus cher.
 
+**Le cache de Postgres.** Un Postgres par défaut réserve 128 Mo de cache
+(`shared_buffers`) et le remplit au fil des lectures, jusqu'à la taille de la base.
+Pour un site de ce trafic, 16 Mo suffisent. Mesuré sur Postgres 16 avec une base de
+119 Mo entièrement lue : 155 Mo (125 Mo de cache, 30 Mo de processus) par défaut,
+46 Mo avec `shared_buffers = 16MB`. Le réglage vit dans la base, pas dans ce dépôt :
+il se pose une fois, depuis `psql` (`railway connect Postgres` sur Railway) — pas
+depuis une console qui enveloppe la requête dans une transaction, que
+`ALTER SYSTEM` refuse — puis il faut redémarrer le service Postgres :
+
+```sql
+ALTER SYSTEM SET shared_buffers = '16MB';
+-- après redémarrage :
+SHOW shared_buffers;
+```
+
 **Les images.** Il faut choisir l'une des deux, et le choix n'est pas optionnel en
 production : sans lui, les images sont écrites sur le disque du conteneur et
 **disparaissent au déploiement suivant, y compris sur les cartes déjà envoyées**.
