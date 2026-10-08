@@ -16,7 +16,8 @@ import { LANGUES_ACTIVES, estLangue, langueDuNavigateur, type Langue } from "./l
 export type Decision =
   | { type: "suite" }
   | { type: "redirection"; vers: string; permanente: boolean }
-  | { type: "reecriture"; vers: string };
+  | { type: "reecriture"; vers: string }
+  | { type: "absent" };
 
 // Le format des slugs de carte, celui de la contrainte en base.
 const SLUG = /^[a-z0-9][a-z0-9-]{1,58}[a-z0-9]$/;
@@ -28,6 +29,32 @@ const SLUG = /^[a-z0-9][a-z0-9-]{1,58}[a-z0-9]$/;
  * ecartees a ce titre.
  */
 const PASSANTS = new Set(["api", "admin", "carte", "_next", "opengraph-image", "twitter-image", "icon", "apple-icon"]);
+
+/*
+ * Les seuls fichiers servis a la racine : ceux de public/ et les routes de
+ * metadonnees d'app/. Tout autre nom a point au premier niveau est une sonde de
+ * robot (/.env, /wp-login.php, /xmlrpc.php...).
+ *
+ * Laissees passer, ces sondes tombaient sur app/[langue] avec une « langue »
+ * hors de generateStaticParams : `dynamicParams = false` fait lever a Next un
+ * NoFallbackError, journalise avec sa pile a chaque requete. En production les
+ * journaux n'etaient plus que cela, et chaque sonde traversait tout le rendu
+ * pour finir en 404. Le middleware y repond desormais seul, sans rendu.
+ * `scripts/check.ts` verifie que la liste suit le disque.
+ */
+export const FICHIERS_RACINE = new Set([
+  "ads.txt",
+  "apple-icon.png",
+  "favicon.ico",
+  "icon-192.png",
+  "icon-512.png",
+  "icon-maskable-512.png",
+  "icon.svg",
+  "llms.txt",
+  "manifest.webmanifest",
+  "robots.txt",
+  "sitemap.xml",
+]);
 
 /**
  * L'hote vers lequel rediriger pour n'exposer qu'une seule adresse indexable :
@@ -65,6 +92,7 @@ export function router(
   if (!premier) {
     return { type: "redirection", vers: `/${langueDuNavigateur(acceptLanguage, actives)}`, permanente: false };
   }
+  if (premier.includes(".") && segments.length === 1 && !FICHIERS_RACINE.has(premier)) return { type: "absent" };
   if (PASSANTS.has(premier) || premier.includes(".")) return { type: "suite" };
 
   /*
