@@ -1141,6 +1141,25 @@ test("boot.mjs et lib/db.ts decident du TLS de la meme maniere", () => {
  * `MEDIA_DIR` est lu au chargement du module cote TypeScript : on ne compare donc
  * que le cas par defaut, le seul que ce harnais puisse observer.
  */
+test("en production, un seul processus : ni npm ni shell autour de Next", () => {
+  /*
+   * `npm start` laissait npm (64 Mo au repos) et un `sh -c` vivre a cote de
+   * Next, pour rien : plus du quart de la memoire facturee. railway.json lance
+   * boot.mjs, qui demarre Next lui-meme apres le schema.
+   */
+  const demarrage = JSON.parse(lire("railway.json")).deploy.startCommand as string;
+  assert.match(demarrage, /^node .*scripts\/boot\.mjs --serveur$/, "railway.json ne lance plus boot.mjs --serveur");
+  assert.doesNotMatch(demarrage, /\bnpm\b|&&|;/, "la commande de demarrage repasse par npm ou un shell");
+  const boot = lire("scripts/boot.mjs");
+  // Le schema d'abord : un Next demarre avant lui servirait une base sans table.
+  assert.match(
+    boot,
+    /\.then\(\(\) => applySchema\(\)\)[\s\S]*\.then\(\(\) => \(serveur \? demarrerNext\(\) : undefined\)\)/,
+    "boot.mjs ne demarre plus Next apres le schema",
+  );
+  assert.match(boot, /process\.argv = \[process\.argv\[0\], bin, "start"\]/, "boot.mjs ne lance plus `next start`");
+});
+
 test("boot.mjs et mediaStore designent le meme dossier d'images", () => {
   assert.equal(process.env.MEDIA_DIR ?? "", "", "MEDIA_DIR doit etre absent pour ce test");
   assert.equal(bootMediaDir(), MEDIA_DIR);

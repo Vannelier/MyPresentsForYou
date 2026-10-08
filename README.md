@@ -1171,6 +1171,17 @@ l'hébergeur sans rien expliquer.
 
 `npm run db:migrate` reste disponible pour l'appliquer manuellement.
 
+**Un seul processus en production.** Sur Railway, `railway.json` remplace
+`npm start` par `node --max-semi-space-size=2 scripts/boot.mjs --serveur` : le
+même `boot.mjs`, qui démarre ensuite Next dans son propre processus. Avec
+`npm start`, trois processus restaient en vie pour un seul serveur (npm, un shell,
+Next), et npm seul pesait 64 Mo sur 223 au repos — plus du quart de la mémoire
+facturée, pour un processus qui ne fait qu'attendre. L'option de V8 réduit la
+jeune génération du tas : environ 25 Mo de moins, pour 4 % de CPU en plus sous
+charge. Mesuré en local après 400 pages servies : 245 Mo avant, 152 Mo après.
+Un autre hébergeur peut reprendre la même commande ; `npm start` marche toujours,
+il coûte simplement plus cher.
+
 **Les images.** Il faut choisir l'une des deux, et le choix n'est pas optionnel en
 production : sans lui, les images sont écrites sur le disque du conteneur et
 **disparaissent au déploiement suivant, y compris sur les cartes déjà envoyées**.
