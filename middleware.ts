@@ -24,6 +24,7 @@ export function middleware(req: NextRequest) {
 
   const decision = router(req.nextUrl.pathname, req.headers.get("accept-language"));
   if (decision.type === "suite") return NextResponse.next();
+  if (decision.type === "absent") return new NextResponse(null, { status: 404 });
 
   const cible = new URL(decision.vers + req.nextUrl.search, req.url);
   if (decision.type === "reecriture") return NextResponse.rewrite(cible);
@@ -36,7 +37,9 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  // Ni les fichiers de Next, ni l'API, ni un fichier a extension (robots.txt,
-  // favicon.ico...) : ils ne relevent pas des langues.
-  matcher: ["/((?!_next/|api/|.*\\.[a-z0-9]+$).*)"],
+  // Ni les fichiers de Next, ni l'API, ni un fichier a extension sous un dossier
+  // (/exemple/casque.jpg) : ils ne relevent pas des langues. Les fichiers a la
+  // racine, eux, passent ici : c'est la que frappent les sondes de robots, que
+  // le routeur ecarte avant qu'elles n'atteignent app/[langue].
+  matcher: ["/((?!_next/|api/|[^/]*/.*\\.[a-z0-9]+$).*)"],
 };

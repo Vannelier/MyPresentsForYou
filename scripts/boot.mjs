@@ -16,6 +16,7 @@
  * ferait boucler l'hébergeur sur des redémarrages sans rien expliquer.
  */
 import { readFileSync } from "node:fs";
+import { createRequire } from "node:module";
 import { mkdir, rm, writeFile } from "node:fs/promises";
 import { join, resolve } from "node:path";
 
@@ -138,8 +139,30 @@ async function verifierStockageImages() {
 // Sans `await` au niveau du module, pour rester importable par les outils qui
 // transposent en CommonJS.
 if (process.argv[1] && process.argv[1].endsWith("boot.mjs")) {
+  const serveur = process.argv.includes("--serveur");
   verifierStockageImages()
     .catch((err) => console.error("[mypresentsforyou]", err.message))
     .then(() => applySchema())
-    .catch((err) => console.error("[mypresentsforyou]", err.message));
+    .catch((err) => console.error("[mypresentsforyou]", err.message))
+    .then(() => (serveur ? demarrerNext() : undefined));
+}
+
+/**
+ * Lance `next start` dans ce processus-ci, une fois le schema applique.
+ *
+ * `npm start` laissait trois processus en vie pour un seul serveur : npm
+ * lui-meme, le `sh -c` de la commande, et Next. Mesure au repos : npm pesait
+ * 64 Mo sur 223, soit plus d'un quart de la memoire facturee par l'hebergeur
+ * pour un processus qui ne fait qu'attendre. Ici, un seul processus : la
+ * commande de demarrage de railway.json est `node ... boot.mjs --serveur`,
+ * sans npm ni shell — on ne depend donc pas de la facon dont l'hebergeur
+ * interprete `&&`.
+ *
+ * Le binaire de Next lit ses arguments dans process.argv (commander, mode
+ * « node ») : on les remplace avant de le charger, comme si on l'avait lance.
+ */
+async function demarrerNext() {
+  const bin = createRequire(import.meta.url).resolve("next/dist/bin/next");
+  process.argv = [process.argv[0], bin, "start"];
+  await import(bin);
 }

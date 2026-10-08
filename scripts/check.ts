@@ -60,7 +60,7 @@ import {
   langueOuDefaut,
   type Langue,
 } from "../lib/i18n/langues";
-import { redirectionHote, router } from "../lib/i18n/routage";
+import { FICHIERS_RACINE, redirectionHote, router } from "../lib/i18n/routage";
 import { EVENEMENTS, lienSortant, synthese, urlAchat } from "../lib/compteurs";
 import {
   clesImages,
@@ -1141,6 +1141,25 @@ test("boot.mjs et lib/db.ts decident du TLS de la meme maniere", () => {
  * `MEDIA_DIR` est lu au chargement du module cote TypeScript : on ne compare donc
  * que le cas par defaut, le seul que ce harnais puisse observer.
  */
+test("en production, un seul processus : ni npm ni shell autour de Next", () => {
+  /*
+   * `npm start` laissait npm (64 Mo au repos) et un `sh -c` vivre a cote de
+   * Next, pour rien : plus du quart de la memoire facturee. railway.json lance
+   * boot.mjs, qui demarre Next lui-meme apres le schema.
+   */
+  const demarrage = JSON.parse(lire("railway.json")).deploy.startCommand as string;
+  assert.match(demarrage, /^node .*scripts\/boot\.mjs --serveur$/, "railway.json ne lance plus boot.mjs --serveur");
+  assert.doesNotMatch(demarrage, /\bnpm\b|&&|;/, "la commande de demarrage repasse par npm ou un shell");
+  const boot = lire("scripts/boot.mjs");
+  // Le schema d'abord : un Next demarre avant lui servirait une base sans table.
+  assert.match(
+    boot,
+    /\.then\(\(\) => applySchema\(\)\)[\s\S]*\.then\(\(\) => \(serveur \? demarrerNext\(\) : undefined\)\)/,
+    "boot.mjs ne demarre plus Next apres le schema",
+  );
+  assert.match(boot, /process\.argv = \[process\.argv\[0\], bin, "start"\]/, "boot.mjs ne lance plus `next start`");
+});
+
 test("boot.mjs et mediaStore designent le meme dossier d'images", () => {
   assert.equal(process.env.MEDIA_DIR ?? "", "", "MEDIA_DIR doit etre absent pour ce test");
   assert.equal(bootMediaDir(), MEDIA_DIR);
@@ -2685,6 +2704,43 @@ test("le routage : langues, anciennes adresses, cartes", () => {
   });
   assert.deepEqual(r("/fr/idees-cadeaux/inconnue"), { type: "reecriture", vers: "/fr/introuvable" });
   assert.deepEqual(r("/fr/autre/chose"), { type: "suite" });
+});
+
+test("les sondes de robots s'arretent au middleware, les vrais fichiers passent", () => {
+  /*
+   * Une sonde a la racine (/.env, /wp-login.php) tombait sur app/[langue] et
+   * faisait lever a Next un NoFallbackError par requete : les journaux de
+   * production n'etaient plus que cela. Le routeur les ecarte, mais seulement
+   * s'il connait tous les vrais fichiers de la racine — un fichier ajoute a
+   * public/ sans passer par FICHIERS_RACINE serait servi en 404.
+   */
+  for (const sonde of ["/.env", "/wp-login.php", "/xmlrpc.php", "/config.json", "/.git"]) {
+    assert.deepEqual(router(sonde, null, LANGUES_ACTIVES), { type: "absent" }, sonde);
+  }
+
+  const surDisque = new Set<string>(readdirSync("public", { withFileTypes: true }).filter((e) => e.isFile()).map((e) => e.name));
+  for (const e of readdirSync("app", { withFileTypes: true })) {
+    // Une route a point (app/llms.txt/route.ts) ou un fichier de metadonnees servi tel quel.
+    if (e.isDirectory() && e.name.includes(".")) surDisque.add(e.name);
+    if (e.isFile() && /^(favicon\.ico|icon\.\w+|apple-icon\.\w+)$/.test(e.name)) surDisque.add(e.name);
+  }
+  const generes: Record<string, string> = { "robots.ts": "robots.txt", "sitemap.ts": "sitemap.xml", "manifest.ts": "manifest.webmanifest" };
+  for (const [source, servi] of Object.entries(generes)) if (existsSync(`app/${source}`)) surDisque.add(servi);
+  assert.deepEqual([...FICHIERS_RACINE].sort(), [...surDisque].sort(), "FICHIERS_RACINE ne suit plus la racine servie");
+  for (const fichier of FICHIERS_RACINE) {
+    assert.deepEqual(router(`/${fichier}`, null, LANGUES_ACTIVES), { type: "suite" }, fichier);
+  }
+
+  // Le middleware doit voir les fichiers de la racine, sinon le routeur n'est jamais consulte.
+  const mw = lire("middleware.ts");
+  const matcher = mw.match(/matcher: \["(.+)"\]/);
+  assert.ok(matcher, "matcher introuvable");
+  const motif = new RegExp(`^${matcher[1].replace(/\\\\/g, "\\")}$`);
+  assert.ok(motif.test("/wp-login.php"), "le middleware ne voit plus les sondes de la racine");
+  assert.ok(motif.test("/.env"), "le middleware ne voit plus les fichiers caches de la racine");
+  assert.ok(!motif.test("/exemple/casque.jpg"), "le middleware passe sur chaque image de public/");
+  assert.ok(!motif.test("/_next/static/x.js"), "le middleware passe sur les fichiers de Next");
+  assert.match(mw, /decision\.type === "absent"\) return new NextResponse\(null, \{ status: 404 \}\)/);
 });
 
 test("une seule adresse indexable : l'apex file vers le www, le reste passe", () => {
