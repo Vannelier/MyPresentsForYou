@@ -1384,10 +1384,17 @@ le référencement, et seulement ensuite la publicité du site. Le modèle s'y i
    script Sovrn, qui se chargerait sur chaque page et y poserait des cookies. Sovrn plutôt qu'Awin ou
    Amazon Partenaires : c'est le seul à affilier un lien vers n'importe quel marchand par une simple
    redirection, comme le faisait Skimlinks ; Awin passe par un script ou par une candidature par
-   marchand, Amazon ne couvre qu'Amazon et retire une demande sans trois ventes en 180 jours. Et Sovrn
-   [n'examine un site qu'après ses premiers clics](https://knowledge.sovrn.com/kb/content-and-blog-onboarding-guide-for-commerce),
-   ce qui évite le refus d'entrée qu'un site encore peu visité a reçu chez Skimlinks. Un marchand que
-   Sovrn ne connaît pas est servi sans commission, mais servi. La mention
+   marchand, Amazon ne couvre qu'Amazon et retire une demande sans trois ventes en 180 jours. Sovrn
+   [regarde aussi les clics que génèrent les liens](https://knowledge.sovrn.com/kb/content-and-blog-onboarding-guide-for-commerce)
+   pour juger un site. Inscription faite le 15 octobre 2026 : le compte est « Under review », réponse
+   annoncée sous 1 à 3 jours ouvrés. Un marchand que Sovrn ne connaît pas est servi sans commission,
+   mais servi.
+
+   **Amazon ne commissionne pas par Sovrn.** Sovrn demande de
+   [connecter son propre compte Amazon Partenaires](https://knowledge.sovrn.com/kb/how-to-connect-amazon-to-sovrn-commerce),
+   un identifiant de suivi par pays. Tant qu'il n'existe pas, un achat sur Amazon — le marchand par
+   défaut des guides — ne rapporte rien ; la Fnac, Decathlon ou Sephora, au catalogue de Sovrn,
+   commissionnent directement. La mention
    « Lien affilié » s'afficherait sous le bouton dès que la variable serait posée. La FAQ, les
    conditions et la politique de confidentialité disent que le bouton « peut » passer par un réseau
    d'affiliation, qui peut poser ses propres cookies une fois le site quitté : vrai avant comme après
