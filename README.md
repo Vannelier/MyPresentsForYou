@@ -1071,7 +1071,9 @@ l'outil : l'accueil, le formulaire, `/questions`, et surtout les guides par occa
   enverrait les robots sur une page introuvable.
 - **Des titres qui portent ce qu'on cherche, pas ce qu'on est.** « MyPresentsForYou — offre le choix » ne se
   trouve qu'en tapant « MyPresentsForYou », c'est-à-dire en connaissant déjà le site. L'accueil annonce donc
-  « Offrir en laissant choisir le cadeau ». Tous les titres tiennent sous 60 signes, toutes les
+  « Créer ta page cadeau gratuitement » : l'action que fait le clic, et la gratuité. Le titre précédent,
+  « Offrir en laissant choisir le cadeau », décrivait le concept ; il obtenait des impressions dans
+  Google et pas de clics. Tous les titres tiennent sous 60 signes, toutes les
   descriptions sous 160 — au-delà, Google coupe.
 - **Données structurées** : `WebApplication` sur l'accueil, avec un `offers` à zéro qui est la façon
   normalisée de dire « gratuit » ; `FAQPage` sur `/questions`.

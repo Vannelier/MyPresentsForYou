@@ -175,7 +175,7 @@ export const de = {
   },
 
   accueil: {
-    titreMeta: "Schenken und wählen lassen — MyPresentsForYou",
+    titreMeta: "Erstelle deine Geschenkseite kostenlos — MyPresentsForYou",
     descriptionMeta:
       "Sammle ein paar Geschenkideen auf einer Seite, die du eigens für einen wichtigen Menschen gestaltest, und schick den Link zu seiner eigenen Seite.",
     motsCles: [

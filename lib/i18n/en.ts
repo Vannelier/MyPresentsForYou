@@ -174,7 +174,7 @@ export const en = {
   },
 
   accueil: {
-    titreMeta: "Give a gift and let them choose — MyPresentsForYou",
+    titreMeta: "Create your gift page for free — MyPresentsForYou",
     descriptionMeta:
       "Put a few gift ideas on a page made just for the person you care about, and send them the link to their own page.",
     motsCles: [

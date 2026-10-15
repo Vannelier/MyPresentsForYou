@@ -2571,6 +2571,10 @@ test("titres et descriptions tiennent dans ce que Google affiche, dans chaque la
       assert.ok(titre.length <= 60, `${langue}/${page} : titre de ${titre.length} signes`);
       assert.ok(description.length <= 160, `${langue}/${page} : description de ${description.length} signes`);
     }
+    // llms.txt retire la marque par ce separateur : l'accueil francais la gardait avec une virgule.
+    for (const page of ["accueil", "creation", "exemple"] as const) {
+      assert.match(d[page].titreMeta, /\s—\sMyPresentsForYou$/, `${langue}/${page} : marque hors du separateur`);
+    }
   }
 });
 

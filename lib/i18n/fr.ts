@@ -181,7 +181,7 @@ export const fr = {
   },
 
   accueil: {
-    titreMeta: "Offrir en laissant choisir le cadeau, MyPresentsForYou",
+    titreMeta: "Créer ta page cadeau gratuitement — MyPresentsForYou",
     descriptionMeta:
       "Réunis quelques idées de cadeaux sur une page créée spécialement pour la personne à qui tu tiens et envoie le lien vers sa page personnalisée.",
     motsCles: [

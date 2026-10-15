@@ -15,9 +15,16 @@ type Params = { params: Promise<{ langue: string }> };
  * Le titre porte ce qu'on cherche, pas ce qu'on est.
  *
  * « MyPresentsForYou — offre le choix » ne se trouve qu'en tapant « MyPresentsForYou », c'est-à-dire
- * en connaissant déjà le site. Le titre décrit donc d'abord l'action — offrir en
- * laissant choisir — et garde la marque en fin de ligne, là où elle ne prend pas
- * la place des mots utiles. Environ 60 signes : au-delà, Google coupe.
+ * en connaissant déjà le site. Le titre décrit donc d'abord l'action et garde la
+ * marque en fin de ligne, là où elle ne prend pas la place des mots utiles.
+ * Environ 60 signes : au-delà, Google coupe.
+ *
+ * L'action est celle qu'on fait en cliquant — créer sa page, gratuitement — et non
+ * le concept. « Offrir en laissant choisir le cadeau » obtenait des impressions et
+ * aucun clic : il décrit une idée, il ne dit ni ce qu'on trouve derrière le lien ni
+ * que c'est gratuit, deux choses qui décident du clic dans une page de résultats.
+ * La marque est séparée par un tiret cadratin, comme ailleurs : llms.txt la retire
+ * avec ce séparateur, et la virgule de l'ancien titre la lui laissait.
  */
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const langue = langueOuDefaut((await params).langue);
