@@ -49,19 +49,23 @@ export function urlAchat(page: Pick<GiftPage, "items" | "chosen_item_id">): stri
 }
 
 /**
- * L'adresse de sortie du bouton « Acheter » : par le Link Wrapper de Skimlinks
- * quand un identifiant est pose, telle quelle sinon.
+ * L'adresse de sortie du bouton « Acheter » : par la redirection de Sovrn
+ * Commerce quand une cle est posee, telle quelle sinon.
  *
- * Le Link Wrapper plutot que le script de Skimlinks : le script se chargerait
- * sur toutes les pages et y poserait des cookies, ce que la politique de
+ * La redirection plutot que le script de Sovrn : le script se chargerait sur
+ * toutes les pages et y poserait des cookies, ce que la politique de
  * confidentialite exclut. La redirection, elle, ne concerne que l'offreur qui
- * clique pour acheter. Un marchand que Skimlinks ne connait pas est servi sans
+ * clique pour acheter. Un marchand que Sovrn ne connait pas est servi sans
  * commission, mais servi : le lien ne casse jamais.
+ *
+ * `redirect.viglink.com`, `key`, `u` et `cuid` sont ceux de la base de
+ * connaissance Sovrn (« Create Links in Commerce », « CUIDs in Commerce »).
+ * Skimlinks, premier reseau branche ici, a refuse le compte le 20/09/2026.
  */
-export function lienSortant(cible: string, idSkimlinks: string | null): string {
-  if (!idSkimlinks) return cible;
-  const params = new URLSearchParams({ id: idSkimlinks, url: cible, xcust: "bouton_acheter" });
-  return `https://go.skimresources.com/?${params}`;
+export function lienSortant(cible: string, cleSovrn: string | null): string {
+  if (!cleSovrn) return cible;
+  const params = new URLSearchParams({ key: cleSovrn, u: cible, cuid: "bouton_acheter" });
+  return `https://redirect.viglink.com/?${params}`;
 }
 
 export type LigneCompteur = { jour: string; evenement: string; total: number };

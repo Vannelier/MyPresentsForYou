@@ -48,7 +48,7 @@ récupère les valeurs du projet.
 | `NEXT_PUBLIC_BASE_URL` | base absolue des liens, balises Open Graph, `robots.txt` et sitemap |
 | `FREE_PAGE_TTL_DAYS` | durée de vie d'une page gratuite (défaut : 365) |
 | `ADSENSE_PUBLISHER_ID` | identifiant d'éditeur AdSense (`pub-…` ou `ca-pub-…`), publié dans `/ads.txt` ; absent, `/ads.txt` répond 404 |
-| `SKIMLINKS_ID` | identifiant d'éditeur Skimlinks (`309459X1797814`) ; posé, le bouton « Acheter » passe par le Link Wrapper et affiche « Lien affilié » ; absent, il va droit chez le marchand |
+| `SOVRN_KEY` | clé d'API Sovrn Commerce du site ; posée, le bouton « Acheter » passe par la redirection de Sovrn et affiche « Lien affilié » ; absente, il va droit chez le marchand |
 | `PURGE_SECRET` | secret de `POST /api/purge`, 32 caractères au moins ; absent, la purge est désactivée — voir « La purge des cartes expirées » |
 | `RATE_LIMIT_DISABLED` | `1` coupe les quotas. Développement seulement — voir « Les routes anonymes » |
 
@@ -1377,10 +1377,17 @@ le référencement, et seulement ensuite la publicité du site. Le modèle s'y i
    rapports qui décident de la suite : la part des cartes choisies, et les clics par choix. La
    politique de confidentialité mentionne ces trois totaux.
 
-   **Le branchement existe dans le code, mais Skimlinks a refusé le compte.** Avec `SKIMLINKS_ID`
-   posé, la redirection enverrait vers `https://go.skimresources.com/?id=…&url=…&xcust=bouton_acheter`
-   — le Link Wrapper, sans le script Skimlinks, qui se chargerait sur chaque page et y poserait des
-   cookies. Un marchand que Skimlinks ne connaît pas est servi sans commission, mais servi. La mention
+   **Le branchement vise Sovrn Commerce depuis le 15 octobre 2026, après le refus de Skimlinks.**
+   Avec `SOVRN_KEY` posé, la redirection envoie vers
+   `https://redirect.viglink.com/?key=…&u=…&cuid=bouton_acheter` — le format de lien manuel de la
+   [base de connaissance Sovrn](https://knowledge.sovrn.com/kb/create-links-in-commerce), sans le
+   script Sovrn, qui se chargerait sur chaque page et y poserait des cookies. Sovrn plutôt qu'Awin ou
+   Amazon Partenaires : c'est le seul à affilier un lien vers n'importe quel marchand par une simple
+   redirection, comme le faisait Skimlinks ; Awin passe par un script ou par une candidature par
+   marchand, Amazon ne couvre qu'Amazon et retire une demande sans trois ventes en 180 jours. Et Sovrn
+   [n'examine un site qu'après ses premiers clics](https://knowledge.sovrn.com/kb/content-and-blog-onboarding-guide-for-commerce),
+   ce qui évite le refus d'entrée qu'un site encore peu visité a reçu chez Skimlinks. Un marchand que
+   Sovrn ne connaît pas est servi sans commission, mais servi. La mention
    « Lien affilié » s'afficherait sous le bouton dès que la variable serait posée. La FAQ, les
    conditions et la politique de confidentialité disent que le bouton « peut » passer par un réseau
    d'affiliation, qui peut poser ses propres cookies une fois le site quitté : vrai avant comme après
@@ -1419,9 +1426,8 @@ le référencement, et seulement ensuite la publicité du site. Le modèle s'y i
 3. **Une fois le site traduit et en ligne, et avec du contenu qui pointe vers des marchands** :
    l'inscription au réseau d'affiliation. Les réseaux examinent un site avant d'accepter son éditeur ;
    le refus de Skimlinks du 20 septembre 2026 (point 1) en donne le motif documenté — du contenu de
-   produits sans lien sortant, pas seulement l'absence de trafic. Skimlinks reste le choix par défaut
-   si ce point est corrigé ; en cas de nouveau refus, des alternatives existent (Sovrn Commerce, Awin,
-   CJ Affiliate) mais n'ont pas été évaluées — ce serait à faire à ce moment-là, pas avant.
+   produits sans lien sortant, pas seulement l'absence de trafic. Le réseau visé est désormais Sovrn
+   Commerce (point 1) ; les liens nus des guides restent, ils sont ce contenu-là.
 4. **Avec du trafic** : les suggestions. **Une première version existe** : dans l'étape « Cadeaux »
    de l'éditeur, un encart replié « Besoin d'idées ? » propose les pistes du guide de l'occasion
    choisie (celles d'anniversaire pour une occasion sans guide). Un clic place le titre **et un lien de
@@ -1429,7 +1435,7 @@ le référencement, et seulement ensuite la publicité du site. Le modèle s'y i
    l'offreur, lui reste à préciser. Les pistes viennent des guides (`pistesPourEditeur`), passées en
    propriété par les pages serveur : l'éditeur n'importe jamais `lib/guides`. Ce lien n'est pas affilié
    ici — l'affiliation ne s'ajoute qu'au clic « Acheter », côté serveur. Une liste de marchands propre
-   à un réseau n'est **pas** nécessaire : le Link Wrapper trie partenaire et non-partenaire au clic, et
+   à un réseau n'est **pas** nécessaire : la redirection du réseau trie partenaire et non-partenaire au clic, et
    maintenir notre propre liste serait une donnée à périmer pour zéro gain.
 
 ## Décisions structurantes

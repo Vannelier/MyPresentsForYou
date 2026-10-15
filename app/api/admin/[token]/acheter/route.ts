@@ -1,5 +1,5 @@
 import { compter, lienSortant, urlAchat } from "@/lib/compteurs";
-import { skimlinksId } from "@/lib/env";
+import { cleSovrn } from "@/lib/env";
 import { findByAdminToken } from "@/lib/db";
 import { handleError, notFoundJson, tropDeRequetes } from "@/lib/http";
 import { QUOTAS } from "@/lib/rateLimit";
@@ -10,7 +10,7 @@ type Params = { params: Promise<{ token: string }> };
 
 /**
  * Le bouton « Acheter » de l'administration passe par ici : on compte le clic,
- * puis on renvoie chez le marchand — par Skimlinks quand `SKIMLINKS_ID` est pose,
+ * puis on renvoie chez le marchand — par Sovrn Commerce quand `SOVRN_KEY` est pose,
  * ce qui ajoute l'affiliation (voir `lienSortant`).
  *
  * Redirection cote serveur, et non compteur en JavaScript : aucun script, aucun
@@ -30,7 +30,7 @@ export async function GET(req: Request, { params }: Params) {
     return new Response(null, {
       status: 302,
       headers: {
-        location: lienSortant(cible, skimlinksId()),
+        location: lienSortant(cible, cleSovrn()),
         // Le jeton d'administration est dans l'adresse de cette route et de la
         // page qui y mene : le marchand ne doit le recevoir par aucun Referer.
         "referrer-policy": "no-referrer",
