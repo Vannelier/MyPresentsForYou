@@ -52,15 +52,19 @@ export function adsensePublisherId(): string | null {
 }
 
 /**
- * L'identifiant d'editeur Skimlinks (`309459X1797814`), s'il est pose et bien
- * forme ; `null` sinon, et le bouton « Acheter » envoie alors chez le marchand
- * sans affiliation. Une variable plutot qu'une constante : l'affiliation se
- * branche le jour ou le compte est approuve, et se coupe sans deploiement de
- * code si le reseau la refuse.
+ * La cle d'API Sovrn Commerce du site (Settings, icone de cle), si elle est
+ * posee et bien formee ; `null` sinon, et le bouton « Acheter » envoie alors
+ * chez le marchand sans affiliation. Une variable plutot qu'une constante :
+ * l'affiliation se coupe sans deploiement de code si le reseau la refuse.
+ *
+ * La forme n'est pas fixee par une documentation : l'exemple de Sovrn est en
+ * hexadecimal de 32 signes, d'ou une borne large plutot qu'un motif exact qui
+ * couperait l'affiliation en silence si la cle reelle differait. La borne basse
+ * ecarte l'ancien identifiant Skimlinks, s'il trainait encore dans une config.
  */
-export function skimlinksId(): string | null {
-  const id = process.env.SKIMLINKS_ID?.trim() ?? "";
-  return /^\d+X\d+$/.test(id) ? id : null;
+export function cleSovrn(): string | null {
+  const cle = process.env.SOVRN_KEY?.trim() ?? "";
+  return /^[A-Za-z0-9]{20,64}$/.test(cle) ? cle : null;
 }
 
 /**

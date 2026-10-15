@@ -33,7 +33,7 @@ import { hexToHsl, hslToHex, styleDeTeinte, teinteDuTheme } from "../lib/carteCo
 import { RESERVED_SLUGS, slugError, slugify, suggestVariant } from "../lib/slug";
 import { REPLY_WINDOW_MS, isExpired, isLocked, isSealed, replyWindowOpen } from "../lib/types";
 import { LIMITS } from "../lib/limits";
-import { adsensePublisherId, baseUrl, freePageTtlDays, hoteCanonique, secretDePurge, skimlinksId } from "../lib/env";
+import { adsensePublisherId, baseUrl, freePageTtlDays, hoteCanonique, secretDePurge, cleSovrn } from "../lib/env";
 import sitemap from "../app/sitemap";
 import { GET as llmsTxt } from "../app/llms.txt/route";
 import { alternatesDe, alternatesGuide } from "../lib/i18n/alternates";
@@ -3063,44 +3063,45 @@ test("le bouton d'achat ne redirige que vers l'adresse web du cadeau choisi", ()
   assert.equal(urlAchat({ items, chosen_item_id: null }), null);
 });
 
-test("l'affiliation passe par le Link Wrapper, et seulement quand un identifiant valide est pose", () => {
+test("l'affiliation passe par la redirection Sovrn, et seulement quand une cle valide est posee", () => {
+  const cle = "88ac2a40e081e283ac504d1789d398ac";
   const cible = "https://boutique.example/velo?taille=M&couleur=bleu";
   assert.equal(lienSortant(cible, null), cible);
-  const sortie = new URL(lienSortant(cible, "309459X1797814"));
-  assert.equal(sortie.origin + sortie.pathname, "https://go.skimresources.com/");
-  assert.equal(sortie.searchParams.get("id"), "309459X1797814");
-  // Mal encodee, `&couleur=bleu` deviendrait un parametre de Skimlinks et le
+  const sortie = new URL(lienSortant(cible, cle));
+  assert.equal(sortie.origin + sortie.pathname, "https://redirect.viglink.com/");
+  assert.equal(sortie.searchParams.get("key"), cle);
+  // Mal encodee, `&couleur=bleu` deviendrait un parametre de Sovrn et le
   // marchand recevrait une adresse tronquee.
-  assert.equal(sortie.searchParams.get("url"), cible);
+  assert.equal(sortie.searchParams.get("u"), cible);
 
-  const avant = process.env.SKIMLINKS_ID;
+  const avant = process.env.SOVRN_KEY;
   try {
-    process.env.SKIMLINKS_ID = " 309459X1797814 ";
-    assert.equal(skimlinksId(), "309459X1797814");
-    for (const faux of ["", "309459", "<script>", "pub-0000000000000000"]) {
-      process.env.SKIMLINKS_ID = faux;
-      assert.equal(skimlinksId(), null, faux);
+    process.env.SOVRN_KEY = ` ${cle} `;
+    assert.equal(cleSovrn(), cle);
+    for (const faux of ["", "309459X1797814", "<script>", "pub-0000000000000000", `${cle}&u=https://ailleurs.example`]) {
+      process.env.SOVRN_KEY = faux;
+      assert.equal(cleSovrn(), null, faux);
     }
   } finally {
-    if (avant === undefined) delete process.env.SKIMLINKS_ID;
-    else process.env.SKIMLINKS_ID = avant;
+    if (avant === undefined) delete process.env.SOVRN_KEY;
+    else process.env.SOVRN_KEY = avant;
   }
 
   const achat = lire("app/api/admin/[token]/acheter/route.ts");
-  assert.match(achat, /location: lienSortant\(cible, skimlinksId\(\)\)/, "la redirection n'ajoute plus l'affiliation");
+  assert.match(achat, /location: lienSortant\(cible, cleSovrn\(\)\)/, "la redirection n'ajoute plus l'affiliation");
   // La mention accompagne le bouton des que l'affiliation est active, jamais sans elle.
-  assert.match(lire("app/admin/[token]/page.tsx"), /affilie: skimlinksId\(\) !== null/);
+  assert.match(lire("app/admin/[token]/page.tsx"), /affilie: cleSovrn\(\) !== null/);
   assert.match(
     lire("components/AdminView.tsx"),
     /chosen\.source_url && page\.affilie && <p className="help"[^>]*>\{t\.lienAffilie\}<\/p>/,
   );
-  // Le script de Skimlinks poserait des cookies sur chaque page : il n'a rien a faire dans le code.
+  // Le script d'un reseau poserait des cookies sur chaque page : il n'a rien a faire dans le code.
   const parcourir = (d: string) => {
     for (const e of readdirSync(d, { withFileTypes: true })) {
       const chemin = `${d}/${e.name}`;
       if (e.isDirectory()) parcourir(chemin);
       else if (/\.(tsx?|css)$/.test(e.name)) {
-        assert.doesNotMatch(lire(chemin), /skimlinks\.js|amp-skimlinks|s\.skimresources\.com/, chemin);
+        assert.doesNotMatch(lire(chemin), /skimlinks\.js|amp-skimlinks|s\.skimresources\.com|vglnk\.js|cdn\.viglink\.com/, chemin);
       }
     }
   };
@@ -3214,8 +3215,8 @@ test("les guides pointent vers des liens marchands nus, et l'editeur pre-remplit
    * receveur poserait le cookie chez qui n'achete pas, et trahirait « aucun lien
    * affilie hors du chemin d'achat ». L'affiliation ne vit que sur « Acheter ».
    */
-  assert.doesNotMatch(guide, /skimresources|lienSortant|skimlinksId/, "un lien de guide passe par l'affiliation");
-  assert.doesNotMatch(lire("lib/marchand.ts"), /skimresources/, "le lien marchand passe par le wrapper d'affiliation");
+  assert.doesNotMatch(guide, /viglink|lienSortant|cleSovrn/, "un lien de guide passe par l'affiliation");
+  assert.doesNotMatch(lire("lib/marchand.ts"), /viglink/, "le lien marchand passe par le wrapper d'affiliation");
 
   // Une recherche encodee, par langue : sans encodage, un « & » couperait la requete.
   for (const langue of LANGUES) {

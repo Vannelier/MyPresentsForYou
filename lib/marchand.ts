@@ -2,7 +2,7 @@ import type { Langue } from "@/lib/i18n/langues";
 
 /*
  * Le domaine Amazon par langue. Amazon plutot qu'un autre marchand : c'est le
- * seul present dans les six marches du site, et un partenaire Skimlinks dans
+ * seul present dans les six marches du site, et affilie par les reseaux dans
  * chacun — donc le lien « Acheter » de l'offreur (le seul chemin affilie du
  * site) commissionnera une fois le compte actif, sans qu'on ait rien a detecter.
  *
