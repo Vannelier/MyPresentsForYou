@@ -175,7 +175,7 @@ export const it = {
   },
 
   accueil: {
-    titreMeta: "Fare un regalo lasciando scegliere — MyPresentsForYou",
+    titreMeta: "Crea la tua pagina regalo gratis — MyPresentsForYou",
     descriptionMeta:
       "Raccogli qualche idea regalo in una pagina creata appositamente per la persona a cui tieni e invia il link alla sua pagina personalizzata.",
     motsCles: [

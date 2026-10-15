@@ -174,7 +174,7 @@ export const nl = {
   },
 
   accueil: {
-    titreMeta: "Een cadeau geven en laten kiezen — MyPresentsForYou",
+    titreMeta: "Maak gratis je eigen cadeaupagina — MyPresentsForYou",
     descriptionMeta:
       "Zet een paar cadeau-ideeën op een pagina die je speciaal maakt voor iemand die je dierbaar is, en stuur de link naar die eigen pagina.",
     motsCles: [
