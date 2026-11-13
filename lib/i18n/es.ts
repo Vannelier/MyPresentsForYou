@@ -321,6 +321,8 @@ export const es = {
     surtitre: "Administración",
     choixFait: "La elección está hecha",
     enAttente: "A la espera de una elección",
+    expiree: "Tarjeta caducada",
+    expireeAide: "El enlace dejó de funcionar el {date}. Quien lo abre ve «{message}».",
     cadeauChoisi: "Regalo elegido",
     cadeauChoisiAide: "Te toca: encárgalo y regálalo. No ha pasado nada por el sitio.",
     motDuReceveur: "«{mot}»",

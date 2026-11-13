@@ -316,6 +316,8 @@ export const nl = {
     surtitre: "Beheer",
     choixFait: "De keuze is gemaakt",
     enAttente: "Wacht op een keuze",
+    expiree: "Kaart verlopen",
+    expireeAide: "De link werkt niet meer sinds {date}. Wie hem opent, ziet “{message}”.",
     cadeauChoisi: "Gekozen cadeau",
     cadeauChoisiAide: "Nu jij: bestellen en geven. Er is niets via de site gelopen.",
     motDuReceveur: "“{mot}”",

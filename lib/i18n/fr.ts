@@ -326,6 +326,8 @@ export const fr = {
     surtitre: "Administration",
     choixFait: "Le choix est fait",
     enAttente: "En attente d'un choix",
+    expiree: "Carte expirée",
+    expireeAide: "Le lien ne fonctionne plus depuis le {date}. La personne qui l'ouvre voit « {message} ».",
     cadeauChoisi: "Cadeau choisi",
     cadeauChoisiAide: "À toi de jouer : commande-le et offre-le. Rien n'est passé par le site.",
     motDuReceveur: "« {mot} »",

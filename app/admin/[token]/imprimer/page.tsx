@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import PrintableCard from "@/components/PrintableCard";
 import { lireCarteAdmin } from "@/lib/carte";
 import { publicUrlFor } from "@/lib/env";
 import { dictionnaire } from "@/lib/i18n";
 import { langueOuDefaut } from "@/lib/i18n/langues";
 import { occasionById } from "@/lib/occasions";
+import { isExpired } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
 
@@ -28,6 +29,8 @@ export default async function PrintRoute({ params }: Props) {
   const { token } = await params;
   const page = await lireCarteAdmin(token);
   if (!page) notFound();
+  // Un QR code vers une carte expiree n'ouvre plus rien : l'admin dit pourquoi.
+  if (isExpired(page)) redirect(`/admin/${token}`);
   const formules = dictionnaire(langueOuDefaut(page.theme.langue)).occasions[
     occasionById(page.theme.occasion).id
   ];

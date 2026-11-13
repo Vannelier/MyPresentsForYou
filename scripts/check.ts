@@ -3152,6 +3152,25 @@ test("chaque evenement est compte la ou il se produit, sans jamais bloquer l'act
   assert.doesNotMatch(admin, /href=\{chosen\.source_url\}/);
 });
 
+test("une carte expiree ne se partage plus depuis l'administration", () => {
+  /*
+   * Les cartes creees avant le passage a un an expiraient a trente jours, et
+   * leur admin proposait encore le lien, l'apercu et le QR code d'une adresse
+   * qui ne repondait plus que « Ce cadeau n'est plus disponible ».
+   */
+  const admin = lire("components/AdminView.tsx");
+  const etat = admin.indexOf("{page.expired ? (");
+  assert.ok(etat >= 0, "l'admin ne distingue plus une carte expiree");
+  for (const partage of ["<CopyLine value={page.publicUrl} />", "<CardPreview"]) {
+    const ou = admin.indexOf(partage);
+    assert.ok(ou > admin.indexOf(") : (", etat), `${partage} hors de la branche d'une carte active`);
+  }
+  assert.match(admin, /t\.expireeAide/);
+
+  const impression = lire("app/admin/[token]/imprimer/page.tsx");
+  assert.match(impression, /if \(isExpired\(page\)\) redirect\(/, "la carte a imprimer d'une carte expiree");
+});
+
 // --- Besoin d'idees ? --------------------------------------------------------
 
 test("une piste remplit la premiere ligne vide, sans doublon ni depassement", () => {
