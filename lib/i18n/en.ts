@@ -315,6 +315,8 @@ export const en = {
     surtitre: "Admin",
     choixFait: "The choice is made",
     enAttente: "Waiting for a choice",
+    expiree: "Card expired",
+    expireeAide: "The link stopped working on {date}. Anyone who opens it sees “{message}”.",
     cadeauChoisi: "Chosen gift",
     cadeauChoisiAide: "Over to you: order it and give it. Nothing went through the site.",
     motDuReceveur: "“{mot}”",

@@ -318,6 +318,8 @@ export const de = {
     surtitre: "Verwaltung",
     choixFait: "Die Wahl ist getroffen",
     enAttente: "Warten auf eine Wahl",
+    expiree: "Karte abgelaufen",
+    expireeAide: "Der Link funktioniert seit dem {date} nicht mehr. Wer ihn öffnet, sieht „{message}“.",
     cadeauChoisi: "Gewähltes Geschenk",
     cadeauChoisiAide: "Jetzt du: bestellen und schenken. Über die Website ist nichts gelaufen.",
     motDuReceveur: "„{mot}“",

@@ -319,6 +319,8 @@ export const it = {
     surtitre: "Amministrazione",
     choixFait: "La scelta è fatta",
     enAttente: "In attesa di una scelta",
+    expiree: "Biglietto scaduto",
+    expireeAide: "Il link non funziona più dal {date}. Chi lo apre vede «{message}».",
     cadeauChoisi: "Regalo scelto",
     cadeauChoisiAide: "Tocca a te: ordinalo e regalalo. Non è passato niente dal sito.",
     motDuReceveur: "«{mot}»",

@@ -103,7 +103,7 @@ export default function AdminView({ page, token, pistes }: { page: AdminSnapshot
     <div className="shell shell--wide">
       <header className="hero">
         <p className="eyebrow">{page.name || t.surtitre}</p>
-        <h1>{page.locked ? t.choixFait : t.enAttente}</h1>
+        <h1>{page.locked ? t.choixFait : page.expired ? t.expiree : t.enAttente}</h1>
       </header>
 
       {/* Le cadeau choisi passe avant les liens : c'est ce qu'on vient chercher
@@ -150,42 +150,62 @@ export default function AdminView({ page, token, pistes }: { page: AdminSnapshot
         </section>
       )}
 
-      <section className="panel">
-        <h2>{t.partager}</h2>
-
-        {/* Seule date conservée : une carte scellée ne s'ouvre pas encore, et rien
-            d'autre sur cette page ne le dirait. */}
-        {page.reveal_at && (
+      {/*
+        Une carte expiree ne se partage plus. L'admin proposait encore le lien,
+        l'apercu et le QR code d'une adresse qui ne repond plus que « Ce cadeau
+        n'est plus disponible » : on copiait, on imprimait, et le receveur
+        tombait sur un mur. L'admin, elle, reste ouverte — c'est la que l'offreur
+        retrouve le cadeau choisi et le bouton « Acheter », souvent bien apres
+        le choix. Sans choix, la purge l'efface avec la carte.
+      */}
+      {page.expired ? (
+        <section className="panel">
+          <h2>{t.partager}</h2>
           <p className="help">
-            {remplir(page.sealed ? t.sOuvreLe : t.ouverteDepuis, {
-              date: formatDateTime(page.reveal_at, LOCALES[langue].intl),
+            {remplir(t.expireeAide, {
+              date: formatDateTime(page.expires_at, LOCALES[langue].intl),
+              message: d.carte.expireTitre,
             })}
           </p>
-        )}
+        </section>
+      ) : (
+        <section className="panel">
+          <h2>{t.partager}</h2>
 
-        <div className="link-box">
-          <span className="link-box__label">{t.lienEnvoi}</span>
-          <CopyLine value={page.publicUrl} />
-        </div>
+          {/* Seule date conservée : une carte scellée ne s'ouvre pas encore, et rien
+              d'autre sur cette page ne le dirait. */}
+          {page.reveal_at && (
+            <p className="help">
+              {remplir(page.sealed ? t.sOuvreLe : t.ouverteDepuis, {
+                date: formatDateTime(page.reveal_at, LOCALES[langue].intl),
+              })}
+            </p>
+          )}
 
-        {/*
-          L'apercu de la carte, et non le QR seul.
+          <div className="link-box">
+            <span className="link-box__label">{t.lienEnvoi}</span>
+            <CopyLine value={page.publicUrl} />
+          </div>
 
-          Le damier noir et blanc pleine largeur ne disait rien de ce qu'on va
-          tenir dans la main : ni le prenom, ni le theme, ni meme qu'il existe
-          une carte derriere. Le bouton « Carte a imprimer » vivait dessous, dans
-          une rangee separee ou personne ne faisait le lien entre les deux.
-        */}
-        <CardPreview
-          url={page.publicUrl}
-          to={page.recipient_name}
-          intro={page.intro_message.trim() || d.occasions[occasionById(page.theme.occasion).id].intro}
-          title={page.welcome_message}
-          signature={page.signature}
-          theme={page.theme}
-          printHref={`/admin/${token}/imprimer`}
-        />
-      </section>
+          {/*
+            L'apercu de la carte, et non le QR seul.
+
+            Le damier noir et blanc pleine largeur ne disait rien de ce qu'on va
+            tenir dans la main : ni le prenom, ni le theme, ni meme qu'il existe
+            une carte derriere. Le bouton « Carte a imprimer » vivait dessous, dans
+            une rangee separee ou personne ne faisait le lien entre les deux.
+          */}
+          <CardPreview
+            url={page.publicUrl}
+            to={page.recipient_name}
+            intro={page.intro_message.trim() || d.occasions[occasionById(page.theme.occasion).id].intro}
+            title={page.welcome_message}
+            signature={page.signature}
+            theme={page.theme}
+            printHref={`/admin/${token}/imprimer`}
+          />
+        </section>
+      )}
 
       {editable && (
         <>
