@@ -11,6 +11,7 @@ import { dictionnaire } from "@/lib/i18n";
 import { alternatesGuide } from "@/lib/i18n/alternates";
 import { CATEGORIES, GUIDES, SUJETS, cheminGuide, cheminVers, estCategorie, type Sujet } from "@/lib/i18n/chemins";
 import { LOCALES, langueOuDefaut, type Langue } from "@/lib/i18n/langues";
+import { apercuPartage } from "@/lib/partage";
 
 // Une date par famille : les categories, ecrites plus tard, affichaient la date
 // des occasions — une page qui ment sur son age des sa publication.
@@ -42,7 +43,12 @@ async function lire(params: Params["params"]): Promise<{ langue: Langue; guide: 
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { langue, guide } = await lire(params);
   const t = contenu(langue, guide);
-  return { title: t.titreMeta, description: t.descriptionMeta, alternates: alternatesGuide(langue, guide) };
+  return {
+    title: t.titreMeta,
+    description: t.descriptionMeta,
+    alternates: alternatesGuide(langue, guide),
+    ...apercuPartage(langue, cheminGuide(langue, guide), t.titreMeta, t.descriptionMeta),
+  };
 }
 
 function contenu(langue: Langue, guide: Sujet) {
