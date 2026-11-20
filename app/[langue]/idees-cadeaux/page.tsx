@@ -11,13 +11,19 @@ import { CATEGORIES, GUIDES, cheminGuide, cheminVers } from "@/lib/i18n/chemins"
 import { langueOuDefaut } from "@/lib/i18n/langues";
 import { occasionById } from "@/lib/occasions";
 import { paletteStyle } from "@/lib/palettes";
+import { apercuPartage } from "@/lib/partage";
 
 type Params = { params: Promise<{ langue: string }> };
 
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const langue = langueOuDefaut((await params).langue);
   const t = textesGuides(langue).page;
-  return { title: t.titreMeta, description: t.descriptionMeta, alternates: alternatesDe(langue, "idees") };
+  return {
+    title: t.titreMeta,
+    description: t.descriptionMeta,
+    alternates: alternatesDe(langue, "idees"),
+    ...apercuPartage(langue, cheminVers(langue, "idees"), t.titreMeta, t.descriptionMeta),
+  };
 }
 
 /**

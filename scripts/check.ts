@@ -3287,6 +3287,22 @@ test("les cartes memorisees se lisent au montage, jamais dans un initialiseur", 
   assert.match(lire("app/[langue]/page.tsx"), /<AccueilCarteOuExemple/, "l'accueil n'offre plus la bascule carte-ou-exemple");
 });
 
+/*
+ * Une page qui a son propre titre et qu'on partage doit le donner aussi a
+ * l'apercu : sans `openGraph` a elle, elle herite du titre generique du layout.
+ * Les guides partaient sous « MyPresentsForYou, create an animated gift page. »
+ * (novembre 2026).
+ */
+test("les pages partageables donnent leur titre a l'apercu de partage", () => {
+  for (const f of [
+    "app/[langue]/exemple/page.tsx",
+    "app/[langue]/idees-cadeaux/page.tsx",
+    "app/[langue]/idees-cadeaux/[occasion]/page.tsx",
+  ]) {
+    assert.match(lire(f), /\.\.\.apercuPartage\(langue, /, `${f} n'a plus d'apercu de partage a son titre`);
+  }
+});
+
 // --- llms.txt ----------------------------------------------------------------
 
 async function checkLlms() {
